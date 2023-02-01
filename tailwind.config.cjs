@@ -15,9 +15,9 @@ module.exports = {
         component: "#F66B0E",
       },
     },
-    daisyui: {
-      themes: false,
-    },
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: false,
+  },
 };
