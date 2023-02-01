@@ -53,8 +53,8 @@ function App() {
     //   element: checkToken ? <Checkout /> : <Login />,
     // },
     {
-      path: "/profile-student/:id_user",
-      element: checkToken ? <ProfileStudent /> : <Login />,
+      path: "/profile-student",
+      element: <ProfileStudent />,
     },
     // {
     //   path: "/transactions",
