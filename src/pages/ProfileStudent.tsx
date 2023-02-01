@@ -2,10 +2,13 @@ import React from "react";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
+import EditProfilStudent from "./editProfilStudent";
+
 import Profil from "../assets/profil.jpg";
 import Profil2 from "../assets/profil2.webp";
 
 import { FaRegEdit } from "react-icons/fa";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 function ProfileStudent() {
   return (
@@ -24,8 +27,8 @@ function ProfileStudent() {
 
           {/* Put this part before </body> tag */}
           <label
-            htmlFor="my-modal-4"
-            className="flex gap-1 absolute lg:top-28 top-32 lg:right-52 right-8"
+            htmlFor="my-modal-5"
+            className="flex gap-1 absolute lg:top-28 top-32 lg:right-52 right-5"
           >
             <FaRegEdit className="w-5 h-5 text-[#424242]" />
             <p className="text-[#8E8E8E] lg:text-[16px] text-[14px]">
@@ -33,18 +36,15 @@ function ProfileStudent() {
             </p>
           </label>
 
-          <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-          <label htmlFor="my-modal-4" className="modal cursor-pointer">
-            <label className="modal-box relative" htmlFor="">
-              <h3 className="text-lg font-bold">
-                Congratulations random Internet user!
-              </h3>
-              <p className="py-4">
-                You've been selected for a chance to get one year of
-                subscription to use Wikipedia for free!
-              </p>
-            </label>
-          </label>
+          <input type="checkbox" id="my-modal-5" className="modal-toggle" />
+          <div className="modal">
+            <div className="modal-box lg:w-9/12 w-10/12 max-w-full lg:pl-10 lg:p-5 p-7 shadow-xl">
+              <label htmlFor="my-modal-5" className="absolute right-5 top-4">
+                <IoMdCloseCircleOutline className="text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7" />
+              </label>
+              <EditProfilStudent />
+            </div>
+          </div>
           <div
             className=" w-32 h-32 lg:mt-12 mt-24 border border-[#EFEFEF] rounded-full overflow-hidden mt- bg-no-repeat bg-cover"
             style={{ backgroundImage: `URL(${Profil})` }}
