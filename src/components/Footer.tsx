@@ -1,18 +1,9 @@
 import React from "react";
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer
-      className="footer footer-center p-4  text-base-content mt-10"
-      style={{ backgroundColor: "#EFEFEF" }}
-    >
-      <div>
-        <p className="text-black font-bold text-lg   ">
-          Copyright ©2023 GuruMu
-        </p>
-      </div>
-    </footer>
+    <div className="bg-card flex justify-center items-center text-white h-14">
+      <p>Hak Cipta © 2023 - Tim BE_14 | FE_11 | QE_8 </p>
+    </div>
   );
-};
-
-export default Footer;
+}
