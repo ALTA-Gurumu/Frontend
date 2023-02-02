@@ -12,6 +12,7 @@ import LandingPage from "../pages/LandingPage";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import ProfileStudent from "../pages/ProfileStudent";
+import Rating from "../pages/Rating";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -39,6 +40,10 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/ulasan/:guru_id",
+      element: <Rating />,
     },
     // {
     //   path: "/detail/:id_item",
