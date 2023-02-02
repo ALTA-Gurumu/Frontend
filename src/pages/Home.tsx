@@ -11,7 +11,7 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import Profil from "../assets/profil.jpg";
 import Profil2 from "../assets/profil2.webp";
-import ButtonProfil from "../components/buttonProfil";
+import Button from "../components/Button";
 
 function Home() {
   return (
@@ -100,8 +100,8 @@ function Home() {
         </div>
       </div>
       <div className="text-center mt-14 mb-20">
-        <ButtonProfil
-          className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white"
+        <Button
+          className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
           label="Lihat lebih banyak guru"
         />
       </div>

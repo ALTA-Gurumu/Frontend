@@ -17,11 +17,14 @@ function ProfileStudent() {
       <div className="flex justify-center lg:py-11 py-14">
         <div className="lg:w-[75vw] w-[90vw] h-[75vh] flex flex-col items-center rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.4)] bg-white p-5 relative">
           <div className="flex w-full gap-4 bg-[#FAFAFA]">
-            <p className="bg-[#EDF1FF] border-b-2 border-[#3056D3] px-8 py-3 items-center font-medium text-[18px] text-[#3056D3]">
+            <p className="bg-[#EDF1FF] border-b-2 border-[#3056D3] lg:px-8 px-6 py-3 items-center font-medium text-[18px] text-[#3056D3]">
               Profil
             </p>
-            <p className="px-5 py-3 items-center font-medium text-[18px] text-[#7C828F]">
-              Jadwal Saya
+            <p className="lg:px-5 px-2 py-3 items-center font-medium text-[18px] text-[#7C828F]">
+              Riwayat
+            </p>
+            <p className="lg:px-5 px-2 lg:py-3 py-1 items-center font-medium lg:text-[18px] text-[16px] text-[#7C828F]">
+              Sedang Berlangsung
             </p>
           </div>
 

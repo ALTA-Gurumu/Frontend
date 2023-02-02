@@ -7,8 +7,12 @@ import {
 } from "react-router-dom";
 import useCookies from "react-cookie/cjs/useCookies";
 
-import Beranda from "../pages/Home";
+import ProfileStudent from "../pages/ProfileStudent";
+import ProfileTeacher from "../pages/ProfilTeacher";
 import LandingPage from "../pages/LandingPage";
+
+
+import Beranda from "../pages/Home";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import ProfileStudent from "../pages/ProfileStudent";
@@ -66,10 +70,10 @@ function App() {
       path: "/profile-student",
       element: <ProfileStudent />,
     },
-    // {
-    //   path: "/transactions",
-    //   element: checkToken ? <Transaction /> : <Login />,
-    // },
+    {
+      path: "/profile-teacher",
+      element: <ProfileTeacher />,
+    },
     // {
     //   path: "/transactions-selling",
     //   element: checkToken ? <TranscSell /> : <Login />,

@@ -1,7 +1,8 @@
 import React from "react";
+
 import Layout from "../components/Layout";
-import { Navbar } from "../components/Navbar";
-import { ButtonLanding } from "../components/ButtonLanding";
+import Navbar from "../components/Navbar";
+import Button from "../components/Button";
 import image1 from "../assets/image1.svg";
 import Selecting from "../assets/selecting.svg";
 import Request from "../assets/request.svg";
@@ -25,10 +26,10 @@ function LandingPage() {
 
           <br />
           <div className="flex justify-center mr-12 lg:mr-11">
-            <ButtonLanding
+            <Button
               disabled={false}
               label="Pilih guru disini"
-              className="w-40 h-10 lg:w-[12rem]"
+              className="w-40 h-10 bg-component text-white hover:bg-navy border-none rounded-full lg:w-[12rem]"
             />
           </div>
         </div>
