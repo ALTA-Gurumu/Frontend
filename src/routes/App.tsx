@@ -5,14 +5,15 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import useCookies from "react-cookie/cjs/useCookies";
 
 import Beranda from "../pages/Home";
 import LandingPage from "../pages/LandingPage";
-import Register from "../pages/Register";
-import Login from "../pages/Login";
+import Register from "../pages/auth/Register";
+import Login from "../pages/auth/Login";
 import ProfileStudent from "../pages/ProfileStudent";
 import Rating from "../pages/Rating";
+import EditStudent from "../pages/EditStudent";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -44,6 +45,10 @@ function App() {
     {
       path: "/ulasan/:guru_id",
       element: <Rating />,
+    },
+    {
+      path: "/editStudent",
+      element: <EditStudent />,
     },
     // {
     //   path: "/detail/:id_item",
