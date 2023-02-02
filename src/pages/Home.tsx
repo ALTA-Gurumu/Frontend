@@ -1,7 +1,7 @@
 import React from "react";
 
 import Layout from "../components/Layout";
-import Navbar from "../components/Navbar";
+import { Navbar } from "../components/Navbar";
 import InputProfil from "../components/inputProfil";
 import Card from "../components/card";
 

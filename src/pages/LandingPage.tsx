@@ -1,4 +1,5 @@
 import React from "react";
+
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
@@ -6,7 +7,7 @@ import image1 from "../assets/image1.svg";
 import Selecting from "../assets/selecting.svg";
 import Request from "../assets/request.svg";
 import Calender from "../assets/calender.svg";
-import Footer from "../components/Footer";
+import { Footer } from "../components/Footer";
 
 function LandingPage() {
   return (
