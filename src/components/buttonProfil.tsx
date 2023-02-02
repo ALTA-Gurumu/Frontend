@@ -1,16 +1,17 @@
-import { ButtonHTMLAttributes } from "react";
+import { FC, ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  id?: string;
   label?: string;
   loading?: boolean;
 }
 
-const CustomButton = ({ id, label, loading, ...props }: ButtonProps) => {
+const ButtonProfil: FC<ButtonProps> = ({ id, label, loading, ...props }) => {
   return (
     <button
       id={id}
-      className={` ${loading && "bg-gray-700 cursor-not-allowed"}`}
       disabled={loading}
+      className={`h-10 rounded-2xl bg-[#F66B0E] text-white`}
       {...props}
     >
       {label}
@@ -18,4 +19,4 @@ const CustomButton = ({ id, label, loading, ...props }: ButtonProps) => {
   );
 };
 
-export default CustomButton;
+export default ButtonProfil;
