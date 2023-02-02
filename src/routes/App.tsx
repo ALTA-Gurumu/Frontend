@@ -7,11 +7,12 @@ import {
 } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-import Beranda from "../pages/Home";
+import ProfileStudent from "../pages/ProfileStudent";
+import ProfileTeacher from "../pages/ProfilTeacher";
 import LandingPage from "../pages/LandingPage";
 import Register from "../pages/Register";
+import Beranda from "../pages/Home";
 import Login from "../pages/Login";
-import ProfileStudent from "../pages/ProfileStudent";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -56,10 +57,10 @@ function App() {
       path: "/profile-student",
       element: <ProfileStudent />,
     },
-    // {
-    //   path: "/transactions",
-    //   element: checkToken ? <Transaction /> : <Login />,
-    // },
+    {
+      path: "/profile-teacher",
+      element: <ProfileTeacher />,
+    },
     // {
     //   path: "/transactions-selling",
     //   element: checkToken ? <TranscSell /> : <Login />,

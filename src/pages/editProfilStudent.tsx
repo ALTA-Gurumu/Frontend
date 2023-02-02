@@ -1,6 +1,4 @@
 import InputProfil from "../components/inputProfil";
-import ButtonProfil from "../components/buttonProfil";
-import Layout from "../components/Layout";
 
 import Profil2 from "../assets/profil2.webp";
 
@@ -8,6 +6,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsPhoneFill } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
+import Button from "../components/Button";
 
 const EditProfilStudent = () => {
   return (
@@ -50,7 +49,10 @@ const EditProfilStudent = () => {
           </div>
         </div>
         <div className="font-semibold text-[18px] mt-4">
-          <ButtonProfil />
+          <Button
+            className="px-10 py-2 text-[16px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
+            label="Perbarui"
+          />
         </div>
       </div>
 
@@ -62,10 +64,15 @@ const EditProfilStudent = () => {
         <p className="text-[14px] text-[#C0B7B7]">
           *Uk.foto maks 400 x 400 pixels
         </p>
-        <p className="flex text-[#F66B0E]">
-          Unggah Foto
-          <AiOutlineCloudUpload className="w-7 h-6" />
-        </p>
+        <input
+          id="input-avatar-student"
+          name="input-avatar-student"
+          type="file"
+          accept="image/png, image/jpg, image/jpeg"
+          className="flex text-[#112B3C] lg:text-[16px] text-[14px] text-center"
+        />
+        {/* Unggah Foto
+        <AiOutlineCloudUpload className="w-7 h-6" /> */}
       </div>
     </div>
   );
