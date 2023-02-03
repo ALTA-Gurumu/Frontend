@@ -7,20 +7,17 @@ import {
 } from "react-router-dom";
 import useCookies from "react-cookie/cjs/useCookies";
 
+import HalamanSesiMurid from "../pages/HalamanSesiMurid";
+import HalamanSesiGuru from "../pages/HalamanSesiGuru";
+import PaymentDetails from "../pages/paymentDetails";
 import ProfileStudent from "../pages/ProfileStudent";
 import ProfileTeacher from "../pages/ProfilTeacher";
+import EditStudent from "../pages/EditStudent";
 import LandingPage from "../pages/LandingPage";
-
-
-import Beranda from "../pages/Home";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
-import ProfileStudent from "../pages/ProfileStudent";
+import Beranda from "../pages/Home";
 import Rating from "../pages/Rating";
-import EditStudent from "../pages/EditStudent";
-import HalamanSesiGuru from "../pages/HalamanSesiGuru";
-import HalamanSesiMurid from "../pages/HalamanSesiMurid";
-import PaymentDetails from "../pages/paymentDetails";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -82,11 +79,11 @@ function App() {
     //   element: checkToken ? <Checkout /> : <Login />,
     // },
     {
-      path: "/profile-student",
+      path: "/profileStudent",
       element: <ProfileStudent />,
     },
     {
-      path: "/profile-teacher",
+      path: "/profileTeacher",
       element: <ProfileTeacher />,
     },
     // {

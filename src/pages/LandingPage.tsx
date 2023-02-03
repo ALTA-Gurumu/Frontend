@@ -1,13 +1,13 @@
 import React from "react";
 
 import Layout from "../components/Layout";
-import Navbar from "../components/Navbar";
-import Button from "../components/Button";
+import { Navbar } from "../components/Navbar";
 import image1 from "../assets/image1.svg";
 import Selecting from "../assets/selecting.svg";
 import Request from "../assets/request.svg";
 import Calender from "../assets/calender.svg";
 import { Footer } from "../components/Footer";
+import CustomButton from "../components/CustomButton";
 
 function LandingPage() {
   return (
@@ -26,7 +26,7 @@ function LandingPage() {
 
           <br />
           <div className="flex justify-center mr-12 lg:mr-11">
-            <Button
+            <CustomButton
               disabled={false}
               label="Pilih guru disini"
               className="w-40 h-10 bg-component text-white hover:bg-navy border-none rounded-full lg:w-[12rem]"

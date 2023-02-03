@@ -2,7 +2,7 @@ import { FC } from "react";
 import "../styles/app.css";
 
 import { AiFillStar } from "react-icons/ai";
-import Button from "./Button";
+import CustomButton from "./CustomButton";
 
 interface CardProps {
   id?: string;
@@ -44,7 +44,7 @@ const Card: FC<CardProps> = ({
         </div>
         <p className="line-clamp-3 text-justify text-zinc-900 ">{deskripsi}</p>
         <div className="text-end mt-4">
-          <Button
+          <CustomButton
             className="h-10 px-2 rounded-2xl bg-[#205375] text-white shadow-lg hover:bg-[#2f6991]"
             label="Tarif Belajar : Rp 50000/jam"
           />
