@@ -16,17 +16,18 @@ function Rating() {
         </h1>
         <div className="text-navy flex flex-col lg:flex-row  h-[31rem] lg:justify-evenly justify-between items-center">
           <div>
-            <p className="font-semibold pt-8 lg:pt-0 text-xl">Ahmad Bambang</p>
+            <p className="font-semibold pt-8 lg:pt-0 text-xl">
+              Ahmad Bambang
+            </p>
             <p className="text-lg font-semibold pt-4">Ulasan</p>
             <br />
             <form>
               <div className="w-[20rem] h-20 flex rounded-xl justify-center border border-[#424242] ">
-                <CustomInput
-                  id="input-ulasan"
-                  type={"text"}
-                  placeholder="ulasan"
-                  className=" h-auto pl-3 rounded-xl w-full"
-                ></CustomInput>
+                <textarea
+                  maxLength={300}
+                  className="w-full h-full rounded-xl p-3"
+                  placeholder="Ulasan..."
+                />
               </div>
               <p className="text-lg font-semibold flex pt-4">
                 Penilaian
@@ -46,12 +47,19 @@ function Rating() {
                 ></CustomInput>
               </div>
               <div className="flex justify-center lg:justify-end pt-16">
-                <CustomButton label="Nilai" className="w-40 h-8 items-end" />
+                <CustomButton
+                  label="Nilai"
+                  className="w-40 h-8 items-end"
+                />
               </div>
             </form>
           </div>
           <div className="bg-white pt-12 lg:pt-0 ">
-            <img className="w-[30rem]" src={ulasan} alt="ulasan" />
+            <img
+              className="w-[30rem]"
+              src={ulasan}
+              alt="ulasan"
+            />
           </div>
         </div>
       </div>

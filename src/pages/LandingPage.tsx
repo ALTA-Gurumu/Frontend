@@ -1,19 +1,22 @@
 import React from "react";
+import { AiFillStar } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
+import { Footer } from "../components/Footer";
+import CustomBotton from "../components/CustomButton";
+
 import image1 from "../assets/image1.svg";
 import Selecting from "../assets/selecting.svg";
 import Request from "../assets/request.svg";
 import Calender from "../assets/calender.svg";
-import { Footer } from "../components/Footer";
-import CustomButton from "../components/CustomButton";
+import avatar2 from "../assets/avatar2.webp";
 
 function LandingPage() {
   return (
     <Layout>
       <Navbar />
-      {/* <div className="flex justify-evenly items-center h-[35rem] bg-white "> */}
       <div className="flex flex-col-reverse lg:flex-row w-full justify-center min-h-screen bg-white items-center">
         <div className="flex-1 pl-5 lg:mt-0 ">
           <h1 className="flex justify-center text-4xl font-medium lg:text-[2.5rem]">
@@ -26,11 +29,14 @@ function LandingPage() {
 
           <br />
           <div className="flex justify-center mr-12 lg:mr-11">
-            <CustomButton
-              disabled={false}
-              label="Pilih guru disini"
-              className="w-40 h-10 bg-component text-white hover:bg-navy border-none rounded-full lg:w-[12rem]"
-            />
+            <Link to={"/home"}>
+              <CustomBotton
+                id="btn-landing-page"
+                disabled={false}
+                label="Pilih guru disini"
+                className="w-40 h-10 bg-component text-white hover:bg-navy border-none rounded-full lg:w-[12rem]"
+              />
+            </Link>
           </div>
         </div>
         <div className="flex-1 h-full items-center pt-10 lg:p-0 ">
@@ -42,15 +48,73 @@ function LandingPage() {
           />
         </div>
       </div>
-      <div className="h-[5rem]  pl-[13rem] pt-20">
+      <div className="h-[8rem] lg:h-[5rem]  lg:pl-[13rem] pt-20 text-center lg:text-start">
         <h1 className="text-4xl font-medium">
           Belajar dengan
           <br />
           guru ulasan terbaik
         </h1>
       </div>
-      <div className="flex h-[35rem] justify-evenly items-center">card</div>
-      <div className="h-[8rem] lg:h-[0rem] bg-white lg:pl-[13rem] lg:pt-20 pt-8 pl-8 text-center lg:text-start">
+      <div className="flex flex-col lg:flex-row pt-20 gap-[3rem] pb-12 lg:pb-0 lg:h-[35rem] justify-center lg:gap-28 items-center">
+        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
+          <p className="leading-8 font-semibold text-lg pt-6">
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple
+            yang diajarkan (ULASAN)
+          </p>
+          <br />
+          <p className="font-semibold">Ahmad Bambang</p>
+          <div className="flex flex-row justify-between ">
+            <div className="flex">
+              <AiFillStar className="text-component w-5 h-5" />
+              <p className="font-semibold pl-1">5</p>
+            </div>
+            <img
+              src={avatar2}
+              className="w-[3rem] justify-self-end"
+              alt="avatar"
+            />
+          </div>
+        </div>
+        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
+          <p className="leading-8 font-semibold text-lg pt-6">
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple
+            yang diajarkan (ULASAN)
+          </p>
+          <br />
+          <p className="font-semibold">Ahmad Bambang</p>
+          <div className="flex flex-row justify-between ">
+            <div className="flex">
+              <AiFillStar className="text-component w-5 h-5" />
+              <p className="font-semibold pl-1">5</p>
+            </div>
+            <img
+              src={avatar2}
+              className="w-[3rem] justify-self-end"
+              alt="avatar"
+            />
+          </div>
+        </div>
+        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
+          <p className="leading-8 font-semibold text-lg pt-6">
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple
+            yang diajarkan (ULASAN)
+          </p>
+          <br />
+          <p className="font-semibold">Ahmad Bambang</p>
+          <div className="flex flex-row justify-between ">
+            <div className="flex">
+              <AiFillStar className="text-component w-5 h-5" />
+              <p className="font-semibold pl-1">5</p>
+            </div>
+            <img
+              src={avatar2}
+              className="w-[3rem] justify-self-end"
+              alt="avatar"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="h-[8rem] lg:h-[0rem] bg-white lg:pl-[13rem] lg:pt-20 pt-8 pl-2 text-center lg:text-start">
         <h1 className="text-4xl font-medium">
           Dengan cara yang
           <br />
@@ -59,7 +123,9 @@ function LandingPage() {
       </div>
       <div className="flex flex-col lg:flex-row w-full  bg-white h-[35rem] lg:h-[30rem] justify-evenly lg:items-center ">
         <div className="pl-8 lg:pl-0">
-          <h1 className="text-2xl font-medium">1. Pilih guru anda</h1>
+          <h1 className="text-2xl font-medium">
+            1. Pilih guru anda
+          </h1>
           <br />
           <p className="lg:text-xl">
             cek profile guru dan
@@ -71,12 +137,22 @@ function LandingPage() {
             anda
           </p>
         </div>
-        <img className="w-[30rem]" src={Selecting} alt="Pilih guru anda" />
+        <img
+          className="w-[30rem]"
+          src={Selecting}
+          alt="Pilih guru anda"
+        />
       </div>
       <div className="flex flex-col-reverse lg:flex-row w-full h-[40rem] lg:h-[35rem] pt-20 lg:pt-0 justify-evenly items-center">
-        <img className="w-[30rem]" src={Request} alt="Pilih guru anda" />
+        <img
+          className="w-[30rem]"
+          src={Request}
+          alt="Pilih guru anda"
+        />
         <div>
-          <h1 className="text-2xl font-medium">2. Ajukan Permintaan belajar</h1>
+          <h1 className="text-2xl font-medium">
+            2. Ajukan Permintaan belajar
+          </h1>
           <br />
           <p className="lg:text-xl">
             Para guru akan
@@ -105,7 +181,11 @@ function LandingPage() {
             guru yang Anda pilih
           </p>
         </div>
-        <img className="w-[30rem]" src={Calender} alt="Pilih guru anda" />
+        <img
+          className="w-[30rem]"
+          src={Calender}
+          alt="Pilih guru anda"
+        />
       </div>
       <Footer />
     </Layout>

@@ -42,7 +42,9 @@ const ProfileTeacher = () => {
 
               <div className="flex gap-1 mb-4">
                 <MdStars className="w-5 h-5 text-[#F66B0E]" />
-                <p className="text-[14px]">{`${5} (6 ulasan)`} </p>
+                <p className="text-[14px]">
+                  {`${5} (6 ulasan)`}{" "}
+                </p>
               </div>
               <p className="font-semibold lg:text-[16px] text-[14px] pr-8 mb-5">
                 Tarif Belajar/Jam{" "}
@@ -50,13 +52,19 @@ const ProfileTeacher = () => {
               </p>
               <CustomButton
                 className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
-                icon={<RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />}
+                icon={
+                  <RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />
+                }
                 label={"Cek Jadwal"}
               />
 
-              <p className="text-zinc-800 mt-6">Mata Pelajaran dan Tingkatan</p>
+              <p className="text-zinc-800 mt-6">
+                Mata Pelajaran dan Tingkatan
+              </p>
               <div className="flex text-[#637381] gap-8 text-[14px] mt-2">
-                <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">Matematika</p>
+                <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">
+                  Matematika
+                </p>
                 <p className="py-1 px-2 bg-[#b3b3b3]  rounded-lg">
                   Sekolah Dasar
                 </p>
@@ -76,8 +84,9 @@ const ProfileTeacher = () => {
               Bachelor Degree of Mathematics
             </p>
             <p className="text-[14px] text-zinc-500">
-              CumLaude Grade (GPA: 3.87 out of 4) || Curriculum: IB, IGCSE, O
-              Level, AS/A Level, AP, SAT, ACT and National Curriculum.
+              CumLaude Grade (GPA: 3.87 out of 4) || Curriculum:
+              IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and
+              National Curriculum.
             </p>
             <p className="font-bold text-[28px] text-zinc-900 mt-10">
               Tentang John Doe
@@ -85,15 +94,17 @@ const ProfileTeacher = () => {
             <ul className="lg:text-[16px] text-[15px]">
               <li className="flex gap-4 mt-8">
                 <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-                Bachelor's Degree with more than 10 years experienced teaching
-                math from primary, secondary, until senior.
+                Bachelor's Degree with more than 10 years
+                experienced teaching math from primary,
+                secondary, until senior.
               </li>
               <li className="flex gap-4 mt-8 mb-5">
                 <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-                Experienced Teaching All Math Levels (AP Calculus, Pre-Algebra,
-                Algebra 1, Algebra 2, Geometry, Trigonometry, SAT, ACT, etc) for
-                any curriculums such as Advanced Placement, IB (HL and SL),
-                Cambridge (IGCSE, O Level and A Level).
+                Experienced Teaching All Math Levels (AP
+                Calculus, Pre-Algebra, Algebra 1, Algebra 2,
+                Geometry, Trigonometry, SAT, ACT, etc) for any
+                curriculums such as Advanced Placement, IB (HL
+                and SL), Cambridge (IGCSE, O Level and A Level).
               </li>
               <label id="modal-profil-guru" htmlFor="my-modal-5">
                 Baca Selengkapnya ........
@@ -184,9 +195,10 @@ const ProfileTeacher = () => {
                 </div>
               </div>
               <p className="mt-4 lg:text-[16px] text-[15px]">
-                Sempurna! Thanks to him, my daughter test score improve a lot
-                now. I recommend to all parents who wants to boost their child
-                understanding and confidence in Math
+                Sempurna! Thanks to him, my daughter test score
+                improve a lot now. I recommend to all parents who
+                wants to boost their child understanding and
+                confidence in Math
               </p>
             </div>
             <div className="bg-white rounded-xl py-4 px-10 text-[16px]">
@@ -202,9 +214,10 @@ const ProfileTeacher = () => {
                 </div>
               </div>
               <p className="mt-4 lg:text-[16px] text-[15px]">
-                Sempurna! Thanks to him, my daughter test score improve a lot
-                now. I recommend to all parents who wants to boost their child
-                understanding and confidence in Math
+                Sempurna! Thanks to him, my daughter test score
+                improve a lot now. I recommend to all parents who
+                wants to boost their child understanding and
+                confidence in Math
               </p>
             </div>
             <p className="mt-5">Lihat lebih banyak ......</p>
