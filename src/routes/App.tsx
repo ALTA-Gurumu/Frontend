@@ -14,6 +14,9 @@ import Login from "../pages/auth/Login";
 import ProfileStudent from "../pages/ProfileStudent";
 import Rating from "../pages/Rating";
 import EditStudent from "../pages/EditStudent";
+import HalamanSesiGuru from "../pages/HalamanSesiGuru";
+import HalamanSesiMurid from "../pages/HalamanSesiMurid";
+import PaymentDetails from "../pages/paymentDetails";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -49,6 +52,18 @@ function App() {
     {
       path: "/editStudent",
       element: <EditStudent />,
+    },
+    {
+      path: "/HalamanSesiGuru",
+      element: <HalamanSesiGuru />,
+    },
+    {
+      path: "/HalamanSesiMurid",
+      element: <HalamanSesiMurid />,
+    },
+    {
+      path: "paymentDetails",
+      element: <PaymentDetails />,
     },
     // {
     //   path: "/detail/:id_item",

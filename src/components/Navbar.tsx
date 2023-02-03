@@ -11,7 +11,14 @@ function Navbar() {
       </div>
       <div className="flex-none gap-2">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <IoNotificationsOutline className="text-primary w-7 h-7" />
+          <Link to="/HalamanSesiGuru">
+            <IoNotificationsOutline className="text-primary w-7 h-7" />
+          </Link>
+        </label>
+        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+          <Link to="/HalamanSesiMurid">
+            <IoNotificationsOutline className="text-primary w-7 h-7" />
+          </Link>
         </label>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -28,7 +35,7 @@ function Navbar() {
               <Link to="/login">Masuk</Link>
             </li>
             <li>
-              <a>Daftar</a>
+              <Link to="/register">Daftar</Link>
             </li>
           </ul>
         </div>
