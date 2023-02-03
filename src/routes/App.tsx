@@ -19,6 +19,7 @@ import Reservasi from "../pages/Reservasi";
 import Login from "../pages/auth/Login";
 import Beranda from "../pages/Home";
 import Rating from "../pages/Rating";
+import Reservasi from "../pages/Reservasi";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);

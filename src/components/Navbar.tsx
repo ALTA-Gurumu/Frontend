@@ -47,10 +47,14 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to="/login">Masuk</Link>
+              <Link to={"/login"}>
+                <a>Masuk</a>
+              </Link>
             </li>
             <li>
-              <Link to="/register">Daftar</Link>
+              <Link to={"/register"}>
+                <a>Daftar</a>
+              </Link>
             </li>
           </ul>
         </div>

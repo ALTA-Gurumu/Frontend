@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { Tabs, Tab, Classes } from "@blueprintjs/core";
 
-import InputProfil from "../components/inputProfil";
-import Button from "../components/Button";
+import { CustomInput } from "../components/CustomInput";
+import CustomBotton from "../components/CustomButton";
 import Profil2 from "../assets/profil2.webp";
 
 import { FaRegEdit } from "react-icons/fa";
@@ -151,7 +151,7 @@ function Reservasi() {
           <p className="font-semibold">Alamat</p>
           <div className="border w-full h-12 border-[#424242] rounded-lg flex">
             <MdLocationOn className="text-[#424242] self-center w-7 h-7" />
-            <InputProfil
+            <CustomInput
               id="input-alamat"
               type={"text"}
               placeholder="Sukabumi, Jawa Barat"
@@ -162,7 +162,7 @@ function Reservasi() {
           <p className="font-semibold">No.Hp</p>
           <div className="border w-full h-12 border-[#424242] rounded-lg flex">
             <MdPhoneIphone className="text-[#424242] self-center w-7 h-7" />
-            <InputProfil
+            <CustomInput
               id="input-no-hp"
               type={"number"}
               placeholder="08122334345"
@@ -171,7 +171,7 @@ function Reservasi() {
             />
           </div>
           <br />
-          <Button
+          <CustomBotton
             id="btn-pembayaran"
             label="Lanjut pembayaran"
             className="bg-black text-white w-full h-10 text-base rounded-xl"
