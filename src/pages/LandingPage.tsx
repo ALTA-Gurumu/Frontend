@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 import { ButtonLanding } from "../components/ButtonLanding";
@@ -12,7 +13,6 @@ function LandingPage() {
   return (
     <Layout>
       <Navbar />
-      {/* <div className="flex justify-evenly items-center h-[35rem] bg-white "> */}
       <div className="flex flex-col-reverse lg:flex-row w-full justify-center min-h-screen bg-white items-center">
         <div className="flex-1 pl-5 lg:mt-0 ">
           <h1 className="flex justify-center text-4xl font-medium lg:text-[2.5rem]">
@@ -25,11 +25,13 @@ function LandingPage() {
 
           <br />
           <div className="flex justify-center mr-12 lg:mr-11">
-            <ButtonLanding
-              disabled={false}
-              label="Pilih guru disini"
-              className="w-40 h-10 lg:w-[12rem]"
-            />
+            <Link to={"/home"}>
+              <ButtonLanding
+                disabled={false}
+                label="Pilih guru disini"
+                className="w-40 h-10 lg:w-[12rem]"
+              />
+            </Link>
           </div>
         </div>
         <div className="flex-1 h-full items-center pt-10 lg:p-0 ">

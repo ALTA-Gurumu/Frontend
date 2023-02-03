@@ -23,12 +23,11 @@ function Rating() {
             <br />
             <form>
               <div className="w-[20rem] h-20 flex rounded-xl justify-center border border-[#424242] ">
-                <InputProfil
-                  id="input-ulasan"
-                  type={"text"}
-                  placeholder="ulasan"
-                  className=" h-auto pl-3 rounded-xl w-full"
-                ></InputProfil>
+                <textarea
+                  maxLength={300}
+                  className="w-full h-full rounded-xl p-3"
+                  placeholder="Ulasan..."
+                />
               </div>
               <p className="text-lg font-semibold flex pt-4">
                 Penilaian

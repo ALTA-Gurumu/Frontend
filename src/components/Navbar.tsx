@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { IoNotificationsOutline } from "react-icons/io5";
 
@@ -6,9 +7,11 @@ function Navbar() {
   return (
     <div className="navbar bg-card">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-primary text-xl">
-          GuruMu
-        </a>
+        <Link to={"/"}>
+          <a className="btn btn-ghost normal-case text-primary text-xl">
+            GuruMu
+          </a>
+        </Link>
       </div>
       <div className="flex-none gap-2">
         <label
@@ -29,13 +32,19 @@ function Navbar() {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Profil</a>
+              <Link to={"/profile-student"}>
+                <a>Profil</a>
+              </Link>
             </li>
             <li>
-              <a>Masuk</a>
+              <Link to={"/login"}>
+                <a>Masuk</a>
+              </Link>
             </li>
             <li>
-              <a>Daftar</a>
+              <Link to={"/register"}>
+                <a>Daftar</a>
+              </Link>
             </li>
           </ul>
         </div>

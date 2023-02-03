@@ -13,6 +13,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import ProfileStudent from "../pages/ProfileStudent";
 import Rating from "../pages/Rating";
+import Reservasi from "../pages/Reservasi";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -49,10 +50,10 @@ function App() {
     //   path: "/detail/:id_item",
     //   element: <DetailItems />,
     // },
-    // {
-    //   path: "/cart",
-    //   element: checkToken ? <Cart /> : <Login />,
-    // },
+    {
+      path: "/reservasi",
+      element: <Reservasi />,
+    },
     // {
     //   path: "/checkout",
     //   element: checkToken ? <Checkout /> : <Login />,
