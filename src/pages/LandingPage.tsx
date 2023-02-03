@@ -1,12 +1,17 @@
 import React from "react";
+import { AiFillStar } from "react-icons/ai";
+import { Link } from "react-router-dom";
+
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
+import { Footer } from "../components/Footer";
 import Button from "../components/Button";
+
 import image1 from "../assets/image1.svg";
 import Selecting from "../assets/selecting.svg";
 import Request from "../assets/request.svg";
 import Calender from "../assets/calender.svg";
-import { Footer } from "../components/Footer";
+import avatar2 from "../assets/avatar2.webp";
 
 function LandingPage() {
   return (
@@ -24,11 +29,14 @@ function LandingPage() {
 
           <br />
           <div className="flex justify-center mr-12 lg:mr-11">
-            <Button
-              disabled={false}
-              label="Pilih guru disini"
-              className="w-40 h-10 bg-component text-white hover:bg-navy border-none rounded-full lg:w-[12rem]"
-            />
+            <Link to={"/home"}>
+              <Button
+                id="btn-landing-page"
+                disabled={false}
+                label="Pilih guru disini"
+                className="w-40 h-10 bg-component text-white hover:bg-navy border-none rounded-full lg:w-[12rem]"
+              />
+            </Link>
           </div>
         </div>
         <div className="flex-1 h-full items-center pt-10 lg:p-0 ">
@@ -40,17 +48,73 @@ function LandingPage() {
           />
         </div>
       </div>
-      <div className="h-[5rem]  pl-[13rem] pt-20">
+      <div className="h-[8rem] lg:h-[5rem]  lg:pl-[13rem] pt-20 text-center lg:text-start">
         <h1 className="text-4xl font-medium">
           Belajar dengan
           <br />
           guru ulasan terbaik
         </h1>
       </div>
-      <div className="flex h-[35rem] justify-evenly items-center">
-        card
+      <div className="flex flex-col lg:flex-row pt-20 gap-[3rem] pb-12 lg:pb-0 lg:h-[35rem] justify-center lg:gap-28 items-center">
+        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
+          <p className="leading-8 font-semibold text-lg pt-6">
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple
+            yang diajarkan (ULASAN)
+          </p>
+          <br />
+          <p className="font-semibold">Ahmad Bambang</p>
+          <div className="flex flex-row justify-between ">
+            <div className="flex">
+              <AiFillStar className="text-component w-5 h-5" />
+              <p className="font-semibold pl-1">5</p>
+            </div>
+            <img
+              src={avatar2}
+              className="w-[3rem] justify-self-end"
+              alt="avatar"
+            />
+          </div>
+        </div>
+        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
+          <p className="leading-8 font-semibold text-lg pt-6">
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple
+            yang diajarkan (ULASAN)
+          </p>
+          <br />
+          <p className="font-semibold">Ahmad Bambang</p>
+          <div className="flex flex-row justify-between ">
+            <div className="flex">
+              <AiFillStar className="text-component w-5 h-5" />
+              <p className="font-semibold pl-1">5</p>
+            </div>
+            <img
+              src={avatar2}
+              className="w-[3rem] justify-self-end"
+              alt="avatar"
+            />
+          </div>
+        </div>
+        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
+          <p className="leading-8 font-semibold text-lg pt-6">
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple
+            yang diajarkan (ULASAN)
+          </p>
+          <br />
+          <p className="font-semibold">Ahmad Bambang</p>
+          <div className="flex flex-row justify-between ">
+            <div className="flex">
+              <AiFillStar className="text-component w-5 h-5" />
+              <p className="font-semibold pl-1">5</p>
+            </div>
+            <img
+              src={avatar2}
+              className="w-[3rem] justify-self-end"
+              alt="avatar"
+            />
+          </div>
+        </div>
       </div>
-      <div className="h-[8rem] lg:h-[0rem] bg-white lg:pl-[13rem] lg:pt-20 pt-8 pl-8 text-center lg:text-start">
+      <div className="h-[8rem] lg:h-[0rem] bg-white lg:pl-[13rem] lg:pt-20 pt-8 pl-2 text-center lg:text-start">
         <h1 className="text-4xl font-medium">
           Dengan cara yang
           <br />
