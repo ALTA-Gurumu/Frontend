@@ -79,11 +79,11 @@ function App() {
     //   element: checkToken ? <Checkout /> : <Login />,
     // },
     {
-      path: "/profile-student",
+      path: "/profileStudent",
       element: <ProfileStudent />,
     },
     {
-      path: "/profile-teacher",
+      path: "/profileTeacher",
       element: <ProfileTeacher />,
     },
     // {

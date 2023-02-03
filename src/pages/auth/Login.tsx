@@ -1,7 +1,7 @@
 import Layout from "../../components/Layout";
 import imgLogin from "../../assets/login-img.webp";
 
-import CustomInput from "../../components/CustomInput";
+import { CustomInput } from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { Footer } from "../../components/Footer";
 import { Link } from "react-router-dom";

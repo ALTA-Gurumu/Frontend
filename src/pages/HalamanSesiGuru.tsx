@@ -1,17 +1,31 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { Tabs, Tab, Classes } from "@blueprintjs/core";
+
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
 import CustomButton from "../components/CustomButton";
 import { Footer } from "../components/Footer";
 
 function HalamanSesiGuru() {
+  const [status, setStatus] = useState<string>("Belum Selesai");
+  const [disable, setDisable] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (status === "Selesai") {
+      setDisable(true);
+    } else {
+      setDisable(true);
+    }
+  }, [status]);
+  console.log(status);
+
   return (
     <>
       <Layout>
         <Navbar />
-        <div className="bg-white w-9/12 rounded-2xl lg:h-[34rem] mt-32 mb-32 mx-auto">
+        <div className="bg-white w-9/12 rounded-2xl lg:h-[34rem] mt-32 mb-32 mx-auto shadow-xl">
           <h1>
             <div className="h-full">
               <Tabs
@@ -28,16 +42,23 @@ function HalamanSesiGuru() {
                       <table className="table w-full mx-auto">
                         <thead>
                           <tr>
-                            <th></th>
-                            <th>Nama Murid</th>
-
-                            <th>Jam</th>
-                            <th>Hari & Tanggal</th>
-                            <th>Link Google Meet</th>
-                            <th>Status</th>
+                            <th className="text-[18px] text-zinc-700">NO</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Nama Murid
+                            </th>
+                            <th className="text-[18px] text-zinc-700">Jam</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Hari & Tanggal
+                            </th>
+                            <th className="text-[18px] text-zinc-700">
+                              Link Google Meet
+                            </th>
+                            <th className="text-[18px] text-zinc-700">
+                              Status
+                            </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="text-[16px] font-normal">
                           <tr>
                             <th>1</th>
                             <td>Danu</td>
@@ -69,17 +90,26 @@ function HalamanSesiGuru() {
                       <table className="table w-full mx-auto">
                         <thead>
                           <tr>
-                            <th></th>
-                            <th>Nama Murid</th>
-
-                            <th>Jam</th>
-                            <th>Hari & Tanggal</th>
-                            <th>Link Google Meet</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th className="text-[18px] text-zinc-700">No</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Nama Murid
+                            </th>
+                            <th className="text-[18px] text-zinc-700">Jam</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Hari & Tanggal
+                            </th>
+                            <th className="text-[18px] text-zinc-700">
+                              Link Google Meet
+                            </th>
+                            <th className="text-[18px] text-zinc-700">
+                              Status
+                            </th>
+                            <th className="text-[18px] text-zinc-700">
+                              Action
+                            </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="text-[16px] font-normal">
                           <tr>
                             <th>1</th>
                             <td>Danu</td>
@@ -92,6 +122,7 @@ function HalamanSesiGuru() {
                                 id="button-action-history"
                                 className="py-2 px-6 text-md font-normal rounded-xl hover:bg-orange-600 bg-orange-500 text-white"
                                 label="Submit"
+                                loading={disable}
                               />
                             </td>
                           </tr>
@@ -125,13 +156,14 @@ function HalamanSesiGuru() {
                       <table className="table w-full mx-auto">
                         <thead>
                           <tr>
-                            <th></th>
-
-                            <th>Hari & Tanggal</th>
-                            <th>Jam</th>
+                            <th className="text-[18px] text-zinc-700">No</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Hari & Tanggal
+                            </th>
+                            <th className="text-[18px] text-zinc-700">Jam</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="text-[16px] font-normal">
                           <tr>
                             <th>1</th>
                             <td>Senin, 20 Januari 2023</td>
