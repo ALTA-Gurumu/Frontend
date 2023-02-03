@@ -1,6 +1,6 @@
-import Footer from "../components/Footer";
+import { Footer } from "../components/Footer";
 import Layout from "../components/Layout";
-import Navbar from "../components/Navbar";
+import { Navbar } from "../components/Navbar";
 
 import { RiMessage2Fill } from "react-icons/ri";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -10,7 +10,6 @@ import { FaLaptop } from "react-icons/fa";
 import { MdStars } from "react-icons/md";
 
 import Profil2 from "../assets/profil2.webp";
-import Card from "../components/card";
 import Button from "../components/Button";
 
 const ProfileTeacher = () => {

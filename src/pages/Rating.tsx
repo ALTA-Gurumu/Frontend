@@ -4,7 +4,7 @@ import { Navbar } from "../components/Navbar";
 import ulasan from "../assets/ulasan.svg";
 import InputProfil from "../components/inputProfil";
 import { AiFillStar } from "react-icons/ai";
-import { ButtonLanding } from "../components/ButtonLanding";
+import Button from "../components/Button";
 
 function Rating() {
   return (
@@ -46,7 +46,7 @@ function Rating() {
                 ></InputProfil>
               </div>
               <div className="flex justify-center lg:justify-end pt-16">
-                <ButtonLanding label="Nilai" className="w-40 h-8 items-end" />
+                <Button label="Nilai" className="w-40 h-8 items-end" />
               </div>
             </form>
           </div>
