@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import Button from "../components/Button";
+import CustomBotton from "../components/CustomButton";
 
 import image1 from "../assets/image1.svg";
 import Selecting from "../assets/selecting.svg";
@@ -30,7 +30,7 @@ function LandingPage() {
           <br />
           <div className="flex justify-center mr-12 lg:mr-11">
             <Link to={"/home"}>
-              <Button
+              <CustomBotton
                 id="btn-landing-page"
                 disabled={false}
                 label="Pilih guru disini"

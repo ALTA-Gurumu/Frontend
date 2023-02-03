@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
+import { CustomInput } from "../components/CustomInput";
 import Layout from "../components/Layout";
 import avatar2 from "../assets/avatar2.webp";
 import { Footer } from "../components/Footer";

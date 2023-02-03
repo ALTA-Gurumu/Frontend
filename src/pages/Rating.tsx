@@ -2,9 +2,9 @@ import React from "react";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
 import ulasan from "../assets/ulasan.svg";
-import InputProfil from "../components/inputProfil";
 import { AiFillStar } from "react-icons/ai";
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
+import { CustomInput } from "../components/CustomInput";
 
 function Rating() {
   return (
@@ -37,19 +37,19 @@ function Rating() {
               </p>
               <br />
               <div className="w-[20rem] h-20 flex rounded-xl justify-center border border-[#424242] ">
-                <InputProfil
+                <CustomInput
                   id="input-ulasan"
                   type={"number"}
                   max={"5"}
                   min={"1"}
                   placeholder="1 sampai 5 (angka)"
                   className=" h-auto px-3 rounded-xl w-full"
-                ></InputProfil>
+                ></CustomInput>
               </div>
               <div className="flex justify-center lg:justify-end pt-16">
-                <Button
+                <CustomButton
                   label="Nilai"
-                  className="w-40 h-8 items-end bg-component  text-white rounded-lg"
+                  className="w-40 h-8 items-end"
                 />
               </div>
             </form>
