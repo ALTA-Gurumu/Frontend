@@ -102,7 +102,7 @@ const ProfileTeacher = () => {
 
             <input id="my-modal-5" type="checkbox" className="modal-toggle" />
             <div className="modal">
-              <div className="modal-box w-8/12 max-w-full shadow-xl">
+              <div className="modal-box lg:w-8/12 w-10/12 max-w-full shadow-xl">
                 <label
                   id="modal-profil-guru"
                   htmlFor="my-modal-5"
@@ -111,7 +111,7 @@ const ProfileTeacher = () => {
                   <IoMdCloseCircleOutline className="text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7" />
                 </label>
 
-                <p className="font-bold text-center text-[28px] text-zinc-900 pb-2 -mx-2 border-b-2 border-zinc-500 ">
+                <p className="font-bold text-center lg:text-[28px] text-[24px] text-zinc-900 pb-2 lg:mt-0 mt-5 -mx-2 border-b-2 border-zinc-500 ">
                   Tentang John Doe
                 </p>
                 <ul className="lg:text-[16px] text-[15px]">
