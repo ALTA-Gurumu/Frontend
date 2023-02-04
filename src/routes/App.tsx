@@ -20,8 +20,9 @@ import Rating from "../pages/Rating";
 import EditStudent from "../pages/EditStudent";
 import { HalamanSesiGuru } from "../pages/HistoryPage";
 import { HalamanSesiMurid } from "../pages/HistoryPage";
-
 import PaymentDetails from "../pages/paymentDetails";
+import Reservasi from "../pages/Reservasi";
+import EditTeacher from "../pages/EditTeacher";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -54,10 +55,10 @@ function App() {
       path: "/ulasan/:guru_id",
       element: <Rating />,
     },
-    {
-      path: "/editStudent",
-      element: <EditStudent />,
-    },
+    // {
+    //   path: "/editStudent",
+    //   element: <EditStudent />,
+    // },
     {
       path: "/HalamanSesiGuru",
       element: <HalamanSesiGuru />,
@@ -70,20 +71,16 @@ function App() {
       path: "paymentDetails",
       element: <PaymentDetails />,
     },
-    // {
-    //   path: "/detail/:id_item",
-    //   element: <DetailItems />,
-    // },
-    // {
-    //   path: "/cart",
-    //   element: checkToken ? <Cart /> : <Login />,
-    // },
-    // {
-    //   path: "/checkout",
-    //   element: checkToken ? <Checkout /> : <Login />,
-    // },
     {
-      path: "/profile-student",
+      path: "/editTeacher",
+      element: <EditTeacher />,
+    },
+    {
+      path: "/reservasi",
+      element: <Reservasi />,
+    },
+    {
+      path: "/profileStudent",
       element: <ProfileStudent />,
     },
     {

@@ -1,7 +1,7 @@
 import Layout from "../../components/Layout";
 import imgLogin from "../../assets/login-img.webp";
 
-import CustomInput from "../../components/CustomInput";
+import { CustomInput } from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { Footer } from "../../components/Footer";
 import { Link } from "react-router-dom";
@@ -9,27 +9,6 @@ import { LoginNavbar } from "../../components/Navbar";
 import { useState } from "react";
 
 const Login = () => {
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [isDisabled, setIsDisabled] = useState(false);
-
-  const onChangeEmail = (e: any) => {
-    setEmailInput((prevState) => e.target.value);
-    if (e.target.value.trim().length < 1) {
-      setIsDisabled(true);
-    } else {
-      setIsDisabled(false);
-    }
-  };
-
-  const onChangePassword = (e: any) => {
-    setPasswordInput((prevState) => e.target.value);
-    if (e.target.value.trim().length < 1) {
-      setIsDisabled(true);
-    } else {
-      setIsDisabled(false);
-    }
-  };
   return (
     <>
       <Layout>
@@ -61,7 +40,6 @@ const Login = () => {
                   <CustomInput
                     id="input-email"
                     type="text"
-                    onChange={onChangeEmail}
                     placeholder="@johndoe@gmail.com"
                     className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   />
@@ -75,7 +53,6 @@ const Login = () => {
                     id="input-password"
                     type="password"
                     placeholder="*********"
-                    onChange={onChangePassword}
                     className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   />
                   <CustomButton
@@ -83,19 +60,7 @@ const Login = () => {
                     label="Masuk"
                     className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600 font-poppins"
                   />
-                  {}
-                  {/* The button to open modal */}
-                  {emailInput === "" || passwordInput === "" ? (
-                    <label htmlFor="my-modal" className="btn-disabled">
-                      open modal
-                    </label>
-                  ) : (
-                    <label htmlFor="my-modal" className="btn">
-                      open modal
-                    </label>
-                  )}
 
-                  {/* Put this part before </body> tag */}
                   <input
                     type="checkbox"
                     id="my-modal"

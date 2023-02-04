@@ -2,9 +2,9 @@ import React from "react";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
 import ulasan from "../assets/ulasan.svg";
-import CustomInput from "../components/CustomInput";
 import { AiFillStar } from "react-icons/ai";
 import CustomButton from "../components/CustomButton";
+import { CustomInput } from "../components/CustomInput";
 
 function Rating() {
   return (
@@ -21,12 +21,12 @@ function Rating() {
             <br />
             <form>
               <div className="w-[20rem] h-20 flex rounded-xl justify-center border border-[#424242] ">
-                <CustomInput
+                <textarea
                   id="input-ulasan"
-                  type={"text"}
-                  placeholder="ulasan"
-                  className=" h-auto pl-3 rounded-xl w-full"
-                ></CustomInput>
+                  maxLength={300}
+                  className="w-full h-full rounded-xl p-3"
+                  placeholder="Ulasan..."
+                />
               </div>
               <p className="text-lg font-semibold flex pt-4">
                 Penilaian
@@ -37,7 +37,7 @@ function Rating() {
               <br />
               <div className="w-[20rem] h-20 flex rounded-xl justify-center border border-[#424242] ">
                 <CustomInput
-                  id="input-ulasan"
+                  id="input-penilaian"
                   type={"number"}
                   max={"5"}
                   min={"1"}

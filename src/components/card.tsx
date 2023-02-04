@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { FC } from "react";
 import "../styles/app.css";
 
@@ -23,11 +24,19 @@ const Card: FC<CardProps> = ({
   deskripsi,
   tarif,
 }) => {
+  const navigate = useNavigate();
+
+  function onCLickReservasi() {
+    navigate(`/profileTeacher`);
+  }
+
   return (
     <div className="card card-compact bg-base-100 shadow-xl">
       <figure
+        id="link-reservasi"
         className="relative w-full h-80 bg-cover bg-no-repeat"
         style={{ backgroundImage: `URL(${image})` }}
+        onClick={() => onCLickReservasi()}
       >
         <div className="textShadow absolute bottom-0 left-0 pl-4 pb-2 drop-shadow-2xl">
           <p className="text-[36px] text-[#EFEFEF] font-semibold drop-shadow-lg">
@@ -48,6 +57,7 @@ const Card: FC<CardProps> = ({
             id="btn-tarifperjam"
             className="h-10 px-2 rounded-2xl bg-[#205375] text-white shadow-lg hover:bg-[#2f6991]"
             label="Tarif Belajar : Rp 50000/jam"
+            onClick={() => onCLickReservasi()}
           />
         </div>
       </div>

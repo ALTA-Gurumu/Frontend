@@ -1,7 +1,7 @@
 import Layout from "../components/Layout";
 import avatarEdit from "../assets/avataredit.svg";
 
-import CustomInput from "../components/CustomInput";
+import { CustomInput } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import { Footer } from "../components/Footer";
 import { Link } from "react-router-dom";

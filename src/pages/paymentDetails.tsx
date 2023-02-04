@@ -6,7 +6,7 @@ import bca from "../assets/Logo-Bank-BCA-1 4.svg";
 import permata from "../assets/permata bank 4.svg";
 import qris from "../assets/qris logo 2.svg";
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
+import { CustomInput } from "../components/CustomInput";
 
 interface ModalProps {
   id: string;
@@ -26,6 +26,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
             </label>
 
             {/* Put this part before </body> tag */}
+
             <CustomInput
               type="checkbox"
               id="my-modal-3"

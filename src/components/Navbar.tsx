@@ -1,13 +1,19 @@
-import React from "react";
-import { FaRegUser } from "react-icons/fa";
-import { IoNotificationsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import React from "react";
+
+import { IoNotificationsOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
 
 function Navbar() {
   return (
     <div className="navbar bg-card">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-primary text-xl">GuruMu</a>
+        <Link
+          to={"/"}
+          className="btn btn-ghost normal-case text-primary text-xl"
+        >
+          GuruMu
+        </Link>
       </div>
       <div className="flex-none gap-2">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -29,19 +35,13 @@ function Navbar() {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link id="link-profilguru" to="/profile-teacher">
-                Profil
-              </Link>
+              <a>Profil</a>
             </li>
             <li>
-              <Link id="link-login" to="/login">
-                Masuk
-              </Link>
+              <Link to="/login">Masuk</Link>
             </li>
             <li>
-              <Link id="link-register" to="/register">
-                Daftar
-              </Link>
+              <Link to="/register">Daftar</Link>
             </li>
           </ul>
         </div>
@@ -84,12 +84,16 @@ const LoginNavbar = () => {
                 >
                   Daftar
                 </Link>
-                <a className="btn border-none text-white font-semibold mt-2 font-poppins bg-component">
+                <a
+                  className="btn border-none text-white font-semibold mt-2"
+                  style={{ backgroundColor: "#F66B0E", fontFamily: "Poppins" }}
+                >
                   Getting Started
                 </a>
               </li>
             </ul>
           </div>
+
           <Link
             to="/"
             className="btn btn-ghost normal-case text-xl lg:text-3xl font-bold text-component font-poppins"
@@ -105,9 +109,11 @@ const LoginNavbar = () => {
           >
             Daftar
           </Link>
+
           <Link
             to="/"
-            className="btn hidden lg:flex border-none text-white font-semibold bg-component font-poppins"
+            className="btn hidden lg:flex border-none text-white font-semibold"
+            style={{ backgroundColor: "#F66B0E", fontFamily: "Poppins" }}
           >
             Get started
           </Link>
