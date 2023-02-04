@@ -52,10 +52,10 @@ function App() {
       path: "/ulasan/:guru_id",
       element: <Rating />,
     },
-    {
-      path: "/editStudent",
-      element: <EditStudent />,
-    },
+    // {
+    //   path: "/editStudent",
+    //   element: <EditStudent />,
+    // },
     {
       path: "/HalamanSesiGuru",
       element: <HalamanSesiGuru />,
@@ -68,10 +68,10 @@ function App() {
       path: "paymentDetails",
       element: <PaymentDetails />,
     },
-    // {
-    //   path: "/editTeacher",
-    //   element: <EditTeacher />,
-    // },
+    {
+      path: "/editTeacher",
+      element: <EditTeacher />,
+    },
     {
       path: "/reservasi",
       element: <Reservasi />,
