@@ -35,13 +35,17 @@ function Navbar() {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Profil</a>
+              <Link to={"/HalamanSesiMurid"}>Profil</Link>
+            </li>
+
+            <li className="bg-component text-zinc-50">
+              <Link to={"/home"}>Home</Link>
             </li>
             <li>
-              <Link to="/login">Masuk</Link>
+              <Link to={"/login"}>Masuk</Link>
             </li>
             <li>
-              <Link to="/register">Daftar</Link>
+              <Link to={"/register"}>Daftar</Link>
             </li>
           </ul>
         </div>
@@ -86,7 +90,10 @@ const LoginNavbar = () => {
                 </Link>
                 <a
                   className="btn border-none text-white font-semibold mt-2"
-                  style={{ backgroundColor: "#F66B0E", fontFamily: "Poppins" }}
+                  style={{
+                    backgroundColor: "#F66B0E",
+                    fontFamily: "Poppins",
+                  }}
                 >
                   Getting Started
                 </a>
@@ -113,7 +120,10 @@ const LoginNavbar = () => {
           <Link
             to="/"
             className="btn hidden lg:flex border-none text-white font-semibold"
-            style={{ backgroundColor: "#F66B0E", fontFamily: "Poppins" }}
+            style={{
+              backgroundColor: "#F66B0E",
+              fontFamily: "Poppins",
+            }}
           >
             Get started
           </Link>

@@ -24,9 +24,6 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
             <label htmlFor="my-modal-3" className="">
               <img src={bca} className="w-1/12" />
             </label>
-
-            {/* Put this part before </body> tag */}
-
             <CustomInput
               type="checkbox"
               id="my-modal-3"
@@ -70,6 +67,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                   </div>
                   <div className="collapse">
                     <CustomInput id="checkbox-pembayaran" type="checkbox" />
+
                     <div className="collapse-title text-xl font-semibold mt-5">
                       My{name}
                     </div>

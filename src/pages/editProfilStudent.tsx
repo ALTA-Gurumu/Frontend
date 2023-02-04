@@ -6,6 +6,7 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsPhoneFill } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
 import CustomButton from "../components/CustomButton";
+
 import { CustomInput } from "../components/CustomInput";
 
 const EditProfilStudent = () => {
@@ -36,7 +37,6 @@ const EditProfilStudent = () => {
           <p className="items-start">Email</p>
           <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
             <MdOutlineAlternateEmail className="w-7 h-6" />
-
             <InputIcon
               id="input-email"
               placeholder="divalestipujiana@gmail.com"

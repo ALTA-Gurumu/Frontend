@@ -28,7 +28,8 @@ const Login = () => {
                   Masuk
                 </h1>
                 <p className="text-center text-base text-black font-semibold w-8/12 mx-auto mt-7 tracking-normal">
-                  Lengkapi Formulir Dibawah dan Dapatkan Akses Masuk Akun Anda
+                  Lengkapi Formulir Dibawah dan Dapatkan Akses
+                  Masuk Akun Anda
                 </p>
                 <div className="form-control w-full ">
                   <label className="label mt-5">

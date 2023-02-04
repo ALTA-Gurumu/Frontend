@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ReactComponentElement } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -115,7 +116,8 @@ const Register = () => {
                     id="input-nama-lengkap"
                     type="text"
                     placeholder="John Doe"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
+                    style={{ border: "2px solid #424242" }}
                     onChange={(e) => setNama(e.target.value)}
                   />
                   <label className="label">

@@ -31,7 +31,6 @@ function Home() {
 
           <div className="flex w-5/12 lg:py-2 py-0 pl-5 border-l-[1px] border-[#112B3C] gap-2">
             <HiOutlineLocationMarker className="w-7 h-7" />
-
             <InputIcon
               id="input-pencarianLokasi"
               className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"

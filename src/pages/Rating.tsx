@@ -46,7 +46,11 @@ function Rating() {
                 ></CustomInput>
               </div>
               <div className="flex justify-center lg:justify-end pt-16">
-                <CustomButton label="Nilai" className="w-40 h-8 items-end" />
+                <CustomButton
+                  id="btn-nilai"
+                  label="Nilai"
+                  className="w-40 h-8 items-end bg-component rounded-lg text-white"
+                />
               </div>
             </form>
           </div>

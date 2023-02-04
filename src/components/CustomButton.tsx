@@ -7,15 +7,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   onClick?: any;
 }
-
-const CustomButton = ({
+const CustomButton: FC<ButtonProps> = ({
   id,
   label,
   icon,
-  onClick,
   loading,
+  onClick,
   ...props
-}: ButtonProps) => {
+}) => {
   return (
     <button
       id={id}
