@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../components/CustomButton";
 import { CustomInput } from "../components/CustomInput";
@@ -8,6 +8,12 @@ import { Footer } from "../components/Footer";
 import { LoginNavbar } from "../components/Navbar";
 
 export default function EditTeacher() {
+  const [option, setOption] = useState();
+
+  function handleChange(event: any) {
+    setOption(event.target.value);
+  }
+
   return (
     <>
       {/* nama lengkap, peran, email, password*/}
@@ -95,15 +101,18 @@ export default function EditTeacher() {
                     </span>
                   </label>
                   <select
+                    defaultValue={"DEFAULT"}
                     className="select select-bordered w-10/12 lg:w-8/12 mx-auto bg-white"
                     style={{ border: "2px solid #424242" }}
+                    name="option"
+                    onChange={handleChange}
                   >
-                    <option disabled selected>
+                    <option value="DEFAULT" disabled>
                       Pilih Salah Satu
                     </option>
-                    <option>Sekolah Dasar</option>
-                    <option>Sekolah Menengah Pertama</option>
-                    <option>Sekolah Menengah Atas</option>
+                    <option value="1">Sekolah Dasar</option>
+                    <option value="2">Sekolah Menengah Pertama</option>
+                    <option value="3">Sekolah Menengah Atas</option>
                   </select>
                   <div className="form-control">
                     <label className="label">
@@ -120,16 +129,15 @@ export default function EditTeacher() {
                       style={{ border: "2px solid #424242" }}
                     ></textarea>
                   </div>
-                  <Link to="/editStudent">
-                    <CustomButton
-                      id="button-masuk"
-                      label="Update"
-                      className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
-                      style={{
-                        fontFamily: "Poppins",
-                      }}
-                    />
-                  </Link>
+
+                  <CustomButton
+                    id="button-masuk"
+                    label="Update"
+                    className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                    style={{
+                      fontFamily: "Poppins",
+                    }}
+                  />
                 </div>
               </div>
             </div>
