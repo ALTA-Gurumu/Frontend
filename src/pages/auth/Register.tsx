@@ -1,8 +1,5 @@
-import React, {
-  useState,
-  useEffect,
-  ReactComponentElement,
-} from "react";
+import React, { useState, useEffect, ReactComponentElement } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -48,9 +45,7 @@ const Register = () => {
   //   // console.log(option);
   // }
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setDLoading(true);
     e.preventDefault();
     const body = {
@@ -76,9 +71,7 @@ const Register = () => {
           showCancelButton: false,
         });
 
-        option === "1"
-          ? navigate("/login")
-          : navigate("/editTeacher");
+        option === "1" ? navigate("/login") : navigate("/editTeacher");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -93,7 +86,6 @@ const Register = () => {
 
   return (
     <>
-      {/* nama lengkap, peran, email, password*/}
       <Layout>
         <LoginNavbar />
         <div className="w-full lg:min-h-screen flex justify-center items-center mt-5 mb-10">
@@ -115,10 +107,7 @@ const Register = () => {
                   onSubmit={(e) => handleSubmit(e)}
                 >
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Nama Lengkap :
                     </span>
                   </label>
@@ -132,20 +121,16 @@ const Register = () => {
                     onChange={(e) => setNama(e.target.value)}
                   />
                   <label className="label">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Peran
                     </span>
                   </label>
                   <select
                     defaultValue={"DEFAULT"}
                     id="input-role"
-                    className="select select-bordered w-10/12 lg:w-8/12 mx-auto bg-white"
+                    className="select select-bordered w-10/12 lg:w-8/12 mx-auto border-label border-2 bg-white"
                     name="option"
                     onChange={handleChange}
-                    style={{ border: "2px solid #424242" }}
                   >
                     <option value="DEFAULT" disabled>
                       Pilih Salah Satu
@@ -155,27 +140,19 @@ const Register = () => {
                   </select>
 
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Email :
                     </span>
                   </label>
-
                   <CustomInput
                     id="input-email"
                     type="text"
                     placeholder="@johndoe@gmail.com"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-label border-2"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Password :
                     </span>
                   </label>
@@ -184,17 +161,13 @@ const Register = () => {
                     id="input-password"
                     type="password"
                     placeholder="*********"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <CustomButton
                     id="btn-daftar"
                     label="Daftar"
-                    className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 disabled:bg-slate-500 disabled:cursor-not-allowed text-white font-lg text-lg bg-component hover:bg-orange-600"
-                    style={{
-                      fontFamily: "Poppins",
-                    }}
+                    className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 disabled:bg-slate-500 disabled:cursor-not-allowed text-white font-lg text-lg bg-component hover:bg-orange-600 font-poppins"
                     loading={loading || disabled}
                   />
                 </form>

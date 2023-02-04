@@ -7,19 +7,22 @@ import {
 } from "react-router-dom";
 import useCookies from "react-cookie/cjs/useCookies";
 
-import HalamanSesiMurid from "../pages/HalamanSesiMurid";
-import HalamanSesiGuru from "../pages/HalamanSesiGuru";
-import PaymentDetails from "../pages/paymentDetails";
-import ProfileStudent from "../pages/ProfileStudent";
-import ProfileTeacher from "../pages/ProfilTeacher";
-import EditStudent from "../pages/EditStudent";
-import EditTeacher from "../pages/EditTeacher";
+import { ProfileStudent } from "../pages/ProfilePage";
+import { TabsContentForTeacherPage } from "../pages/ProfilePage";
+
 import LandingPage from "../pages/LandingPage";
-import Register from "../pages/auth/Register";
-import Reservasi from "../pages/Reservasi";
-import Login from "../pages/auth/Login";
+
 import Beranda from "../pages/Home";
+import Register from "../pages/auth/Register";
+import Login from "../pages/auth/Login";
+
 import Rating from "../pages/Rating";
+import EditStudent from "../pages/EditStudent";
+import { HalamanSesiGuru } from "../pages/HistoryPage";
+import { HalamanSesiMurid } from "../pages/HistoryPage";
+import PaymentDetails from "../pages/paymentDetails";
+import Reservasi from "../pages/Reservasi";
+import EditTeacher from "../pages/EditTeacher";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -81,8 +84,8 @@ function App() {
       element: <ProfileStudent />,
     },
     {
-      path: "/profileTeacher",
-      element: <ProfileTeacher />,
+      path: "/profile-teacher",
+      element: <TabsContentForTeacherPage />,
     },
     // {
     //   path: "/transactions-selling",

@@ -21,6 +21,7 @@ function Home() {
         <div className="flex gap-2 lg:w-[60vw] w-[90vw] bg-white text-[#112B3C] text-[20px] rounded-xl lg:px-6 px-2 py-2 mt-10  ">
           <div className="flex lg:w-5/12 w-7/12 lg:py-2 py-0 gap-2">
             <IoNewspaperOutline className="w-7 h-7" />
+
             <InputIcon
               id="input-pencarianMapel"
               className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"

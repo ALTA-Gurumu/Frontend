@@ -13,6 +13,10 @@ module.exports = {
         primary: "#EFEFEF",
         card: "#205375",
         component: "#F66B0E",
+        label: "#424242",
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },

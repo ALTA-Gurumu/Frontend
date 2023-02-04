@@ -35,44 +35,33 @@ const EditStudent = () => {
               <div className="flex-1 items-center -mt-15 lg:mt-10 ">
                 <div className="form-control w-full ">
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Nama Lengkap :
                     </span>
                   </label>
 
                   <CustomInput
-                    id="fullname"
+                    id="input-namalengkap"
                     type="text"
                     placeholder="@johndoe@gmail.com"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   />
 
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Handphone :
                     </span>
                   </label>
 
                   <CustomInput
-                    id="fullname"
+                    id="input-handphone"
                     type="text"
-                    placeholder="@johndoe@gmail.com"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    placeholder="082XXXX"
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   />
 
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Email :
                     </span>
                   </label>
@@ -81,14 +70,10 @@ const EditStudent = () => {
                     id="email"
                     type="text"
                     placeholder="@johndoe@gmail.com"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   />
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Password :
                     </span>
                   </label>
@@ -96,33 +81,25 @@ const EditStudent = () => {
                   <input
                     type="password"
                     placeholder="*********"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-label border-2"
                   />
 
                   <div className="form-control">
                     <label className="label">
-                      <span
-                        className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                        style={{ color: "#424242" }}
-                      >
+                      <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                         Your bio
                       </span>
                     </label>
                     <textarea
                       className="textarea textarea-bordered h-32 w-10/12 lg:w-8/12 mx-auto bg-white"
-                      placeholder="Bio"
-                      style={{ border: "2px solid #424242" }}
+                      placeholder="Bio border-2 border-label"
                     ></textarea>
                   </div>
-                  <Link to="/editStudent">
+                  <Link id="link-editstudent" to="/editStudent">
                     <CustomButton
                       id="button-masuk"
                       label="Update"
-                      className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
-                      style={{
-                        fontFamily: "Poppins",
-                      }}
+                      className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600 font-poppins"
                     />
                   </Link>
                 </div>
