@@ -24,6 +24,7 @@ function Rating() {
             <form>
               <div className="w-[20rem] h-20 flex rounded-xl justify-center border border-[#424242] ">
                 <textarea
+                  id="input-ulasan"
                   maxLength={300}
                   className="w-full h-full rounded-xl p-3"
                   placeholder="Ulasan..."
@@ -38,7 +39,7 @@ function Rating() {
               <br />
               <div className="w-[20rem] h-20 flex rounded-xl justify-center border border-[#424242] ">
                 <CustomInput
-                  id="input-ulasan"
+                  id="input-penilaian"
                   type={"number"}
                   max={"5"}
                   min={"1"}
@@ -48,8 +49,9 @@ function Rating() {
               </div>
               <div className="flex justify-center lg:justify-end pt-16">
                 <CustomButton
+                  id="btn-nilai"
                   label="Nilai"
-                  className="w-40 h-8 items-end"
+                  className="w-40 h-8 items-end bg-component rounded-lg text-white"
                 />
               </div>
             </form>

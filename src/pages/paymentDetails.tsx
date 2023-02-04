@@ -26,7 +26,11 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
             </label>
 
             {/* Put this part before </body> tag */}
-            <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+            <input
+              type="checkbox"
+              id="my-modal-3"
+              className="modal-toggle"
+            />
             <div className="modal">
               <div className="modal-box relative">
                 <label
@@ -35,7 +39,9 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                 >
                   ✕
                 </label>
-                <h3 className="text-xl font-bold">{name} Payment</h3>
+                <h3 className="text-xl font-bold">
+                  {name} Payment
+                </h3>
                 <hr className="mt-2" />
 
                 <div>
@@ -58,7 +64,10 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     />
                   </form>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <input
+                      id="checkbox-mobile"
+                      type="checkbox"
+                    />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       {name} Mobile
                     </div>
@@ -67,7 +76,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     </div>
                   </div>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <input id="checkbox-my" type="checkbox" />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       My{name}
                     </div>
@@ -76,7 +85,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     </div>
                   </div>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <input id="checkbox-klik" type="checkbox" />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       Klik{name}
                     </div>
@@ -85,7 +94,10 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     </div>
                   </div>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <input
+                      id="checkbox-klik-bisnis"
+                      type="checkbox"
+                    />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       Klik{name} Bisnis
                     </div>
@@ -94,7 +106,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     </div>
                   </div>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <input id="checkbox-atm" type="checkbox" />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       ATM {name}
                     </div>
@@ -102,7 +114,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                       <p>hello</p>
                     </div>
                     <CustomButton
-                      id="button-payment"
+                      id="btn-payment"
                       className="bg-slate-700 w-7/12 p-2 text-white rounded-xl mt-5 hover:bg-slate-800"
                       label="Selesaikan Transaksi"
                     />
@@ -141,16 +153,24 @@ export default function PaymentDetails() {
             <p className="font-semibold text-xl underline mt-2 ml-20">
               Nama Guru
             </p>
-            <p className="font-semibold text-md ml-20 mt-2">Ahmad Bambang</p>
+            <p className="font-semibold text-md ml-20 mt-2">
+              Ahmad Bambang
+            </p>
             <p className="font-semibold text-xl underline mt-2 ml-20">
               Format Kursus
             </p>
-            <p className="font-semibold text-md ml-20 mt-2">Online</p>
+            <p className="font-semibold text-md ml-20 mt-2">
+              Online
+            </p>
             <p className="font-semibold text-xl underline mt-2 ml-20">
               Kursus yang diambil
             </p>
-            <p className="font-semibold text-md ml-20 mt-2">Matematika</p>
-            <p className="font-semibold text-xl underline mt-2 ml-20">Tarif</p>
+            <p className="font-semibold text-md ml-20 mt-2">
+              Matematika
+            </p>
+            <p className="font-semibold text-xl underline mt-2 ml-20">
+              Tarif
+            </p>
             <p className="font-semibold text-md ml-20 mt-2">
               Rp. 500.000 / Jam
             </p>
@@ -160,7 +180,9 @@ export default function PaymentDetails() {
             <p className="font-semibold text-md ml-20 mt-2">
               Sukabumi, Jawa Barat
             </p>
-            <p className="font-semibold text-md ml-20 mt-2">0822XXXXXXX</p>
+            <p className="font-semibold text-md ml-20 mt-2">
+              0822XXXXXXX
+            </p>
             <h2 className="font-bold underline text-2xl mt-5 ml-20">
               Metode Pembayaran
             </h2>
@@ -192,7 +214,9 @@ export default function PaymentDetails() {
               >
                 <div className="collapse-title text-xl font-medium flex flex-rows justify-between items-center">
                   <div>
-                    <p className="text-xl font-semibold ">Metode QRIS</p>
+                    <p className="text-xl font-semibold ">
+                      Metode QRIS
+                    </p>
                   </div>
                   <div className="flex flex-row justify-end">
                     <img src={qris} />

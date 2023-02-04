@@ -24,7 +24,7 @@ export default function EditTeacher() {
             <div className="flex flex-col items-center lg:flex-row-reverse w-full h-full justify-center">
               <div className="flex-1 flex-col  ">
                 <h1 className="text-black text-center text-xl lg:text-2xl font-bold mb-5">
-                  Complete Your Profile
+                  Selesaikan Profil Anda
                 </h1>
                 <img
                   src={avatar2}
@@ -33,13 +33,14 @@ export default function EditTeacher() {
                 <p className="text-center text-gray-500 font-semibold">
                   * Uk. photo 400 x 400 pixels
                 </p>
-                <input
+                <CustomInput
+                  id="input-avatar"
                   type="file"
                   className="file-input w-full max-w-xs flex justify-center bg-white lg:ml-36 lg:mt-5"
                 />
 
                 <CustomInput
-                  id="fullname"
+                  id="input-linkedin"
                   type="text"
                   placeholder="LInkedin Profile"
                   className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7 lg:ml-28"
@@ -51,7 +52,8 @@ export default function EditTeacher() {
                     Upload Ijazah
                   </span>
                 </label>
-                <input
+                <CustomInput
+                  id="input-ijazah"
                   type="file"
                   className="file-input file-input-bordered w-full max-w-xs bg-white lg:ml-32"
                 />
@@ -68,9 +70,9 @@ export default function EditTeacher() {
                   </label>
 
                   <CustomInput
-                    id="fullname"
+                    id="input-alamat"
                     type="text"
-                    placeholder="@johndoe@gmail.com"
+                    placeholder="Sukabumi, Jawa Barat"
                     className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                     style={{ border: "2px solid #424242" }}
                   />
@@ -85,9 +87,9 @@ export default function EditTeacher() {
                   </label>
 
                   <CustomInput
-                    id="fullname"
-                    type="text"
-                    placeholder="@johndoe@gmail.com"
+                    id="input-no-hp"
+                    type="number"
+                    placeholder="0891234556"
                     className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                     style={{ border: "2px solid #424242" }}
                   />
@@ -102,6 +104,7 @@ export default function EditTeacher() {
                   </label>
                   <select
                     defaultValue={"DEFAULT"}
+                    id="input-jenjang-pengajaran"
                     className="select select-bordered w-10/12 lg:w-8/12 mx-auto bg-white"
                     style={{ border: "2px solid #424242" }}
                     name="option"
@@ -111,8 +114,12 @@ export default function EditTeacher() {
                       Pilih Salah Satu
                     </option>
                     <option value="1">Sekolah Dasar</option>
-                    <option value="2">Sekolah Menengah Pertama</option>
-                    <option value="3">Sekolah Menengah Atas</option>
+                    <option value="2">
+                      Sekolah Menengah Pertama
+                    </option>
+                    <option value="3">
+                      Sekolah Menengah Atas
+                    </option>
                   </select>
                   <div className="form-control">
                     <label className="label">
@@ -124,20 +131,22 @@ export default function EditTeacher() {
                       </span>
                     </label>
                     <textarea
+                      id="input-bio"
                       className="textarea textarea-bordered h-32 w-10/12 lg:w-8/12 mx-auto bg-white"
                       placeholder="Bio"
                       style={{ border: "2px solid #424242" }}
                     ></textarea>
                   </div>
-
-                  <CustomButton
-                    id="button-masuk"
-                    label="Update"
-                    className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
-                    style={{
-                      fontFamily: "Poppins",
-                    }}
-                  />
+                  <Link to="/editStudent">
+                    <CustomButton
+                      id="btn-daftar"
+                      label="Daftar"
+                      className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                      style={{
+                        fontFamily: "Poppins",
+                      }}
+                    />
+                  </Link>
                 </div>
               </div>
             </div>

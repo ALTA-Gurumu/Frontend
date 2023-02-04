@@ -16,7 +16,10 @@ const EditProfilStudent = () => {
           <p className="items-start">Nama Lengkap</p>
           <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
             <HiUser className="w-7 h-6" />
-            <InputIcon id="input-nama" placeholder="Diva Lesti Pujiana" />
+            <InputIcon
+              id="input-nama-lengkap"
+              placeholder="Diva Lesti Pujiana"
+            />
           </div>
         </div>
 
@@ -24,7 +27,10 @@ const EditProfilStudent = () => {
           <p className="items-start">Handphone</p>
           <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
             <BsPhoneFill className="w-7 h-6" />
-            <InputIcon id="input-handphone" placeholder="089788970987" />
+            <InputIcon
+              id="input-handphone"
+              placeholder="089788970987"
+            />
           </div>
         </div>
 
@@ -59,7 +65,9 @@ const EditProfilStudent = () => {
       </div>
 
       <div className="flex flex-col items-center lg:w-[50vw] w-[70vw] lg:pt-16 pt-0 lg:mt-0 mt-2">
-        <p className="text-[#112B3C] text-[34px] font-semibold">Ubah Profil</p>
+        <p className="text-[#112B3C] text-[34px] font-semibold">
+          Ubah Profil
+        </p>
         <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
           <img src={Profil2} alt="profil.jpg" />
         </div>

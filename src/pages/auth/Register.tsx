@@ -1,4 +1,8 @@
-import React, { useState, useEffect, ReactComponentElement } from "react";
+import React, {
+  useState,
+  useEffect,
+  ReactComponentElement,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -44,7 +48,9 @@ const Register = () => {
   //   // console.log(option);
   // }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setDLoading(true);
     e.preventDefault();
     const body = {
@@ -70,7 +76,9 @@ const Register = () => {
           showCancelButton: false,
         });
 
-        option === "1" ? navigate("/login") : navigate("/editTeacher");
+        option === "1"
+          ? navigate("/login")
+          : navigate("/editTeacher");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -116,7 +124,7 @@ const Register = () => {
                   </label>
 
                   <CustomInput
-                    id="input-namaLengkap"
+                    id="input-nama-lengkap"
                     type="text"
                     placeholder="John Doe"
                     className="input w-10/12 lg:w-8/12 mx-auto bg-white"
@@ -133,6 +141,7 @@ const Register = () => {
                   </label>
                   <select
                     defaultValue={"DEFAULT"}
+                    id="input-role"
                     className="select select-bordered w-10/12 lg:w-8/12 mx-auto bg-white"
                     name="option"
                     onChange={handleChange}
@@ -180,7 +189,7 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <CustomButton
-                    id="button-masuk"
+                    id="btn-daftar"
                     label="Daftar"
                     className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 disabled:bg-slate-500 disabled:cursor-not-allowed text-white font-lg text-lg bg-component hover:bg-orange-600"
                     style={{

@@ -51,6 +51,7 @@ const ProfileTeacher = () => {
                 <span className="lg:ml-10 ml-2">Rp.{5000}</span>
               </p>
               <CustomButton
+                id="btn-cek-jadwal"
                 className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
                 icon={
                   <RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />
@@ -111,11 +112,15 @@ const ProfileTeacher = () => {
               </label>
             </ul>
 
-            <input id="my-modal-5" type="checkbox" className="modal-toggle" />
+            <input
+              id="my-modal-5"
+              type="checkbox"
+              className="modal-toggle"
+            />
             <div className="modal">
               <div className="modal-box lg:w-8/12 w-10/12 max-w-full shadow-xl">
                 <label
-                  id="modal-profil-guru"
+                  id="label-profil-guru"
                   htmlFor="my-modal-5"
                   className="absolute right-4 top-2"
                 >
@@ -128,32 +133,39 @@ const ProfileTeacher = () => {
                 <ul className="lg:text-[16px] text-[15px]">
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-                    Bachelor's Degree with more than 10 years experienced
-                    teaching math from primary, secondary, until senior.
+                    Bachelor's Degree with more than 10 years
+                    experienced teaching math from primary,
+                    secondary, until senior.
                   </li>
                   <li className="flex gap-4 mt-8 mb-5">
                     <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-                    Experienced Teaching All Math Levels (AP Calculus,
-                    Pre-Algebra, Algebra 1, Algebra 2, Geometry, Trigonometry,
-                    SAT, ACT, etc) for any curriculums such as Advanced
-                    Placement, IB (HL and SL), Cambridge (IGCSE, O Level and A
-                    Level).
+                    Experienced Teaching All Math Levels (AP
+                    Calculus, Pre-Algebra, Algebra 1, Algebra 2,
+                    Geometry, Trigonometry, SAT, ACT, etc) for
+                    any curriculums such as Advanced Placement,
+                    IB (HL and SL), Cambridge (IGCSE, O Level and
+                    A Level).
                   </li>
                   <li className="flex gap-4 mt-8 mb-5">
                     <BsCheckCircle className="lg:w-56 w-32 lg:h-32 h-56 text-blue-600 lg:pb-0 pb-24" />
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Temporibus ex vitae aperiam eum hic saepe cupiditate officia
-                    impedit atque eos veniam enim error optio aspernatur aliquam
-                    voluptates consequuntur ipsam eaque reiciendis, sed
-                    voluptatibus delectus? Blanditiis perspiciatis placeat autem
-                    provident. Ex quasi sint doloribus a. Voluptas sapiente
-                    mollitia doloremque corrupti voluptatibus animi, consectetur
-                    qui totam alias veritatis numquam blanditiis magni ullam
-                    eligendi fugiat accusamus distinctio iste iure earum! Non
-                    illum, porro aspernatur quidem error iste aperiam tempore
-                    aliquam eligendi, totam dolor veritatis sit nisi suscipit
-                    cumque officia quia dicta est rem quam voluptates debitis
-                    molestias. At magnam corrupti cumque mollitia magni.
+                    Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Temporibus ex vitae aperiam
+                    eum hic saepe cupiditate officia impedit
+                    atque eos veniam enim error optio aspernatur
+                    aliquam voluptates consequuntur ipsam eaque
+                    reiciendis, sed voluptatibus delectus?
+                    Blanditiis perspiciatis placeat autem
+                    provident. Ex quasi sint doloribus a.
+                    Voluptas sapiente mollitia doloremque
+                    corrupti voluptatibus animi, consectetur qui
+                    totam alias veritatis numquam blanditiis
+                    magni ullam eligendi fugiat accusamus
+                    distinctio iste iure earum! Non illum, porro
+                    aspernatur quidem error iste aperiam tempore
+                    aliquam eligendi, totam dolor veritatis sit
+                    nisi suscipit cumque officia quia dicta est
+                    rem quam voluptates debitis molestias. At
+                    magnam corrupti cumque mollitia magni.
                   </li>
                 </ul>
               </div>
