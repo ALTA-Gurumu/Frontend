@@ -97,7 +97,7 @@ function Reservasi() {
             renderActiveTabPanelOnly={true}
           >
             <Tab
-              id="1"
+              id="tab-1"
               title="Tatap muka"
               className="  text-center font-semibold text-base text-slate-500 mt-2 lg:pl-8 lg:pr-8"
               panel={
@@ -107,7 +107,7 @@ function Reservasi() {
               }
             />
             <Tab
-              id="2"
+              id="tab-2"
               title="Online"
               className="  text-center font-semibold text-base text-slate-500 mt-2 lg:pl-8 lg:pr-8"
             />

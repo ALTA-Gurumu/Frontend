@@ -2,10 +2,14 @@ import { HtmlHTMLAttributes, InputHTMLAttributes } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  placeholder: string;
+  placeholder?: string;
 }
 
-export function CustomInput({ id, placeholder, ...props }: Props) {
+export function CustomInput({
+  id,
+  placeholder,
+  ...props
+}: Props) {
   return (
     <input
       id={id}

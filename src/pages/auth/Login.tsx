@@ -26,7 +26,8 @@ const Login = () => {
                   Masuk
                 </h1>
                 <p className="text-center text-base text-black font-semibold w-8/12 mx-auto mt-7 tracking-normal">
-                  Lengkapi Formulir Dibawah dan Dapatkan Akses Masuk Akun Anda
+                  Lengkapi Formulir Dibawah dan Dapatkan Akses
+                  Masuk Akun Anda
                 </p>
                 <div className="form-control w-full ">
                   <label className="label mt-5">
@@ -39,7 +40,7 @@ const Login = () => {
                   </label>
 
                   <CustomInput
-                    id="email-button"
+                    id="input-email"
                     type="text"
                     placeholder="@johndoe@gmail.com"
                     className="input w-10/12 lg:w-8/12 mx-auto bg-white"
@@ -54,14 +55,15 @@ const Login = () => {
                     </span>
                   </label>
 
-                  <input
+                  <CustomInput
+                    id="input-password"
                     type="password"
                     placeholder="*********"
                     className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                     style={{ border: "2px solid #424242" }}
                   />
                   <CustomButton
-                    id="button-masuk"
+                    id="btn-masuk"
                     label="Masuk"
                     className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
                     style={{

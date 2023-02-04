@@ -30,11 +30,11 @@ function HalamanSesiGuru() {
             <div className="h-full">
               <Tabs
                 className=" w-11/12 mx-auto"
-                defaultSelectedTabId="3"
+                defaultSelectedTabId="tab-3"
                 renderActiveTabPanelOnly={true}
               >
                 <Tab
-                  id="1"
+                  id="tab-1"
                   title="Riwayat"
                   className="  text-center font-semibold text-lg text-slate-500 mt-2 lg:pl-8 lg:pr-8"
                   panel={
@@ -42,11 +42,15 @@ function HalamanSesiGuru() {
                       <table className="table w-full mx-auto">
                         <thead>
                           <tr>
-                            <th className="text-[18px] text-zinc-700">NO</th>
+                            <th className="text-[18px] text-zinc-700">
+                              NO
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Nama Murid
                             </th>
-                            <th className="text-[18px] text-zinc-700">Jam</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Jam
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Hari & Tanggal
                             </th>
@@ -82,7 +86,7 @@ function HalamanSesiGuru() {
                   }
                 />
                 <Tab
-                  id="2"
+                  id="tab-2"
                   title="Sedang Berlangsung"
                   className=" text-center font-semibold text-lg text-slate-500 mt-2 pl-0 lg:pl-8 lg:pr-8 "
                   panel={
@@ -90,11 +94,15 @@ function HalamanSesiGuru() {
                       <table className="table w-full mx-auto">
                         <thead>
                           <tr>
-                            <th className="text-[18px] text-zinc-700">No</th>
+                            <th className="text-[18px] text-zinc-700">
+                              No
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Nama Murid
                             </th>
-                            <th className="text-[18px] text-zinc-700">Jam</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Jam
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Hari & Tanggal
                             </th>
@@ -119,7 +127,7 @@ function HalamanSesiGuru() {
                             <td>Belum Selesai</td>
                             <td>
                               <CustomButton
-                                id="button-action-history"
+                                id="btn-action-history"
                                 className="py-2 px-6 text-md font-normal rounded-xl hover:bg-orange-600 bg-orange-500 text-white"
                                 label="Submit"
                                 loading={disable}
@@ -136,7 +144,7 @@ function HalamanSesiGuru() {
                             <td>Selesai</td>
                             <td>
                               <CustomButton
-                                id="button-action-history"
+                                id="btn-action-history"
                                 className="py-2 px-6 text-md font-normal rounded-xl hover:bg-orange-600 bg-slate-500 text-slate-200"
                                 label="Submit"
                               />
@@ -148,7 +156,7 @@ function HalamanSesiGuru() {
                   }
                 />
                 <Tab
-                  id="3"
+                  id="tab-3"
                   title="Jadwal Mengajar"
                   className=" text-center font-semibold lg:text-lg text-slate-500 lg:mt-10 pl-0 lg:pl-8 lg:pr-8 "
                   panel={
@@ -156,11 +164,15 @@ function HalamanSesiGuru() {
                       <table className="table w-full mx-auto">
                         <thead>
                           <tr>
-                            <th className="text-[18px] text-zinc-700">No</th>
+                            <th className="text-[18px] text-zinc-700">
+                              No
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Hari & Tanggal
                             </th>
-                            <th className="text-[18px] text-zinc-700">Jam</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Jam
+                            </th>
                           </tr>
                         </thead>
                         <tbody className="text-[16px] font-normal">

@@ -54,7 +54,7 @@ function HalamanSesiMurid() {
                       <div className="modal">
                         <div className="modal-box lg:w-9/12 w-10/12 max-w-full lg:pl-10 lg:p-5 p-7 shadow-xl">
                           <label
-                            id="modal-profil-murid"
+                            id="label-profil-murid"
                             htmlFor="my-modal-5"
                             className="absolute right-5 top-4"
                           >
@@ -66,7 +66,9 @@ function HalamanSesiMurid() {
 
                       <div
                         className=" w-32 h-32 lg:mt-10 mt-14 border border-[#EFEFEF] rounded-full overflow-hidden mt- bg-no-repeat bg-cover"
-                        style={{ backgroundImage: `URL(${Profil})` }}
+                        style={{
+                          backgroundImage: `URL(${Profil})`,
+                        }}
                       >
                         <img src={Profil2} alt="profil.jpg" />
                       </div>
@@ -93,9 +95,12 @@ function HalamanSesiMurid() {
                           </p>
                         </div>
                         <div className="lg:ml-0 ml-3 lg:mt-0 mt-5">
-                          <p className="block font-semibold">Alamat :</p>
+                          <p className="block font-semibold">
+                            Alamat :
+                          </p>
                           <p className="font-normal">
-                            Ds. Kebun Bumi Bulat, Garum, Blitar, Jawa Timur
+                            Ds. Kebun Bumi Bulat, Garum, Blitar,
+                            Jawa Timur
                           </p>
                         </div>
                       </div>
@@ -103,7 +108,7 @@ function HalamanSesiMurid() {
                   }
                 />
                 <Tab
-                  id="2"
+                  id="tab-2"
                   title="Riwayat"
                   className=" text-center font-semibold text-lg text-slate-500 mt-2 pl-0 lg:pl-8 lg:pr-8 lg:-ml-0 -ml-2"
                   panel={
@@ -111,11 +116,15 @@ function HalamanSesiMurid() {
                       <table className="table w-full mx-auto">
                         <thead>
                           <tr>
-                            <th className="text-[18px] text-zinc-700">No</th>
+                            <th className="text-[18px] text-zinc-700">
+                              No
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Nama Guru
                             </th>
-                            <th className="text-[18px] text-zinc-700">Jam</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Jam
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Hari & Tanggal
                             </th>
@@ -143,7 +152,7 @@ function HalamanSesiMurid() {
                   }
                 />
                 <Tab
-                  id="3"
+                  id="tab-3"
                   title="Sedang Berlangsung"
                   className="text-center font-semibold lg:text-lg text-[18px] text-slate-500 lg:mt-10 pl-0 lg:pl-8 lg:pr-8 lg:-ml-4 -ml-2"
                   panel={
@@ -151,11 +160,15 @@ function HalamanSesiMurid() {
                       <table className="table w-full mx-auto">
                         <thead>
                           <tr>
-                            <th className="text-[18px] text-zinc-700">No</th>
+                            <th className="text-[18px] text-zinc-700">
+                              No
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Nama Guru
                             </th>
-                            <th className="text-[18px] text-zinc-700">Jam</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Jam
+                            </th>
                             <th className="text-[18px] text-zinc-700">
                               Hari & Tanggal
                             </th>
