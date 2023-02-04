@@ -1,6 +1,6 @@
-import React from "react";
-import "@blueprintjs/core/lib/css/blueprint.css";
 import { Tabs, Tab, Classes } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import React from "react";
 
 import EditProfilStudent from "./editProfilStudent";
 

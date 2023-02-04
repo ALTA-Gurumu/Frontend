@@ -13,13 +13,13 @@ import PaymentDetails from "../pages/paymentDetails";
 import ProfileStudent from "../pages/ProfileStudent";
 import ProfileTeacher from "../pages/ProfilTeacher";
 import EditStudent from "../pages/EditStudent";
+import EditTeacher from "../pages/EditTeacher";
 import LandingPage from "../pages/LandingPage";
 import Register from "../pages/auth/Register";
 import Reservasi from "../pages/Reservasi";
 import Login from "../pages/auth/Login";
 import Beranda from "../pages/Home";
 import Rating from "../pages/Rating";
-import Reservasi from "../pages/Reservasi";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -69,17 +69,13 @@ function App() {
       element: <PaymentDetails />,
     },
     // {
-    //   path: "/detail/:id_item",
-    //   element: <DetailItems />,
+    //   path: "/editTeacher",
+    //   element: <EditTeacher />,
     // },
     {
       path: "/reservasi",
       element: <Reservasi />,
     },
-    // {
-    //   path: "/checkout",
-    //   element: checkToken ? <Checkout /> : <Login />,
-    // },
     {
       path: "/profileStudent",
       element: <ProfileStudent />,

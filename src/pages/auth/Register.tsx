@@ -1,11 +1,12 @@
-import Layout from "../../components/Layout";
-import imgRegis from "../../assets/imgregis.webp";
+import { Link } from "react-router-dom";
 
 import { CustomInput } from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import { Footer } from "../../components/Footer";
-import { Link } from "react-router-dom";
 import { LoginNavbar } from "../../components/Navbar";
+import { Footer } from "../../components/Footer";
+import Layout from "../../components/Layout";
+
+import imgRegis from "../../assets/imgregis.webp";
 
 const Register = () => {
   return (

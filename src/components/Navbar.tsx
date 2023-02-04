@@ -1,40 +1,33 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { FaRegUser } from "react-icons/fa";
+import React from "react";
+
 import { IoNotificationsOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
 
 function Navbar() {
   return (
     <div className="navbar bg-card">
       <div className="flex-1">
-        <Link to={"/"}>
-          <a className="btn btn-ghost normal-case text-primary text-xl">
-            GuruMu
-          </a>
+        <Link
+          to={"/"}
+          className="btn btn-ghost normal-case text-primary text-xl"
+        >
+          GuruMu
         </Link>
       </div>
       <div className="flex-none gap-2">
-        <label
-          tabIndex={0}
-          className="btn btn-ghost btn-circle avatar"
-        >
+        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
           <Link to="/HalamanSesiGuru">
             <IoNotificationsOutline className="text-primary w-7 h-7" />
           </Link>
         </label>
-        <label
-          tabIndex={0}
-          className="btn btn-ghost btn-circle avatar"
-        >
+        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
           <Link to="/HalamanSesiMurid">
             <IoNotificationsOutline className="text-primary w-7 h-7" />
           </Link>
         </label>
         <div className="dropdown dropdown-end">
-          <label
-            tabIndex={0}
-            className="btn btn-ghost btn-circle avatar"
-          >
+          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <FaRegUser className="text-primary w-7 h-7" />
           </label>
           <ul
@@ -42,19 +35,17 @@ function Navbar() {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to={"/profile-student"}>
-                <a>Profil</a>
-              </Link>
+              <Link to={"/HalamanSesiMurid"}>Profil</Link>
+            </li>
+
+            <li className="bg-component text-zinc-50">
+              <Link to={"/home"}>Home</Link>
             </li>
             <li>
-              <Link to={"/login"}>
-                <a>Masuk</a>
-              </Link>
+              <Link to={"/login"}>Masuk</Link>
             </li>
             <li>
-              <Link to={"/register"}>
-                <a>Daftar</a>
-              </Link>
+              <Link to={"/register"}>Daftar</Link>
             </li>
           </ul>
         </div>
@@ -72,10 +63,7 @@ const LoginNavbar = () => {
       >
         <div className="navbar-start">
           <div className="dropdown">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost lg:hidden"
-            >
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -115,6 +103,7 @@ const LoginNavbar = () => {
               </li>
             </ul>
           </div>
+
           <Link
             to="/"
             className="btn btn-ghost normal-case text-xl lg:text-3xl font-bold"
@@ -132,6 +121,7 @@ const LoginNavbar = () => {
           >
             Daftar
           </Link>
+
           <Link
             to="/"
             className="btn hidden lg:flex border-none text-white font-semibold"
