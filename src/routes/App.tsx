@@ -7,19 +7,20 @@ import {
 } from "react-router-dom";
 import useCookies from "react-cookie/cjs/useCookies";
 
-import ProfileStudent from "../pages/ProfileStudent";
-import ProfileTeacher from "../pages/ProfilTeacher";
-import LandingPage from "../pages/LandingPage";
+import { ProfileStudent } from "../pages/ProfilePage";
+import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 
+import LandingPage from "../pages/LandingPage";
 
 import Beranda from "../pages/Home";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
-import ProfileStudent from "../pages/ProfileStudent";
+
 import Rating from "../pages/Rating";
 import EditStudent from "../pages/EditStudent";
-import HalamanSesiGuru from "../pages/HalamanSesiGuru";
-import HalamanSesiMurid from "../pages/HalamanSesiMurid";
+import { HalamanSesiGuru } from "../pages/HistoryPage";
+import { HalamanSesiMurid } from "../pages/HistoryPage";
+
 import PaymentDetails from "../pages/paymentDetails";
 
 function App() {
@@ -87,7 +88,7 @@ function App() {
     },
     {
       path: "/profile-teacher",
-      element: <ProfileTeacher />,
+      element: <TabsContentForTeacherPage />,
     },
     // {
     //   path: "/transactions-selling",

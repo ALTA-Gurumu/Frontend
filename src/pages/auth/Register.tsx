@@ -10,7 +10,6 @@ import { LoginNavbar } from "../../components/Navbar";
 const Register = () => {
   return (
     <>
-      {/* nama lengkap, peran, email, password*/}
       <Layout>
         <LoginNavbar />
         <div className="w-full lg:min-h-screen flex justify-center items-center mt-5 mb-10">
@@ -38,75 +37,61 @@ const Register = () => {
                   </label>
 
                   <CustomInput
-                    id="fullname"
+                    id="input-namalengkap"
                     type="text"
                     placeholder="@johndoe@gmail.com"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   />
                   <label className="label">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Peran
                     </span>
                   </label>
                   <select
-                    className="select select-bordered w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    id="select-role"
+                    className="select select-bordered w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   >
                     <option disabled selected>
                       Pilih Salah Satu
                     </option>
-                    <option>Student</option>
-                    <option>Teacher</option>
+                    <option id="option-role-student">Student</option>
+                    <option id="option-role-teacher">Teacher</option>
                   </select>
 
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Email :
                     </span>
                   </label>
 
                   <CustomInput
-                    id="email"
+                    id="input-email"
                     type="text"
                     placeholder="@johndoe@gmail.com"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   />
                   <label className="label mt-5">
-                    <span
-                      className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                      style={{ color: "#424242" }}
-                    >
+                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Password :
                     </span>
                   </label>
 
-                  <input
+                  <CustomInput
+                    id="input-password"
                     type="password"
                     placeholder="*********"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
                   />
-                  <Link to="/editStudent">
+                  <Link id="link-editMurid" to="/editStudent">
                     <CustomButton
-                      id="button-masuk"
+                      id="btn-daftar"
                       label="Daftar"
-                      className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
-                      style={{
-                        fontFamily: "Poppins",
-                      }}
+                      className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600 font-poppins"
                     />
                   </Link>
                   <p className="text-center mt-5 text-slate-700 font-medium pb-10 lg:p-0">
                     Belum Memiliki Akun?{" "}
-                    <Link to="/login">
+                    <Link id="link-login" to="/login">
                       <span className="font-bold underline text-slate-700 ml-2 pb-20">
                         Login
                       </span>

@@ -26,7 +26,11 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
             </label>
 
             {/* Put this part before </body> tag */}
-            <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+            <CustomInput
+              type="checkbox"
+              id="my-modal-3"
+              className="modal-toggle"
+            />
             <div className="modal">
               <div className="modal-box relative">
                 <label
@@ -41,10 +45,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                 <div>
                   <form>
                     <label className="label mt-5">
-                      <span
-                        className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                        style={{ color: "#424242" }}
-                      >
+                      <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                         {name} Virtual Account Number
                       </span>
                     </label>
@@ -58,7 +59,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     />
                   </form>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       {name} Mobile
                     </div>
@@ -67,7 +68,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     </div>
                   </div>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       My{name}
                     </div>
@@ -76,7 +77,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     </div>
                   </div>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       Klik{name}
                     </div>
@@ -85,7 +86,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     </div>
                   </div>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       Klik{name} Bisnis
                     </div>
@@ -94,7 +95,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                     </div>
                   </div>
                   <div className="collapse">
-                    <input type="checkbox" />
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
                     <div className="collapse-title text-xl font-semibold mt-5">
                       ATM {name}
                     </div>
@@ -102,7 +103,7 @@ const ModalPayment: FC<ModalProps> = ({ id, name }) => {
                       <p>hello</p>
                     </div>
                     <CustomButton
-                      id="button-payment"
+                      id="btn-pembayaran"
                       className="bg-slate-700 w-7/12 p-2 text-white rounded-xl mt-5 hover:bg-slate-800"
                       label="Selesaikan Transaksi"
                     />
@@ -183,7 +184,7 @@ export default function PaymentDetails() {
                     <img src={permata} className="w-2/12" />
                   </div>
                 </div>
-                <ModalPayment id="" name="BCA" label="MyBCA" />
+                <ModalPayment id="modal-pembayaran" name="BCA" label="MyBCA" />
                 {/**/}
               </div>
               <div

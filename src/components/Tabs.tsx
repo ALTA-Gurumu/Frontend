@@ -48,6 +48,7 @@ export default function Tabs() {
       <div className="tab tab-bordered">
         {tabList.map((tab, i) => (
           <button
+            id="tabs-component"
             key={i}
             onClick={() => setCurrentTab(tab.name)}
             className={tab.name === currentTab ? "tab-active" : ""}

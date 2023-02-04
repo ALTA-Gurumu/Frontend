@@ -2,7 +2,7 @@ import React from "react";
 
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
-import InputProfil from "../components/inputProfil";
+import CustomInput from "../components/CustomInput";
 import Card from "../components/card";
 
 import { IoNewspaperOutline } from "react-icons/io5";
@@ -11,7 +11,7 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import Profil from "../assets/profil.jpg";
 import Profil2 from "../assets/profil2.webp";
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
 
 function Home() {
   return (
@@ -21,7 +21,7 @@ function Home() {
         <div className="flex gap-2 lg:w-[60vw] w-[90vw] bg-white text-[#112B3C] text-[20px] rounded-xl lg:px-6 px-2 py-2 mt-10  ">
           <div className="flex lg:w-5/12 w-7/12 lg:py-2 py-0 gap-2">
             <IoNewspaperOutline className="w-7 h-7" />
-            <InputProfil
+            <CustomInput
               className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"
               id="input-searchMapel"
               placeholder="Mata Pelajaran"
@@ -30,7 +30,7 @@ function Home() {
 
           <div className="flex w-5/12 lg:py-2 py-0 pl-5 border-l-[1px] border-[#112B3C] gap-2">
             <HiOutlineLocationMarker className="w-7 h-7" />
-            <InputProfil
+            <CustomInput
               className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"
               id="input-searchLokasi"
               placeholder="Lokasi"
@@ -100,7 +100,7 @@ function Home() {
         </div>
       </div>
       <div className="text-center mt-14 mb-20">
-        <Button
+        <CustomButton
           className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
           label="Lihat lebih banyak guru"
         />
