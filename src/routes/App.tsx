@@ -25,10 +25,6 @@ import Rating from "../pages/Rating";
 
 import Reservasi from "../pages/Reservasi";
 
-import EditTeacher from "../pages/EditTeacher";
-import ProfileTeacher from "../pages/ProfilTeacher";
-
-
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
