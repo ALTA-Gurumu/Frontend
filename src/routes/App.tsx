@@ -25,6 +25,10 @@ import Rating from "../pages/Rating";
 
 import Reservasi from "../pages/Reservasi";
 
+import EditTeacher from "../pages/EditTeacher";
+import ProfileTeacher from "../pages/ProfilTeacher";
+
+
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
@@ -85,7 +89,7 @@ function App() {
       element: <ProfileStudent />,
     },
     {
-      path: "/profile-teacher",
+      path: "/profile-teacher/:guru_id",
       element: <TabsContentForTeacherPage />,
     },
     // {
