@@ -21,12 +21,12 @@ import Beranda from "../pages/Home";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import Rating from "../pages/Rating";
-
 import Reservasi from "../pages/Reservasi";
 
 function App() {
-  const [cookie, , removeCookie] = useCookies(["token"]);
+  const [cookie, , removeCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
+  const checkRole = cookie.role;
 
   axios.interceptors.request.use(function (config) {
     config.headers = config.headers ?? {};
@@ -59,13 +59,18 @@ function App() {
     //   path: "/editStudent",
     //   element: <EditStudent />,
     // },
-    {
-      path: "/HalamanSesiGuru",
-      element: <HalamanSesiGuru />,
-    },
+    // {
+    //   path: "/HalamanSesiGuru",
+    //   element: <HalamanSesiGuru />,
+    // },
     {
       path: "/HalamanSesiMurid",
-      element: <HalamanSesiMurid />,
+      element:
+        checkToken && checkRole === "siswa" ? (
+          <HalamanSesiMurid />
+        ) : (
+          <Navigate to="/login" />
+        ),
     },
     {
       path: "paymentDetails",
@@ -84,7 +89,7 @@ function App() {
       element: <ProfileStudent />,
     },
     {
-      path: "/profile-teacher/",
+      path: "/profile-teacher/:guru_id",
       element: <TabsContentForTeacherPage />,
     },
     // {

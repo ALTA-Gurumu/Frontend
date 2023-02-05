@@ -1,31 +1,75 @@
-import { Link } from "react-router-dom";
-import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+
+import withReactContent from "sweetalert2-react-content";
+import { handleAuth } from "../utils/redux/reducer/reducer";
+import Swal from "../utils/Swal";
 
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
+
+  const [cookie, , removeCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+  const checkRole = cookie.role;
+
+  const handleLogout = async () => {
+    removeCookie("token");
+    dispatch(handleAuth(false));
+    navigate("/login");
+    MySwal.fire({
+      title: "Log Out Account",
+      text: "You have been Logged out",
+      showCancelButton: false,
+    });
+  };
+
   return (
     <div className="navbar bg-card">
       <div className="flex-1">
         <Link
+          id="link-landingpage-1"
           to={"/"}
           className="btn btn-ghost normal-case text-primary text-xl"
         >
           GuruMu
         </Link>
       </div>
+
       <div className="flex-none gap-2">
-        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <Link id="link-historysesiguru" to="/HalamanSesiGuru">
-            <IoNotificationsOutline className="text-primary w-7 h-7" />
-          </Link>
-        </label>
-        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <Link id="link-historysesimurid" to="/HalamanSesiMurid">
-            <IoNotificationsOutline className="text-primary w-7 h-7" />
-          </Link>
-        </label>
+        {checkToken && checkRole === "guru" ? (
+          <label
+            id="link-histori-sesi-guru"
+            tabIndex={0}
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <Link to="/profile-teacher/:guru_id">
+              <IoNotificationsOutline className="text-primary w-7 h-7" />
+            </Link>
+          </label>
+        ) : (
+          ""
+        )}
+
+        {checkToken && checkRole === "siswa" ? (
+          <label
+            id="link-histori-sesi-murid"
+            tabIndex={0}
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <Link to="/HalamanSesiMurid">
+              <IoNotificationsOutline className="text-primary w-7 h-7" />
+            </Link>
+          </label>
+        ) : (
+          ""
+        )}
+
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <FaRegUser className="text-primary w-7 h-7" />
@@ -34,18 +78,40 @@ function Navbar() {
             tabIndex={0}
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
-            <li>
-              <Link to={"/profile-teacher/:guru_id"}>Profil</Link>
+            {checkToken ? (
+              <li>
+                <button
+                  id="link-profil"
+                  onClick={() =>
+                    checkToken && checkRole === "guru"
+                      ? navigate("/profile-teacher/:guru_id")
+                      : navigate("/HalamanSesiMurid")
+                  }
+                >
+                  Profil
+                </button>
+              </li>
+            ) : (
+              ""
+            )}
+
+            <li id="link-home-1" className="bg-component text-zinc-50">
+              <Link to="/home">Home</Link>
             </li>
 
-            <li className="bg-component text-zinc-50">
-              <Link to={"/home"}>Home</Link>
-            </li>
             <li>
-              <Link to={"/login"}>Masuk</Link>
+              <button
+                id="btn-auth"
+                onClick={() =>
+                  checkToken ? handleLogout() : navigate("/login")
+                }
+              >
+                {checkToken ? "Keluar" : "Masuk"}
+              </button>
             </li>
-            <li>
-              <Link to={"/register"}>Daftar</Link>
+
+            <li id="link-daftar-1">
+              <Link to="/register">Daftar</Link>
             </li>
           </ul>
         </div>
@@ -59,7 +125,7 @@ const LoginNavbar = () => {
     <>
       <div className="navbar w-10/12 mx-auto mt-2 lg:mt-7 primary">
         <div className="navbar-start">
-          <div id-="dropdown" className="dropdown">
+          <div id="dropdown" className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -76,19 +142,23 @@ const LoginNavbar = () => {
                 />
               </svg>
             </label>
+
             <ul
               tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-52"
             >
               <li>
                 <Link
-                  id="link-register"
+                  id="link-daftar-2"
                   to="/register"
                   className="font-bold hover:bg-gray-50 mt-2 text-lg text-orange-600 sans"
                 >
                   Daftar
                 </Link>
-                <a
+
+                <Link
+                  id="link-home-2"
+                  to="/home"
                   className="btn border-none text-white font-semibold mt-2"
                   style={{
                     backgroundColor: "#F66B0E",
@@ -96,12 +166,13 @@ const LoginNavbar = () => {
                   }}
                 >
                   Getting Started
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
 
           <Link
+            id="link-landingpage-2"
             to="/"
             className="btn btn-ghost normal-case text-xl lg:text-3xl font-bold text-component font-poppins"
           >
@@ -111,6 +182,7 @@ const LoginNavbar = () => {
 
         <div className="navbar-end">
           <Link
+            id="link-register-3"
             to="/register"
             className="hidden lg:flex btn btn-ghost normal-case text-xl font-bold mr-5  color text-navy font-poppins"
           >
@@ -118,7 +190,8 @@ const LoginNavbar = () => {
           </Link>
 
           <Link
-            to="/"
+            id="link-home-3"
+            to="/home"
             className="btn hidden lg:flex border-none text-white font-semibold"
             style={{
               backgroundColor: "#F66B0E",

@@ -1,19 +1,19 @@
 import React, { useState, useEffect, ReactComponentElement } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 
+import imgRegis from "../../assets/imgregis.webp";
+
 import { CustomInput } from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { LoginNavbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
 import Layout from "../../components/Layout";
-import { usePasswordValidation } from "../../utils/hooks/PasswordValidation";
 
-import imgRegis from "../../assets/imgregis.webp";
+import { usePasswordValidation } from "../../utils/hooks/PasswordValidation";
 
 const Register = () => {
   const str =
@@ -46,13 +46,6 @@ const Register = () => {
     }
   }, [nama, option, email, password]);
 
-  // if (option === "1") {
-  //   // console.log(option);
-
-  // } else if (option === "2") {
-  //   // console.log(option);
-  // }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setDLoading(true);
     e.preventDefault();
@@ -78,8 +71,8 @@ const Register = () => {
           text: messsage,
           showCancelButton: false,
         });
-
-        option === "1" ? navigate("/login") : navigate("/editTeacher");
+        navigate("/login");
+        // option === "1" ? navigate("/login") : navigate("/editTeacher");
       })
       .catch((err) => {
         const { message } = err.response.data;

@@ -27,7 +27,7 @@ const Card: FC<CardProps> = ({
   const navigate = useNavigate();
 
   function onCLickReservasi() {
-    navigate(`/profileTeacher`);
+    navigate(`/profile-teacher`);
   }
 
   return (

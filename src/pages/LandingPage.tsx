@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
@@ -12,7 +13,54 @@ import Request from "../assets/request.svg";
 import Calender from "../assets/calender.svg";
 import avatar2 from "../assets/avatar2.webp";
 
+interface cardType {
+  nama_guru: string;
+  penilaian: number;
+  ulasan: string;
+}
+function Card({ nama_guru, penilaian, ulasan }: cardType) {
+  return (
+    <div className="flex-col bg-white w-[15rem] h-[20rem] flex p-4 rounded-2xl ">
+      <div className="leading-8 font-semibold text-lg pt-6 w-full h-[15rem] ">
+        <p>{ulasan} </p>
+      </div>
+      <br />
+      <p className="font-semibold">{nama_guru}</p>
+      <div className="flex flex-row  items-center">
+        <div className="flex">
+          <AiFillStar className="text-component w-5 h-5" />
+          <p className="font-semibold pl-1">{penilaian}</p>
+        </div>
+        <img
+          src={avatar2}
+          className="w-[3rem] ml-auto pr-2 "
+          alt="avatar"
+        />
+      </div>
+    </div>
+  );
+}
+
 function LandingPage() {
+  const [ulasans, setUlasan] = useState<cardType[]>([]);
+
+  useEffect(() => {
+    fetchUlasan();
+  }, []);
+
+  function fetchUlasan() {
+    axios
+      .get(
+        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/ulasan"
+      )
+      .then((res) => {
+        setUlasan(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+  }
   return (
     <Layout>
       <Navbar />
@@ -54,65 +102,18 @@ function LandingPage() {
           guru ulasan terbaik
         </h1>
       </div>
+
       <div className="flex flex-col lg:flex-row pt-20 gap-[3rem] pb-12 lg:pb-0 lg:h-[35rem] justify-center lg:gap-28 items-center">
-        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
-          <p className="leading-8 font-semibold text-lg pt-6">
-            Pak ahmad baik, ngajarnya cepat, banyak cara simple yang diajarkan
-            (ULASAN)
-          </p>
-          <br />
-          <p className="font-semibold">Ahmad Bambang</p>
-          <div className="flex flex-row justify-between ">
-            <div className="flex">
-              <AiFillStar className="text-component w-5 h-5" />
-              <p className="font-semibold pl-1">5</p>
-            </div>
-            <img
-              src={avatar2}
-              className="w-[3rem] justify-self-end"
-              alt="avatar"
-            />
-          </div>
-        </div>
-        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
-          <p className="leading-8 font-semibold text-lg pt-6">
-            Pak ahmad baik, ngajarnya cepat, banyak cara simple yang diajarkan
-            (ULASAN)
-          </p>
-          <br />
-          <p className="font-semibold">Ahmad Bambang</p>
-          <div className="flex flex-row justify-between ">
-            <div className="flex">
-              <AiFillStar className="text-component w-5 h-5" />
-              <p className="font-semibold pl-1">5</p>
-            </div>
-            <img
-              src={avatar2}
-              className="w-[3rem] justify-self-end"
-              alt="avatar"
-            />
-          </div>
-        </div>
-        <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
-          <p className="leading-8 font-semibold text-lg pt-6">
-            Pak ahmad baik, ngajarnya cepat, banyak cara simple yang diajarkan
-            (ULASAN)
-          </p>
-          <br />
-          <p className="font-semibold">Ahmad Bambang</p>
-          <div className="flex flex-row justify-between ">
-            <div className="flex">
-              <AiFillStar className="text-component w-5 h-5" />
-              <p className="font-semibold pl-1">5</p>
-            </div>
-            <img
-              src={avatar2}
-              className="w-[3rem] justify-self-end"
-              alt="avatar"
-            />
-          </div>
-        </div>
+        {ulasans.map((data, index) => (
+          <Card
+            key={index}
+            nama_guru={data.nama_guru}
+            penilaian={data.penilaian}
+            ulasan={data.ulasan}
+          />
+        ))}
       </div>
+
       <div className="h-[8rem] lg:h-[0rem] bg-white lg:pl-[13rem] lg:pt-20 pt-8 pl-2 text-center lg:text-start">
         <h1 className="text-4xl font-medium">
           Dengan cara yang
@@ -122,7 +123,9 @@ function LandingPage() {
       </div>
       <div className="flex flex-col lg:flex-row w-full  bg-white h-[35rem] lg:h-[30rem] justify-evenly lg:items-center ">
         <div className="pl-8 lg:pl-0">
-          <h1 className="text-2xl font-medium">1. Pilih guru anda</h1>
+          <h1 className="text-2xl font-medium">
+            1. Pilih guru anda
+          </h1>
           <br />
           <p className="lg:text-xl">
             cek profile guru dan
@@ -134,12 +137,22 @@ function LandingPage() {
             anda
           </p>
         </div>
-        <img className="w-[30rem]" src={Selecting} alt="Pilih guru anda" />
+        <img
+          className="w-[30rem]"
+          src={Selecting}
+          alt="Pilih guru anda"
+        />
       </div>
       <div className="flex flex-col-reverse lg:flex-row w-full h-[40rem] lg:h-[35rem] pt-20 lg:pt-0 justify-evenly items-center">
-        <img className="w-[30rem]" src={Request} alt="Pilih guru anda" />
+        <img
+          className="w-[30rem]"
+          src={Request}
+          alt="Pilih guru anda"
+        />
         <div>
-          <h1 className="text-2xl font-medium">2. Ajukan Permintaan belajar</h1>
+          <h1 className="text-2xl font-medium">
+            2. Ajukan Permintaan belajar
+          </h1>
           <br />
           <p className="lg:text-xl">
             Para guru akan
@@ -168,7 +181,11 @@ function LandingPage() {
             guru yang Anda pilih
           </p>
         </div>
-        <img className="w-[30rem]" src={Calender} alt="Pilih guru anda" />
+        <img
+          className="w-[30rem]"
+          src={Calender}
+          alt="Pilih guru anda"
+        />
       </div>
       <Footer />
     </Layout>
