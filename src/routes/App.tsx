@@ -11,13 +11,9 @@ import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
 
 import HalamanSesiMurid from "../pages/HalamanSesiMurid";
-
 import { HalamanSesiGuru } from "../pages/HistoryPage";
-
-// import HalamanSesiGuru from "../pages/HalamanSesiGuru";
-
 import PaymentDetails from "../pages/paymentDetails";
-import ProfileTeacher from "../pages/ProfilTeacher";
+
 import EditStudent from "../pages/EditStudent";
 import EditTeacher from "../pages/EditTeacher";
 import LandingPage from "../pages/LandingPage";
@@ -94,7 +90,6 @@ function App() {
     },
     {
       path: "/profile-teacher/:guru_id",
-
       element: <TabsContentForTeacherPage />,
     },
     // {

@@ -14,7 +14,7 @@ interface ModalProps {
   name: string;
 }
 
-const ModalPayment: FC<ModalProps> = ({ id, name }) => {
+export const ModalPayment: FC<ModalProps> = ({ id, name }) => {
   return (
     <>
       <div className="collapse-content flex flex-col">
@@ -164,42 +164,96 @@ export default function PaymentDetails() {
             <h2 className="font-bold underline text-2xl mt-5 ml-20">
               Metode Pembayaran
             </h2>
-            <div>
-              <div
-                tabIndex={0}
-                className="collapse collapse-plus border border-base-300 bg-base-100 rounded-box mt-6 w-11/12 mx-auto"
-              >
-                <div className="collapse-title text-xl font-medium flex flex-rows justify-between items-center">
-                  <div>
-                    <p className="text-xl font-semibold ">
-                      ATM / Bank Transfer
-                    </p>
-                  </div>
-                  <div className="flex flex-row justify-end">
-                    <img src={bca} className="w-2/12" />
-                    <img src={bri} className="w-2/12" />
+            <img src={bca} className="w-1/12 ml-16" />
+            {/* <CustomInput
+              id="input-selesaikantransaksi"
+              className="input w-10/12 ml-20 lg:w-7/12 bg-white border-2 border-label"
+              placeholder="898 - 989- 999 -6666"
+            /> */}
+            {/* The button to open modal */}
+            <label htmlFor="my-modal-3" className="btn w-3/12 mt-5 ml-20">
+              Selesaikan Transaksi
+            </label>
 
-                    <img src={bni} className="w-2/12" />
-                    <img src={permata} className="w-2/12" />
+            {/* Put this part before </body> tag */}
+            <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+            <div className="modal">
+              <div className="modal-box relative">
+                <label
+                  htmlFor="my-modal-3"
+                  className="btn btn-sm btn-circle absolute right-2 top-2"
+                >
+                  ✕
+                </label>
+                <h3 className="text-xl font-bold">BCA Payment</h3>
+                <hr className="mt-2" />
+
+                <div>
+                  <form>
+                    <label className="label mt-5">
+                      <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
+                        BCA Virtual Account Number
+                      </span>
+                    </label>
+
+                    <CustomInput
+                      id="input-va"
+                      type="number"
+                      placeholder="2227362736278"
+                      className="input w-full bg-white border-label border-2"
+                    />
+                  </form>
+                  <div className="collapse">
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
+                    <div className="collapse-title text-xl font-semibold mt-5">
+                      BCA Mobile
+                    </div>
+                    <div className="collapse-content">
+                      <p>hello</p>
+                    </div>
                   </div>
-                </div>
-                <ModalPayment id="modal-pembayaran" name="BCA" label="MyBCA" />
-                {/**/}
-              </div>
-              <div
-                tabIndex={0}
-                className="collapse collapse-plus border border-base-300 bg-base-100 rounded-box mt-6 w-11/12 mx-auto"
-              >
-                <div className="collapse-title text-xl font-medium flex flex-rows justify-between items-center">
-                  <div>
-                    <p className="text-xl font-semibold ">Metode QRIS</p>
+                  <div className="collapse">
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
+
+                    <div className="collapse-title text-xl font-semibold mt-5">
+                      MyBCA
+                    </div>
+                    <div className="collapse-content">
+                      <p>hello</p>
+                    </div>
                   </div>
-                  <div className="flex flex-row justify-end">
-                    <img src={qris} />
+                  <div className="collapse">
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
+                    <div className="collapse-title text-xl font-semibold mt-5">
+                      KlikBCA
+                    </div>
+                    <div className="collapse-content">
+                      <p>hello</p>
+                    </div>
                   </div>
-                </div>
-                <div className="collapse-content flex flex-col">
-                  <div>Content</div>
+                  <div className="collapse">
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
+                    <div className="collapse-title text-xl font-semibold mt-5">
+                      KlikBCA Bisnis
+                    </div>
+                    <div className="collapse-content">
+                      <p>hello</p>
+                    </div>
+                  </div>
+                  <div className="collapse">
+                    <CustomInput id="checkbox-pembayaran" type="checkbox" />
+                    <div className="collapse-title text-xl font-semibold mt-5">
+                      ATM BCA
+                    </div>
+                    <div className="collapse-content">
+                      <p>hello</p>
+                    </div>
+                    <CustomButton
+                      id="btn-pembayaran"
+                      className="bg-slate-700 w-7/12 p-2 text-white rounded-xl mt-5 hover:bg-slate-800"
+                      label="Bayar"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
