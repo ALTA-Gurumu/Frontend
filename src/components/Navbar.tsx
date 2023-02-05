@@ -35,7 +35,7 @@ function Navbar() {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to={"/HalamanSesiMurid"}>Profil</Link>
+              <Link to={"/profile-teacher/:guru_id"}>Profil</Link>
             </li>
 
             <li className="bg-component text-zinc-50">

@@ -23,6 +23,7 @@ import { HalamanSesiMurid } from "../pages/HistoryPage";
 import PaymentDetails from "../pages/paymentDetails";
 import Reservasi from "../pages/Reservasi";
 import EditTeacher from "../pages/EditTeacher";
+import ProfileTeacher from "../pages/ProfilTeacher";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -84,7 +85,7 @@ function App() {
       element: <ProfileStudent />,
     },
     {
-      path: "/profile-teacher",
+      path: "/profile-teacher/:guru_id",
       element: <TabsContentForTeacherPage />,
     },
     // {
