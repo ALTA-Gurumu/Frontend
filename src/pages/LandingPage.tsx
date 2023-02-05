@@ -6,7 +6,6 @@ import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import CustomBotton from "../components/CustomButton";
-
 import image1 from "../assets/image1.svg";
 import Selecting from "../assets/selecting.svg";
 import Request from "../assets/request.svg";
@@ -58,8 +57,8 @@ function LandingPage() {
       <div className="flex flex-col lg:flex-row pt-20 gap-[3rem] pb-12 lg:pb-0 lg:h-[35rem] justify-center lg:gap-28 items-center">
         <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
           <p className="leading-8 font-semibold text-lg pt-6">
-            Pak ahmad baik, ngajarnya cepat, banyak cara simple
-            yang diajarkan (ULASAN)
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple yang diajarkan
+            (ULASAN)
           </p>
           <br />
           <p className="font-semibold">Ahmad Bambang</p>
@@ -77,8 +76,8 @@ function LandingPage() {
         </div>
         <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
           <p className="leading-8 font-semibold text-lg pt-6">
-            Pak ahmad baik, ngajarnya cepat, banyak cara simple
-            yang diajarkan (ULASAN)
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple yang diajarkan
+            (ULASAN)
           </p>
           <br />
           <p className="font-semibold">Ahmad Bambang</p>
@@ -96,8 +95,8 @@ function LandingPage() {
         </div>
         <div className="flex-col bg-white w-[15rem] h-[20rem] flex justify-around p-4 rounded-2xl ">
           <p className="leading-8 font-semibold text-lg pt-6">
-            Pak ahmad baik, ngajarnya cepat, banyak cara simple
-            yang diajarkan (ULASAN)
+            Pak ahmad baik, ngajarnya cepat, banyak cara simple yang diajarkan
+            (ULASAN)
           </p>
           <br />
           <p className="font-semibold">Ahmad Bambang</p>
@@ -123,9 +122,7 @@ function LandingPage() {
       </div>
       <div className="flex flex-col lg:flex-row w-full  bg-white h-[35rem] lg:h-[30rem] justify-evenly lg:items-center ">
         <div className="pl-8 lg:pl-0">
-          <h1 className="text-2xl font-medium">
-            1. Pilih guru anda
-          </h1>
+          <h1 className="text-2xl font-medium">1. Pilih guru anda</h1>
           <br />
           <p className="lg:text-xl">
             cek profile guru dan
@@ -137,22 +134,12 @@ function LandingPage() {
             anda
           </p>
         </div>
-        <img
-          className="w-[30rem]"
-          src={Selecting}
-          alt="Pilih guru anda"
-        />
+        <img className="w-[30rem]" src={Selecting} alt="Pilih guru anda" />
       </div>
       <div className="flex flex-col-reverse lg:flex-row w-full h-[40rem] lg:h-[35rem] pt-20 lg:pt-0 justify-evenly items-center">
-        <img
-          className="w-[30rem]"
-          src={Request}
-          alt="Pilih guru anda"
-        />
+        <img className="w-[30rem]" src={Request} alt="Pilih guru anda" />
         <div>
-          <h1 className="text-2xl font-medium">
-            2. Ajukan Permintaan belajar
-          </h1>
+          <h1 className="text-2xl font-medium">2. Ajukan Permintaan belajar</h1>
           <br />
           <p className="lg:text-xl">
             Para guru akan
@@ -181,11 +168,7 @@ function LandingPage() {
             guru yang Anda pilih
           </p>
         </div>
-        <img
-          className="w-[30rem]"
-          src={Calender}
-          alt="Pilih guru anda"
-        />
+        <img className="w-[30rem]" src={Calender} alt="Pilih guru anda" />
       </div>
       <Footer />
     </Layout>

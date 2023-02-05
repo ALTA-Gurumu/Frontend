@@ -54,7 +54,7 @@ const Card: FC<CardProps> = ({
         <p className="line-clamp-3 text-justify text-zinc-900 ">{deskripsi}</p>
         <div className="text-end mt-4">
           <CustomButton
-            id="btn-reservasi"
+            id="btn-tarifperjam"
             className="h-10 px-2 rounded-2xl bg-[#205375] text-white shadow-lg hover:bg-[#2f6991]"
             label="Tarif Belajar : Rp 50000/jam"
             onClick={() => onCLickReservasi()}

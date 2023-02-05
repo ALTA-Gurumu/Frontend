@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 ::-webkit-scrollbar {
   border-radius: 9999px;
@@ -22,7 +23,8 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   border-radius: 9999px;
-  background: #555;}
+  background: #555;
+}
 
 body {
   padding: 0;

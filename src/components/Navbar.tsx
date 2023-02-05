@@ -17,12 +17,12 @@ function Navbar() {
       </div>
       <div className="flex-none gap-2">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <Link to="/HalamanSesiGuru">
+          <Link id="link-historysesiguru" to="/HalamanSesiGuru">
             <IoNotificationsOutline className="text-primary w-7 h-7" />
           </Link>
         </label>
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <Link to="/HalamanSesiMurid">
+          <Link id="link-historysesimurid" to="/HalamanSesiMurid">
             <IoNotificationsOutline className="text-primary w-7 h-7" />
           </Link>
         </label>
@@ -57,12 +57,9 @@ function Navbar() {
 const LoginNavbar = () => {
   return (
     <>
-      <div
-        className="navbar w-10/12 mx-auto mt-2 lg:mt-7"
-        style={{ backgroundColor: "#EFEFEF" }}
-      >
+      <div className="navbar w-10/12 mx-auto mt-2 lg:mt-7 primary">
         <div className="navbar-start">
-          <div className="dropdown">
+          <div id-="dropdown" className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -85,9 +82,9 @@ const LoginNavbar = () => {
             >
               <li>
                 <Link
+                  id="link-register"
                   to="/register"
-                  className="font-bold hover:bg-gray-50 mt-2 text-lg text-orange-600"
-                  style={{ fontFamily: "Poppins" }}
+                  className="font-bold hover:bg-gray-50 mt-2 text-lg text-orange-600 sans"
                 >
                   Daftar
                 </Link>
@@ -106,8 +103,7 @@ const LoginNavbar = () => {
 
           <Link
             to="/"
-            className="btn btn-ghost normal-case text-xl lg:text-3xl font-bold"
-            style={{ color: "#F66B0E", fontFamily: "Poppins" }}
+            className="btn btn-ghost normal-case text-xl lg:text-3xl font-bold text-component font-poppins"
           >
             GuruMu
           </Link>
@@ -116,8 +112,7 @@ const LoginNavbar = () => {
         <div className="navbar-end">
           <Link
             to="/register"
-            className="hidden lg:flex btn btn-ghost normal-case text-xl font-bold mr-5"
-            style={{ fontFamily: "Poppins", color: "#112B3C" }}
+            className="hidden lg:flex btn btn-ghost normal-case text-xl font-bold mr-5  color text-navy font-poppins"
           >
             Daftar
           </Link>

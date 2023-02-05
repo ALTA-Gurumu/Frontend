@@ -8,6 +8,7 @@ import Swal from "../utils/Swal";
 
 import { CustomInput, InputIcon } from "../components/CustomInput";
 
+
 import Profil2 from "../assets/profil2.webp";
 
 import { MdOutlineAlternateEmail } from "react-icons/md";
@@ -15,6 +16,8 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsPhoneFill } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
 import CustomButton from "../components/CustomButton";
+
+import { CustomInput } from "../components/CustomInput";
 
 const EditProfilStudent = () => {
   const MySwal = withReactContent(Swal);
@@ -111,6 +114,7 @@ const EditProfilStudent = () => {
             </div>
           </div>
 
+
           <div>
             <p className="items-start">Handphone</p>
             <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
@@ -123,6 +127,7 @@ const EditProfilStudent = () => {
                 onChange={(e) => handleChange(e.target.value, "telepon")}
               />
             </div>
+            
           </div>
 
           <div>
@@ -187,6 +192,7 @@ const EditProfilStudent = () => {
             }}
           />
           {/* Unggah Foto
+       
         <AiOutlineCloudUpload className="w-7 h-6" /> */}
         </div>
       </form>
