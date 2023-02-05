@@ -11,7 +11,7 @@ import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
 
 import HalamanSesiMurid from "../pages/HalamanSesiMurid";
-import HalamanSesiGuru from "../pages/HalamanSesiGuru";
+// import HalamanSesiGuru from "../pages/HalamanSesiGuru";
 import PaymentDetails from "../pages/paymentDetails";
 import ProfileTeacher from "../pages/ProfilTeacher";
 import EditStudent from "../pages/EditStudent";
@@ -60,10 +60,10 @@ function App() {
     //   path: "/editStudent",
     //   element: <EditStudent />,
     // },
-    {
-      path: "/HalamanSesiGuru",
-      element: <HalamanSesiGuru />,
-    },
+    // {
+    //   path: "/HalamanSesiGuru",
+    //   element: <HalamanSesiGuru />,
+    // },
     {
       path: "/HalamanSesiMurid",
       element: <HalamanSesiMurid />,
