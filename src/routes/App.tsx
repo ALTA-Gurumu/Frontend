@@ -11,12 +11,11 @@ import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
 
 import HalamanSesiMurid from "../pages/HalamanSesiMurid";
-import HalamanSesiGuru from "../pages/HalamanSesiGuru";
+import { HalamanSesiGuru } from "../pages/HistoryPage";
 import PaymentDetails from "../pages/paymentDetails";
-import ProfileTeacher from "../pages/ProfilTeacher";
+
 import EditStudent from "../pages/EditStudent";
 import EditTeacher from "../pages/EditTeacher";
-
 import LandingPage from "../pages/LandingPage";
 import Beranda from "../pages/Home";
 import Register from "../pages/auth/Register";
@@ -24,10 +23,6 @@ import Login from "../pages/auth/Login";
 import Rating from "../pages/Rating";
 
 import Reservasi from "../pages/Reservasi";
-
-import EditTeacher from "../pages/EditTeacher";
-import ProfileTeacher from "../pages/ProfilTeacher";
-
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -89,7 +84,7 @@ function App() {
       element: <ProfileStudent />,
     },
     {
-      path: "/profile-teacher/:guru_id",
+      path: "/profile-teacher/",
       element: <TabsContentForTeacherPage />,
     },
     // {
