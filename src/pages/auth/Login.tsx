@@ -26,6 +26,7 @@ const Login = () => {
 
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setDLoading] = useState<boolean>(false);
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -59,6 +60,7 @@ const Login = () => {
         // console.log(cookie)
 
         dispatch(handleAuth(true));
+
         MySwal.fire({
           title: "Succes Login",
           text: message,
@@ -104,6 +106,7 @@ const Login = () => {
                       id="input-email"
                       type="text"
                       onChange={(e) => setEmail(e.target.value)}
+                      name="email"
                       placeholder="@johndoe@gmail.com"
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                       style={{ border: "2px solid #424242" }}
@@ -121,6 +124,7 @@ const Login = () => {
                       id="input-password"
                       type="password"
                       onChange={(e) => setPassword(e.target.value)}
+                      name="password"
                       placeholder="*********"
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                       style={{ border: "2px solid #424242" }}
@@ -128,7 +132,7 @@ const Login = () => {
                     <CustomButton
                       id="btn-masuk"
                       label="Masuk"
-                      className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-600 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
+                      className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-500 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
                       style={{
                         fontFamily: "Poppins",
                       }}

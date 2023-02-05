@@ -11,10 +11,13 @@ import CustomButton from "../../components/CustomButton";
 import { LoginNavbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
 import Layout from "../../components/Layout";
+import { usePasswordValidation } from "../../utils/hooks/PasswordValidation";
 
 import imgRegis from "../../assets/imgregis.webp";
 
 const Register = () => {
+  const str =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "1234567890";
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
 
@@ -24,7 +27,12 @@ const Register = () => {
   const [nama, setNama] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [generatePass, setGeneratePass] = useState<string>("");
   const [option, setOption] = useState();
+
+  const [hasNumber, upperCase, lowerCase] = usePasswordValidation({
+    password: password,
+  });
 
   function handleChange(event: any) {
     setOption(event.target.value);
@@ -83,6 +91,16 @@ const Register = () => {
       })
       .finally(() => setDLoading(false));
   };
+
+  function generatePassword(length: number) {
+    let result = " ";
+    for (let i = 0; i <= length; i++) {
+      let randomChar = Math.floor(Math.random() * str.length + 1);
+      result += str.charAt(randomChar);
+    }
+
+    return setGeneratePass(result);
+  }
 
   return (
     <>
@@ -144,6 +162,7 @@ const Register = () => {
                       Email :
                     </span>
                   </label>
+
                   <CustomInput
                     id="input-email"
                     type="text"
@@ -151,19 +170,64 @@ const Register = () => {
                     className="input w-10/12 lg:w-8/12 mx-auto bg-white border-label border-2"
                     onChange={(e) => setEmail(e.target.value)}
                   />
+
                   <label className="label mt-5">
                     <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
                       Password :
                     </span>
                   </label>
-
-                  <CustomInput
-                    id="input-password"
-                    type="password"
-                    placeholder="*********"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-label"
-                    onChange={(e) => setPassword(e.target.value)}
+                  {password.length >= 8 &&
+                  hasNumber === true &&
+                  upperCase === true &&
+                  lowerCase === true ? (
+                    <>
+                      <CustomInput
+                        id="input-password"
+                        type="password"
+                        placeholder="Silahkan Masukan Password"
+                        className="input w-10/12 lg:w-8/12 mx-auto bg-white border-3 border-green-900"
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <p className="text-center text-lg text-green-600 border-green-700">
+                        Password yang anda masukkan kuat*
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <CustomInput
+                        id="input-password"
+                        type="password"
+                        placeholder="*********"
+                        className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-red-700"
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <p className="text-center text-red-600 text-lg">
+                        Password yang anda masukkan Lemah*
+                      </p>
+                    </>
+                  )}
+                  <CustomButton
+                    id="generate-password"
+                    label="Generate Secure Password"
+                    className="py-2 px-4 text-lg font-semibold"
+                    onClick={() => generatePassword(12)}
                   />
+                  {generatePass === "" ? (
+                    <p></p>
+                  ) : (
+                    <div className="flex flex-col just">
+                      <p className="flex-1 flex justify-center">
+                        {generatePass}
+                      </p>
+                      <CustomButton
+                        id="clear-generate"
+                        label="clear"
+                        className="py-2 px-4 flex-1 justify-center"
+                        onClick={() => setGeneratePass("")}
+                      />
+                    </div>
+                  )}
+
                   <CustomButton
                     id="btn-daftar"
                     label="Daftar"

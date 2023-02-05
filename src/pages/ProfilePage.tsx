@@ -24,7 +24,7 @@ import openMap from "../assets/google-maps.webp";
 import { Tabs, Tab, Classes } from "@blueprintjs/core";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useMemo, useState, useCallback } from "react";
 import { InputIcon } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
@@ -33,6 +33,10 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsPhoneFill } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
+import { DataTypesGuru } from "../utils/DataTypes";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { useParams } from "react-router";
 
 function ProfileStudent() {
   return (
@@ -269,16 +273,52 @@ const TabsContentForTeacherPage = () => {
 };
 
 const ProfileTeacher = () => {
+  const { guru_id } = useParams();
+  const [teacher, setTeacher] = useState<DataTypesGuru[]>([]);
+  const [, setCookie] = useCookies(["token"]);
+  const [cookie, removeCookie] = useCookies(["token"]);
+  const CheckToken = cookie.token;
+
+  // const fetchData = useCallback(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: `https://devmyproject.site/guru/${guru_id}`,
+  //     headers: {
+  //       Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJ1c2VySUQiOjl9.tts0-h8yVc0F32LZbSCqU5umPcvrQ6uR9L7M4YTcCig`,
+  //     },
+  //     params: {},
+  //   })
+  //     .then((response) => {
+  //       const ApiResponse = response.data;
+  //       setTeacher(ApiResponse.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, [fetchData]);
+
   return (
     <div className="flex flex-col p-8">
       <div className="flex lg:flex-row flex-col lg:items-start items-center w-full mt-10">
         <div className="flex flex-col items-center lg:w-4/12 w-11/12 lg:p-5 p-0 ">
           <div className="flex flex-col w-11/12 lg:h-[30rem] items-center rounded-3xl pb-4 bg-white text-[#424242] shadow-xl">
-            <img
-              src={Profil2}
-              alt="profil.webp"
-              className="lg:w-32 w-28 lg:h-32 h-28 rounded-full lg:mt-10 mt-5 mb-2"
-            />
+            {teacher.map((item, idx) => {
+              return (
+                <div key={idx}>
+                  {item.Email}
+                  <img
+                    src={item.Avatar}
+                    alt="profil.webp"
+                    className="lg:w-32 w-28 lg:h-32 h-28 rounded-full lg:mt-10 mt-5 mb-2"
+                  />
+                  {item.Nama}
+                </div>
+              );
+            })}
 
             <p className="lg:text-[36px] text-[28px] font-semibold mt-5 mb-5">
               {" "}
