@@ -39,7 +39,7 @@ function HalamanSesiMurid() {
   const [email, setEmail] = useState<string>("");
   const [alamat, setAlamat] = useState<string>("");
   const [telepon, setTelepon] = useState<string>("");
-  const [gambar, setGambar] = useState<string>("");
+  const [gambar, setGambar] = useState<any>();
 
   useEffect(() => {
     fetchData();
@@ -49,17 +49,18 @@ function HalamanSesiMurid() {
     axios
       .get(
         "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/siswa"
+        // "https://virtserver.swaggerhub.com/back-end-14-alterra/sosmed/1.0.0/users"
       )
       .then((res) => {
-        const { nama, email, alamat, telepon, avatar } = res.data.data;
+        const { nama, email, alamat, telepon, photo } = res.data.data;
 
         setNama(nama);
         setEmail(email);
         setAlamat(alamat);
         setTelepon(telepon);
-        setGambar(avatar);
+        setGambar(photo);
         // console.log(res.data.data);
-        // console.log(avatar);
+        // console.log(gambar);
       })
       .catch((err) => {
         alert(err.toString());
@@ -275,7 +276,7 @@ function HalamanSesiMurid() {
                       <div
                         className=" w-32 h-32 lg:mt-10 mt-14 border border-[#EFEFEF] rounded-full overflow-hidden mt- bg-no-repeat bg-cover"
                         style={{
-                          backgroundImage: `URL(${Profil2})`,
+                          backgroundImage: `URL(${gambar})`,
                         }}
                       >
                         <img src={gambar} alt="profil.jpg" />

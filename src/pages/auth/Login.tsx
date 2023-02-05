@@ -1,75 +1,72 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "../../utils/Swal";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
 
 import imgLogin from "../../assets/login-img.webp";
 
-import Layout from "../../components/Layout";
 import { CustomInput } from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import { Footer } from "../../components/Footer";
 import { LoginNavbar } from "../../components/Navbar";
+import { Footer } from "../../components/Footer";
+import Layout from "../../components/Layout";
+
+import { handleAuth } from "../../utils/redux/reducer/reducer";
 
 const Login = () => {
   const MySwal = withReactContent(Swal);
-  const [formLogin, setFormLogin] = useState({
-    email: "",
-    password: "",
-  });
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "id",
-    "email",
-    "token",
-    "role",
-    "verifikasi",
-  ]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [cookies, setCookies] = useCookies(["token", "role"]);
+
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setDLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
-    if (formLogin.email && formLogin.password) {
+    if (email && password) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [formLogin]);
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormLogin({
-      ...formLogin,
-      [event.target.name]: event.target.value,
-    });
-  };
+  }, [email, password]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setDLoading(true);
     e.preventDefault();
+
+    const body = {
+      email,
+      password,
+    };
+
     axios
-      .post("https://devmyproject.site/login", formLogin)
+      .post("https://devmyproject.site/login", body)
       .then((res) => {
+        const { data, message } = res.data;
+        const { role } = res.data.data;
+        // console.log(message);
+        // console.log(res.data.data);
         // console.log(cookies.role);
-        // console.log(cookies.verifikasi);
-        setCookie("id", res.data.data.id);
-        setCookie("email", res.data.data.email);
-        setCookie("token", res.data.token, { path: "/" });
-        setCookie("role", res.data.data.role, { path: "/" });
-        setCookie("verifikasi", res.data.data.verifikasi, {
-          path: "/",
-        });
-        const { message } = res.data;
+
+        setCookies("token", data.token, { path: "/" });
+        setCookies("role", role, { path: "/" });
+
+        dispatch(handleAuth(true));
+
         MySwal.fire({
           title: "Succes Login",
           text: message,
           showCancelButton: false,
         });
-        navigate("/");
+        navigate("/home");
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -96,8 +93,7 @@ const Login = () => {
                   Masuk
                 </h1>
                 <p className="text-center text-base text-black font-semibold w-8/12 mx-auto mt-7 tracking-normal">
-                  Lengkapi Formulir Dibawah dan Dapatkan Akses
-                  Masuk Akun Anda
+                  Lengkapi Formulir Dibawah dan Dapatkan Akses Masuk Akun Anda
                 </p>
                 <div className="form-control w-full ">
                   <label className="label mt-5">
@@ -109,8 +105,8 @@ const Login = () => {
                     <CustomInput
                       id="input-email"
                       type="text"
+                      onChange={(e) => setEmail(e.target.value)}
                       name="email"
-                      onChange={handleChange}
                       placeholder="@johndoe@gmail.com"
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                       style={{ border: "2px solid #424242" }}
@@ -127,9 +123,9 @@ const Login = () => {
                     <CustomInput
                       id="input-password"
                       type="password"
+                      onChange={(e) => setPassword(e.target.value)}
                       name="password"
                       placeholder="*********"
-                      onChange={handleChange}
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                       style={{ border: "2px solid #424242" }}
                     />
