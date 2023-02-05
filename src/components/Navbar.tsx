@@ -1,10 +1,34 @@
-import { Link } from "react-router-dom";
-import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+
+import withReactContent from "sweetalert2-react-content";
+import { handleAuth } from "../utils/redux/reducer/reducer";
+import Swal from "../utils/Swal";
 
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
+
+  const [cookie, , removeCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+  const checkRole = cookie.role;
+
+  const handleLogout = async () => {
+    removeCookie("token");
+    dispatch(handleAuth(false));
+    navigate("/login");
+    MySwal.fire({
+      title: "Log Out Account",
+      text: "You have been Logged out",
+      showCancelButton: false,
+    });
+  };
+
   return (
     <div className="navbar bg-card">
       <div className="flex-1">
@@ -15,17 +39,36 @@ function Navbar() {
           GuruMu
         </Link>
       </div>
+
       <div className="flex-none gap-2">
-        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <Link id="link-historysesiguru" to="/HalamanSesiGuru">
-            <IoNotificationsOutline className="text-primary w-7 h-7" />
-          </Link>
-        </label>
-        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <Link id="link-historysesimurid" to="/HalamanSesiMurid">
-            <IoNotificationsOutline className="text-primary w-7 h-7" />
-          </Link>
-        </label>
+        {checkToken && checkRole === "guru" ? (
+          <label
+            id="link-histori-sesi-guru"
+            tabIndex={0}
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <Link to="/HalamanSesiGuru">
+              <IoNotificationsOutline className="text-primary w-7 h-7" />
+            </Link>
+          </label>
+        ) : (
+          ""
+        )}
+
+        {checkToken && checkRole === "siswa" ? (
+          <label
+            id="link-histori-sesi-murid"
+            tabIndex={0}
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <Link to="/HalamanSesiMurid">
+              <IoNotificationsOutline className="text-primary w-7 h-7" />
+            </Link>
+          </label>
+        ) : (
+          ""
+        )}
+
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <FaRegUser className="text-primary w-7 h-7" />
@@ -35,15 +78,31 @@ function Navbar() {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to={"/HalamanSesiMurid"}>Profil</Link>
+              <button
+                onClick={() =>
+                  checkToken && checkRole === "siswa"
+                    ? navigate("/HalamanSesiMurid")
+                    : navigate("/profileTeacher")
+                }
+              >
+                Profil
+              </button>
             </li>
 
             <li className="bg-component text-zinc-50">
               <Link to={"/home"}>Home</Link>
             </li>
+
             <li>
-              <Link to={"/login"}>Masuk</Link>
+              <button
+                onClick={() =>
+                  checkToken ? handleLogout() : navigate("/login")
+                }
+              >
+                {checkToken ? "Keluar" : "Masuk"}
+              </button>
             </li>
+
             <li>
               <Link to={"/register"}>Daftar</Link>
             </li>

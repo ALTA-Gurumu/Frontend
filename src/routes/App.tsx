@@ -11,7 +11,7 @@ import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
 
 import HalamanSesiMurid from "../pages/HalamanSesiMurid";
-import HalamanSesiGuru from "../pages/HalamanSesiGuru";
+import { HalamanSesiGuru } from "../pages/HistoryPage";
 import PaymentDetails from "../pages/paymentDetails";
 import ProfileTeacher from "../pages/ProfilTeacher";
 import EditStudent from "../pages/EditStudent";
@@ -26,8 +26,9 @@ import Rating from "../pages/Rating";
 import Reservasi from "../pages/Reservasi";
 
 function App() {
-  const [cookie, , removeCookie] = useCookies(["token"]);
+  const [cookie, , removeCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
+  const checkRole = cookie.role;
 
   axios.interceptors.request.use(function (config) {
     config.headers = config.headers ?? {};
@@ -66,7 +67,12 @@ function App() {
     },
     {
       path: "/HalamanSesiMurid",
-      element: <HalamanSesiMurid />,
+      element:
+        checkToken && checkRole === "siswa" ? (
+          <HalamanSesiMurid />
+        ) : (
+          <Navigate to="/login" />
+        ),
     },
     {
       path: "paymentDetails",
@@ -85,7 +91,7 @@ function App() {
       element: <ProfileStudent />,
     },
     {
-      path: "/profile-teacher",
+      path: "/profileTeacher",
       element: <TabsContentForTeacherPage />,
     },
     // {

@@ -1,70 +1,70 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "../../utils/Swal";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
 
 import imgLogin from "../../assets/login-img.webp";
 
-import Layout from "../../components/Layout";
 import { CustomInput } from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import { Footer } from "../../components/Footer";
 import { LoginNavbar } from "../../components/Navbar";
+import { Footer } from "../../components/Footer";
+import Layout from "../../components/Layout";
+
+import { handleAuth } from "../../utils/redux/reducer/reducer";
 
 const Login = () => {
   const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [cookies, setCookies] = useCookies(["token", "role"]);
 
-  const [formLogin, setFormLogin] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "id",
-    "email",
-    "token",
-  ]);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setDLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormLogin({
-      ...formLogin,
-      [e.target.id]: e.target.value,
-    });
-  };
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
-    if (formLogin.email && formLogin.password) {
+    if (email && password) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [formLogin]);
+  }, [email, password]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setDLoading(true);
     e.preventDefault();
+
+    const body = {
+      email,
+      password,
+    };
+
     axios
-      .post("https://devmyproject.site/login", formLogin)
+      .post("https://devmyproject.site/login", body)
       .then((res) => {
-        setCookie("id", res.data.data.id);
-        console.log(res.data.data);
-        setCookie("email", res.data.data.username);
-        setCookie("token", res.data.token, { path: "/" });
-        const { message } = res.data;
+        const { data, message } = res.data;
+        const { role } = res.data.data;
+        // console.log(message);
+        // console.log(role);
+
+        setCookies("token", data.token, { path: "/" });
+        setCookies("role", role, { path: "/" });
+        // console.log(cookie)
+
+        dispatch(handleAuth(true));
         MySwal.fire({
           title: "Succes Login",
           text: message,
           showCancelButton: false,
         });
-        navigate("/");
+        navigate("/home");
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -91,8 +91,7 @@ const Login = () => {
                   Masuk
                 </h1>
                 <p className="text-center text-base text-black font-semibold w-8/12 mx-auto mt-7 tracking-normal">
-                  Lengkapi Formulir Dibawah dan Dapatkan Akses
-                  Masuk Akun Anda
+                  Lengkapi Formulir Dibawah dan Dapatkan Akses Masuk Akun Anda
                 </p>
                 <div className="form-control w-full ">
                   <label className="label mt-5">
@@ -104,7 +103,7 @@ const Login = () => {
                     <CustomInput
                       id="input-email"
                       type="text"
-                      onChange={handleChange}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="@johndoe@gmail.com"
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                       style={{ border: "2px solid #424242" }}
@@ -121,7 +120,7 @@ const Login = () => {
                     <CustomInput
                       id="input-password"
                       type="password"
-                      onChange={handleChange}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="*********"
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white"
                       style={{ border: "2px solid #424242" }}
@@ -129,11 +128,11 @@ const Login = () => {
                     <CustomButton
                       id="btn-masuk"
                       label="Masuk"
-                      className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                      className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-600 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
                       style={{
                         fontFamily: "Poppins",
                       }}
-                      // loading={loading || disabled}
+                      loading={loading || disabled}
                     />
                   </form>
                   <p className="text-center mt-5 text-slate-700 font-medium pb-10 lg:p-0">
