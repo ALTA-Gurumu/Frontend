@@ -10,7 +10,6 @@ import useCookies from "react-cookie/cjs/useCookies";
 import HalamanSesiMurid from "../pages/HalamanSesiMurid";
 import HalamanSesiGuru from "../pages/HalamanSesiGuru";
 import PaymentDetails from "../pages/paymentDetails";
-import ProfileStudent from "../pages/ProfileStudent";
 import ProfileTeacher from "../pages/ProfilTeacher";
 import EditStudent from "../pages/EditStudent";
 import EditTeacher from "../pages/EditTeacher";
@@ -75,10 +74,6 @@ function App() {
     {
       path: "/reservasi",
       element: <Reservasi />,
-    },
-    {
-      path: "/profileStudent",
-      element: <ProfileStudent />,
     },
     {
       path: "/profileTeacher",
