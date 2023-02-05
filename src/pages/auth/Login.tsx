@@ -54,7 +54,8 @@ const Login = () => {
     axios
       .post("https://devmyproject.site/login", formLogin)
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(cookies.role);
+        // console.log(cookies.verifikasi);
         setCookie("id", res.data.data.id);
         setCookie("email", res.data.data.email);
         setCookie("token", res.data.token, { path: "/" });
