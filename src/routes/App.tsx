@@ -9,19 +9,21 @@ import useCookies from "react-cookie/cjs/useCookies";
 
 import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
+
+import HalamanSesiMurid from "../pages/HalamanSesiMurid";
+import HalamanSesiGuru from "../pages/HalamanSesiGuru";
+import PaymentDetails from "../pages/paymentDetails";
 import ProfileTeacher from "../pages/ProfilTeacher";
+import EditStudent from "../pages/EditStudent";
+import EditTeacher from "../pages/EditTeacher";
+
 import LandingPage from "../pages/LandingPage";
+import Beranda from "../pages/Home";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
-import Beranda from "../pages/Home";
-
 import Rating from "../pages/Rating";
-import EditStudent from "../pages/EditStudent";
-import { HalamanSesiGuru } from "../pages/HistoryPage";
-import { HalamanSesiMurid } from "../pages/HistoryPage";
-import PaymentDetails from "../pages/paymentDetails";
+
 import Reservasi from "../pages/Reservasi";
-import EditTeacher from "../pages/EditTeacher";
 
 function App() {
   const [cookie, , removeCookie] = useCookies(["token"]);

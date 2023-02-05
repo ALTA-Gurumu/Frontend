@@ -187,6 +187,10 @@ const EditProfilStudent = () => {
             }}
           />
           {/* Unggah Foto
+<<<<<<< HEAD
+=======
+       
+>>>>>>> c8b781127a7bae8a4972e01456d8e6fce9820b78
         <AiOutlineCloudUpload className="w-7 h-6" /> */}
         </div>
       </form>
