@@ -104,8 +104,9 @@ function LandingPage() {
       </div>
 
       <div className="flex flex-col lg:flex-row pt-20 gap-[3rem] pb-12 lg:pb-0 lg:h-[35rem] justify-center lg:gap-28 items-center">
-        {ulasans.map((data) => (
+        {ulasans.map((data, index) => (
           <Card
+            key={index}
             nama_guru={data.nama_guru}
             penilaian={data.penilaian}
             ulasan={data.ulasan}
