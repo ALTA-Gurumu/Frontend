@@ -53,11 +53,11 @@ const Login = () => {
         const { data, message } = res.data;
         const { role } = res.data.data;
         // console.log(message);
-        // console.log(role);
+        // console.log(res.data.data);
+        // console.log(cookies.role);
 
         setCookies("token", data.token, { path: "/" });
         setCookies("role", role, { path: "/" });
-        // console.log(cookie)
 
         dispatch(handleAuth(true));
 
