@@ -7,15 +7,18 @@ import {
 } from "react-router-dom";
 import useCookies from "react-cookie/cjs/useCookies";
 
+import HalamanSesiMurid from "../pages/HalamanSesiMurid";
+import HalamanSesiGuru from "../pages/HalamanSesiGuru";
+import PaymentDetails from "../pages/paymentDetails";
+import ProfileTeacher from "../pages/ProfilTeacher";
+import EditStudent from "../pages/EditStudent";
+import EditTeacher from "../pages/EditTeacher";
 import { ProfileStudent } from "../pages/ProfilePage";
 import { TabsContentForTeacherPage } from "../pages/ProfilePage";
-
 import LandingPage from "../pages/LandingPage";
-
 import Beranda from "../pages/Home";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
-
 import Rating from "../pages/Rating";
 import EditStudent from "../pages/EditStudent";
 import { HalamanSesiGuru } from "../pages/HistoryPage";
