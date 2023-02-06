@@ -8,7 +8,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import CustomBotton from "../components/CustomButton";
 import image1 from "../assets/image1.svg";
-import Selecting from "../assets/selecting.svg";
+import Profiling from "../assets/profiling.svg";
 import Request from "../assets/request.svg";
 import Calender from "../assets/calender.svg";
 import avatar2 from "../assets/avatar2.webp";
@@ -137,7 +137,7 @@ function LandingPage() {
         </div>
         <img
           className="w-[30rem]"
-          src={Selecting}
+          src={Profiling}
           alt="Pilih guru anda"
         />
       </div>
