@@ -6,7 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
 import Swal from "../utils/Swal";
 
-import { IoNotificationsOutline } from "react-icons/io5";
+import { BsFillCalendarCheckFill } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
 
 function Navbar() {
@@ -49,7 +49,7 @@ function Navbar() {
             className="btn btn-ghost btn-circle avatar"
           >
             <Link to="/profile-teacher/:guru_id">
-              <IoNotificationsOutline className="text-primary w-7 h-7" />
+              <BsFillCalendarCheckFill className="text-primary w-7 h-7" />
             </Link>
           </label>
         ) : (
@@ -63,7 +63,7 @@ function Navbar() {
             className="btn btn-ghost btn-circle avatar"
           >
             <Link to="/HalamanSesiMurid">
-              <IoNotificationsOutline className="text-primary w-7 h-7" />
+              <BsFillCalendarCheckFill className="text-primary w-7 h-7" />
             </Link>
           </label>
         ) : (
@@ -71,7 +71,10 @@ function Navbar() {
         )}
 
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+          <label
+            tabIndex={0}
+            className="btn btn-ghost btn-circle avatar"
+          >
             <FaRegUser className="text-primary w-7 h-7" />
           </label>
           <ul
@@ -95,7 +98,10 @@ function Navbar() {
               ""
             )}
 
-            <li id="link-home-1" className="bg-component text-zinc-50">
+            <li
+              id="link-home-1"
+              className="bg-component text-zinc-50"
+            >
               <Link to="/home">Home</Link>
             </li>
 
@@ -103,7 +109,9 @@ function Navbar() {
               <button
                 id="btn-auth"
                 onClick={() =>
-                  checkToken ? handleLogout() : navigate("/login")
+                  checkToken
+                    ? handleLogout()
+                    : navigate("/login")
                 }
               >
                 {checkToken ? "Keluar" : "Masuk"}
@@ -126,7 +134,10 @@ const LoginNavbar = () => {
       <div className="navbar w-10/12 mx-auto mt-2 lg:mt-7 primary">
         <div className="navbar-start">
           <div id="dropdown" className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <label
+              tabIndex={0}
+              className="btn btn-ghost lg:hidden"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
