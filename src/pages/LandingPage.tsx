@@ -50,9 +50,7 @@ function LandingPage() {
 
   function fetchUlasan() {
     axios
-      .get(
-        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/ulasan"
-      )
+      .get("https://devmyproject.site/ulasan")
       .then((res) => {
         setUlasan(res.data.data);
         console.log(res.data.data);

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -13,7 +14,37 @@ import Profil from "../assets/profil.jpg";
 import Profil2 from "../assets/profil2.webp";
 import CustomButton from "../components/CustomButton";
 
+interface hometype {
+  guru_id: number;
+  nama: string;
+  alamat: string;
+  penilaian: number;
+  judul: string;
+  pelajaran: string;
+  avatar: string;
+  tarif: number;
+}
+
 function Home() {
+  const [homes, setHome] = useState<hometype[]>([]);
+
+  useEffect(() => {
+    fetchHome();
+  }, []);
+
+  function fetchHome() {
+    axios
+      .get(
+        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/guru"
+      )
+      .then((res) => {
+        // alert("masuk");
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+  }
   return (
     <Layout>
       <Navbar />
@@ -47,56 +78,6 @@ function Home() {
           <Card
             id="card-guru"
             image={Profil2}
-            nama={"Iwan"}
-            alamat={"Kab. Bululawang"}
-            rating={5}
-            deskripsi={
-              " Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast .....Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast ..... "
-            }
-          />
-          <Card
-            id="card-guru"
-            image={Profil}
-            nama={"Iwan"}
-            alamat={"Kab. Bululawang"}
-            rating={5}
-            deskripsi={
-              " Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast .....Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast ..... "
-            }
-          />
-          <Card
-            id="card-guru"
-            image={Profil2}
-            nama={"Iwan"}
-            alamat={"Kab. Bululawang"}
-            rating={5}
-            deskripsi={
-              " Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast .....Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast ..... "
-            }
-          />
-          <Card
-            id="card-guru"
-            image={Profil}
-            nama={"Iwan"}
-            alamat={"Kab. Bululawang"}
-            rating={5}
-            deskripsi={
-              " Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast .....Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast ..... "
-            }
-          />
-          <Card
-            id="card-guru"
-            image={Profil2}
-            nama={"Iwan"}
-            alamat={"Kab. Bululawang"}
-            rating={5}
-            deskripsi={
-              " Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast .....Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast ..... "
-            }
-          />{" "}
-          <Card
-            id="card-guru"
-            image={Profil}
             nama={"Iwan"}
             alamat={"Kab. Bululawang"}
             rating={5}
