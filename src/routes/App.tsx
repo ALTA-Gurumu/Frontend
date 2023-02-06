@@ -22,18 +22,19 @@ import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import Rating from "../pages/Rating";
 import Reservasi from "../pages/Reservasi";
+import Home from "../pages/Home";
 
 function App() {
-  const [cookie, , removeCookie] = useCookies(["token", "role"]);
+  const [cookie, , removeCookie] = useCookies(["token", "role", "verifikasi"]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
+  const checkVerifikasi = cookie.verifikasi;
 
   axios.interceptors.request.use(function (config) {
     config.headers = config.headers ?? {};
     config.headers.Authorization = `Bearer ${cookie.token}`;
     return config;
   });
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -55,6 +56,7 @@ function App() {
       path: "/ulasan/:guru_id",
       element: <Rating />,
     },
+
     // {
     //   path: "/editStudent",
     //   element: <EditStudent />,
@@ -66,27 +68,29 @@ function App() {
     {
       path: "/HalamanSesiMurid",
       element:
-        checkToken && checkRole === "siswa" ? (
-          <HalamanSesiMurid />
-        ) : (
-          <Navigate to="/login" />
-        ),
+        checkToken && checkRole === "siswa" ? <HalamanSesiMurid /> : <Login />,
     },
     {
       path: "paymentDetails",
-      element: <PaymentDetails />,
+      element:
+        checkToken && checkRole === "siswa" ? <PaymentDetails /> : <Login />,
     },
     {
       path: "/editTeacher",
-      element: <EditTeacher />,
+      element:
+        checkToken && checkRole === "guru" && checkVerifikasi === "false" ? (
+          <EditTeacher />
+        ) : (
+          <Home />
+        ),
     },
     {
       path: "/reservasi",
-      element: <Reservasi />,
+      element: checkToken ? <Reservasi /> : <Login />,
     },
     {
       path: "/profileStudent",
-      element: <ProfileStudent />,
+      element: checkToken ? <ProfileStudent /> : <Login />,
     },
     {
       path: "/profile-teacher/:guru_id",

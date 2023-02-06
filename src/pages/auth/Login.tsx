@@ -38,7 +38,7 @@ const Login = () => {
     }
   }, [email, password]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setDLoading(true);
     e.preventDefault();
 
@@ -53,7 +53,7 @@ const Login = () => {
         const { data, message } = res.data;
         const { role } = res.data.data;
         // console.log(message);
-        // console.log(res.data.data);
+        console.log(res.data.data);
         // console.log(cookies.role);
 
         setCookies("token", data.token, { path: "/" });

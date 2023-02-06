@@ -59,7 +59,7 @@ function HalamanSesiMurid() {
         setAlamat(alamat);
         setTelepon(telepon);
         setGambar(photo);
-        // console.log(res.data.data);
+        console.log(res.data.data);
         // console.log(gambar);
       })
       .catch((err) => {

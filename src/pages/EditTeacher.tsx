@@ -5,7 +5,7 @@ import { CustomInput } from "../components/CustomInput";
 import Layout from "../components/Layout";
 import avatar2 from "../assets/avatar2.webp";
 import { Footer } from "../components/Footer";
-import { LoginNavbar } from "../components/Navbar";
+import { LoginNavbar, Navbar } from "../components/Navbar";
 
 export default function EditTeacher() {
   const [option, setOption] = useState();
@@ -17,8 +17,8 @@ export default function EditTeacher() {
   return (
     <>
       {/* nama lengkap, peran, email, password*/}
-      <Layout>
-        <LoginNavbar />
+      <div>
+        {/* <Navbar /> */}
         <div className="w-full lg:min-h-screen flex justify-center items-center mt-5 mb-10">
           <div className=" w-10/12 mt-5 lg:mt-10 lg:w-8/12 h-full lg:h-6/6 bg-white rounded-3xl border-2 lg:pb-16">
             <div className="flex flex-col items-center lg:flex-row-reverse w-full h-full justify-center">
@@ -114,12 +114,8 @@ export default function EditTeacher() {
                       Pilih Salah Satu
                     </option>
                     <option value="1">Sekolah Dasar</option>
-                    <option value="2">
-                      Sekolah Menengah Pertama
-                    </option>
-                    <option value="3">
-                      Sekolah Menengah Atas
-                    </option>
+                    <option value="2">Sekolah Menengah Pertama</option>
+                    <option value="3">Sekolah Menengah Atas</option>
                   </select>
                   <div className="form-control">
                     <label className="label">
@@ -152,8 +148,8 @@ export default function EditTeacher() {
             </div>
           </div>
         </div>
-        <Footer />
-      </Layout>
+        {/* <Footer /> */}
+      </div>
     </>
   );
 }

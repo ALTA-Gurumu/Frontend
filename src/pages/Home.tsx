@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import { CustomInput, InputIcon } from "../components/CustomInput";
+import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
-import { InputIcon } from "../components/CustomInput";
 import Card from "../components/card";
 
-import { IoNewspaperOutline } from "react-icons/io5";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import { IoNewspaperOutline } from "react-icons/io5";
 import { BiSearchAlt } from "react-icons/bi";
 
-import Profil from "../assets/profil.jpg";
+import avatar2 from "../assets/avatar2.webp";
 import Profil2 from "../assets/profil2.webp";
-import CustomButton from "../components/CustomButton";
+import Profil from "../assets/profil.jpg";
 
 interface hometype {
   guru_id: number;
