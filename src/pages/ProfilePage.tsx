@@ -103,7 +103,7 @@ function ProfileStudent() {
           </div>
           <div
             className=" w-32 h-32 lg:mt-12 mt-24 border border-[#EFEFEF] rounded-full overflow-hidden mt- bg-no-repeat bg-cover"
-            style={{ backgroundImage: `URL(${Profil})` }}
+            style={{ backgroundImage: `URL(${""})` }}
           >
             <img src={Profil2} alt="profil.jpg" />
           </div>

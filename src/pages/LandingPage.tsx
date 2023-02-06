@@ -137,7 +137,7 @@ function LandingPage() {
         </div>
         <img
           className="w-[30rem]"
-          src={Selecting}
+          src=""
           alt="Pilih guru anda"
         />
       </div>
