@@ -2,16 +2,46 @@ export interface DataTypesGuru {
   ID: number;
   Nama: string;
   Email: string;
-  Password: string;
   Telepon: number;
-  Deskripsi: string;
+  LinkedIn: string;
+  Gelar: string;
+  TentangSaya: string;
+  Pengalaman: string;
+  LokasiAsal: string;
+  Offline: string;
+  Online: string;
+  Tarif: number;
   Pelajaran: string;
-  Alamat: string;
+  Pendidikan: string;
   Avatar: string;
   Ijazah: any;
-  Role: string;
   Latitude: number;
   Longitude: number;
+  Password: string;
+  Deskripsi: string;
+  Alamat: string;
+  Role: string;
+}
+
+export interface CompleteTeacher {
+  Nama?: string;
+  Email?: string;
+  Telepon?: number;
+  LinkedIn?: string;
+  Gelar?: string;
+  TentangSaya?: string;
+  Pengalaman?: string;
+  LokasiAsal?: string;
+  Offline?: string;
+  Online?: string;
+  Tarif?: number;
+  Pelajaran?: string;
+  Pendidikan?: string;
+  avatar?: string;
+  ijazah?: any;
+  Latitude?: number;
+  Longitude?: number;
+  onChangeOption?: () => void;
 }
 
 export interface ProfilType {

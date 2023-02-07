@@ -17,23 +17,11 @@ import { AiFillHome } from "react-icons/ai";
 import { FaLaptop } from "react-icons/fa";
 import { MdStars } from "react-icons/md";
 
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import openMap from "../assets/google-maps.webp";
 
-import {
-  Tabs,
-  Tab,
-  Classes,
-  RadioGroup,
-  Radio,
-} from "@blueprintjs/core";
+import { Tabs, Tab, Classes, RadioGroup, Radio } from "@blueprintjs/core";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useRef } from "react";
@@ -85,17 +73,10 @@ function ProfileStudent() {
             </p>
           </label>
 
-          <input
-            type="checkbox"
-            id="my-modal-5"
-            className="modal-toggle"
-          />
+          <input type="checkbox" id="my-modal-5" className="modal-toggle" />
           <div className="modal">
             <div className="modal-box lg:w-9/12 w-10/12 max-w-full lg:pl-10 lg:p-5 p-7 shadow-xl">
-              <label
-                htmlFor="my-modal-5"
-                className="absolute right-5 top-4"
-              >
+              <label htmlFor="my-modal-5" className="absolute right-5 top-4">
                 <IoMdCloseCircleOutline className="text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7" />
               </label>
               <EditProfilStudent />
@@ -123,10 +104,7 @@ function ProfileStudent() {
               <br />
               <p className=" font-semibold">
                 Handphone
-                <span className=" pl-[6px] font-normal">
-                  {" "}
-                  : 089566787765
-                </span>
+                <span className=" pl-[6px] font-normal"> : 089566787765</span>
               </p>
             </div>
             <div className="lg:ml-0 ml-3 lg:mt-0 mt-5">
@@ -162,10 +140,7 @@ const EditProfilStudent = () => {
           <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
             <BsPhoneFill className="w-7 h-6" />
 
-            <InputIcon
-              id="input-handphone"
-              placeholder="089788970987"
-            />
+            <InputIcon id="input-handphone" placeholder="089788970987" />
           </div>
         </div>
 
@@ -201,9 +176,7 @@ const EditProfilStudent = () => {
       </div>
 
       <div className="flex flex-col items-center lg:w-[50vw] w-[70vw] lg:pt-16 pt-0 lg:mt-0 mt-2">
-        <p className="text-[#112B3C] text-[34px] font-semibold">
-          Ubah Profil
-        </p>
+        <p className="text-[#112B3C] text-[34px] font-semibold">Ubah Profil</p>
         <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
           <img src={Profil2} alt="profil.jpg" />
         </div>
@@ -306,35 +279,46 @@ const TabsContentForTeacherPage = () => {
 };
 
 const ProfileTeacher = () => {
+  const [cookie, removeCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+  const checkRole = cookie.role;
+
   const [startDate, setStartDate] = useState(new Date());
   const [checkbox, setCheckBox] = useState("online");
-  const { guru_id } = useParams();
+
   const [teacher, setTeacher] = useState<DataTypesGuru[]>([]);
-  const [, setCookie] = useCookies(["token"]);
-  const [cookie, removeCookie] = useCookies(["token"]);
-  const CheckToken = cookie.token;
 
-  // const fetchData = useCallback(() => {
-  //   axios({
-  //     method: "GET",
-  //     url: `https://devmyproject.site/guru/${guru_id}`,
-  //     headers: {
-  //       Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJ1c2VySUQiOjl9.tts0-h8yVc0F32LZbSCqU5umPcvrQ6uR9L7M4YTcCig`,
-  //     },
-  //     params: {},
-  //   })
-  //     .then((response) => {
-  //       const ApiResponse = response.data;
-  //       setTeacher(ApiResponse.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  const [nama, setNama] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [alamat, setAlamat] = useState<string>("");
+  const [telepon, setTelepon] = useState<string>("");
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, [fetchData]);
+  function fetchData() {
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/siswa`,
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
+      params: {},
+    })
+      .then((res) => {
+        const { nama, email, alamat, telepon } = res.data.data;
+
+        setNama(nama);
+        setEmail(email);
+        setAlamat(alamat);
+        setTelepon(telepon);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => fetchData());
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="flex flex-col p-8">
@@ -365,333 +349,314 @@ const ProfileTeacher = () => {
               <p className="text-[14px]">{`${5} (6 ulasan)`} </p>
             </div>
             <p className="font-semibold lg:text-[16px] text-[14px] pr-8 mb-5">
-              Tarif Belajar/Jam{" "}
-              <span className="lg:ml-10 ml-2">Rp.{5000}</span>
+              Tarif Belajar/Jam <span className="lg:ml-10 ml-2">Rp.{5000}</span>
             </p>
-            {/* The button to open modal */}
-            <label
-              htmlFor="my-modal-3"
-              className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
-            >
-              {
-                <RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />
-              }
-              Reservasi
-            </label>
-
-            {/* Put this part before </body> tag */}
-            <input
-              type="checkbox"
-              id="my-modal-3"
-              className="modal-toggle"
-            />
-            <div className="modal">
-              <div className="modal-box w-11/12 max-w-5xl relative">
+            {checkToken && checkRole === "siswa" ? (
+              <>
                 <label
                   htmlFor="my-modal-3"
-                  className="btn btn-sm btn-circle absolute right-2 top-2"
+                  className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
                 >
-                  ✕
+                  {<RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />}
+                  Reservasi
                 </label>
-                <div className="w-full min-h-screen flex flex-row">
-                  <div className="flex-1 flex-col w-full min-h-scree">
-                    <div className="w-8/12 rounded-2xl bg-primary shadow-xl h-[30rem] mt-10 shad mx-auto">
-                      <img
-                        src={avatarImg}
-                        className="w-6/12 mx-auto pt-7"
-                      />
-                      <p className="font-bold text-3xl text-center mt-7">
-                        John Doe
-                      </p>
-                      <p className="flex flex-row justify-center mt-2">
-                        <span>
-                          <MdStars className="w-6 h-6 text-[#F66B0E] mr-2" />
-                        </span>
-                        <span className="text-lg font-semibold font-poppins">
-                          (6 Ulasan)
-                        </span>
-                      </p>
-                      <p className="flex justify-around mt-5">
-                        <span className="text-lg font-semibold">
-                          Tarif Belajar / Jam
-                        </span>
-                        <span className="text-lg font-semibold">
-                          Rp. 50.000
-                        </span>
-                      </p>
-                      <p className="text-lg font-bold text-center mt-5">
-                        Spelisasi dan Mapel
-                      </p>
-                      <p className="mt-5 text-center ">
-                        <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300">
-                          Bahasa Inggris
-                        </span>
-                        <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300 ">
-                          Sekolah Dasar
-                        </span>
-                      </p>
-                    </div>
 
-                    <h2 className="text-md text-center mt-5 font-bold">
-                      John Doe merespon pesan dengan cepat
-                    </h2>
-                    <h1 className="font-semibold text-xl mt-10 font-poppins ml-10">
-                      Pilih Metode Pembayaran
-                    </h1>
-                    <h3 className="font-semibold text-xl ml-10">
-                      Atm / Bank Transfer
-                    </h3>
-                    <div className="form-control flex flex-row">
-                      <CustomInput
-                        id="input-checkbox-online"
-                        name="online"
-                        checked={checkbox === "bca"}
-                        onChange={() => setCheckBox("bca")}
-                        type="checkbox"
-                        className="checkbox mt-5 ml-10"
-                      />
-                      <label className="ml-4">
-                        <span className="font-semibold text-lg">
-                          <img src={bca} className="w-8/12" />
-                        </span>
-                      </label>
-                    </div>
-                    <div className="form-control flex flex-row mt-5">
-                      <CustomInput
-                        id="input-checkbox-online"
-                        name="online"
-                        type="checkbox"
-                        checked={checkbox === "bni"}
-                        onChange={() => setCheckBox("bni")}
-                        className="checkbox ml-10"
-                      />
-                      <label className="ml-4">
-                        <span className="font-semibold text-lg">
-                          <img src={bni} className="w-8/12" />
-                        </span>
-                      </label>
-                    </div>
-                    <div className="form-control flex flex-row mt-5">
-                      <CustomInput
-                        id="input-checkbox-online"
-                        name="online"
-                        type="checkbox"
-                        checked={checkbox === "bri"}
-                        onChange={() => setCheckBox("bri")}
-                        className="checkbox mt-5 ml-10"
-                      />
-                      <label className="ml-4">
-                        <span className="font-semibold text-lg">
-                          <img src={bri} className="w-8/12" />
-                        </span>
-                      </label>
-                    </div>
-                    <div className="form-control flex flex-row mt-5">
-                      <CustomInput
-                        id="input-checkbox-online"
-                        name="online"
-                        type="checkbox"
-                        checked={checkbox === "permata"}
-                        onChange={() => setCheckBox("permata")}
-                        className="checkbox mt-5 ml-10"
-                      />
-                      <label className="ml-4">
-                        <span className="font-semibold text-lg">
+                {/* Put this part before </body> tag */}
+                <input
+                  type="checkbox"
+                  id="my-modal-3"
+                  className="modal-toggle"
+                />
+                <div className="modal">
+                  <div className="modal-box w-11/12 max-w-5xl relative">
+                    <label
+                      htmlFor="my-modal-3"
+                      className="btn btn-sm btn-circle absolute right-2 top-2"
+                    >
+                      ✕
+                    </label>
+                    <div className="w-full min-h-screen flex flex-row">
+                      <div className="flex-1 flex-col w-full min-h-scree">
+                        <div className="w-8/12 rounded-2xl bg-primary shadow-xl h-[30rem] mt-10 shad mx-auto">
                           <img
-                            src={permata}
-                            className="w-8/12"
+                            src={avatarImg}
+                            className="w-6/12 mx-auto pt-7"
                           />
-                        </span>
-                      </label>
-                    </div>
-                    <h1 className="mt-5 font-semibold text-xl ml-10">
-                      Mode QRIS
-                    </h1>
-                    <div className="form-control flex flex-row">
-                      <CustomInput
-                        id="input-checkbox-online"
-                        name="online"
-                        checked={checkbox === "qris"}
-                        onChange={() => setCheckBox("qris")}
-                        type="checkbox"
-                        className="checkbox mt-5 ml-10"
-                      />
-                      <label className="ml-4">
-                        <span className="font-semibold text-lg">
-                          <img
-                            src={qris}
-                            className="w-8/12 mt-5"
+                          <p className="font-bold text-3xl text-center mt-7">
+                            John Doe
+                          </p>
+                          <p className="flex flex-row justify-center mt-2">
+                            <span>
+                              <MdStars className="w-6 h-6 text-[#F66B0E] mr-2" />
+                            </span>
+                            <span className="text-lg font-semibold font-poppins">
+                              (6 Ulasan)
+                            </span>
+                          </p>
+                          <p className="flex justify-around mt-5">
+                            <span className="text-lg font-semibold">
+                              Tarif Belajar / Jam
+                            </span>
+                            <span className="text-lg font-semibold">
+                              Rp. 50.000
+                            </span>
+                          </p>
+                          <p className="text-lg font-bold text-center mt-5">
+                            Spelisasi dan Mapel
+                          </p>
+                          <p className="mt-5 text-center ">
+                            <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300">
+                              Bahasa Inggris
+                            </span>
+                            <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300 ">
+                              Sekolah Dasar
+                            </span>
+                          </p>
+                        </div>
+
+                        <h2 className="text-md text-center mt-5 font-bold">
+                          John Doe merespon pesan dengan cepat
+                        </h2>
+                        <h1 className="font-semibold text-xl mt-10 font-poppins ml-10">
+                          Pilih Metode Pembayaran
+                        </h1>
+                        <h3 className="font-semibold text-xl ml-10">
+                          Atm / Bank Transfer
+                        </h3>
+                        <div className="form-control flex flex-row">
+                          <CustomInput
+                            id="input-checkbox-online"
+                            name="online"
+                            checked={checkbox === "bca"}
+                            onChange={() => setCheckBox("bca")}
+                            type="checkbox"
+                            className="checkbox mt-5 ml-10"
                           />
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                  <div className="flex-1 flex-col w-full min-h-screen">
-                    <h1 className="font-bold text-3xl ml-5 mt-10">
-                      Reservasi
-                    </h1>
-                    <p className="font-semibold text-lg ml-5 mt-2 ">
-                      Let's thrive with John Doe
-                    </p>
-                    <p className="font-normal text-md w-10/12 ml-5">
-                      Perkenalkan diri anda dan ceritakan apa
-                      yang ingin anda pelajari
-                    </p>
-                    <div className="form-control mt-5 ">
-                      <label className="label">
-                        <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold">
-                          Tentang Saya
-                        </span>
-                      </label>
-                      <textarea
-                        id="input-tentang-saya"
-                        className="textarea textarea-bordered h-32 w-10/12 lg:w-11/12 mx-auto bg-white"
-                        placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
-                      ></textarea>
-                    </div>
-                    <h1 className="text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-10">
-                      Format Kursus
-                    </h1>
-                    <div className="flex flex-rows w-full mt-5 ml-5">
-                      <div className="form-control ">
+                          <label className="ml-4">
+                            <span className="font-semibold text-lg">
+                              <img src={bca} className="w-8/12" />
+                            </span>
+                          </label>
+                        </div>
+                        <div className="form-control flex flex-row mt-5">
+                          <CustomInput
+                            id="input-checkbox-online"
+                            name="online"
+                            type="checkbox"
+                            checked={checkbox === "bni"}
+                            onChange={() => setCheckBox("bni")}
+                            className="checkbox ml-10"
+                          />
+                          <label className="ml-4">
+                            <span className="font-semibold text-lg">
+                              <img src={bni} className="w-8/12" />
+                            </span>
+                          </label>
+                        </div>
+                        <div className="form-control flex flex-row mt-5">
+                          <CustomInput
+                            id="input-checkbox-online"
+                            name="online"
+                            type="checkbox"
+                            checked={checkbox === "bri"}
+                            onChange={() => setCheckBox("bri")}
+                            className="checkbox mt-5 ml-10"
+                          />
+                          <label className="ml-4">
+                            <span className="font-semibold text-lg">
+                              <img src={bri} className="w-8/12" />
+                            </span>
+                          </label>
+                        </div>
+                        <div className="form-control flex flex-row mt-5">
+                          <CustomInput
+                            id="input-checkbox-online"
+                            name="online"
+                            type="checkbox"
+                            checked={checkbox === "permata"}
+                            onChange={() => setCheckBox("permata")}
+                            className="checkbox mt-5 ml-10"
+                          />
+                          <label className="ml-4">
+                            <span className="font-semibold text-lg">
+                              <img src={permata} className="w-8/12" />
+                            </span>
+                          </label>
+                        </div>
+                        <h1 className="mt-5 font-semibold text-xl ml-10">
+                          Mode QRIS
+                        </h1>
+                        <div className="form-control flex flex-row">
+                          <CustomInput
+                            id="input-checkbox-online"
+                            name="online"
+                            checked={checkbox === "qris"}
+                            onChange={() => setCheckBox("qris")}
+                            type="checkbox"
+                            className="checkbox mt-5 ml-10"
+                          />
+                          <label className="ml-4">
+                            <span className="font-semibold text-lg">
+                              <img src={qris} className="w-8/12 mt-5" />
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                      <div className="flex-1 flex-col w-full min-h-screen">
+                        <h1 className="font-bold text-3xl ml-5 mt-10">
+                          Reservasi
+                        </h1>
+                        <p className="font-semibold text-lg ml-5 mt-2 ">
+                          Let's thrive with John Doe
+                        </p>
+                        <p className="font-normal text-md w-10/12 ml-5">
+                          Perkenalkan diri anda dan ceritakan apa yang ingin
+                          anda pelajari
+                        </p>
+                        <div className="form-control mt-5 ">
+                          <label className="label">
+                            <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold">
+                              Tentang Saya
+                            </span>
+                          </label>
+                          <textarea
+                            id="input-tentang-saya"
+                            className="textarea textarea-bordered h-32 w-10/12 lg:w-11/12 mx-auto bg-white"
+                            placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
+                          ></textarea>
+                        </div>
+                        <h1 className="text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-10">
+                          Format Kursus
+                        </h1>
+                        <div className="flex flex-rows w-full mt-5 ml-5">
+                          <div className="form-control ">
+                            <CustomInput
+                              id="input-checkbox-online"
+                              name="online"
+                              type="checkbox"
+                              checked={checkbox === "online"}
+                              onChange={() => setCheckBox("online")}
+                              className="checkbox"
+                            />
+                          </div>
+                          <label className="ml-4">
+                            <span className="font-bold text-xl">Online</span>
+                          </label>
+                          <div className="form-control ml-10">
+                            <CustomInput
+                              id="input-checkbox-offline"
+                              name="online"
+                              type="checkbox"
+                              checked={checkbox === "offline"}
+                              onChange={() => setCheckBox("offline")}
+                              className="checkbox"
+                            />
+                          </div>
+                          <label className="ml-4">
+                            <span className="font-bold text-xl">Offline</span>
+                          </label>
+                        </div>
+                        <h1 className="font-semibold text-lg m-5 mt-8">
+                          Tanggal Kursus Pertama
+                        </h1>
+                        <div className="flex flex-rows  w-10/12 lg:w-11/12 mx-auto mt-5">
+                          <DatePicker
+                            id="picker-calendar"
+                            selected={startDate}
+                            onChange={(date: any) => setStartDate(date)}
+                            className="px-3 py-2 w-11/12 text-lg font-normal"
+                          />
+                          <DatePicker
+                            id="picker-jam"
+                            selected={startDate}
+                            onChange={(date: any) => setStartDate(date)}
+                            showTimeSelect
+                            showTimeSelectOnly
+                            timeIntervals={15}
+                            timeCaption="Time"
+                            dateFormat="h:mm aa"
+                            className="px-3 py-2 text-lg font-normal"
+                          />
+                        </div>
+                        <div className="collapse">
+                          <CustomInput id="checkbox" type="checkbox" />
+                          <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2">
+                            <img src={openMap} className="w-2/12 mx-auto" />
+                          </div>
+                          <div className="collapse-content">
+                            <MapContainer
+                              center={center}
+                              zoom={13}
+                              scrollWheelZoom={false}
+                            >
+                              <TileLayer
+                                id="input-map"
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                              />
+                              <DraggableMarker />
+                            </MapContainer>
+                            <div className="flex justify-center pr-10 mt-">
+                              <CustomButton
+                                id="input-tempat-mengajar"
+                                label="Input Tempat Mengajar"
+                                className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <h1 className="font-semibold text-2xl m-5">
+                          Informasi Kontak
+                        </h1>
+                        <p className="font-normal text-lg w-11/12 ml-5">
+                          Kontak yang anda berikan hanya akan dibagikan ke guru
+                          terkait
+                        </p>
+                        <label className="label mt-5">
+                          <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
+                            Alamat
+                          </span>
+                        </label>
                         <CustomInput
-                          id="input-checkbox-online"
-                          name="online"
-                          type="checkbox"
-                          checked={checkbox === "online"}
-                          onChange={() => setCheckBox("online")}
-                          className="checkbox"
+                          id="input-gelar"
+                          type="text"
+                          defaultValue={alamat}
+                          className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
+                          placeholder="S1 Pendidikan Matematik "
                         />
-                      </div>
-                      <label className="ml-4">
-                        <span className="font-bold text-xl">
-                          Online
-                        </span>
-                      </label>
-                      <div className="form-control ml-10">
+                        <label className="label mt-5">
+                          <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
+                            No. Hp
+                          </span>
+                        </label>
                         <CustomInput
-                          id="input-checkbox-offline"
-                          name="online"
-                          type="checkbox"
-                          checked={checkbox === "offline"}
-                          onChange={() => setCheckBox("offline")}
-                          className="checkbox"
+                          id="input-gelar"
+                          type="text"
+                          defaultValue={telepon}
+                          className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
+                          placeholder="S1 Pendidikan Matematik "
                         />
-                      </div>
-                      <label className="ml-4">
-                        <span className="font-bold text-xl">
-                          Offline
-                        </span>
-                      </label>
-                    </div>
-                    <h1 className="font-semibold text-lg m-5 mt-8">
-                      Tanggal Kursus Pertama
-                    </h1>
-                    <div className="flex flex-rows  w-10/12 lg:w-11/12 mx-auto mt-5">
-                      <DatePicker
-                        id="picker-calendar"
-                        selected={startDate}
-                        onChange={(date: any) =>
-                          setStartDate(date)
-                        }
-                        className="px-3 py-2 w-11/12 text-lg font-normal"
-                      />
-                      <DatePicker
-                        id="picker-jam"
-                        selected={startDate}
-                        onChange={(date: any) =>
-                          setStartDate(date)
-                        }
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
-                        className="px-3 py-2 text-lg font-normal"
-                      />
-                    </div>
-                    <div className="collapse">
-                      <CustomInput
-                        id="checkbox"
-                        type="checkbox"
-                      />
-                      <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2">
-                        <img
-                          src={openMap}
-                          className="w-2/12 mx-auto"
-                        />
-                      </div>
-                      <div className="collapse-content">
-                        <MapContainer
-                          center={center}
-                          zoom={13}
-                          scrollWheelZoom={false}
-                        >
-                          <TileLayer
-                            id="input-map"
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                          />
-                          <DraggableMarker />
-                        </MapContainer>
-                        <div className="flex justify-center pr-10 mt-">
-                          <CustomButton
-                            id="input-tempat-mengajar"
-                            label="Input Tempat Mengajar"
-                            className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
-                          />
+                        <div className="flex justify-center pb-10">
+                          <Link to="/paymentDetails">
+                            <CustomButton
+                              id="btn-pembayaran"
+                              className="px-4 py-2 bg-label text-white rounded-lg mt-8"
+                              label="Lanjutkan Pembayaran"
+                            />
+                          </Link>
                         </div>
                       </div>
                     </div>
-                    <h1 className="font-semibold text-2xl m-5">
-                      Informasi Kontak
-                    </h1>
-                    <p className="font-normal text-lg w-11/12 ml-5">
-                      Kontak yang anda berikan hanya akan
-                      dibagikan ke guru terkait
-                    </p>
-                    <label className="label mt-5">
-                      <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
-                        Alamat
-                      </span>
-                    </label>
-                    <CustomInput
-                      id="input-gelar"
-                      type="text"
-                      className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
-                      placeholder="S1 Pendidikan Matematik "
-                    />
-                    <label className="label mt-5">
-                      <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
-                        No. Hp
-                      </span>
-                    </label>
-                    <CustomInput
-                      id="input-gelar"
-                      type="text"
-                      className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
-                      placeholder="S1 Pendidikan Matematik "
-                    />
-                    <div className="flex justify-center pb-10">
-                      <Link to="/paymentDetails">
-                        <CustomButton
-                          id="btn-pembayaran"
-                          className="px-4 py-2 bg-label text-white rounded-lg mt-8"
-                          label="Lanjutkan Pembayaran"
-                        />
-                      </Link>
-                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <p className="text-zinc-800 mt-6">
-              Mata Pelajaran dan Tingkatan
-            </p>
+              </>
+            ) : (
+              <>Cek Jadwal</>
+            )}
+
+            <p className="text-zinc-800 mt-6">Mata Pelajaran dan Tingkatan</p>
             <div className="flex text-[#637381] gap-8 text-[14px] mt-2">
-              <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">
-                Matematika
-              </p>
+              <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">Matematika</p>
               <p className="py-1 px-2 bg-[#b3b3b3]  rounded-lg">
                 Sekolah Dasar
               </p>
@@ -711,9 +676,8 @@ const ProfileTeacher = () => {
             Bachelor Degree of Mathematics
           </p>
           <p className="text-[14px] text-zinc-500 mt-5">
-            CumLaude Grade (GPA: 3.87 out of 4) || Curriculum:
-            IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and
-            National Curriculum.
+            CumLaude Grade (GPA: 3.87 out of 4) || Curriculum: IB, IGCSE, O
+            Level, AS/A Level, AP, SAT, ACT and National Curriculum.
           </p>
           <p className="font-bold text-[28px] text-zinc-900 mt-10">
             Tentang John Doe
@@ -721,16 +685,14 @@ const ProfileTeacher = () => {
           <ul className="lg:text-[16px] text-[15px]">
             <li className="flex gap-4 mt-8">
               <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-              Bachelor's Degree with more than 10 years
-              experienced teaching math from primary, secondary,
-              until senior.
+              Bachelor's Degree with more than 10 years experienced teaching
+              math from primary, secondary, until senior.
             </li>
             <li className="flex gap-4 mt-8">
               <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-              Experienced Teaching All Math Levels (AP Calculus,
-              Pre-Algebra, Algebra 1, Algebra 2, Geometry,
-              Trigonometry, SAT, ACT, etc) for any curriculums
-              such as Advanced Placement, IB (HL and SL),
+              Experienced Teaching All Math Levels (AP Calculus, Pre-Algebra,
+              Algebra 1, Algebra 2, Geometry, Trigonometry, SAT, ACT, etc) for
+              any curriculums such as Advanced Placement, IB (HL and SL),
               Cambridge (IGCSE, O Level and A Level).
             </li>
             <div className="mt-5">
@@ -738,11 +700,7 @@ const ProfileTeacher = () => {
                 Baca Selengkapnya ...
               </label>
 
-              <input
-                type="checkbox"
-                id="my-modal-3"
-                className="modal-toggle"
-              />
+              <input type="checkbox" id="my-modal-3" className="modal-toggle" />
               <div className="modal">
                 <div className="modal-box relative">
                   <label
@@ -757,42 +715,36 @@ const ProfileTeacher = () => {
                   <hr className="border-2 " />
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-                    Bachelor's Degree with more than 10 years
-                    experienced teaching math from primary,
-                    secondary, until senior.
+                    Bachelor's Degree with more than 10 years experienced
+                    teaching math from primary, secondary, until senior.
                   </li>
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-                    Experienced Teaching All Math Levels (AP
-                    Calculus, Pre-Algebra, Algebra 1, Algebra 2,
-                    Geometry, Trigonometry, SAT, ACT, etc) for
-                    any curriculums such as Advanced Placement,
-                    IB (HL and SL), Cambridge (IGCSE, O Level and
-                    A Level).
+                    Experienced Teaching All Math Levels (AP Calculus,
+                    Pre-Algebra, Algebra 1, Algebra 2, Geometry, Trigonometry,
+                    SAT, ACT, etc) for any curriculums such as Advanced
+                    Placement, IB (HL and SL), Cambridge (IGCSE, O Level and A
+                    Level).
                   </li>
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-                    Bachelor's Degree with more than 10 years
-                    experienced teaching math from primary,
-                    secondary, until senior.
+                    Bachelor's Degree with more than 10 years experienced
+                    teaching math from primary, secondary, until senior.
                   </li>
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-                    Experienced Teaching All Math Levels (AP
-                    Calculus, Pre-Algebra, Algebra 1, Algebra 2,
-                    Geometry, Trigonometry, SAT, ACT, etc) for
-                    any curriculums such as Advanced Placement,
-                    IB (HL and SL), Cambridge (IGCSE, O Level and
-                    A Level).
+                    Experienced Teaching All Math Levels (AP Calculus,
+                    Pre-Algebra, Algebra 1, Algebra 2, Geometry, Trigonometry,
+                    SAT, ACT, etc) for any curriculums such as Advanced
+                    Placement, IB (HL and SL), Cambridge (IGCSE, O Level and A
+                    Level).
                   </li>
                 </div>
               </div>
             </div>
           </ul>
 
-          <p className=" mt-10 mb-5 text-[24px] font-semibold">
-            Lokasi Kursus
-          </p>
+          <p className=" mt-10 mb-5 text-[24px] font-semibold">Lokasi Kursus</p>
           <div className="flex flex-wrap gap-10">
             <div className="flex gap-2 py-2 px-5 rounded-2xl lg:-mb-0 -mb-5 bg-white shadow-lg">
               <FaMapMarkerAlt className="w-5 h-5" />
@@ -826,10 +778,9 @@ const ProfileTeacher = () => {
               </div>
             </div>
             <p className="mt-4 lg:text-[16px] text-[15px]">
-              Sempurna! Thanks to him, my daughter test score
-              improve a lot now. I recommend to all parents who
-              wants to boost their child understanding and
-              confidence in Math
+              Sempurna! Thanks to him, my daughter test score improve a lot now.
+              I recommend to all parents who wants to boost their child
+              understanding and confidence in Math
             </p>
           </div>
           <div className="bg-white rounded-xl py-4 px-10 text-[16px]">
@@ -845,10 +796,9 @@ const ProfileTeacher = () => {
               </div>
             </div>
             <p className="mt-4 lg:text-[16px] text-[15px]">
-              Sempurna! Thanks to him, my daughter test score
-              improve a lot now. I recommend to all parents who
-              wants to boost their child understanding and
-              confidence in Math
+              Sempurna! Thanks to him, my daughter test score improve a lot now.
+              I recommend to all parents who wants to boost their child
+              understanding and confidence in Math
             </p>
           </div>
           <p className="mt-5">Lihat lebih banyak ......</p>
@@ -871,10 +821,7 @@ const EditProfileTeacher = () => {
             <h1 className="text-3xl font-bold text-center mt-5">
               Perbarui Profil Anda
             </h1>
-            <img
-              src={avatarImg}
-              className="w-2/6 mx-auto mt-5"
-            />
+            <img src={avatarImg} className="w-2/6 mx-auto mt-5" />
             <p className="text-center mt-5 text-md text-slate-400 ">
               * Uk. Foto maks 400 x 400 pixels
             </p>
@@ -965,17 +912,10 @@ const EditProfileTeacher = () => {
             <div className="collapse">
               <CustomInput id="checkbox" type="checkbox" />
               <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2">
-                <img
-                  src={openMap}
-                  className="w-2/12 justify-center"
-                />
+                <img src={openMap} className="w-2/12 justify-center" />
               </div>
               <div className="collapse-content">
-                <MapContainer
-                  center={center}
-                  zoom={13}
-                  scrollWheelZoom={false}
-                >
+                <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
                   <TileLayer
                     id="input-map"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -1062,9 +1002,7 @@ const EditProfileTeacher = () => {
                   />
                 </div>
                 <label className="ml-4">
-                  <span className="font-bold text-xl">
-                    Online
-                  </span>
+                  <span className="font-bold text-xl">Online</span>
                 </label>
                 <div className="form-control ml-10">
                   <CustomInput
@@ -1077,9 +1015,7 @@ const EditProfileTeacher = () => {
                   />
                 </div>
                 <label className="ml-4">
-                  <span className="font-bold text-xl">
-                    Offline
-                  </span>
+                  <span className="font-bold text-xl">Offline</span>
                 </label>
               </div>
             </div>
@@ -1130,8 +1066,4 @@ const EditProfileTeacher = () => {
   );
 };
 
-export {
-  ProfileStudent,
-  TabsContentForTeacherPage,
-  EditProfileTeacher,
-};
+export { ProfileStudent, TabsContentForTeacherPage, EditProfileTeacher };
