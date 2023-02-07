@@ -1,18 +1,26 @@
+import { Link, useNavigate } from "react-router-dom";
+import { Cookies, useCookies } from "react-cookie";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import { CustomInput, InputIcon } from "../components/CustomInput";
+import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
-import { InputIcon } from "../components/CustomInput";
 import Card from "../components/card";
 
-import { IoNewspaperOutline } from "react-icons/io5";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import { IoNewspaperOutline } from "react-icons/io5";
 import { BiSearchAlt } from "react-icons/bi";
 
-import Profil from "../assets/profil.jpg";
+import withReactContent from "sweetalert2-react-content";
+import { handleAuth } from "../utils/redux/reducer/reducer";
+import Swal from "../utils/Swal";
+
+import avatar2 from "../assets/avatar2.webp";
 import Profil2 from "../assets/profil2.webp";
-import CustomButton from "../components/CustomButton";
+import Profil from "../assets/profil.jpg";
 
 interface hometype {
   guru_id: number;
@@ -26,6 +34,11 @@ interface hometype {
 }
 
 function Home() {
+  const navigate = useNavigate();
+  const [cookies, , removeCookie] = useCookies(["role", "verifikasi"]);
+  const checkRole = cookies.role;
+  const checkVer = cookies.verifikasi;
+
   const [homes, setHome] = useState<hometype[]>([]);
 
   useEffect(() => {
@@ -45,9 +58,16 @@ function Home() {
         alert(err.response.data.message);
       });
   }
+
   return (
     <Layout>
       <Navbar />
+      <>
+        {checkRole === "guru" ? "guru" : "siswa"}
+        <br />
+        {checkVer === "false" ? "" : "true/undefine"}
+      </>
+
       <div className="flex flex-col items-center">
         <div className="flex gap-2 lg:w-[60vw] w-[90vw] bg-white text-[#112B3C] text-[20px] rounded-xl lg:px-6 px-2 py-2 mt-10  ">
           <div className="flex lg:w-5/12 w-7/12 lg:py-2 py-0 gap-2">

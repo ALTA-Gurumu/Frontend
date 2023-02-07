@@ -14,12 +14,16 @@ function Navbar() {
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
 
-  const [cookie, , removeCookie] = useCookies(["token", "role"]);
+  const [cookie, , removeCookie] = useCookies(["token", "role", "verifikasi"]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
+  const checkVer = cookie.verifikasi;
 
   const handleLogout = async () => {
     removeCookie("token");
+    removeCookie("role");
+    removeCookie("verifikasi");
+
     dispatch(handleAuth(false));
     navigate("/login");
     MySwal.fire({
@@ -42,7 +46,7 @@ function Navbar() {
       </div>
 
       <div className="flex-none gap-2">
-        {checkToken && checkRole === "guru" ? (
+        {checkToken && checkRole === "guru" && checkVer === "true" ? (
           <label
             id="link-histori-sesi-guru"
             tabIndex={0}
@@ -118,9 +122,13 @@ function Navbar() {
               </button>
             </li>
 
-            <li id="link-daftar-1">
-              <Link to="/register">Daftar</Link>
-            </li>
+            {checkToken ? (
+              ""
+            ) : (
+              <li id="link-daftar-1">
+                <Link to="/register">Daftar</Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -184,7 +192,7 @@ const LoginNavbar = () => {
 
           <Link
             id="link-landingpage-2"
-            to="/"
+            to="/home"
             className="btn btn-ghost normal-case text-xl lg:text-3xl font-bold text-component font-poppins"
           >
             GuruMu
