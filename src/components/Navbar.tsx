@@ -17,6 +17,7 @@ function Navbar() {
   const [cookie, , removeCookie] = useCookies(["token", "role", "verifikasi"]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
+  const checkVer = cookie.verifikasi;
 
   const handleLogout = async () => {
     removeCookie("token");
@@ -45,7 +46,7 @@ function Navbar() {
       </div>
 
       <div className="flex-none gap-2">
-        {checkToken && checkRole === "guru" ? (
+        {checkToken && checkRole === "guru" && checkVer === "true" ? (
           <label
             id="link-histori-sesi-guru"
             tabIndex={0}
