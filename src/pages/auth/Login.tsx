@@ -56,7 +56,7 @@ const Login = () => {
         const { role, verifikasi } = res.data.data;
 
         // console.log(res.data.token);
-        console.log(cookies);
+        // console.log(cookies);
 
         setCookies("token", res.data.token, { path: "/" });
         setCookies("role", role, { path: "/" });
