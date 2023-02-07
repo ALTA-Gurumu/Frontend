@@ -16,12 +16,12 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
+import { CompleteTeacher } from "../utils/DataTypes";
 import Swal from "../utils/Swal";
 
 import imgLogin from "../assets/login-img.webp";
-import avatar2 from "../assets/avatar2.webp";
+import DeafultAvatar from "../assets/avatar2.webp";
 import Profil2 from "../assets/profil2.webp";
-import Profil from "../assets/profil.jpg";
 
 interface hometype {
   guru_id: number;
@@ -36,31 +36,31 @@ interface hometype {
 
 function Home() {
   const navigate = useNavigate();
-  const [cookies, , removeCookie] = useCookies(["role", "verifikasi"]);
+  const [cookies, , removeCookie] = useCookies([
+    "token",
+    "role",
+    "verifikasi",
+    "guru_id",
+  ]);
+  const checkToken = cookies.token;
   const checkRole = cookies.role;
   const checkVer = cookies.verifikasi;
+  const checkId = cookies.guru_id;
   const MySwal = withReactContent(Swal);
 
   const [homes, setHome] = useState<hometype[]>([]);
   const [modal, setModal] = useState<string>("modal-open");
 
-  useEffect(() => {
-    fetchHome();
-  }, []);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
-  function fetchHome() {
-    axios
-      .get(
-        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/guru"
-      )
-      .then((res) => {
-        // alert("masuk");
-        console.log(res.data.data);
-      })
-      .catch((err) => {
-        alert(err.response.data.message);
-      });
-  }
+  const [avatar, setAvatar] = useState<any>("");
+  const [ijazah, setIjazah] = useState<any>("");
+  const [lokasiAsal, setLokasiAsal] = useState<string>("");
+  const [pendidikan, setPendidikan] = useState<string>("");
+  const [telefon, setTelefon] = useState<string>("");
+  const [LinkedIn, setLinkedIn] = useState<string>("");
+  const [deskripsi, setDeskripsi] = useState<string>("");
 
   const skipHandle = async () => {
     setModal("modal");
@@ -71,147 +71,289 @@ function Home() {
     });
   };
 
+  useEffect(() => {
+    fetchHome();
+  }, []);
+
+  function fetchHome() {
+    axios
+      .get(
+        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/guru"
+      )
+      .then((res) => {})
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    axios
+      .get(`https://devmyproject.site/guru/${checkId}`, {
+        headers: { Authorization: `Bearer ${checkToken}` },
+      })
+      .then((res) => {
+        const {
+          Ijazah,
+          LokasiAsal,
+          Pendidikan,
+          Telepon,
+          LinkedIn,
+          TentangSaya,
+        } = res.data.data;
+
+        setAvatar(res.data.data.Avatar);
+        setLokasiAsal(LokasiAsal);
+        setLinkedIn(LinkedIn);
+        setTelefon(Telepon);
+        setAvatar(Ijazah);
+        setPendidikan(Pendidikan);
+        setDeskripsi(TentangSaya);
+
+        // console.log(res.data.data);
+        // console.log(res.data.data.TentangSaya);
+        // console.log(deskripsi);
+        // console.log(res.data.data.Avatar);
+        // console.log(avatar);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+    const formData = new FormData();
+    let key: keyof typeof objSubmit;
+    for (key in objSubmit) {
+      formData.append(key, objSubmit[key]);
+    }
+
+    axios
+      .put("https://devmyproject.site/guru", formData, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+          "Content-Type": " multipart/form-data ",
+        },
+      })
+      .then((res) => {
+        const { message } = res.data;
+        MySwal.fire({
+          title: "Edit Succesfull",
+          text: message,
+          showCloseButton: false,
+        });
+        setObjSubmit({});
+      })
+      .catch((err) => {
+        const { data } = err.response;
+        MySwal.fire({
+          title: "Edit Failed",
+          text: data.message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => fetchData());
+  };
+
+  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+    let temp = { ...objSubmit };
+    temp[key] = value;
+    setObjSubmit(temp);
+  };
+
   return (
     <Layout>
       <Navbar />
       <>
         <br />
         {checkVer === "false" ? (
-          <div className={`modal ${modal}`}>
-            <div className="modal-box lg:w-9/12 w-10/12 max-w-full shadow-xl p-4">
-              <div className="w-full flex lg:flex-row flex-col relative">
-                <IoMdCloseCircleOutline
-                  onClick={() => skipHandle()}
-                  className="absolute top-0 right-0 text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7"
-                />
-                <div className="lg:w-6/12 w-full flex flex-col items-center justify-center">
-                  <h1 className="text-navy text-center text-xl lg:text-3xl font-bold mb-5">
-                    Selesaikan Profil Anda
-                  </h1>
-                  <img
-                    src={imgLogin}
-                    className=" w-4/12 max-w-full mt-10 lg:mt-0"
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div className={`modal ${modal}`}>
+              <div className="modal-box lg:w-9/12 w-10/12 max-w-full shadow-xl p-4">
+                <div className="w-full flex lg:flex-row flex-col relative">
+                  <IoMdCloseCircleOutline
+                    onClick={() => skipHandle()}
+                    className="absolute top-0 right-0 text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7"
                   />
-                  <p className="text-center text-gray-500 font-semibold mt-2">
-                    * Uk. photo 400 x 400 pixels
-                  </p>
-                  <CustomInput
-                    id="input-avatar"
-                    type="file"
-                    accept="image/png, image/jpg, image/jpeg"
-                    className="file-input h-10 w-full max-w-xs flex justify-center bg-white lg:mt-4"
-                  />
-
-                  <CustomInput
-                    id="input-linkedin"
-                    type="text"
-                    placeholder="LInkedin Profile"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
-                    style={{ border: "2px solid #424242" }}
-                  />
-
-                  <label className="label">
-                    <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
-                      Upload Ijazah
-                    </span>
-                  </label>
-
-                  <CustomInput
-                    id="input-ijazah"
-                    type="file"
-                    className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
-                  />
-                </div>
-
-                <div className="lg:w-7/12 w-full items-center lg:pl-16 pl-0 lg:mx-0 mx-2">
-                  <div className="form-control w-full ">
-                    <label className="label mt-5">
-                      <span
-                        className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
-                        style={{ color: "#424242" }}
-                      >
-                        Alamat :
-                      </span>
-                    </label>
-
+                  <div className="lg:w-6/12 w-full flex flex-col items-center justify-center">
+                    <h1 className="text-navy text-center text-xl lg:text-3xl font-bold mb-5">
+                      Selesaikan Profil Anda
+                    </h1>
+                    <div>
+                      <img
+                        src={avatar}
+                        className=" w-4/12 max-w-full mt-10 lg:mt-0"
+                      />
+                    </div>
+                    <p className="text-center text-gray-500 font-semibold mt-2">
+                      * Uk. photo 400 x 400 pixels
+                    </p>
                     <CustomInput
-                      id="input-alamat"
-                      type="text"
-                      placeholder="Contoh : Sukabumi"
-                      className="input w-10/12 lg:w-9/12 bg-white"
-                      style={{ border: "2px solid #424242" }}
+                      id="input-avatar"
+                      type="file"
+                      accept="image/png, image/jpg, image/jpeg"
+                      className="file-input h-10 w-full max-w-xs flex justify-center bg-white lg:mt-4"
+                      onChange={(e) => {
+                        if (!e.currentTarget.files) {
+                          return;
+                        }
+                        setAvatar(
+                          URL.createObjectURL(e.currentTarget.files[0])
+                        );
+                        handleChange(e.currentTarget.files[0], "avatar");
+                      }}
                     />
-
-                    <label className="label mt-2">
-                      <span
-                        className="label-text text-lg w-10/12 lg:w-9/12 font-semibold"
-                        style={{ color: "#424242" }}
-                      >
-                        Handphone :
-                      </span>
-                    </label>
-
                     <CustomInput
-                      id="input-no-hp"
-                      type="number"
-                      placeholder="0891234556"
-                      className="input w-10/12 lg:w-9/12 bg-white"
+                      id="input-linkedin"
+                      type="text"
+                      className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
                       style={{ border: "2px solid #424242" }}
+                      placeholder={LinkedIn}
+                      defaultValue={LinkedIn}
+                      onChange={(e) => handleChange(e.target.value, "LinkedIn")}
                     />
 
                     <label className="label">
-                      <span
-                        className="label-text text-lg w-10/12 lg:w-9/12 font-semibold mt-2"
-                        style={{ color: "#424242" }}
-                      >
-                        Jenjang Pendidikan :
+                      <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
+                        Upload Ijazah
                       </span>
                     </label>
-                    <select
-                      defaultValue={"DEFAULT"}
-                      id="input-jenjang-pengajaran"
-                      className="select select-bordered w-10/12 lg:w-9/12  bg-white"
-                      style={{ border: "2px solid #424242" }}
-                      name="option"
-                      // onChange={handleChange}
-                    >
-                      <option value="DEFAULT" disabled>
-                        Pilih Salah Satu
-                      </option>
-                      <option value="1">Sekolah Dasar</option>
-                      <option value="2">Sekolah Menengah Pertama</option>
-                      <option value="3">Sekolah Menengah Atas</option>
-                    </select>
-                    <div className="form-control">
-                      <label className="label">
-                        <span
-                          className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
-                          style={{ color: "#424242" }}
-                        >
-                          Biografi Saya :
-                        </span>
-                      </label>
-                      <textarea
-                        id="input-bio"
-                        className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
-                        placeholder="Ceritakan biografi singkat anda"
-                        style={{ border: "2px solid #424242" }}
-                      ></textarea>
-                    </div>
 
-                    <CustomButton
-                      id="btn-daftar"
-                      label="Update Data"
-                      className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
-                      style={{
-                        fontFamily: "Poppins",
+                    <CustomInput
+                      id="input-ijazah"
+                      type="file"
+                      className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
+                      onChange={(e) => {
+                        if (!e.currentTarget.files) {
+                          return;
+                        }
+                        setIjazah(
+                          URL.createObjectURL(e.currentTarget.files[0])
+                        );
+                        handleChange(e.currentTarget.files[0], "ijazah");
                       }}
                     />
+                  </div>
+
+                  <div className="lg:w-7/12 w-full items-center lg:pl-16 pl-0 lg:mx-0 mx-2">
+                    <div className="form-control w-full ">
+                      <label className="label mt-5">
+                        <span
+                          className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
+                          style={{ color: "#424242" }}
+                        >
+                          Alamat :
+                        </span>
+                      </label>
+
+                      <CustomInput
+                        id="input-alamat"
+                        type="text"
+                        className="input w-10/12 lg:w-9/12 bg-white"
+                        style={{ border: "2px solid #424242" }}
+                        placeholder={"contoh : Blitar"}
+                        defaultValue={lokasiAsal}
+                        onChange={(e) =>
+                          handleChange(e.target.value, "LokasiAsal")
+                        }
+                      />
+
+                      <label className="label mt-2">
+                        <span
+                          className="label-text text-lg w-10/12 lg:w-9/12 font-semibold"
+                          style={{ color: "#424242" }}
+                        >
+                          Handphone :
+                        </span>
+                      </label>
+
+                      <CustomInput
+                        id="input-no-hp"
+                        type="number"
+                        className="input w-10/12 lg:w-9/12 bg-white"
+                        style={{ border: "2px solid #424242" }}
+                        placeholder={"contoh : 0891234556"}
+                        defaultValue={telefon}
+                        onChange={(e) =>
+                          handleChange(e.target.value, "Telepon")
+                        }
+                      />
+
+                      <label className="label">
+                        <span
+                          className="label-text text-lg w-10/12 lg:w-9/12 font-semibold mt-2"
+                          style={{ color: "#424242" }}
+                        >
+                          Jenjang Pendidikan :
+                        </span>
+                      </label>
+
+                      <select
+                        defaultValue={"DEFAULT"}
+                        id="input-jenjang-pengajaran"
+                        className="select select-bordered w-10/12 lg:w-9/12  bg-white"
+                        style={{ border: "2px solid #424242" }}
+                        name="option"
+                        onChange={(e) =>
+                          handleChange(e.target.value, "Pendidikan")
+                        }
+                      >
+                        <option value="DEFAULT" disabled>
+                          {pendidikan === ""
+                            ? "Pilih Salah Satu"
+                            : `${pendidikan}`}
+                        </option>
+                        <option value="Sekolah Dasar">Sekolah Dasar</option>
+                        <option value="Sekolah Menengah Pertama">
+                          Sekolah Menengah Pertama
+                        </option>
+                        <option value="Sekolah Menengah Atas">
+                          Sekolah Menengah Atas
+                        </option>
+                      </select>
+
+                      <div className="form-control">
+                        <label className="label">
+                          <span
+                            className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
+                            style={{ color: "#424242" }}
+                          >
+                            Biografi Saya :
+                          </span>
+                        </label>
+                        <textarea
+                          id="input-bio"
+                          className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
+                          style={{ border: "2px solid #424242" }}
+                          placeholder="Ceritakan biografi singkat anda"
+                          defaultValue={deskripsi}
+                          onChange={(e) =>
+                            handleChange(e.target.value, "TentangSaya")
+                          }
+                        ></textarea>
+                      </div>
+
+                      <CustomButton
+                        id="btn-daftar"
+                        label="Update Data"
+                        className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                        style={{
+                          fontFamily: "Poppins",
+                        }}
+                        loading={loading}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         ) : (
           ""
         )}

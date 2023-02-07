@@ -23,9 +23,16 @@ const Login = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cookies, setCookies] = useCookies(["token", "role", "verifikasi"]);
+  const [cookies, setCookies] = useCookies([
+    "token",
+    "role",
+    "verifikasi",
+    "guru_id",
+    "nama",
+  ]);
   const checkRole = cookies.role;
   const checkVer = cookies.verifikasi;
+  const checkId = cookies.guru_id;
 
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setDLoading] = useState<boolean>(false);
@@ -53,13 +60,15 @@ const Login = () => {
       .post("https://devmyproject.site/login", body)
       .then((res) => {
         const { message } = res.data;
-        const { role, verifikasi } = res.data.data;
+        const { role, verifikasi, nama, guru_id } = res.data.data;
 
         // console.log(res.data.token);
         // console.log(cookies);
 
         setCookies("token", res.data.token, { path: "/" });
         setCookies("role", role, { path: "/" });
+        setCookies("nama", nama, { path: "/" });
+        setCookies("guru_id", guru_id, { path: "/" });
         setCookies("verifikasi", verifikasi, { path: "/" });
 
         dispatch(handleAuth(true));
@@ -69,8 +78,7 @@ const Login = () => {
           text: message,
           showCancelButton: false,
         });
-
-        navigate("/home");
+        navigate(`/home`);
       })
       .catch((err) => {
         alert(err.response.data.message);

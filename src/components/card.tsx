@@ -56,7 +56,7 @@ const Card: FC<CardProps> = ({
           <CustomButton
             id="btn-tarifperjam"
             className="h-10 px-2 rounded-2xl bg-[#205375] text-white shadow-lg hover:bg-[#2f6991]"
-            label="Tarif Belajar : Rp 50000/jam"
+            label={`Tarif Belajar : Rp ${50000}/jam`}
             onClick={() => onCLickReservasi()}
           />
         </div>
