@@ -39,34 +39,35 @@ function HalamanSesiMurid() {
   const [email, setEmail] = useState<string>("");
   const [alamat, setAlamat] = useState<string>("");
   const [telepon, setTelepon] = useState<string>("");
-  const [gambar, setGambar] = useState<any>();
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [avatar, setAvatar] = useState<string>("");
 
   function fetchData() {
-    axios
-      .get(
-        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/siswa"
-        // "https://virtserver.swaggerhub.com/back-end-14-alterra/sosmed/1.0.0/users"
-      )
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/siswa`,
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
+      params: {},
+    })
       .then((res) => {
-        const { nama, email, alamat, telepon, photo } = res.data.data;
+        const { nama, email, alamat, telepon, avatar } = res.data.data;
 
         setNama(nama);
         setEmail(email);
         setAlamat(alamat);
         setTelepon(telepon);
-        setGambar(photo);
-        console.log(res.data.data);
-        // console.log(gambar);
+        setAvatar(avatar);
       })
       .catch((err) => {
-        alert(err.toString());
+        alert(err);
       })
       .finally(() => setLoading(false));
   }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -78,16 +79,16 @@ function HalamanSesiMurid() {
     }
 
     axios
-      .put("", formData, {
+      .put("https://devmyproject.site/siswa", formData, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
-          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        const { message } = res.data.data;
+        const { message } = res.data;
+
         MySwal.fire({
-          title: "Edit Succesfull",
+          title: "Data Berhasil Diupdate",
           text: message,
           showCancelButton: false,
         });
@@ -96,7 +97,7 @@ function HalamanSesiMurid() {
       .catch((err) => {
         const { data } = err.response;
         MySwal.fire({
-          title: "Edit Failed",
+          title: "Data Gagal Diupdate",
           text: data.message,
           showCancelButton: false,
         });
@@ -238,7 +239,7 @@ function HalamanSesiMurid() {
                                   Ubah Profil
                                 </p>
                                 <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
-                                  <img src={gambar} alt="profil.jpg" />
+                                  <img src={avatar} alt="profil.jpg" />
                                 </div>
                                 <p className="text-[14px] font-normal text-[#C0B7B7]">
                                   *Uk.foto maks 400 x 400 pixels
@@ -254,7 +255,8 @@ function HalamanSesiMurid() {
                                     if (!e.currentTarget.files) {
                                       return;
                                     }
-                                    setGambar(
+
+                                    setAvatar(
                                       URL.createObjectURL(
                                         e.currentTarget.files[0]
                                       )
@@ -276,10 +278,10 @@ function HalamanSesiMurid() {
                       <div
                         className=" w-32 h-32 lg:mt-10 mt-14 border border-[#EFEFEF] rounded-full overflow-hidden mt- bg-no-repeat bg-cover"
                         style={{
-                          backgroundImage: `URL(${gambar})`,
+                          backgroundImage: `URL(${avatar})`,
                         }}
                       >
-                        <img src={gambar} alt="profil.jpg" />
+                        <img src={avatar} alt="profil.jpg" />
                       </div>
 
                       <p className="mt-2 lg:text-[36px] text-[24px] font-semibold text-[#112B3C]">

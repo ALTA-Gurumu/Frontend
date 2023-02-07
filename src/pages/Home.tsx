@@ -4,7 +4,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { set, slice } from "lodash";
 
-import { CustomInput, InputIcon } from "../components/CustomInput";
+import {
+  CustomInput,
+  InputIcon,
+} from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -59,7 +62,9 @@ function Home() {
 
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
+    {}
+  );
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -71,8 +76,12 @@ function Home() {
 
   const filteredHomes = homes.filter(
     (home) =>
-      home.pelajaran.toLowerCase().includes(searchSubject.toLowerCase()) &&
-      home.alamat.toLowerCase().includes(searchLocation.toLowerCase())
+      home.pelajaran
+        .toLowerCase()
+        .includes(searchSubject.toLowerCase()) &&
+      home.alamat
+        .toLowerCase()
+        .includes(searchLocation.toLowerCase())
   );
 
   const loadMore = () => {
@@ -149,7 +158,9 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -186,7 +197,10 @@ function Home() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -212,7 +226,9 @@ function Home() {
                     </h1>
                     <div
                       className="w-[120px] h-[120px] overflow-hidden rounded-full bg-no-repeat bg-cover"
-                      style={{ backgroundImage: `URL(${DeafultAvatar})` }}
+                      style={{
+                        backgroundImage: `URL(${DeafultAvatar})`,
+                      }}
                     >
                       <img
                         src={avatar}
@@ -233,9 +249,14 @@ function Home() {
                           return;
                         }
                         setAvatar(
-                          URL.createObjectURL(e.currentTarget.files[0])
+                          URL.createObjectURL(
+                            e.currentTarget.files[0]
+                          )
                         );
-                        handleChange(e.currentTarget.files[0], "avatar");
+                        handleChange(
+                          e.currentTarget.files[0],
+                          "avatar"
+                        );
                       }}
                     />
                     <CustomInput
@@ -246,7 +267,9 @@ function Home() {
                       style={{ border: "2px solid #424242" }}
                       placeholder={LinkedIn}
                       defaultValue={LinkedIn}
-                      onChange={(e) => handleChange(e.target.value, "LinkedIn")}
+                      onChange={(e) =>
+                        handleChange(e.target.value, "LinkedIn")
+                      }
                     />
 
                     <label className="label">
@@ -265,9 +288,14 @@ function Home() {
                           return;
                         }
                         setIjazah(
-                          URL.createObjectURL(e.currentTarget.files[0])
+                          URL.createObjectURL(
+                            e.currentTarget.files[0]
+                          )
                         );
-                        handleChange(e.currentTarget.files[0], "ijazah");
+                        handleChange(
+                          e.currentTarget.files[0],
+                          "ijazah"
+                        );
                       }}
                     />
                   </div>
@@ -291,7 +319,10 @@ function Home() {
                         placeholder={"contoh : Blitar"}
                         defaultValue={lokasiAsal}
                         onChange={(e) =>
-                          handleChange(e.target.value, "LokasiAsal")
+                          handleChange(
+                            e.target.value,
+                            "LokasiAsal"
+                          )
                         }
                       />
 
@@ -332,7 +363,10 @@ function Home() {
                         style={{ border: "2px solid #424242" }}
                         name="option"
                         onChange={(e) =>
-                          handleChange(e.target.value, "Pendidikan")
+                          handleChange(
+                            e.target.value,
+                            "Pendidikan"
+                          )
                         }
                       >
                         <option value="DEFAULT" disabled>
@@ -340,7 +374,9 @@ function Home() {
                             ? "Pilih Salah Satu"
                             : `${pendidikan}`}
                         </option>
-                        <option value="Sekolah Dasar">Sekolah Dasar</option>
+                        <option value="Sekolah Dasar">
+                          Sekolah Dasar
+                        </option>
                         <option value="Sekolah Menengah Pertama">
                           Sekolah Menengah Pertama
                         </option>
@@ -365,7 +401,10 @@ function Home() {
                           placeholder="Ceritakan biografi singkat anda"
                           defaultValue={deskripsi}
                           onChange={(e) =>
-                            handleChange(e.target.value, "TentangSaya")
+                            handleChange(
+                              e.target.value,
+                              "TentangSaya"
+                            )
                           }
                         ></textarea>
                       </div>
