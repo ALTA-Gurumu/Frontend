@@ -42,7 +42,9 @@ const Card: FC<CardProps> = ({
           <p className="text-[36px] text-[#EFEFEF] font-semibold drop-shadow-lg">
             {nama}
           </p>
-          <p className="text-[20px] text-[#EFEFEF] font-semibold">{alamat}</p>
+          <p className="text-[20px] text-[#EFEFEF] font-semibold">
+            {alamat}
+          </p>
         </div>
         {/* <img src={image} alt="Card.png" /> */}
       </figure>
@@ -51,12 +53,14 @@ const Card: FC<CardProps> = ({
           <AiFillStar className="w-6 h-6 text-[#F66B0E]" />
           <p className="text-[#696969] text-[14px] pt-[5px]">{`${rating} (26 Ulasan) `}</p>
         </div>
-        <p className="line-clamp-3 text-justify text-zinc-900 ">{deskripsi}</p>
+        <p className="line-clamp-3 text-justify text-zinc-900 ">
+          {deskripsi}
+        </p>
         <div className="text-end mt-4">
           <CustomButton
             id="btn-tarifperjam"
             className="h-10 px-2 rounded-2xl bg-[#205375] text-white shadow-lg hover:bg-[#2f6991]"
-            label={`Tarif Belajar : Rp ${50000}/jam`}
+            label={`Tarif Belajar : Rp ${tarif}/jam`}
             onClick={() => onCLickReservasi()}
           />
         </div>
