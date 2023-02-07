@@ -2,8 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { Cookies, useCookies } from "react-cookie";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { set, slice } from "lodash";
 
-import { CustomInput, InputIcon } from "../components/CustomInput";
+import {
+  CustomInput,
+  InputIcon,
+} from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -49,10 +53,18 @@ function Home() {
   const MySwal = withReactContent(Swal);
 
   const [homes, setHome] = useState<hometype[]>([]);
+  // const [loading, setDLoading] = useState<boolean>(false);
+  const [searchSubject, setSearchSubject] = useState("");
+  const [searchLocation, setSearchLocation] = useState("");
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const [index, setIndex] = useState<number>(6);
+  // const initialPost = slice(homes, 0, index);
   const [modal, setModal] = useState<string>("modal-open");
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
+    {}
+  );
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -61,6 +73,43 @@ function Home() {
   const [telefon, setTelefon] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
+  const filteredHomes = homes.filter(
+    (home) =>
+      home.pelajaran
+        .toLowerCase()
+        .includes(searchSubject.toLowerCase()) &&
+      home.alamat
+        .toLowerCase()
+        .includes(searchLocation.toLowerCase())
+  );
+
+  const loadMore = () => {
+    setIndex(index + 6);
+    // console.log(index);
+    if (index >= homes.length) {
+      setIsCompleted(true);
+    } else {
+      setIsCompleted(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchHome();
+  }, []);
+
+  function fetchHome() {
+    // setDLoading(true);
+    axios
+      .get("https://devmyproject.site/guru")
+      .then((res) => {
+        setHome(res.data.data);
+        // console.log(res.data.data);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+    // .finally(() => setDLoading(false));
+  }
 
   const skipHandle = async () => {
     setModal("modal");
@@ -74,17 +123,6 @@ function Home() {
   useEffect(() => {
     fetchHome();
   }, []);
-
-  function fetchHome() {
-    axios
-      .get(
-        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/guru"
-      )
-      .then((res) => {})
-      .catch((err) => {
-        alert(err.response.data.message);
-      });
-  }
 
   useEffect(() => {
     fetchData();
@@ -125,7 +163,9 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -161,7 +201,10 @@ function Home() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -204,9 +247,14 @@ function Home() {
                           return;
                         }
                         setAvatar(
-                          URL.createObjectURL(e.currentTarget.files[0])
+                          URL.createObjectURL(
+                            e.currentTarget.files[0]
+                          )
                         );
-                        handleChange(e.currentTarget.files[0], "avatar");
+                        handleChange(
+                          e.currentTarget.files[0],
+                          "avatar"
+                        );
                       }}
                     />
                     <CustomInput
@@ -216,7 +264,9 @@ function Home() {
                       style={{ border: "2px solid #424242" }}
                       placeholder={LinkedIn}
                       defaultValue={LinkedIn}
-                      onChange={(e) => handleChange(e.target.value, "LinkedIn")}
+                      onChange={(e) =>
+                        handleChange(e.target.value, "LinkedIn")
+                      }
                     />
 
                     <label className="label">
@@ -224,6 +274,41 @@ function Home() {
                         Upload Ijazah
                       </span>
                     </label>
+                    <select
+                      defaultValue={"DEFAULT"}
+                      id="input-jenjang-pengajaran"
+                      className="select select-bordered w-10/12 lg:w-9/12  bg-white"
+                      style={{ border: "2px solid #424242" }}
+                      name="option"
+                      // onChange={handleChange}
+                    >
+                      <option value="DEFAULT" disabled>
+                        Pilih Salah Satu
+                      </option>
+                      <option value="1">Sekolah Dasar</option>
+                      <option value="2">
+                        Sekolah Menengah Pertama
+                      </option>
+                      <option value="3">
+                        Sekolah Menengah Atas
+                      </option>
+                    </select>
+                    <div className="form-control">
+                      <label className="label">
+                        <span
+                          className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
+                          style={{ color: "#424242" }}
+                        >
+                          Biografi Saya :
+                        </span>
+                      </label>
+                      <textarea
+                        id="input-bio"
+                        className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
+                        placeholder="Ceritakan biografi singkat anda"
+                        style={{ border: "2px solid #424242" }}
+                      ></textarea>
+                    </div>
 
                     <CustomInput
                       id="input-ijazah"
@@ -234,9 +319,14 @@ function Home() {
                           return;
                         }
                         setIjazah(
-                          URL.createObjectURL(e.currentTarget.files[0])
+                          URL.createObjectURL(
+                            e.currentTarget.files[0]
+                          )
                         );
-                        handleChange(e.currentTarget.files[0], "ijazah");
+                        handleChange(
+                          e.currentTarget.files[0],
+                          "ijazah"
+                        );
                       }}
                     />
                   </div>
@@ -260,7 +350,10 @@ function Home() {
                         placeholder={"contoh : Blitar"}
                         defaultValue={lokasiAsal}
                         onChange={(e) =>
-                          handleChange(e.target.value, "LokasiAsal")
+                          handleChange(
+                            e.target.value,
+                            "LokasiAsal"
+                          )
                         }
                       />
 
@@ -301,7 +394,10 @@ function Home() {
                         style={{ border: "2px solid #424242" }}
                         name="option"
                         onChange={(e) =>
-                          handleChange(e.target.value, "Pendidikan")
+                          handleChange(
+                            e.target.value,
+                            "Pendidikan"
+                          )
                         }
                       >
                         <option value="DEFAULT" disabled>
@@ -309,7 +405,9 @@ function Home() {
                             ? "Pilih Salah Satu"
                             : `${pendidikan}`}
                         </option>
-                        <option value="Sekolah Dasar">Sekolah Dasar</option>
+                        <option value="Sekolah Dasar">
+                          Sekolah Dasar
+                        </option>
                         <option value="Sekolah Menengah Pertama">
                           Sekolah Menengah Pertama
                         </option>
@@ -334,7 +432,10 @@ function Home() {
                           placeholder="Ceritakan biografi singkat anda"
                           defaultValue={deskripsi}
                           onChange={(e) =>
-                            handleChange(e.target.value, "TentangSaya")
+                            handleChange(
+                              e.target.value,
+                              "TentangSaya"
+                            )
                           }
                         ></textarea>
                       </div>
@@ -366,8 +467,11 @@ function Home() {
 
             <InputIcon
               id="input-pencarianMapel"
+              type="search"
               className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"
               placeholder="Mata Pelajaran"
+              value={searchSubject}
+              onChange={(e) => setSearchSubject(e.target.value)}
             />
           </div>
 
@@ -375,8 +479,11 @@ function Home() {
             <HiOutlineLocationMarker className="w-7 h-7" />
             <InputIcon
               id="input-pencarianLokasi"
+              type="search"
               className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"
               placeholder="Lokasi"
+              value={searchLocation}
+              onChange={(e) => setSearchLocation(e.target.value)}
             />
           </div>
 
@@ -386,25 +493,39 @@ function Home() {
 
       <div className="flex flex-col items-center w-full lg:mt-20 mt-14 ">
         <div className="gap-4 grid lg:grid-cols-3 grid-cols-1 lg:w-[90vw] w-[80vw]">
-          <Card
-            id="card-guru"
-            image={Profil2}
-            nama={"Iwan"}
-            alamat={"Kab. Bululawang"}
-            rating={5}
-            deskripsi={
-              " Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast .....Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast ..... "
-            }
-          />
+          {filteredHomes.slice(0, index).map((data, index) => (
+            <Card
+              id="card-guru"
+              key={index}
+              nama={data.nama}
+              image={data.avatar}
+              alamat={data.alamat}
+              rating={data.penilaian}
+              deskripsi={data.judul}
+              tarif={data.tarif}
+            />
+          ))}
         </div>
       </div>
-      <div className="text-center mt-14 mb-20">
-        <CustomButton
-          id="btn-lihatLainnya"
-          className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
-          label="Lihat lebih banyak guru"
-        />
-      </div>
+      {isCompleted ? (
+        <div className="text-center mt-14 mb-20">
+          <CustomButton
+            id="btn-lihatLainnya"
+            className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
+            label="Lihat lebih banyak guru"
+            disabled
+          />
+        </div>
+      ) : (
+        <div className="text-center mt-14 mb-20">
+          <CustomButton
+            id="btn-lihatLainnya"
+            className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
+            label="Lihat lebih banyak guru"
+            onClick={loadMore}
+          />
+        </div>
+      )}
     </Layout>
   );
 }
