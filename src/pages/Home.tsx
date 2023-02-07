@@ -4,10 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { set, slice } from "lodash";
 
-import {
-  CustomInput,
-  InputIcon,
-} from "../components/CustomInput";
+import { CustomInput, InputIcon } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -62,9 +59,7 @@ function Home() {
   const [modal, setModal] = useState<string>("modal-open");
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
-    {}
-  );
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -73,14 +68,11 @@ function Home() {
   const [telefon, setTelefon] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
+
   const filteredHomes = homes.filter(
     (home) =>
-      home.pelajaran
-        .toLowerCase()
-        .includes(searchSubject.toLowerCase()) &&
-      home.alamat
-        .toLowerCase()
-        .includes(searchLocation.toLowerCase())
+      home.pelajaran.toLowerCase().includes(searchSubject.toLowerCase()) &&
+      home.alamat.toLowerCase().includes(searchLocation.toLowerCase())
   );
 
   const loadMore = () => {
@@ -121,10 +113,6 @@ function Home() {
   };
 
   useEffect(() => {
-    fetchHome();
-  }, []);
-
-  useEffect(() => {
     fetchData();
   }, []);
 
@@ -147,7 +135,7 @@ function Home() {
         setLokasiAsal(LokasiAsal);
         setLinkedIn(LinkedIn);
         setTelefon(Telepon);
-        setAvatar(Ijazah);
+        setIjazah(Ijazah);
         setPendidikan(Pendidikan);
         setDeskripsi(TentangSaya);
 
@@ -163,9 +151,7 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -201,10 +187,7 @@ function Home() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (
-    value: string | File,
-    key: keyof typeof objSubmit
-  ) => {
+  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -228,7 +211,10 @@ function Home() {
                     <h1 className="text-navy text-center text-xl lg:text-3xl font-bold mb-5">
                       Selesaikan Profil Anda
                     </h1>
-                    <div>
+                    <div
+                      className="w-32 h-32 rounded-full bg-no-repeat bg-cover"
+                      style={{ backgroundImage: `URL(${Profil2})` }}
+                    >
                       <img
                         src={avatar}
                         className=" w-4/12 max-w-full mt-10 lg:mt-0"
@@ -247,14 +233,9 @@ function Home() {
                           return;
                         }
                         setAvatar(
-                          URL.createObjectURL(
-                            e.currentTarget.files[0]
-                          )
+                          URL.createObjectURL(e.currentTarget.files[0])
                         );
-                        handleChange(
-                          e.currentTarget.files[0],
-                          "avatar"
-                        );
+                        handleChange(e.currentTarget.files[0], "avatar");
                       }}
                     />
                     <CustomInput
@@ -264,9 +245,7 @@ function Home() {
                       style={{ border: "2px solid #424242" }}
                       placeholder={LinkedIn}
                       defaultValue={LinkedIn}
-                      onChange={(e) =>
-                        handleChange(e.target.value, "LinkedIn")
-                      }
+                      onChange={(e) => handleChange(e.target.value, "LinkedIn")}
                     />
 
                     <label className="label">
@@ -274,41 +253,6 @@ function Home() {
                         Upload Ijazah
                       </span>
                     </label>
-                    <select
-                      defaultValue={"DEFAULT"}
-                      id="input-jenjang-pengajaran"
-                      className="select select-bordered w-10/12 lg:w-9/12  bg-white"
-                      style={{ border: "2px solid #424242" }}
-                      name="option"
-                      // onChange={handleChange}
-                    >
-                      <option value="DEFAULT" disabled>
-                        Pilih Salah Satu
-                      </option>
-                      <option value="1">Sekolah Dasar</option>
-                      <option value="2">
-                        Sekolah Menengah Pertama
-                      </option>
-                      <option value="3">
-                        Sekolah Menengah Atas
-                      </option>
-                    </select>
-                    <div className="form-control">
-                      <label className="label">
-                        <span
-                          className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
-                          style={{ color: "#424242" }}
-                        >
-                          Biografi Saya :
-                        </span>
-                      </label>
-                      <textarea
-                        id="input-bio"
-                        className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
-                        placeholder="Ceritakan biografi singkat anda"
-                        style={{ border: "2px solid #424242" }}
-                      ></textarea>
-                    </div>
 
                     <CustomInput
                       id="input-ijazah"
@@ -319,14 +263,9 @@ function Home() {
                           return;
                         }
                         setIjazah(
-                          URL.createObjectURL(
-                            e.currentTarget.files[0]
-                          )
+                          URL.createObjectURL(e.currentTarget.files[0])
                         );
-                        handleChange(
-                          e.currentTarget.files[0],
-                          "ijazah"
-                        );
+                        handleChange(e.currentTarget.files[0], "ijazah");
                       }}
                     />
                   </div>
@@ -350,10 +289,7 @@ function Home() {
                         placeholder={"contoh : Blitar"}
                         defaultValue={lokasiAsal}
                         onChange={(e) =>
-                          handleChange(
-                            e.target.value,
-                            "LokasiAsal"
-                          )
+                          handleChange(e.target.value, "LokasiAsal")
                         }
                       />
 
@@ -394,10 +330,7 @@ function Home() {
                         style={{ border: "2px solid #424242" }}
                         name="option"
                         onChange={(e) =>
-                          handleChange(
-                            e.target.value,
-                            "Pendidikan"
-                          )
+                          handleChange(e.target.value, "Pendidikan")
                         }
                       >
                         <option value="DEFAULT" disabled>
@@ -405,9 +338,7 @@ function Home() {
                             ? "Pilih Salah Satu"
                             : `${pendidikan}`}
                         </option>
-                        <option value="Sekolah Dasar">
-                          Sekolah Dasar
-                        </option>
+                        <option value="Sekolah Dasar">Sekolah Dasar</option>
                         <option value="Sekolah Menengah Pertama">
                           Sekolah Menengah Pertama
                         </option>
@@ -432,10 +363,7 @@ function Home() {
                           placeholder="Ceritakan biografi singkat anda"
                           defaultValue={deskripsi}
                           onChange={(e) =>
-                            handleChange(
-                              e.target.value,
-                              "TentangSaya"
-                            )
+                            handleChange(e.target.value, "TentangSaya")
                           }
                         ></textarea>
                       </div>
