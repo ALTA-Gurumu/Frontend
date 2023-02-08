@@ -37,7 +37,7 @@ interface hometype {
 
 function Home() {
   const navigate = useNavigate();
-  const [cookies, , removeCookie] = useCookies([
+  const [cookies, setCookies] = useCookies([
     "token",
     "role",
     "verifikasi",
@@ -50,7 +50,6 @@ function Home() {
   const MySwal = withReactContent(Swal);
 
   const [homes, setHome] = useState<hometype[]>([]);
-  // const [loading, setDLoading] = useState<boolean>(false);
   const [searchSubject, setSearchSubject] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
@@ -58,7 +57,8 @@ function Home() {
   // const initialPost = slice(homes, 0, index);
   const [modal, setModal] = useState<string>("modal-open");
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
   const [avatar, setAvatar] = useState<any>("");
@@ -112,14 +112,18 @@ function Home() {
     });
   };
 
+  // useEffect(() => {
+  //   lokasiAsal ? setDisabled(true) : setDisabled(false);
+  // }, [lokasiAsal]);
+
   useEffect(() => {
-    fetchData();
+    checkRole === "guru" && fetchData();
   }, []);
 
   function fetchData() {
     axios
       .get(`https://devmyproject.site/guru/${checkId}`, {
-        headers: { Authorization: `Bearer ${checkToken}` },
+        // headers: { Authorization: `Bearer ${checkToken}` },
       })
       .then((res) => {
         const {
@@ -138,12 +142,6 @@ function Home() {
         setIjazah(Ijazah);
         setPendidikan(Pendidikan);
         setDeskripsi(TentangSaya);
-
-        // console.log(res.data.data);
-        // console.log(res.data.data.TentangSaya);
-        // console.log(deskripsi);
-        // console.log(res.data.data.Avatar);
-        // console.log(avatar);
       })
       .catch((err) => {
         alert(err.toString());
@@ -169,10 +167,11 @@ function Home() {
       })
       .then((res) => {
         const { message } = res.data;
+        setCookies("verifikasi", true, { path: "/" });
         MySwal.fire({
           title: "Edit Succesfull",
           text: message,
-          showCloseButton: false,
+          showCancelButton: false,
         });
         setObjSubmit({});
       })
@@ -372,13 +371,13 @@ function Home() {
                       </div>
 
                       <CustomButton
-                        id="btn-daftar"
+                        id="btn-update"
                         label="Update Data"
-                        className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                        className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-500 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
                         style={{
                           fontFamily: "Poppins",
                         }}
-                        loading={loading}
+                        loading={loading || disabled}
                       />
                     </div>
                   </div>
