@@ -14,6 +14,7 @@ import CustomButton from "../components/CustomButton";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import Layout from "../components/Layout";
+import { Link } from "react-router-dom";
 
 import Profil2 from "../assets/profil2.webp";
 import Profil from "../assets/profil.jpg";
@@ -40,6 +41,43 @@ function HalamanSesiMurid() {
   const [alamat, setAlamat] = useState<string>("");
   const [telepon, setTelepon] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
+
+  const [nama_murid, setNamaMurid] = useState<string>("");
+  const [pelajaran, setPelajaran] = useState<string>("");
+  const [tanggal, setTanggal] = useState<string>("");
+  const [jam, setJam] = useState<string>("");
+  const [tautan_gmeet, setTautanGmeet] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
+
+  function fetchDataSesi() {
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/sesiku`,
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
+      params: {},
+    })
+      .then((res) => {
+        const { nama_murid, pelajaran, tanggal, jam, tautan_gmeet, status } =
+          res.data.data;
+
+        setNamaMurid(nama_murid);
+        setPelajaran(pelajaran);
+        setTanggal(tanggal);
+        setJam(jam);
+        setTautanGmeet(tautan_gmeet);
+        setStatus(status);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    fetchDataSesi();
+  }, []);
 
   function fetchData() {
     axios({
@@ -344,7 +382,7 @@ function HalamanSesiMurid() {
                             <td>Selesai</td>
                             <td className="flex items-center text-component text-[16px] gap-1">
                               <AiTwotoneStar className="w-5 h-5" />
-                              Ulasan
+                              <Link to="/ulasan/:guru_id">Ulasan</Link>
                             </td>
                           </tr>
                         </tbody>
@@ -381,9 +419,9 @@ function HalamanSesiMurid() {
                           <tr className="text-[16px] font-normal">
                             <th>1</th>
                             <td>Ahmad Bambang</td>
-                            <td>12.00 (WIB)</td>
-                            <td>Senin 20 Januari 2023</td>
-                            <td>https://google meet/adka</td>
+                            <td>{jam}</td>
+                            <td>{tanggal}</td>
+                            <td>{tautan_gmeet}</td>
                             <td>Selesai</td>
                           </tr>
                         </tbody>

@@ -234,7 +234,7 @@ function Home() {
       <Navbar />
       <>
         <br />
-        {checkVer === "false" ? (
+        {checkVer === "" ? (
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className={`modal ${modal}`}>
               <div className="modal-box lg:w-9/12 w-10/12 max-w-full shadow-xl p-4">
