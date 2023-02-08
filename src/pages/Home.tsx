@@ -17,7 +17,6 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-
 import { CompleteTeacher, getGuruBeranda } from "../utils/DataTypes";
 
 import Swal from "../utils/Swal";
@@ -59,11 +58,13 @@ function Home() {
   // const initialPost = slice(homes, 0, index);
   const [modal, setModal] = useState<string>("modal-open");
 
-
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
   const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
+    {}
+  );
+
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -120,6 +121,10 @@ function Home() {
   //   lokasiAsal ? setDisabled(true) : setDisabled(false);
   // }, [lokasiAsal]);
 
+
+  useEffect(() => {
+    checkRole === "guru" && fetchData();
+  }, []);
   const fetchDataGetGuru = useCallback(() => {
     axios({
       method: "GET",
@@ -140,9 +145,7 @@ function Home() {
     fetchDataGetGuru();
   }, [fetchDataGetGuru]);
 
-  useEffect(() => {
-    checkRole === "guru" && fetchData();
-  }, []);
+
 
   function fetchData() {
     axios
@@ -561,6 +564,7 @@ function Home() {
                         loading={loading || disabled}
                       />
                     </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -609,10 +613,10 @@ function Home() {
               id="card-guru"
               key={index}
               nama={data.nama}
-              image={data.avatar}
+              avatar={data.avatar}
               alamat={data.alamat}
-              rating={data.penilaian}
-              deskripsi={data.judul}
+              penilaian={data.penilaian}
+              judul={data.judul}
               tarif={data.tarif}
             />
           ))}

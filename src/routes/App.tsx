@@ -23,7 +23,11 @@ import Beranda from "../pages/Home";
 import Home from "../pages/Home";
 
 function App() {
-  const [cookie, , removeCookie] = useCookies(["token", "role", "verifikasi"]);
+  const [cookie, , removeCookie] = useCookies([
+    "token",
+    "role",
+    "verifikasi",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkVerifikasi = cookie.verifikasi;
@@ -54,25 +58,32 @@ function App() {
       path: "/ulasan/:guru_id",
       element: <Rating />,
     },
-    {
+
+  {
       path: "/profileStudent",
       element:
         checkToken && checkRole === "siswa" ? <ProfileStudent /> : <Login />,
     },
+
     {
       path: "/HalamanSesiMurid",
-      element:
-        checkToken && checkRole === "siswa" ? <HalamanSesiMurid /> : <Login />,
+      element: checkToken ? <HalamanSesiMurid /> : <Login />,
     },
     {
       path: "/paymentDetails",
       element:
-        checkToken && checkRole === "siswa" ? <PaymentDetails /> : <Login />,
+        checkToken && checkRole === "siswa" ? (
+          <PaymentDetails />
+        ) : (
+          <Login />
+        ),
     },
     {
       path: "/editTeacher",
       element:
-        checkToken && checkRole === "guru" && checkVerifikasi === "false" ? (
+        checkToken &&
+        checkRole === "guru" &&
+        checkVerifikasi === "false" ? (
           <EditTeacher />
         ) : (
           <Home />
@@ -85,6 +96,7 @@ function App() {
     {
       path: "/profile-teacher/:guru_id",
       element: checkToken ? <TabsContentForTeacherPage /> : <Login />,
+
     },
     {
       path: "/listmengajar/:guru_id",

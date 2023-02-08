@@ -7,6 +7,8 @@ import CustomButton from "./CustomButton";
 import { useCookies } from "react-cookie";
 
 interface CardProps {
+
+  id: string;
   guru_id?: number;
   nama?: string;
   alamat?: string;
@@ -18,6 +20,7 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = ({
+  id,
   guru_id,
   nama,
   judul,
@@ -69,7 +72,7 @@ const Card: FC<CardProps> = ({
         </div>
 
         <p className="line-clamp-3 text-justify text-zinc-900 ">
-          {deskripsi}
+          {judul}
         </p>
         <div className="text-end mt-4">
           <CustomButton
