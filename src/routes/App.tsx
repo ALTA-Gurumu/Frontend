@@ -58,15 +58,13 @@ function App() {
       path: "/ulasan/:guru_id",
       element: <Rating />,
     },
-    {
+
+  {
       path: "/profileStudent",
       element:
-        checkToken && checkRole === "siswa" ? (
-          <ProfileStudent />
-        ) : (
-          <Login />
-        ),
+        checkToken && checkRole === "siswa" ? <ProfileStudent /> : <Login />,
     },
+
     {
       path: "/HalamanSesiMurid",
       element: checkToken ? <HalamanSesiMurid /> : <Login />,
@@ -97,20 +95,13 @@ function App() {
     },
     {
       path: "/profile-teacher/:guru_id",
-      element: checkToken ? (
-        <TabsContentForTeacherPage />
-      ) : (
-        <Login />
-      ),
+      element: checkToken ? <TabsContentForTeacherPage /> : <Login />,
+
     },
     {
       path: "/listmengajar/:guru_id",
       element:
-        checkToken && checkRole === "guru" ? (
-          <HalamanSesiGuru />
-        ) : (
-          <Home />
-        ),
+        checkToken && checkRole === "guru" ? <HalamanSesiGuru /> : <Home />,
     },
     // {
     //   path: "/profile-edit/:id_user",
