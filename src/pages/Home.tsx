@@ -4,10 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { set, slice } from "lodash";
 
-import {
-  CustomInput,
-  InputIcon,
-} from "../components/CustomInput";
+import { CustomInput, InputIcon } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -42,7 +39,7 @@ interface hometype {
 
 function Home() {
   const navigate = useNavigate();
-  const [cookies, , removeCookie] = useCookies([
+  const [cookies, setCookies] = useCookies([
     "token",
     "role",
     "verifikasi",
@@ -55,7 +52,6 @@ function Home() {
   const MySwal = withReactContent(Swal);
 
   const [homes, setHome] = useState<hometype[]>([]);
-  // const [loading, setDLoading] = useState<boolean>(false);
   const [searchSubject, setSearchSubject] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
@@ -63,11 +59,11 @@ function Home() {
   // const initialPost = slice(homes, 0, index);
   const [modal, setModal] = useState<string>("modal-open");
 
-  const [loading, setLoading] = useState<boolean>(true);
+
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
   const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
-    {}
-  );
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -76,14 +72,11 @@ function Home() {
   const [telefon, setTelefon] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
+
   const filteredHomes = homes.filter(
     (home) =>
-      home.pelajaran
-        .toLowerCase()
-        .includes(searchSubject.toLowerCase()) &&
-      home.alamat
-        .toLowerCase()
-        .includes(searchLocation.toLowerCase())
+      home.pelajaran.toLowerCase().includes(searchSubject.toLowerCase()) &&
+      home.alamat.toLowerCase().includes(searchLocation.toLowerCase())
   );
 
   const loadMore = () => {
@@ -123,6 +116,9 @@ function Home() {
     });
   };
 
+  // useEffect(() => {
+  //   lokasiAsal ? setDisabled(true) : setDisabled(false);
+  // }, [lokasiAsal]);
 
   const fetchDataGetGuru = useCallback(() => {
     axios({
@@ -144,15 +140,14 @@ function Home() {
     fetchDataGetGuru();
   }, [fetchDataGetGuru]);
 
-
   useEffect(() => {
-    fetchData();
+    checkRole === "guru" && fetchData();
   }, []);
 
   function fetchData() {
     axios
       .get(`https://devmyproject.site/guru/${checkId}`, {
-        headers: { Authorization: `Bearer ${checkToken}` },
+        // headers: { Authorization: `Bearer ${checkToken}` },
       })
       .then((res) => {
         const {
@@ -168,15 +163,9 @@ function Home() {
         setLokasiAsal(LokasiAsal);
         setLinkedIn(LinkedIn);
         setTelefon(Telepon);
-        setAvatar(Ijazah);
+        setIjazah(Ijazah);
         setPendidikan(Pendidikan);
         setDeskripsi(TentangSaya);
-
-        // console.log(res.data.data);
-        // console.log(res.data.data.TentangSaya);
-        // console.log(deskripsi);
-        // console.log(res.data.data.Avatar);
-        // console.log(avatar);
       })
       .catch((err) => {
         alert(err.toString());
@@ -184,10 +173,10 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
+
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -205,10 +194,11 @@ function Home() {
       })
       .then((res) => {
         const { message } = res.data;
+        setCookies("verifikasi", true, { path: "/" });
         MySwal.fire({
           title: "Edit Succesfull",
           text: message,
-          showCloseButton: false,
+          showCancelButton: false,
         });
         setObjSubmit({});
       })
@@ -222,7 +212,6 @@ function Home() {
       })
       .finally(() => fetchData());
   };
-
 
   const handleChange = (
     value: string | File,
@@ -252,14 +241,18 @@ function Home() {
                     <h1 className="text-navy text-center text-xl lg:text-3xl font-bold mb-5">
                       Selesaikan Profil Anda
                     </h1>
-                    <div>
+                    <div
+                      className="w-[120px] h-[120px] overflow-hidden rounded-full bg-no-repeat bg-cover"
+                      style={{ backgroundImage: `URL(${DeafultAvatar})` }}
+                    >
                       <img
                         src={avatar}
-                        className=" w-4/12 max-w-full mt-10 lg:mt-0"
+                        alt="porfil.jpeg"
+                        className="w-full h-11/12"
                       />
                     </div>
                     <p className="text-center text-gray-500 font-semibold mt-2">
-                      * Uk. photo 400 x 400 pixels
+                      * Uk. photo 600 x 600 pixels
                     </p>
                     <CustomInput
                       id="input-avatar"
@@ -279,6 +272,7 @@ function Home() {
                     <CustomInput
                       id="input-linkedin"
                       type="text"
+                      accept="image/png, image/jpg, image/jpeg"
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
                       style={{ border: "2px solid #424242" }}
                       placeholder={LinkedIn}
@@ -445,20 +439,16 @@ function Home() {
                     <CustomInput
                       id="input-ijazah"
                       type="file"
+                      accept="image/png, image/jpg, image/jpeg"
                       className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
                       onChange={(e) => {
                         if (!e.currentTarget.files) {
                           return;
                         }
                         setIjazah(
-                          URL.createObjectURL(
-                            e.currentTarget.files[0]
-                          )
+                          URL.createObjectURL(e.currentTarget.files[0])
                         );
-                        handleChange(
-                          e.currentTarget.files[0],
-                          "ijazah"
-                        );
+                        handleChange(e.currentTarget.files[0], "ijazah");
                       }}
                     />
                   </div>
@@ -482,10 +472,7 @@ function Home() {
                         placeholder={"contoh : Blitar"}
                         defaultValue={lokasiAsal}
                         onChange={(e) =>
-                          handleChange(
-                            e.target.value,
-                            "LokasiAsal"
-                          )
+                          handleChange(e.target.value, "LokasiAsal")
                         }
                       />
 
@@ -526,10 +513,7 @@ function Home() {
                         style={{ border: "2px solid #424242" }}
                         name="option"
                         onChange={(e) =>
-                          handleChange(
-                            e.target.value,
-                            "Pendidikan"
-                          )
+                          handleChange(e.target.value, "Pendidikan")
                         }
                       >
                         <option value="DEFAULT" disabled>
@@ -537,9 +521,7 @@ function Home() {
                             ? "Pilih Salah Satu"
                             : `${pendidikan}`}
                         </option>
-                        <option value="Sekolah Dasar">
-                          Sekolah Dasar
-                        </option>
+                        <option value="Sekolah Dasar">Sekolah Dasar</option>
                         <option value="Sekolah Menengah Pertama">
                           Sekolah Menengah Pertama
                         </option>
@@ -564,22 +546,19 @@ function Home() {
                           placeholder="Ceritakan biografi singkat anda"
                           defaultValue={deskripsi}
                           onChange={(e) =>
-                            handleChange(
-                              e.target.value,
-                              "TentangSaya"
-                            )
+                            handleChange(e.target.value, "TentangSaya")
                           }
                         ></textarea>
                       </div>
 
                       <CustomButton
-                        id="btn-daftar"
+                        id="btn-update"
                         label="Update Data"
-                        className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                        className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-500 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
                         style={{
                           fontFamily: "Poppins",
                         }}
-                        loading={loading}
+                        loading={loading || disabled}
                       />
                     </div>
                   </div>
