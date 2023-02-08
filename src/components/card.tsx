@@ -40,11 +40,12 @@ const Card: FC<CardProps> = ({
   const checkToken = cookies.token;
   const checkRole = cookies.role;
   const checkVer = cookies.verifikasi;
+  const checkId = cookies.guru_id;
 
   const navigate = useNavigate();
 
   function onCLickReservasi() {
-    navigate(`/profile-teacher`);
+    navigate(`/profile-teacher/${checkId}`);
   }
 
   return (
@@ -59,9 +60,7 @@ const Card: FC<CardProps> = ({
           <p className="text-[36px] text-[#EFEFEF] font-semibold drop-shadow-lg">
             {nama}
           </p>
-          <p className="text-[20px] text-[#EFEFEF] font-semibold">
-            {alamat}
-          </p>
+          <p className="text-[20px] text-[#EFEFEF] font-semibold">{alamat}</p>
         </div>
         {/* <img src={image} alt="Card.png" /> */}
       </figure>
@@ -70,7 +69,6 @@ const Card: FC<CardProps> = ({
           <AiFillStar className="w-6 h-6 text-[#F66B0E]" />
           <p className="text-[#696969] text-[14px] pt-[5px]">{`${penilaian} (26 Ulasan) `}</p>
         </div>
-
         <p className="line-clamp-3 text-justify text-zinc-900 ">
           {judul}
         </p>

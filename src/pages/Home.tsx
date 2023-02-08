@@ -61,9 +61,7 @@ function Home() {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
-    {}
-  );
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
 
   const [avatar, setAvatar] = useState<any>("");
@@ -116,7 +114,7 @@ function Home() {
       showCancelButton: false,
     });
   };
-
+  
   // useEffect(() => {
   //   lokasiAsal ? setDisabled(true) : setDisabled(false);
   // }, [lokasiAsal]);
@@ -125,6 +123,7 @@ function Home() {
   useEffect(() => {
     checkRole === "guru" && fetchData();
   }, []);
+
   const fetchDataGetGuru = useCallback(() => {
     axios({
       method: "GET",
@@ -145,6 +144,10 @@ function Home() {
     fetchDataGetGuru();
   }, [fetchDataGetGuru]);
 
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
 
   function fetchData() {
@@ -176,9 +179,11 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
+
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
+
 
     setLoading(true);
     e.preventDefault();
@@ -216,6 +221,7 @@ function Home() {
       .finally(() => fetchData());
   };
 
+
   const handleChange = (
     value: string | File,
     key: keyof typeof objSubmit
@@ -231,6 +237,7 @@ function Home() {
       <Navbar />
       <>
         <br />
+
         {checkVer === "" ? (
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className={`modal ${modal}`}>
@@ -271,84 +278,99 @@ function Home() {
                         );
                         handleChange(e.currentTarget.files[0], "avatar");
                       }}
-                    />
-                    <CustomInput
-                      id="input-linkedin"
-                      type="text"
-                      accept="image/png, image/jpg, image/jpeg"
-                      className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
-                      style={{ border: "2px solid #424242" }}
-                      placeholder={LinkedIn}
-                      defaultValue={LinkedIn}
-                      onChange={(e) => handleChange(e.target.value, "LinkedIn")}
-                    />
 
-                    <label className="label">
-                      <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
-                        Upload Ijazah
+                    />
+                  </div>
+                  <p className="text-center text-gray-500 font-semibold mt-2">
+                    * Uk. photo 400 x 400 pixels
+                  </p>
+                  <CustomInput
+                    id="input-avatar"
+                    type="file"
+                    accept="image/png, image/jpg, image/jpeg"
+                    className="file-input h-10 w-full max-w-xs flex justify-center bg-white lg:mt-4"
+                    onChange={(e) => {
+                      if (!e.currentTarget.files) {
+                        return;
+                      }
+                      setAvatar(URL.createObjectURL(e.currentTarget.files[0]));
+                      handleChange(e.currentTarget.files[0], "Avatar");
+                    }}
+                  />
+                  <CustomInput
+                    id="input-linkedin"
+                    type="text"
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
+                    style={{ border: "2px solid #424242" }}
+                    placeholder={LinkedIn}
+                    defaultValue={LinkedIn}
+                    onChange={(e) => handleChange(e.target.value, "LinkedIn")}
+                  />
+
+                  <label className="label">
+                    <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
+                      Upload Ijazah
+                    </span>
+                  </label>
+
+                  <CustomInput
+                    id="input-ijazah"
+                    type="file"
+                    className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
+                    onChange={(e) => {
+                      if (!e.currentTarget.files) {
+                        return;
+                      }
+                      setIjazah(URL.createObjectURL(e.currentTarget.files[0]));
+                      handleChange(e.currentTarget.files[0], "Ijazah");
+                    }}
+                  />
+                </div>
+
+                <div className="lg:w-7/12 w-full items-center lg:pl-16 pl-0 lg:mx-0 mx-2">
+                  <div className="form-control w-full ">
+                    <label className="label mt-5">
+                      <span
+                        className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
+                        style={{ color: "#424242" }}
+                      >
+                        Alamat :
                       </span>
                     </label>
 
                     <CustomInput
-                      id="input-ijazah"
-                      type="file"
-                      className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
-                      onChange={(e) => {
-                        if (!e.currentTarget.files) {
-                          return;
-                        }
-                        setIjazah(
-                          URL.createObjectURL(e.currentTarget.files[0])
-                        );
-                        handleChange(e.currentTarget.files[0], "ijazah");
-                      }}
+                      id="input-alamat"
+                      type="text"
 
+                      accept="image/png, image/jpg, image/jpeg"
+                      className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
+
+                      style={{ border: "2px solid #424242" }}
+                      placeholder={"contoh : Blitar"}
+                      defaultValue={lokasiAsal}
+                      onChange={(e) =>
+                        handleChange(e.target.value, "LokasiAsal")
+                      }
                     />
-                  </div>
 
-                  <div className="lg:w-7/12 w-full items-center lg:pl-16 pl-0 lg:mx-0 mx-2">
-                    <div className="form-control w-full ">
-                      <label className="label mt-5">
-                        <span
-                          className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
-                          style={{ color: "#424242" }}
-                        >
-                          Alamat :
-                        </span>
-                      </label>
+                    <label className="label mt-2">
+                      <span
+                        className="label-text text-lg w-10/12 lg:w-9/12 font-semibold"
+                        style={{ color: "#424242" }}
+                      >
+                        Handphone :
+                      </span>
+                    </label>
 
-                      <CustomInput
-                        id="input-alamat"
-                        type="text"
-                        className="input w-10/12 lg:w-9/12 bg-white"
-                        style={{ border: "2px solid #424242" }}
-                        placeholder={"contoh : Blitar"}
-                        defaultValue={lokasiAsal}
-                        onChange={(e) =>
-                          handleChange(e.target.value, "LokasiAsal")
-                        }
-                      />
-
-                      <label className="label mt-2">
-                        <span
-                          className="label-text text-lg w-10/12 lg:w-9/12 font-semibold"
-                          style={{ color: "#424242" }}
-                        >
-                          Handphone :
-                        </span>
-                      </label>
-
-                      <CustomInput
-                        id="input-no-hp"
-                        type="number"
-                        className="input w-10/12 lg:w-9/12 bg-white"
-                        style={{ border: "2px solid #424242" }}
-                        placeholder={"contoh : 0891234556"}
-                        defaultValue={telefon}
-                        onChange={(e) =>
-                          handleChange(e.target.value, "Telepon")
-                        }
-                      />
+                    <CustomInput
+                      id="input-no-hp"
+                      type="number"
+                      className="input w-10/12 lg:w-9/12 bg-white"
+                      style={{ border: "2px solid #424242" }}
+                      placeholder={"contoh : 0891234556"}
+                      defaultValue={telefon}
+                      onChange={(e) => handleChange(e.target.value, "Telepon")}
+                    />
                     <label className="label">
                       <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
                         Upload Ijazah
@@ -366,12 +388,8 @@ function Home() {
                         Pilih Salah Satu
                       </option>
                       <option value="1">Sekolah Dasar</option>
-                      <option value="2">
-                        Sekolah Menengah Pertama
-                      </option>
-                      <option value="3">
-                        Sekolah Menengah Atas
-                      </option>
+                      <option value="2">Sekolah Menengah Pertama</option>
+                      <option value="3">Sekolah Menengah Atas</option>
                     </select>
                     <div className="form-control">
                       <label className="label">
@@ -406,7 +424,6 @@ function Home() {
                           Sekolah Menengah Atas
                         </option>
                       </select>
-
 
                       <div className="form-control">
                         <label className="label">
@@ -569,10 +586,8 @@ function Home() {
                 </div>
               </div>
             </div>
-          </form>
-        ) : (
-          ""
-        )}
+          </div>
+        </form>
       </>
 
       <div className="flex flex-col items-center">
