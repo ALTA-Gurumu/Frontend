@@ -93,8 +93,13 @@ function App() {
       element: checkToken ? <ProfileStudent /> : <Login />,
     },
     {
-      path: "/profile-teacher",
-      element: checkToken ? <ProfileTeacher /> : <Login />,
+      path: "/profile-teacher/:guru_id",
+      element:
+        checkToken && checkRole === "guru" ? (
+          <TabsContentForTeacherPage />
+        ) : (
+          <Login />
+        ),
     },
     // {
     //   path: "/transactions-selling",

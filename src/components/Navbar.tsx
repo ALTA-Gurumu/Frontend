@@ -14,10 +14,16 @@ function Navbar() {
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
 
-  const [cookie, , removeCookie] = useCookies(["token", "role", "verifikasi"]);
+  const [cookie, , removeCookie] = useCookies([
+    "token",
+    "role",
+    "verifikasi",
+    "guru_id",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkVer = cookie.verifikasi;
+  const checkId = cookie.guru_id;
 
   const handleLogout = async () => {
     removeCookie("token");
@@ -32,6 +38,7 @@ function Navbar() {
       showCancelButton: false,
     });
   };
+  const linkProfile = `/profile-teacher/${checkId}`;
 
   return (
     <div className="navbar bg-card">
@@ -71,14 +78,19 @@ function Navbar() {
             </Link>
           </label>
         ) : (
-          ""
-        )}
-
-        <div className="dropdown dropdown-end">
           <label
+            id="link-histori-sesi-murid"
             tabIndex={0}
             className="btn btn-ghost btn-circle avatar"
           >
+            <Link to="/HalamanSesiMurid">
+              <BsFillCalendarCheckFill className="text-primary w-7 h-7" />
+            </Link>
+          </label>
+        )}
+
+        <div className="dropdown dropdown-end">
+          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <FaRegUser className="text-primary w-7 h-7" />
           </label>
           <ul
@@ -91,7 +103,7 @@ function Navbar() {
                   id="link-profil"
                   onClick={() =>
                     checkToken && checkRole === "guru"
-                      ? navigate("/profile-teacher/:guru_id")
+                      ? navigate(`/profile-teacher/${checkId}`)
                       : navigate("/HalamanSesiMurid")
                   }
                 >
@@ -102,10 +114,7 @@ function Navbar() {
               ""
             )}
 
-            <li
-              id="link-home-1"
-              className="bg-component text-zinc-50"
-            >
+            <li id="link-home-1" className="bg-component text-zinc-50">
               <Link to="/home">Home</Link>
             </li>
 
@@ -113,9 +122,7 @@ function Navbar() {
               <button
                 id="btn-auth"
                 onClick={() =>
-                  checkToken
-                    ? handleLogout()
-                    : navigate("/login")
+                  checkToken ? handleLogout() : navigate("/login")
                 }
               >
                 {checkToken ? "Keluar" : "Masuk"}
@@ -142,10 +149,7 @@ const LoginNavbar = () => {
       <div className="navbar w-10/12 mx-auto mt-2 lg:mt-7 primary">
         <div className="navbar-start">
           <div id="dropdown" className="dropdown">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost lg:hidden"
-            >
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"

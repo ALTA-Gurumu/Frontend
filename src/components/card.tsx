@@ -18,7 +18,6 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = ({
-  guru_id,
   nama,
   judul,
   alamat,
@@ -37,11 +36,12 @@ const Card: FC<CardProps> = ({
   const checkToken = cookies.token;
   const checkRole = cookies.role;
   const checkVer = cookies.verifikasi;
+  const checkId = cookies.guru_id;
 
   const navigate = useNavigate();
 
   function onCLickReservasi() {
-    navigate(`/profile-teacher`);
+    navigate(`/profile-teacher/${checkId}`);
   }
 
   return (
@@ -56,9 +56,7 @@ const Card: FC<CardProps> = ({
           <p className="text-[36px] text-[#EFEFEF] font-semibold drop-shadow-lg">
             {nama}
           </p>
-          <p className="text-[20px] text-[#EFEFEF] font-semibold">
-            {alamat}
-          </p>
+          <p className="text-[20px] text-[#EFEFEF] font-semibold">{alamat}</p>
         </div>
         {/* <img src={image} alt="Card.png" /> */}
       </figure>
@@ -68,9 +66,7 @@ const Card: FC<CardProps> = ({
           <p className="text-[#696969] text-[14px] pt-[5px]">{`${penilaian} (26 Ulasan) `}</p>
         </div>
 
-        <p className="line-clamp-3 text-justify text-zinc-900 ">
-          {deskripsi}
-        </p>
+        <p className="line-clamp-3 text-justify text-zinc-900 ">{}</p>
         <div className="text-end mt-4">
           <CustomButton
             id="btn-tarifperjam"

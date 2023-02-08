@@ -13,7 +13,7 @@ export interface DataTypesGuru {
   Tarif: number;
   Pelajaran: string;
   Pendidikan: string;
-  Avatar: string;
+  Avatar: any;
   Ijazah: any;
   Latitude: number;
   Longitude: number;
@@ -32,13 +32,14 @@ export interface CompleteTeacher {
   TentangSaya?: string;
   Pengalaman?: string;
   LokasiAsal?: string;
-  Offline?: string;
-  Online?: string;
+  MetodeBljr?: string;
   Tarif?: number;
   Pelajaran?: string;
   Pendidikan?: string;
-  avatar?: string;
-  ijazah?: any;
+  Avatar?: any;
+  avatar?: any;
+  Jadwal?: any;
+  Ijazah?: any;
   Latitude?: number;
   Longitude?: number;
   onChangeOption?: () => void;
