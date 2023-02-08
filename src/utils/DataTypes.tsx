@@ -42,6 +42,7 @@ export interface CompleteTeacher {
   Latitude?: number;
   Longitude?: number;
   Jadwal?: JadwaType[];
+  data?: RiwayatType[];
   onChangeOption?: () => void;
 }
 
@@ -58,6 +59,15 @@ type JadwaType = {
   Tanggal?: string;
   Jam?: string;
   Status?: string;
+};
+
+type RiwayatType = {
+  reservasi_id?: number;
+  nama_murid?: string;
+  jam?: string;
+  tanggal?: string;
+  tautan_gmet?: string;
+  status?: string;
 };
 
 export interface getGuruBeranda {

@@ -7,8 +7,7 @@ import CustomButton from "./CustomButton";
 import { useCookies } from "react-cookie";
 
 interface CardProps {
-
-  id: string;
+  id?: string;
   guru_id?: number;
   nama?: string;
   alamat?: string;
@@ -59,9 +58,7 @@ const Card: FC<CardProps> = ({
           <p className="text-[36px] text-[#EFEFEF] font-semibold drop-shadow-lg">
             {nama}
           </p>
-          <p className="text-[20px] text-[#EFEFEF] font-semibold">
-            {alamat}
-          </p>
+          <p className="text-[20px] text-[#EFEFEF] font-semibold">{alamat}</p>
         </div>
         {/* <img src={image} alt="Card.png" /> */}
       </figure>
@@ -71,9 +68,7 @@ const Card: FC<CardProps> = ({
           <p className="text-[#696969] text-[14px] pt-[5px]">{`${penilaian} (26 Ulasan) `}</p>
         </div>
 
-        <p className="line-clamp-3 text-justify text-zinc-900 ">
-          {judul}
-        </p>
+        <p className="line-clamp-3 text-justify text-zinc-900 ">{judul}</p>
         <div className="text-end mt-4">
           <CustomButton
             id="btn-tarifperjam"

@@ -61,10 +61,7 @@ function Home() {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
-    {}
-  );
-
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -73,6 +70,9 @@ function Home() {
   const [telefon, setTelefon] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
+
+  const [btn, setBtn] = useState<string>("px-4 py-3 text-[20px] rounded-2xl");
+  const [label, setLabel] = useState<string>("Lihat lebih banyak guru");
 
   const filteredHomes = homes.filter(
     (home) =>
@@ -85,6 +85,8 @@ function Home() {
     // console.log(index);
     if (index >= homes.length) {
       setIsCompleted(true);
+      setBtn("btn-disabled");
+      setLabel("");
     } else {
       setIsCompleted(false);
     }
@@ -121,7 +123,6 @@ function Home() {
   //   lokasiAsal ? setDisabled(true) : setDisabled(false);
   // }, [lokasiAsal]);
 
-
   useEffect(() => {
     checkRole === "guru" && fetchData();
   }, []);
@@ -144,8 +145,6 @@ function Home() {
   useEffect(() => {
     fetchDataGetGuru();
   }, [fetchDataGetGuru]);
-
-
 
   function fetchData() {
     axios
@@ -176,10 +175,7 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -216,11 +212,7 @@ function Home() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (
-    value: string | File,
-    key: keyof typeof objSubmit
-  ) => {
-
+  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -246,7 +238,9 @@ function Home() {
                     </h1>
                     <div
                       className="w-[120px] h-[120px] overflow-hidden rounded-full bg-no-repeat bg-cover"
-                      style={{ backgroundImage: `URL(${DeafultAvatar})` }}
+                      style={{
+                        backgroundImage: `URL(${DeafultAvatar})`,
+                      }}
                     >
                       <img
                         src={avatar}
@@ -302,7 +296,6 @@ function Home() {
                         );
                         handleChange(e.currentTarget.files[0], "ijazah");
                       }}
-
                     />
                   </div>
 
@@ -349,221 +342,220 @@ function Home() {
                           handleChange(e.target.value, "Telepon")
                         }
                       />
-                    <label className="label">
-                      <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
-                        Upload Ijazah
-                      </span>
-                    </label>
-                    <select
-                      defaultValue={"DEFAULT"}
-                      id="input-jenjang-pengajaran"
-                      className="select select-bordered w-10/12 lg:w-9/12  bg-white"
-                      style={{ border: "2px solid #424242" }}
-                      name="option"
-                      // onChange={handleChange}
-                    >
-                      <option value="DEFAULT" disabled>
-                        Pilih Salah Satu
-                      </option>
-                      <option value="1">Sekolah Dasar</option>
-                      <option value="2">
-                        Sekolah Menengah Pertama
-                      </option>
-                      <option value="3">
-                        Sekolah Menengah Atas
-                      </option>
-                    </select>
-                    <div className="form-control">
                       <label className="label">
-                        <span
-                          className="label-text text-lg w-10/12 lg:w-9/12 font-semibold mt-2"
-                          style={{ color: "#424242" }}
-                        >
-                          Jenjang Pendidikan :
+                        <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
+                          Upload Ijazah
                         </span>
                       </label>
-
                       <select
                         defaultValue={"DEFAULT"}
                         id="input-jenjang-pengajaran"
                         className="select select-bordered w-10/12 lg:w-9/12  bg-white"
                         style={{ border: "2px solid #424242" }}
                         name="option"
-                        onChange={(e) =>
-                          handleChange(e.target.value, "Pendidikan")
-                        }
+                        // onChange={handleChange}
                       >
                         <option value="DEFAULT" disabled>
-                          {pendidikan === ""
-                            ? "Pilih Salah Satu"
-                            : `${pendidikan}`}
+                          Pilih Salah Satu
                         </option>
-                        <option value="Sekolah Dasar">Sekolah Dasar</option>
-                        <option value="Sekolah Menengah Pertama">
-                          Sekolah Menengah Pertama
-                        </option>
-                        <option value="Sekolah Menengah Atas">
-                          Sekolah Menengah Atas
-                        </option>
+                        <option value="1">Sekolah Dasar</option>
+                        <option value="2">Sekolah Menengah Pertama</option>
+                        <option value="3">Sekolah Menengah Atas</option>
                       </select>
-
-
                       <div className="form-control">
                         <label className="label">
                           <span
-                            className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
+                            className="label-text text-lg w-10/12 lg:w-9/12 font-semibold mt-2"
                             style={{ color: "#424242" }}
                           >
-                            Biografi Saya :
+                            Jenjang Pendidikan :
                           </span>
                         </label>
-                        <textarea
-                          id="input-bio"
-                          className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
-                          style={{ border: "2px solid #424242" }}
-                          placeholder="Ceritakan biografi singkat anda"
-                          defaultValue={deskripsi}
-                          onChange={(e) =>
-                            handleChange(e.target.value, "TentangSaya")
-                          }
-                        ></textarea>
-                      </div>
 
-                      <CustomButton
-                        id="btn-daftar"
-                        label="Update Data"
-                        className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
-                        style={{
-                          fontFamily: "Poppins",
+                        <select
+                          defaultValue={"DEFAULT"}
+                          id="input-jenjang-pengajaran"
+                          className="select select-bordered w-10/12 lg:w-9/12  bg-white"
+                          style={{ border: "2px solid #424242" }}
+                          name="option"
+                          onChange={(e) =>
+                            handleChange(e.target.value, "Pendidikan")
+                          }
+                        >
+                          <option value="DEFAULT" disabled>
+                            {pendidikan === ""
+                              ? "Pilih Salah Satu"
+                              : `${pendidikan}`}
+                          </option>
+                          <option value="Sekolah Dasar">Sekolah Dasar</option>
+                          <option value="Sekolah Menengah Pertama">
+                            Sekolah Menengah Pertama
+                          </option>
+                          <option value="Sekolah Menengah Atas">
+                            Sekolah Menengah Atas
+                          </option>
+                        </select>
+
+                        <div className="form-control">
+                          <label className="label">
+                            <span
+                              className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
+                              style={{ color: "#424242" }}
+                            >
+                              Biografi Saya :
+                            </span>
+                          </label>
+                          <textarea
+                            id="input-bio"
+                            className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
+                            style={{
+                              border: "2px solid #424242",
+                            }}
+                            placeholder="Ceritakan biografi singkat anda"
+                            defaultValue={deskripsi}
+                            onChange={(e) =>
+                              handleChange(e.target.value, "TentangSaya")
+                            }
+                          ></textarea>
+                        </div>
+
+                        <CustomButton
+                          id="btn-daftar"
+                          label="Update Data"
+                          className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                          style={{
+                            fontFamily: "Poppins",
+                          }}
+                          loading={loading}
+                        />
+                      </div>
+                      <CustomInput
+                        id="input-ijazah"
+                        type="file"
+                        accept="image/png, image/jpg, image/jpeg"
+                        className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
+                        onChange={(e) => {
+                          if (!e.currentTarget.files) {
+                            return;
+                          }
+                          setIjazah(
+                            URL.createObjectURL(e.currentTarget.files[0])
+                          );
+                          handleChange(e.currentTarget.files[0], "ijazah");
                         }}
-                        loading={loading}
                       />
                     </div>
-                    <CustomInput
-                      id="input-ijazah"
-                      type="file"
-                      accept="image/png, image/jpg, image/jpeg"
-                      className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
-                      onChange={(e) => {
-                        if (!e.currentTarget.files) {
-                          return;
-                        }
-                        setIjazah(
-                          URL.createObjectURL(e.currentTarget.files[0])
-                        );
-                        handleChange(e.currentTarget.files[0], "ijazah");
-                      }}
-                    />
-                  </div>
 
-                  <div className="lg:w-7/12 w-full items-center lg:pl-16 pl-0 lg:mx-0 mx-2">
-                    <div className="form-control w-full ">
-                      <label className="label mt-5">
-                        <span
-                          className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
-                          style={{ color: "#424242" }}
-                        >
-                          Alamat :
-                        </span>
-                      </label>
+                    <div className="lg:w-7/12 w-full items-center lg:pl-16 pl-0 lg:mx-0 mx-2">
+                      <div className="form-control w-full ">
+                        <label className="label mt-5">
+                          <span
+                            className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
+                            style={{ color: "#424242" }}
+                          >
+                            Alamat :
+                          </span>
+                        </label>
 
-                      <CustomInput
-                        id="input-alamat"
-                        type="text"
-                        className="input w-10/12 lg:w-9/12 bg-white"
-                        style={{ border: "2px solid #424242" }}
-                        placeholder={"contoh : Blitar"}
-                        defaultValue={lokasiAsal}
-                        onChange={(e) =>
-                          handleChange(e.target.value, "LokasiAsal")
-                        }
-                      />
+                        <CustomInput
+                          id="input-alamat"
+                          type="text"
+                          className="input w-10/12 lg:w-9/12 bg-white"
+                          style={{ border: "2px solid #424242" }}
+                          placeholder={"contoh : Blitar"}
+                          defaultValue={lokasiAsal}
+                          onChange={(e) =>
+                            handleChange(e.target.value, "LokasiAsal")
+                          }
+                        />
 
-                      <label className="label mt-2">
-                        <span
-                          className="label-text text-lg w-10/12 lg:w-9/12 font-semibold"
-                          style={{ color: "#424242" }}
-                        >
-                          Handphone :
-                        </span>
-                      </label>
+                        <label className="label mt-2">
+                          <span
+                            className="label-text text-lg w-10/12 lg:w-9/12 font-semibold"
+                            style={{ color: "#424242" }}
+                          >
+                            Handphone :
+                          </span>
+                        </label>
 
-                      <CustomInput
-                        id="input-no-hp"
-                        type="number"
-                        className="input w-10/12 lg:w-9/12 bg-white"
-                        style={{ border: "2px solid #424242" }}
-                        placeholder={"contoh : 0891234556"}
-                        defaultValue={telefon}
-                        onChange={(e) =>
-                          handleChange(e.target.value, "Telepon")
-                        }
-                      />
+                        <CustomInput
+                          id="input-no-hp"
+                          type="number"
+                          className="input w-10/12 lg:w-9/12 bg-white"
+                          style={{ border: "2px solid #424242" }}
+                          placeholder={"contoh : 0891234556"}
+                          defaultValue={telefon}
+                          onChange={(e) =>
+                            handleChange(e.target.value, "Telepon")
+                          }
+                        />
 
-                      <label className="label">
-                        <span
-                          className="label-text text-lg w-10/12 lg:w-9/12 font-semibold mt-2"
-                          style={{ color: "#424242" }}
-                        >
-                          Jenjang Pendidikan :
-                        </span>
-                      </label>
-
-                      <select
-                        defaultValue={"DEFAULT"}
-                        id="input-jenjang-pengajaran"
-                        className="select select-bordered w-10/12 lg:w-9/12  bg-white"
-                        style={{ border: "2px solid #424242" }}
-                        name="option"
-                        onChange={(e) =>
-                          handleChange(e.target.value, "Pendidikan")
-                        }
-                      >
-                        <option value="DEFAULT" disabled>
-                          {pendidikan === ""
-                            ? "Pilih Salah Satu"
-                            : `${pendidikan}`}
-                        </option>
-                        <option value="Sekolah Dasar">Sekolah Dasar</option>
-                        <option value="Sekolah Menengah Pertama">
-                          Sekolah Menengah Pertama
-                        </option>
-                        <option value="Sekolah Menengah Atas">
-                          Sekolah Menengah Atas
-                        </option>
-                      </select>
-
-                      <div className="form-control">
                         <label className="label">
                           <span
-                            className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
+                            className="label-text text-lg w-10/12 lg:w-9/12 font-semibold mt-2"
                             style={{ color: "#424242" }}
                           >
-                            Biografi Saya :
+                            Jenjang Pendidikan :
                           </span>
                         </label>
-                        <textarea
-                          id="input-bio"
-                          className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
-                          style={{ border: "2px solid #424242" }}
-                          placeholder="Ceritakan biografi singkat anda"
-                          defaultValue={deskripsi}
-                          onChange={(e) =>
-                            handleChange(e.target.value, "TentangSaya")
-                          }
-                        ></textarea>
-                      </div>
 
-                      <CustomButton
-                        id="btn-update"
-                        label="Update Data"
-                        className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-500 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
-                        style={{
-                          fontFamily: "Poppins",
-                        }}
-                        loading={loading || disabled}
-                      />
-                    </div>
+                        <select
+                          defaultValue={"DEFAULT"}
+                          id="input-jenjang-pengajaran"
+                          className="select select-bordered w-10/12 lg:w-9/12  bg-white"
+                          style={{ border: "2px solid #424242" }}
+                          name="option"
+                          onChange={(e) =>
+                            handleChange(e.target.value, "Pendidikan")
+                          }
+                        >
+                          <option value="DEFAULT" disabled>
+                            {pendidikan === ""
+                              ? "Pilih Salah Satu"
+                              : `${pendidikan}`}
+                          </option>
+                          <option value="Sekolah Dasar">Sekolah Dasar</option>
+                          <option value="Sekolah Menengah Pertama">
+                            Sekolah Menengah Pertama
+                          </option>
+                          <option value="Sekolah Menengah Atas">
+                            Sekolah Menengah Atas
+                          </option>
+                        </select>
+
+                        <div className="form-control">
+                          <label className="label">
+                            <span
+                              className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
+                              style={{ color: "#424242" }}
+                            >
+                              Biografi Saya :
+                            </span>
+                          </label>
+                          <textarea
+                            id="input-bio"
+                            className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
+                            style={{
+                              border: "2px solid #424242",
+                            }}
+                            placeholder="Ceritakan biografi singkat anda"
+                            defaultValue={deskripsi}
+                            onChange={(e) =>
+                              handleChange(e.target.value, "TentangSaya")
+                            }
+                          ></textarea>
+                        </div>
+
+                        <CustomButton
+                          id="btn-update"
+                          label="Update Data"
+                          className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-500 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
+                          style={{
+                            fontFamily: "Poppins",
+                          }}
+                          loading={loading || disabled}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -633,10 +625,11 @@ function Home() {
         </div>
       ) : (
         <div className="text-center mt-14 mb-20">
+          {/* {loadMore !== homes.length ? "" : ""} */}
           <CustomButton
             id="btn-lihatLainnya"
-            className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
-            label="Lihat lebih banyak guru"
+            className={`${btn} bg-[#F66B0E] text-white hover:bg-navy shadow-xl`}
+            label={label}
             onClick={loadMore}
           />
         </div>
