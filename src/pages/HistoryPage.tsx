@@ -1,16 +1,52 @@
-import { useState, useEffect } from "react";
-import "@blueprintjs/core/lib/css/blueprint.css";
-import { Tabs, Tab, Classes } from "@blueprintjs/core";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
-import Layout from "../components/Layout";
-import { Navbar } from "../components/Navbar";
+import { Tabs, Tab, Classes } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../utils/Swal";
+
+import { CompleteTeacher } from "../utils/DataTypes";
+
 import CustomButton from "../components/CustomButton";
 import { Footer } from "../components/Footer";
+import { Navbar } from "../components/Navbar";
+import Layout from "../components/Layout";
 
 function HalamanSesiGuru() {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+  const [cookies, ,] = useCookies(["token", "guru_id"]);
+  const checkToken = cookies.token;
+  const checkID = cookies.guru_id;
+
   const [status, setStatus] = useState<string>("Belum Selesai");
   const [disable, setDisable] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [jadwal, setJadwal] = useState<CompleteTeacher>({});
+
+  useEffect(() => {
+    fetchJadwal();
+  }, []);
+
+  function fetchJadwal() {
+    axios
+      .get(`https://devmyproject.site/guru/${checkID}`, {
+        headers: { Authorization: `Bearer ${checkToken}` },
+      })
+      .then((res) => {
+        setJadwal(res.data.data);
+        // console.log(res.data.data.Jadwal);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  }
 
   useEffect(() => {
     if (status === "Selesai") {
@@ -19,7 +55,6 @@ function HalamanSesiGuru() {
       setDisable(true);
     }
   }, [status]);
-  console.log(status);
 
   return (
     <>
@@ -147,6 +182,7 @@ function HalamanSesiGuru() {
                     </div>
                   }
                 />
+
                 <Tab
                   id="tab-3"
                   title="Jadwal Mengajar"
@@ -164,11 +200,15 @@ function HalamanSesiGuru() {
                           </tr>
                         </thead>
                         <tbody className="text-[16px] font-normal">
-                          <tr>
-                            <th>1</th>
-                            <td>Senin, 20 Januari 2023</td>
-                            <td>09.00 AM (WIB)</td>
-                          </tr>
+                          <>
+                            {jadwal.Jadwal?.map((data, index) => (
+                              <tr key={index}>
+                                <th>{data.ID}</th>
+                                <td>{data.Tanggal}</td>
+                                <td>{data.Jam}</td>
+                              </tr>
+                            ))}
+                          </>
                         </tbody>
                       </table>
                     </div>
