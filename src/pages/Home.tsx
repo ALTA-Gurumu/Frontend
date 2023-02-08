@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Cookies, useCookies } from "react-cookie";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { set, slice } from "lodash";
 
@@ -212,16 +212,17 @@ function Home() {
                       Selesaikan Profil Anda
                     </h1>
                     <div
-                      className="w-32 h-32 rounded-full bg-no-repeat bg-cover"
-                      style={{ backgroundImage: `URL(${Profil2})` }}
+                      className="w-[120px] h-[120px] overflow-hidden rounded-full bg-no-repeat bg-cover"
+                      style={{ backgroundImage: `URL(${DeafultAvatar})` }}
                     >
                       <img
                         src={avatar}
-                        className=" w-4/12 max-w-full mt-10 lg:mt-0"
+                        alt="porfil.jpeg"
+                        className="w-full h-11/12"
                       />
                     </div>
                     <p className="text-center text-gray-500 font-semibold mt-2">
-                      * Uk. photo 400 x 400 pixels
+                      * Uk. photo 600 x 600 pixels
                     </p>
                     <CustomInput
                       id="input-avatar"
@@ -241,6 +242,7 @@ function Home() {
                     <CustomInput
                       id="input-linkedin"
                       type="text"
+                      accept="image/png, image/jpg, image/jpeg"
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
                       style={{ border: "2px solid #424242" }}
                       placeholder={LinkedIn}
@@ -257,6 +259,7 @@ function Home() {
                     <CustomInput
                       id="input-ijazah"
                       type="file"
+                      accept="image/png, image/jpg, image/jpeg"
                       className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
                       onChange={(e) => {
                         if (!e.currentTarget.files) {
