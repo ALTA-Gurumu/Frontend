@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Cookies, useCookies } from "react-cookie";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 import { CustomInput, InputIcon } from "../components/CustomInput";
@@ -16,7 +16,7 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-import { CompleteTeacher } from "../utils/DataTypes";
+import { CompleteTeacher, getGuruBeranda } from "../utils/DataTypes";
 import Swal from "../utils/Swal";
 
 import imgLogin from "../assets/login-img.webp";
@@ -52,6 +52,7 @@ function Home() {
   const [modal, setModal] = useState<string>("modal-open");
 
   const [loading, setLoading] = useState<boolean>(true);
+  const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
   const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
   const [avatar, setAvatar] = useState<any>("");
@@ -71,24 +72,25 @@ function Home() {
     });
   };
 
-  useEffect(() => {
-    fetchHome();
-  }, []);
-
-  function fetchHome() {
-    axios
-      .get(
-        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/guru"
-      )
-      .then((res) => {})
+  const fetchDataGetGuru = useCallback(() => {
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/guru`,
+      headers: {},
+      params: {},
+    })
+      .then((res) => {
+        const ApiResponse = res.data;
+        setTeacher(ApiResponse.data);
+      })
       .catch((err) => {
-        alert(err.response.data.message);
+        console.log(err);
       });
-  }
+  }, []);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchDataGetGuru();
+  }, [fetchDataGetGuru]);
 
   function fetchData() {
     axios
@@ -386,16 +388,21 @@ function Home() {
 
       <div className="flex flex-col items-center w-full lg:mt-20 mt-14 ">
         <div className="gap-4 grid lg:grid-cols-3 grid-cols-1 lg:w-[90vw] w-[80vw]">
-          <Card
-            id="card-guru"
-            image={Profil2}
-            nama={"Iwan"}
-            alamat={"Kab. Bululawang"}
-            rating={5}
-            deskripsi={
-              " Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast .....Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast ..... "
-            }
-          />
+          {teacher.map((item, index) => {
+            return (
+              <Card
+                key={index}
+                id="card-guru"
+                image={item.avatar}
+                nama={item.nama}
+                alamat={item.alamat}
+                rating={item.penilaian}
+                deskripsi={
+                  " Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast .....Jurusan sisologi dengan nilai mega cumload, menjadi leader broadcast dan poadcast ..... "
+                }
+              />
+            );
+          })}
         </div>
       </div>
       <div className="text-center mt-14 mb-20">

@@ -51,3 +51,13 @@ export interface ProfilType {
   telepon?: string;
   avatar?: any;
 }
+
+export interface getGuruBeranda {
+  nama?: string;
+  alamat?: string;
+  judul?: string;
+  pelajaran?: string;
+  avatar?: any;
+  tarif?: number;
+  penilaian?: number;
+}
