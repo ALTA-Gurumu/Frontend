@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import useCookies from "react-cookie/cjs/useCookies";
-
+import { ProfileTeacher } from "../pages/ProfilePage";
 import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
 
@@ -71,7 +71,7 @@ function App() {
         checkToken && checkRole === "siswa" ? <HalamanSesiMurid /> : <Login />,
     },
     {
-      path: "paymentDetails",
+      path: "/paymentDetails",
       element:
         checkToken && checkRole === "siswa" ? <PaymentDetails /> : <Login />,
     },
@@ -93,8 +93,8 @@ function App() {
       element: checkToken ? <ProfileStudent /> : <Login />,
     },
     {
-      path: "/profile-teacher/:guru_id",
-      element: <TabsContentForTeacherPage />,
+      path: "/profile-teacher",
+      element: <ProfileTeacher />,
     },
     // {
     //   path: "/transactions-selling",
