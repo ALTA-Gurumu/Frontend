@@ -59,6 +59,7 @@ type JadwaType = {
   Jam?: string;
   Status?: string;
 };
+
 export interface getGuruBeranda {
   nama?: string;
   alamat?: string;
