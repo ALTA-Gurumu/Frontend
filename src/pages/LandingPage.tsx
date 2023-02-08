@@ -64,7 +64,7 @@ function LandingPage() {
       <Navbar />
       <div className="flex flex-col-reverse lg:flex-row w-full justify-center min-h-screen bg-white items-center">
         <div className="flex-1 pl-5 lg:mt-0 ">
-          <h1 className="flex justify-center text-4xl font-medium lg:text-[2.5rem]">
+          <h1 className="flex justify-center text-4xl font-bold lg:text-[2.5rem]">
             Diajar
             <br />
             dengan guru
@@ -94,7 +94,7 @@ function LandingPage() {
         </div>
       </div>
       <div className="h-[8rem] lg:h-[5rem]  lg:pl-[13rem] pt-20 text-center lg:text-start">
-        <h1 className="text-4xl font-medium">
+        <h1 className="text-4xl font-bold">
           Belajar dengan
           <br />
           guru ulasan terbaik
@@ -102,7 +102,7 @@ function LandingPage() {
       </div>
 
       <div className="flex flex-col lg:flex-row pt-20 gap-[3rem] pb-12 lg:pb-0 lg:h-[35rem] justify-center lg:gap-28 items-center">
-        {ulasans.map((data, index) => (
+        {ulasans.slice(0, 2).map((data, index) => (
           <Card
             key={index}
             nama_guru={data.nama_guru}
@@ -113,7 +113,7 @@ function LandingPage() {
       </div>
 
       <div className="h-[8rem] lg:h-[0rem] bg-white lg:pl-[13rem] lg:pt-20 pt-8 pl-2 text-center lg:text-start">
-        <h1 className="text-4xl font-medium">
+        <h1 className="text-4xl font-bold">
           Dengan cara yang
           <br />
           mudah
@@ -121,7 +121,7 @@ function LandingPage() {
       </div>
       <div className="flex flex-col lg:flex-row w-full  bg-white h-[35rem] lg:h-[30rem] justify-evenly lg:items-center ">
         <div className="pl-8 lg:pl-0">
-          <h1 className="text-2xl font-medium">
+          <h1 className="text-2xl font-bold">
             1. Pilih guru anda
           </h1>
           <br />
@@ -141,14 +141,17 @@ function LandingPage() {
           alt="Pilih guru anda"
         />
       </div>
-      <div className="flex flex-col-reverse lg:flex-row w-full h-[40rem] lg:h-[35rem] pt-20 lg:pt-0 justify-evenly items-center">
-        <img
-          className="w-[30rem]"
-          src={Request}
-          alt="Pilih guru anda"
-        />
-        <div>
-          <h1 className="text-2xl font-medium">
+      <div className="w-full flex flex-col-reverse lg:flex-row mx-auto gap-20 bg-white h-[45rem] lg:h-auto  ">
+        <div className="flex-1 bg-white lg:ml-[10rem] ">
+          <img
+            className="w-[30rem]"
+            src={Request}
+            alt="Pilih guru anda"
+          />
+        </div>
+        <div className="flex-1  bg-primary pt-10 lg:pt-40 lg:pl-20 pl-8  lg:h-[30rem]">
+          {" "}
+          <h1 className="text-2xl font-bold">
             2. Ajukan Permintaan belajar
           </h1>
           <br />
@@ -165,7 +168,7 @@ function LandingPage() {
       </div>
       <div className="flex flex-col lg:flex-row w-full bg-white h-[45rem] lg:h-[35rem] pt-8 lg:pt-0 justify-evenly items-center">
         <div>
-          <h1 className="text-2xl font-medium">
+          <h1 className="text-2xl font-bold">
             3. Atur jadwal belajar anda
             <br />
             sendiri
