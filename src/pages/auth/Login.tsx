@@ -30,9 +30,9 @@ const Login = () => {
     "guru_id",
     "nama",
   ]);
-  const checkRole = cookies.role;
-  const checkVer = cookies.verifikasi;
-  const checkId = cookies.guru_id;
+  // const checkRole = cookies.role;
+  // const checkVer = cookies.verifikasi;
+  // const checkId = cookies.guru_id;
 
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setDLoading] = useState<boolean>(false);
@@ -61,9 +61,6 @@ const Login = () => {
       .then((res) => {
         const { message } = res.data;
         const { role, verifikasi, nama, guru_id } = res.data.data;
-
-        // console.log(res.data.token);
-        // console.log(cookies);
 
         setCookies("token", res.data.token, { path: "/" });
         setCookies("role", role, { path: "/" });

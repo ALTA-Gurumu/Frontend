@@ -13,19 +13,21 @@ import { ProfileStudent } from "../pages/ProfilePage";
 import HalamanSesiMurid from "../pages/HalamanSesiMurid";
 import { HalamanSesiGuru } from "../pages/HistoryPage";
 import PaymentDetails from "../pages/paymentDetails";
-
-import EditStudent from "../pages/EditStudent";
 import EditTeacher from "../pages/EditTeacher";
 import LandingPage from "../pages/LandingPage";
-import Beranda from "../pages/Home";
 import Register from "../pages/auth/Register";
+import Reservasi from "../pages/Reservasi";
 import Login from "../pages/auth/Login";
 import Rating from "../pages/Rating";
-import Reservasi from "../pages/Reservasi";
+import Beranda from "../pages/Home";
 import Home from "../pages/Home";
 
 function App() {
-  const [cookie, , removeCookie] = useCookies(["token", "role", "verifikasi"]);
+  const [cookie, , removeCookie] = useCookies([
+    "token",
+    "role",
+    "verifikasi",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkVerifikasi = cookie.verifikasi;
@@ -57,28 +59,31 @@ function App() {
       element: <Rating />,
     },
 
-    // {
-    //   path: "/editStudent",
-    //   element: <EditStudent />,
-    // },
-    // {
-    //   path: "/HalamanSesiGuru",
-    //   element: <HalamanSesiGuru />,
-    // },
+  {
+      path: "/profileStudent",
+      element:
+        checkToken && checkRole === "siswa" ? <ProfileStudent /> : <Login />,
+    },
+
     {
       path: "/HalamanSesiMurid",
-      element:
-        checkToken && checkRole === "siswa" ? <HalamanSesiMurid /> : <Login />,
+      element: checkToken ? <HalamanSesiMurid /> : <Login />,
     },
     {
       path: "/paymentDetails",
       element:
-        checkToken && checkRole === "siswa" ? <PaymentDetails /> : <Login />,
+        checkToken && checkRole === "siswa" ? (
+          <PaymentDetails />
+        ) : (
+          <Login />
+        ),
     },
     {
       path: "/editTeacher",
       element:
-        checkToken && checkRole === "guru" && checkVerifikasi === "false" ? (
+        checkToken &&
+        checkRole === "guru" &&
+        checkVerifikasi === "false" ? (
           <EditTeacher />
         ) : (
           <Home />
@@ -89,22 +94,17 @@ function App() {
       element: checkToken ? <Reservasi /> : <Login />,
     },
     {
-      path: "/profileStudent",
-      element: checkToken ? <ProfileStudent /> : <Login />,
+      path: "/profile-teacher/:guru_id",
+      element: checkToken ? <TabsContentForTeacherPage /> : <Login />,
+
     },
     {
-      path: "/profile-teacher/:guru_id",
+
+      path: "/listmengajar/:guru_id",
       element:
-        checkToken && checkRole === "guru" ? (
-          <TabsContentForTeacherPage />
-        ) : (
-          <Login />
-        ),
+        checkToken && checkRole === "guru" ? <HalamanSesiGuru /> : <Home />,
+
     },
-    // {
-    //   path: "/transactions-selling",
-    //   element: checkToken ? <TranscSell /> : <Login />,
-    // },
     // {
     //   path: "/profile-edit/:id_user",
     //   element: checkToken ? <EditProfile /> : <Login />,

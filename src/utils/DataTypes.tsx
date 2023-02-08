@@ -42,6 +42,7 @@ export interface CompleteTeacher {
   Ijazah?: any;
   Latitude?: number;
   Longitude?: number;
+  Jadwal?: JadwaType[];
   onChangeOption?: () => void;
 }
 
@@ -52,6 +53,13 @@ export interface ProfilType {
   telepon?: string;
   avatar?: any;
 }
+
+type JadwaType = {
+  ID?: number;
+  Tanggal?: string;
+  Jam?: string;
+  Status?: string;
+};
 
 export interface getGuruBeranda {
   nama?: string;

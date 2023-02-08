@@ -7,6 +7,8 @@ import CustomButton from "./CustomButton";
 import { useCookies } from "react-cookie";
 
 interface CardProps {
+
+  id: string;
   guru_id?: number;
   nama?: string;
   alamat?: string;
@@ -18,6 +20,8 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = ({
+  id,
+  guru_id,
   nama,
   judul,
   alamat,
@@ -65,8 +69,9 @@ const Card: FC<CardProps> = ({
           <AiFillStar className="w-6 h-6 text-[#F66B0E]" />
           <p className="text-[#696969] text-[14px] pt-[5px]">{`${penilaian} (26 Ulasan) `}</p>
         </div>
-
-        <p className="line-clamp-3 text-justify text-zinc-900 ">{}</p>
+        <p className="line-clamp-3 text-justify text-zinc-900 ">
+          {judul}
+        </p>
         <div className="text-end mt-4">
           <CustomButton
             id="btn-tarifperjam"

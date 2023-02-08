@@ -17,7 +17,6 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-
 import { CompleteTeacher, getGuruBeranda } from "../utils/DataTypes";
 
 import Swal from "../utils/Swal";
@@ -39,7 +38,7 @@ interface hometype {
 
 function Home() {
   const navigate = useNavigate();
-  const [cookies, , removeCookie] = useCookies([
+  const [cookies, setCookies] = useCookies([
     "token",
     "role",
     "verifikasi",
@@ -52,7 +51,6 @@ function Home() {
   const MySwal = withReactContent(Swal);
 
   const [homes, setHome] = useState<hometype[]>([]);
-  // const [loading, setDLoading] = useState<boolean>(false);
   const [searchSubject, setSearchSubject] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
@@ -60,9 +58,11 @@ function Home() {
   // const initialPost = slice(homes, 0, index);
   const [modal, setModal] = useState<string>("modal-open");
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
   const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -71,6 +71,7 @@ function Home() {
   const [telefon, setTelefon] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
+
   const filteredHomes = homes.filter(
     (home) =>
       home.pelajaran.toLowerCase().includes(searchSubject.toLowerCase()) &&
@@ -113,6 +114,15 @@ function Home() {
       showCancelButton: false,
     });
   };
+  
+  // useEffect(() => {
+  //   lokasiAsal ? setDisabled(true) : setDisabled(false);
+  // }, [lokasiAsal]);
+
+
+  useEffect(() => {
+    checkRole === "guru" && fetchData();
+  }, []);
 
   const fetchDataGetGuru = useCallback(() => {
     axios({
@@ -134,14 +144,16 @@ function Home() {
     fetchDataGetGuru();
   }, [fetchDataGetGuru]);
 
+
   useEffect(() => {
     fetchData();
   }, []);
 
+
   function fetchData() {
     axios
       .get(`https://devmyproject.site/guru/${checkId}`, {
-        headers: { Authorization: `Bearer ${checkToken}` },
+        // headers: { Authorization: `Bearer ${checkToken}` },
       })
       .then((res) => {
         const {
@@ -157,15 +169,9 @@ function Home() {
         setLokasiAsal(LokasiAsal);
         setLinkedIn(LinkedIn);
         setTelefon(Telepon);
-        setAvatar(Ijazah);
+        setIjazah(Ijazah);
         setPendidikan(Pendidikan);
         setDeskripsi(TentangSaya);
-
-        // console.log(res.data.data);
-        // console.log(res.data.data.TentangSaya);
-        // console.log(deskripsi);
-        // console.log(res.data.data.Avatar);
-        // console.log(avatar);
       })
       .catch((err) => {
         alert(err.toString());
@@ -173,7 +179,12 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+
+
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -191,10 +202,11 @@ function Home() {
       })
       .then((res) => {
         const { message } = res.data;
+        setCookies("verifikasi", true, { path: "/" });
         MySwal.fire({
           title: "Edit Succesfull",
           text: message,
-          showCloseButton: false,
+          showCancelButton: false,
         });
         setObjSubmit({});
       })
@@ -209,7 +221,12 @@ function Home() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
+
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -220,22 +237,48 @@ function Home() {
       <Navbar />
       <>
         <br />
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className={`modal ${modal}`}>
-            <div className="modal-box lg:w-9/12 w-10/12 max-w-full shadow-xl p-4">
-              <div className="w-full flex lg:flex-row flex-col relative">
-                <IoMdCloseCircleOutline
-                  onClick={() => skipHandle()}
-                  className="absolute top-0 right-0 text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7"
-                />
-                <div className="lg:w-6/12 w-full flex flex-col items-center justify-center">
-                  <h1 className="text-navy text-center text-xl lg:text-3xl font-bold mb-5">
-                    Selesaikan Profil Anda
-                  </h1>
-                  <div>
-                    <img
-                      src={avatar}
-                      className=" w-4/12 max-w-full mt-10 lg:mt-0"
+
+        {checkVer === "" ? (
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div className={`modal ${modal}`}>
+              <div className="modal-box lg:w-9/12 w-10/12 max-w-full shadow-xl p-4">
+                <div className="w-full flex lg:flex-row flex-col relative">
+                  <IoMdCloseCircleOutline
+                    onClick={() => skipHandle()}
+                    className="absolute top-0 right-0 text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7"
+                  />
+                  <div className="lg:w-6/12 w-full flex flex-col items-center justify-center">
+                    <h1 className="text-navy text-center text-xl lg:text-3xl font-bold mb-5">
+                      Selesaikan Profil Anda
+                    </h1>
+                    <div
+                      className="w-[120px] h-[120px] overflow-hidden rounded-full bg-no-repeat bg-cover"
+                      style={{ backgroundImage: `URL(${DeafultAvatar})` }}
+                    >
+                      <img
+                        src={avatar}
+                        alt="porfil.jpeg"
+                        className="w-full h-11/12"
+                      />
+                    </div>
+                    <p className="text-center text-gray-500 font-semibold mt-2">
+                      * Uk. photo 600 x 600 pixels
+                    </p>
+                    <CustomInput
+                      id="input-avatar"
+                      type="file"
+                      accept="image/png, image/jpg, image/jpeg"
+                      className="file-input h-10 w-full max-w-xs flex justify-center bg-white lg:mt-4"
+                      onChange={(e) => {
+                        if (!e.currentTarget.files) {
+                          return;
+                        }
+                        setAvatar(
+                          URL.createObjectURL(e.currentTarget.files[0])
+                        );
+                        handleChange(e.currentTarget.files[0], "avatar");
+                      }}
+
                     />
                   </div>
                   <p className="text-center text-gray-500 font-semibold mt-2">
@@ -298,7 +341,10 @@ function Home() {
                     <CustomInput
                       id="input-alamat"
                       type="text"
-                      className="input w-10/12 lg:w-9/12 bg-white"
+
+                      accept="image/png, image/jpg, image/jpeg"
+                      className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
+
                       style={{ border: "2px solid #424242" }}
                       placeholder={"contoh : Blitar"}
                       defaultValue={lokasiAsal}
@@ -413,6 +459,7 @@ function Home() {
                     <CustomInput
                       id="input-ijazah"
                       type="file"
+                      accept="image/png, image/jpg, image/jpeg"
                       className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
                       onChange={(e) => {
                         if (!e.currentTarget.files) {
@@ -421,7 +468,7 @@ function Home() {
                         setIjazah(
                           URL.createObjectURL(e.currentTarget.files[0])
                         );
-                        handleChange(e.currentTarget.files[0], "Ijazah");
+                        handleChange(e.currentTarget.files[0], "ijazah");
                       }}
                     />
                   </div>
@@ -525,14 +572,15 @@ function Home() {
                       </div>
 
                       <CustomButton
-                        id="btn-daftar"
+                        id="btn-update"
                         label="Update Data"
-                        className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                        className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-500 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
                         style={{
                           fontFamily: "Poppins",
                         }}
-                        loading={loading}
+                        loading={loading || disabled}
                       />
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -580,10 +628,10 @@ function Home() {
               id="card-guru"
               key={index}
               nama={data.nama}
-              image={data.avatar}
+              avatar={data.avatar}
               alamat={data.alamat}
-              rating={data.penilaian}
-              deskripsi={data.judul}
+              penilaian={data.penilaian}
+              judul={data.judul}
               tarif={data.tarif}
             />
           ))}
