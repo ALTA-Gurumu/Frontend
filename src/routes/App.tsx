@@ -94,7 +94,7 @@ function App() {
     },
     {
       path: "/profile-teacher",
-      element: <ProfileTeacher />,
+      element: checkToken ? <ProfileTeacher /> : <Login />,
     },
     // {
     //   path: "/transactions-selling",
