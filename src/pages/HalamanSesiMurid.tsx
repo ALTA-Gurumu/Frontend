@@ -14,6 +14,7 @@ import CustomButton from "../components/CustomButton";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import Layout from "../components/Layout";
+import { Link } from "react-router-dom";
 
 import Profil2 from "../assets/profil2.webp";
 import Profil from "../assets/profil.jpg";
@@ -39,34 +40,72 @@ function HalamanSesiMurid() {
   const [email, setEmail] = useState<string>("");
   const [alamat, setAlamat] = useState<string>("");
   const [telepon, setTelepon] = useState<string>("");
-  const [gambar, setGambar] = useState<any>();
+  const [avatar, setAvatar] = useState<string>("");
+
+  const [nama_murid, setNamaMurid] = useState<string>("");
+  const [pelajaran, setPelajaran] = useState<string>("");
+  const [tanggal, setTanggal] = useState<string>("");
+  const [jam, setJam] = useState<string>("");
+  const [tautan_gmeet, setTautanGmeet] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
+
+  function fetchDataSesi() {
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/sesiku`,
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
+      params: {},
+    })
+      .then((res) => {
+        const { nama_murid, pelajaran, tanggal, jam, tautan_gmeet, status } =
+          res.data.data;
+
+        setNamaMurid(nama_murid);
+        setPelajaran(pelajaran);
+        setTanggal(tanggal);
+        setJam(jam);
+        setTautanGmeet(tautan_gmeet);
+        setStatus(status);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  }
 
   useEffect(() => {
-    fetchData();
+    fetchDataSesi();
   }, []);
 
   function fetchData() {
-    axios
-      .get(
-        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/siswa"
-        // "https://virtserver.swaggerhub.com/back-end-14-alterra/sosmed/1.0.0/users"
-      )
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/siswa`,
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
+      params: {},
+    })
       .then((res) => {
-        const { nama, email, alamat, telepon, photo } = res.data.data;
+        const { nama, email, alamat, telepon, avatar } = res.data.data;
 
         setNama(nama);
         setEmail(email);
         setAlamat(alamat);
         setTelepon(telepon);
-        setGambar(photo);
-        console.log(res.data.data);
-        // console.log(gambar);
+        setAvatar(avatar);
       })
       .catch((err) => {
-        alert(err.toString());
+        alert(err);
       })
       .finally(() => setLoading(false));
   }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -78,16 +117,16 @@ function HalamanSesiMurid() {
     }
 
     axios
-      .put("", formData, {
+      .put("https://devmyproject.site/siswa", formData, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
-          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        const { message } = res.data.data;
+        const { message } = res.data;
+
         MySwal.fire({
-          title: "Edit Succesfull",
+          title: "Data Berhasil Diupdate",
           text: message,
           showCancelButton: false,
         });
@@ -96,7 +135,7 @@ function HalamanSesiMurid() {
       .catch((err) => {
         const { data } = err.response;
         MySwal.fire({
-          title: "Edit Failed",
+          title: "Data Gagal Diupdate",
           text: data.message,
           showCancelButton: false,
         });
@@ -238,7 +277,7 @@ function HalamanSesiMurid() {
                                   Ubah Profil
                                 </p>
                                 <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
-                                  <img src={gambar} alt="profil.jpg" />
+                                  <img src={avatar} alt="profil.jpg" />
                                 </div>
                                 <p className="text-[14px] font-normal text-[#C0B7B7]">
                                   *Uk.foto maks 400 x 400 pixels
@@ -254,7 +293,8 @@ function HalamanSesiMurid() {
                                     if (!e.currentTarget.files) {
                                       return;
                                     }
-                                    setGambar(
+
+                                    setAvatar(
                                       URL.createObjectURL(
                                         e.currentTarget.files[0]
                                       )
@@ -276,10 +316,10 @@ function HalamanSesiMurid() {
                       <div
                         className=" w-32 h-32 lg:mt-10 mt-14 border border-[#EFEFEF] rounded-full overflow-hidden mt- bg-no-repeat bg-cover"
                         style={{
-                          backgroundImage: `URL(${gambar})`,
+                          backgroundImage: `URL(${avatar})`,
                         }}
                       >
-                        <img src={gambar} alt="profil.jpg" />
+                        <img src={avatar} alt="profil.jpg" />
                       </div>
 
                       <p className="mt-2 lg:text-[36px] text-[24px] font-semibold text-[#112B3C]">
@@ -342,7 +382,7 @@ function HalamanSesiMurid() {
                             <td>Selesai</td>
                             <td className="flex items-center text-component text-[16px] gap-1">
                               <AiTwotoneStar className="w-5 h-5" />
-                              Ulasan
+                              <Link to="/ulasan/:guru_id">Ulasan</Link>
                             </td>
                           </tr>
                         </tbody>
@@ -379,9 +419,9 @@ function HalamanSesiMurid() {
                           <tr className="text-[16px] font-normal">
                             <th>1</th>
                             <td>Ahmad Bambang</td>
-                            <td>12.00 (WIB)</td>
-                            <td>Senin 20 Januari 2023</td>
-                            <td>https://google meet/adka</td>
+                            <td>{jam}</td>
+                            <td>{tanggal}</td>
+                            <td>{tautan_gmeet}</td>
                             <td>Selesai</td>
                           </tr>
                         </tbody>

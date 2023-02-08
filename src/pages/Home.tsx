@@ -17,7 +17,9 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-import { CompleteTeacher } from "../utils/DataTypes";
+
+import { CompleteTeacher, getGuruBeranda } from "../utils/DataTypes";
+
 import Swal from "../utils/Swal";
 
 import imgLogin from "../assets/login-img.webp";
@@ -57,9 +59,11 @@ function Home() {
   // const initialPost = slice(homes, 0, index);
   const [modal, setModal] = useState<string>("modal-open");
 
+
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+  const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -116,6 +120,26 @@ function Home() {
   //   lokasiAsal ? setDisabled(true) : setDisabled(false);
   // }, [lokasiAsal]);
 
+  const fetchDataGetGuru = useCallback(() => {
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/guru`,
+      headers: {},
+      params: {},
+    })
+      .then((res) => {
+        const ApiResponse = res.data;
+        setTeacher(ApiResponse.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetchDataGetGuru();
+  }, [fetchDataGetGuru]);
+
   useEffect(() => {
     checkRole === "guru" && fetchData();
   }, []);
@@ -149,7 +173,10 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -186,7 +213,11 @@ function Home() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
+
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -197,7 +228,7 @@ function Home() {
       <Navbar />
       <>
         <br />
-        {checkVer === "false" ? (
+        {checkVer === "" ? (
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className={`modal ${modal}`}>
               <div className="modal-box lg:w-9/12 w-10/12 max-w-full shadow-xl p-4">
@@ -255,6 +286,156 @@ function Home() {
                       </span>
                     </label>
 
+                    <CustomInput
+                      id="input-ijazah"
+                      type="file"
+                      className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
+                      onChange={(e) => {
+                        if (!e.currentTarget.files) {
+                          return;
+                        }
+                        setIjazah(
+                          URL.createObjectURL(e.currentTarget.files[0])
+                        );
+                        handleChange(e.currentTarget.files[0], "ijazah");
+                      }}
+
+                    />
+                  </div>
+
+                  <div className="lg:w-7/12 w-full items-center lg:pl-16 pl-0 lg:mx-0 mx-2">
+                    <div className="form-control w-full ">
+                      <label className="label mt-5">
+                        <span
+                          className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
+                          style={{ color: "#424242" }}
+                        >
+                          Alamat :
+                        </span>
+                      </label>
+
+                      <CustomInput
+                        id="input-alamat"
+                        type="text"
+                        className="input w-10/12 lg:w-9/12 bg-white"
+                        style={{ border: "2px solid #424242" }}
+                        placeholder={"contoh : Blitar"}
+                        defaultValue={lokasiAsal}
+                        onChange={(e) =>
+                          handleChange(e.target.value, "LokasiAsal")
+                        }
+                      />
+
+                      <label className="label mt-2">
+                        <span
+                          className="label-text text-lg w-10/12 lg:w-9/12 font-semibold"
+                          style={{ color: "#424242" }}
+                        >
+                          Handphone :
+                        </span>
+                      </label>
+
+                      <CustomInput
+                        id="input-no-hp"
+                        type="number"
+                        className="input w-10/12 lg:w-9/12 bg-white"
+                        style={{ border: "2px solid #424242" }}
+                        placeholder={"contoh : 0891234556"}
+                        defaultValue={telefon}
+                        onChange={(e) =>
+                          handleChange(e.target.value, "Telepon")
+                        }
+                      />
+                    <label className="label">
+                      <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
+                        Upload Ijazah
+                      </span>
+                    </label>
+                    <select
+                      defaultValue={"DEFAULT"}
+                      id="input-jenjang-pengajaran"
+                      className="select select-bordered w-10/12 lg:w-9/12  bg-white"
+                      style={{ border: "2px solid #424242" }}
+                      name="option"
+                      // onChange={handleChange}
+                    >
+                      <option value="DEFAULT" disabled>
+                        Pilih Salah Satu
+                      </option>
+                      <option value="1">Sekolah Dasar</option>
+                      <option value="2">
+                        Sekolah Menengah Pertama
+                      </option>
+                      <option value="3">
+                        Sekolah Menengah Atas
+                      </option>
+                    </select>
+                    <div className="form-control">
+                      <label className="label">
+                        <span
+                          className="label-text text-lg w-10/12 lg:w-9/12 font-semibold mt-2"
+                          style={{ color: "#424242" }}
+                        >
+                          Jenjang Pendidikan :
+                        </span>
+                      </label>
+
+                      <select
+                        defaultValue={"DEFAULT"}
+                        id="input-jenjang-pengajaran"
+                        className="select select-bordered w-10/12 lg:w-9/12  bg-white"
+                        style={{ border: "2px solid #424242" }}
+                        name="option"
+                        onChange={(e) =>
+                          handleChange(e.target.value, "Pendidikan")
+                        }
+                      >
+                        <option value="DEFAULT" disabled>
+                          {pendidikan === ""
+                            ? "Pilih Salah Satu"
+                            : `${pendidikan}`}
+                        </option>
+                        <option value="Sekolah Dasar">Sekolah Dasar</option>
+                        <option value="Sekolah Menengah Pertama">
+                          Sekolah Menengah Pertama
+                        </option>
+                        <option value="Sekolah Menengah Atas">
+                          Sekolah Menengah Atas
+                        </option>
+                      </select>
+
+
+                      <div className="form-control">
+                        <label className="label">
+                          <span
+                            className="label-text text-lg  w-10/12 lg:w-8/12 font-semibold"
+                            style={{ color: "#424242" }}
+                          >
+                            Biografi Saya :
+                          </span>
+                        </label>
+                        <textarea
+                          id="input-bio"
+                          className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 bg-white"
+                          style={{ border: "2px solid #424242" }}
+                          placeholder="Ceritakan biografi singkat anda"
+                          defaultValue={deskripsi}
+                          onChange={(e) =>
+                            handleChange(e.target.value, "TentangSaya")
+                          }
+                        ></textarea>
+                      </div>
+
+                      <CustomButton
+                        id="btn-daftar"
+                        label="Update Data"
+                        className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                        style={{
+                          fontFamily: "Poppins",
+                        }}
+                        loading={loading}
+                      />
+                    </div>
                     <CustomInput
                       id="input-ijazah"
                       type="file"

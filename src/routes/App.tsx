@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import useCookies from "react-cookie/cjs/useCookies";
-
+import { ProfileTeacher } from "../pages/ProfilePage";
 import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
 
@@ -65,7 +65,7 @@ function App() {
         checkToken && checkRole === "siswa" ? <HalamanSesiMurid /> : <Login />,
     },
     {
-      path: "paymentDetails",
+      path: "/paymentDetails",
       element:
         checkToken && checkRole === "siswa" ? <PaymentDetails /> : <Login />,
     },
