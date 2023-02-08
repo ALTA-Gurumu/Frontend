@@ -20,7 +20,10 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-import { CompleteTeacher } from "../utils/DataTypes";
+import {
+  CompleteTeacher,
+  getGuruBeranda,
+} from "../utils/DataTypes";
 import Swal from "../utils/Swal";
 
 import imgLogin from "../assets/login-img.webp";
@@ -62,6 +65,7 @@ function Home() {
 
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
   const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
     {}
   );
@@ -128,6 +132,25 @@ function Home() {
   useEffect(() => {
     checkRole === "guru" && fetchData();
   }, []);
+  const fetchDataGetGuru = useCallback(() => {
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/guru`,
+      headers: {},
+      params: {},
+    })
+      .then((res) => {
+        const ApiResponse = res.data;
+        setTeacher(ApiResponse.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetchDataGetGuru();
+  }, [fetchDataGetGuru]);
 
   function fetchData() {
     axios
@@ -467,10 +490,10 @@ function Home() {
               id="card-guru"
               key={index}
               nama={data.nama}
-              image={data.avatar}
+              avatar={data.avatar}
               alamat={data.alamat}
-              rating={data.penilaian}
-              deskripsi={data.judul}
+              penilaian={data.penilaian}
+              judul={data.judul}
               tarif={data.tarif}
             />
           ))}
