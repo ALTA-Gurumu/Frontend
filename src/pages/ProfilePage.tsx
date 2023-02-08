@@ -283,8 +283,9 @@ const TabsContentForTeacherPage = () => {
 };
 
 const ProfileTeacher = () => {
-  const navigate = useNavigate();
-
+  const [cookie, removeCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+  const checkRole = cookie.role;
   const [loading, setLoading] = useState<boolean>(false);
 
   const [tanggal, setTanggal] = useState(new Date());
@@ -295,28 +296,14 @@ const ProfileTeacher = () => {
   const [nama, setNama] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [alamat, setAlamat] = useState<string>("");
-  const [telefon, setTelefon] = useState<string>("");
   const [telepon, setTelepon] = useState<string>("");
-  const [jadwal, setJadwal] = useState<string>("");
-  const [deskripsi, setDeskripsi] = useState<string>("");
-  const { guru_id } = useParams();
 
   const [pesan, setPesan] = useState<string>("");
   const [metode_belajar, setMetodebelajar] = useState<string>("");
   const [jam, setJam] = useState(new Date());
   const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
-  const [cookies, , removeCookie] = useCookies([
-    "token",
-    "role",
-    "verifikasi",
-    "guru_id",
-  ]);
-
-  const checkToken = cookies.token;
-  console.log(checkToken);
-  const checkRole = cookies.role;
-  console.log(checkRole);
+  const navigate = useNavigate();
 
   const fetchData = useCallback(() => {
     axios({
@@ -347,22 +334,17 @@ const ProfileTeacher = () => {
   const fetchDataGuru = useCallback(() => {
     axios({
       method: "GET",
-      url: `https://devmyproject.site/guru/${guru_id}`,
+      url: `https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/guru`,
       headers: {
         Authorization: `Bearer ${checkToken}`,
       },
       params: {},
     })
       .then((response) => {
-        const { nama, email, alamat, telefon, jadwal, deskripsi } =
-          response.data.data;
+        const ApiResponse = response.data;
+        console.log(ApiResponse);
 
-        setNama(nama);
-        setEmail(email);
-        setAlamat(alamat);
-        setTelefon(telefon);
-        setJadwal(jadwal);
-        setDeskripsi(deskripsi);
+        setTeacher(ApiResponse.data);
       })
       .catch((error) => {
         console.log(error);
@@ -371,7 +353,7 @@ const ProfileTeacher = () => {
 
   useEffect(() => {
     fetchDataGuru();
-  }, []);
+  }, [fetchDataGuru]);
 
   const handleReservasi = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -389,16 +371,12 @@ const ProfileTeacher = () => {
     };
 
     axios
-      .post(
-        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/reservasi",
-        body,
-        {
-          headers: {
-            Authorization: `Bearer ${checkToken}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      .post("https://devmyproject.site/reservasi", body, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         const { data, message } = res.data.data;
         MySwal.fire({
@@ -406,7 +384,7 @@ const ProfileTeacher = () => {
           text: message,
           showCancelButton: false,
         });
-        navigate("/paymentDetails");
+        // navigate("/paymentDetails");
       })
       .catch((err) => {
         console.log(err);
@@ -428,14 +406,14 @@ const ProfileTeacher = () => {
             {teacher.map((item, idx) => {
               return (
                 <>
-                  <div>
-                    {email}
+                  <div key={idx}>
+                    {item.Email}
                     <img
                       src={avatarImg}
                       alt="profil.webp"
                       className="lg:w-32 w-28 lg:h-32 h-28 rounded-full lg:mt-10 mt-5 mb-2"
                     />
-                    {nama}
+                    {item.Nama}
                   </div>
                   {checkToken && checkRole === "siswa" ? (
                     <>
