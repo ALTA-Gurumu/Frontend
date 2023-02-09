@@ -38,7 +38,7 @@ export interface CompleteTeacher {
   Pendidikan?: string;
   Avatar?: any;
   avatar?: any;
-  Jadwal?: any;
+  Jadwal?: string;
   Ijazah?: any;
   Latitude?: number;
   Longitude?: number;
@@ -61,4 +61,11 @@ export interface getGuruBeranda {
   avatar?: any;
   tarif?: number;
   penilaian?: number;
+}
+
+export interface JadwaType {
+  id?: number;
+  guru_id?: number;
+  tanggal?: string;
+  jam?: string;
 }
