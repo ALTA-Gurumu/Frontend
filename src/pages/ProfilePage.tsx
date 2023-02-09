@@ -318,7 +318,7 @@ const ProfileTeacher = () => {
   const [Latitude, setLatitude] = useState<string>("");
   const [Longitude, setLongitude] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
-  const [lokasiAsal, setLokasiAsal] = useState<string>("");
+  const [LokasiAsal, setLokasiAsal] = useState<string>("");
   const [Nama, setNAMA] = useState<string>("");
   const [Offline, setOffline] = useState<string>("");
   const [Online, setOnline] = useState<string>("");
@@ -756,7 +756,6 @@ const ProfileTeacher = () => {
                                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
-                                <DraggableMarker />
                               </MapContainer>
                               <div className="flex justify-center pr-10 mt-">
                                 <CustomButton
@@ -1000,7 +999,6 @@ const ProfileTeacher = () => {
                                           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
-                                        <DraggableMarker />
                                       </MapContainer>
                                       <div className="flex justify-center pr-10 mt-">
                                         <CustomButton
@@ -1201,7 +1199,7 @@ const ProfileTeacher = () => {
           <div className="flex flex-wrap gap-10">
             <div className="flex gap-2 py-2 px-5 rounded-2xl lg:-mb-0 -mb-5 bg-white shadow-lg">
               <FaMapMarkerAlt className="w-5 h-5" />
-              <p>{lokasiAsal}</p>
+              <p>{LokasiAsal}</p>
             </div>
             <div className="flex gap-2 py-2 px-5 rounded-2xl bg-white shadow-lg">
               <AiFillHome className="w-5 h-5" />
@@ -1293,8 +1291,8 @@ const EditProfileTeacher: React.FC<{
   const [Latitude, setLatitude] = useState<any>("");
   const [Longitude, setLongitude] = useState<any>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
-  const [lokasiAsal, setLokasiAsal] = useState<string>("");
-  const [MetodeBljr, setMetodeBljr] = useState("");
+  const [LokasiAsal, setLokasiAsal] = useState<string>("");
+  const [MetodeBljr, setMetodeBljr] = useState("online");
   const [Pelajaran, setPelajaran] = useState<string>("");
   const [Pendidikan, setPendidikan] = useState<string>("");
   const [Pengalaman, setPengalaman] = useState<string>("");
@@ -1349,9 +1347,7 @@ const EditProfileTeacher: React.FC<{
           Longitude,
           LinkedIn,
           LokasiAsal,
-          Nama,
-          Offline,
-          Online,
+          MetodeBljr,
           Pelajaran,
           Pendidikan,
           Pengalaman,
@@ -1400,7 +1396,6 @@ const EditProfileTeacher: React.FC<{
       .put("https://devmyproject.site/guru", formData, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
-          "Content-Type": " multipart/form-data ",
         },
       })
       .then((res) => {
@@ -1561,29 +1556,30 @@ const EditProfileTeacher: React.FC<{
               <h1 className="text-center mt-10 text-xl font-semibold">
                 Atur Waktu Mengajar
               </h1>
-              <div className="flex flex-row w-full border-2">
-                <CustomInput
-                  id="date"
-                  type="date"
-                  className="w-4/12 h-[3rem] mt-5 flex mx-auto  "
-                  defaultValue={Jadwal}
-                  onChange={(e) => setTanggal(e.target.value)}
-                />
-
-                <CustomInput
-                  id="time"
-                  type="time"
-                  className="w-4/12 h-[3rem] mt-5 flex mx-auto  "
-                  defaultValue={jam}
-                  onChange={(e) => setJam(e.target.value)}
-                />
-
+              <div className="flex flex-row w-full h-20 border-2">
+                <div className="flex-1">
+                  <CustomInput
+                    id="date"
+                    type="date"
+                    className=" p-5 w-10/12 h-10 rounded-xl mt-5 flex mx-auto font-semibold text-lg"
+                    defaultValue={Jadwal}
+                    onChange={(e) => setTanggal(e.target.value)}
+                  />
+                </div>
+                <div className="flex-1">
+                  <CustomInput
+                    id="time"
+                    type="time"
+                    className=" p-5 w-10/12 h-10 rounded-xl mt-5 flex mx-auto font-semibold text-lg"
+                    defaultValue={jam}
+                    onChange={(e) => setJam(e.target.value)}
+                  />
+                </div>
               </div>
-              <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto mt-5"></div>
               <h1 className="text-center mt-10 text-xl font-semibold">
                 Atur Tempat Mengajar
               </h1>
-
+              <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto mt-5"></div>
               <CustomInput
                 id="input-Latitude"
                 defaultValue={Latitude}
@@ -1692,10 +1688,9 @@ const EditProfileTeacher: React.FC<{
                 <CustomInput
                   id="input-lokasi"
                   type="text"
-                  defaultValue={lokasiAsal}
+                  defaultValue={LokasiAsal}
                   onChange={(e) => handleChange(e.target.value, "LokasiAsal")}
                   className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
-                  placeholder="S1 Pendidikan Matematik "
                 />
               </div>
 
@@ -1706,8 +1701,8 @@ const EditProfileTeacher: React.FC<{
                     name="online"
                     type="checkbox"
                     checked={MetodeBljr === "online"}
-                    onChange={() => setMetodeBljr("online")}
-                    className="checkbox    ml-10"
+                    onChange={(e) => setMetodeBljr("online")}
+                    className="checkbox  ml-10"
                   />
                 </div>
                 <label className="ml-4">
