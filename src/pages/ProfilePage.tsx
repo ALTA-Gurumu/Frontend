@@ -339,14 +339,14 @@ const ProfileTeacher = () => {
 
   const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
-  const navigate = useNavigate();
-  const { guru_id } = useParams();
 
+  const navigate = useNavigate();
   const checkId = cookie.guru_id;
 
   const [ulasan, setUlasan] = useState<UlasanType[]>([]);
   const [tambah, setTambah] = useState<number>(2);
   const [finish, setFinish] = useState<boolean>(false);
+  const { guru_id } = useParams();
 
   const fetchData = useCallback(() => {
     axios({
@@ -374,10 +374,12 @@ const ProfileTeacher = () => {
     checkRole !== "guru" && fetchData();
   }, []);
 
+  console.log(useParams);
+
   const fetchDataGuru = useCallback(() => {
     axios({
       method: "GET",
-      url: `https://devmyproject.site/guru/${checkId}`,
+      url: `https://devmyproject.site/guru/${guru_id}`,
       headers: {
         Authorization: `Bearer ${checkToken}`,
       },
@@ -482,7 +484,7 @@ const ProfileTeacher = () => {
 
   function fetchUlasan() {
     axios
-      .get("https://devmyproject.site/ulasan/29")
+      .get(`https://devmyproject.site/ulasan/${guru_id}`)
       .then((res) => {
         setUlasan(res.data.data);
         // console.log(ulasan.data);
@@ -501,6 +503,14 @@ const ProfileTeacher = () => {
       setFinish(false);
     }
   };
+
+  // useEffect(() => {
+  //   fetchPOVSiswa();
+  // }, []);
+
+  // function fetchPOVSiswa() {
+  //   axios.get("https://devmyproject.site/guru/");
+  // }
 
   return (
     <div className="flex flex-col p-8">
