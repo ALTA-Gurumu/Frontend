@@ -31,11 +31,7 @@ function Card({ nama_guru, penilaian, ulasan }: cardType) {
           <AiFillStar className="text-component w-5 h-5" />
           <p className="font-semibold pl-1">{penilaian}</p>
         </div>
-        <img
-          src={avatar2}
-          className="w-[3rem] ml-auto pr-2 "
-          alt="avatar"
-        />
+        <img src={avatar2} className="w-[3rem] ml-auto pr-2 " alt="avatar" />
       </div>
     </div>
   );
@@ -53,7 +49,6 @@ function LandingPage() {
       .get("https://devmyproject.site/ulasan")
       .then((res) => {
         setUlasan(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -121,9 +116,7 @@ function LandingPage() {
       </div>
       <div className="flex flex-col lg:flex-row w-full  bg-white h-[35rem] lg:h-[30rem] justify-evenly lg:items-center ">
         <div className="pl-8 lg:pl-0">
-          <h1 className="text-2xl font-bold">
-            1. Pilih guru anda
-          </h1>
+          <h1 className="text-2xl font-bold">1. Pilih guru anda</h1>
           <br />
           <p className="lg:text-xl">
             cek profile guru dan
@@ -135,25 +128,15 @@ function LandingPage() {
             anda
           </p>
         </div>
-        <img
-          className="w-[30rem]"
-          src={selecting}
-          alt="Pilih guru anda"
-        />
+        <img className="w-[30rem]" src={selecting} alt="Pilih guru anda" />
       </div>
       <div className="w-full flex flex-col-reverse lg:flex-row mx-auto gap-20 bg-white h-[45rem] lg:h-auto  ">
         <div className="flex-1 bg-white lg:ml-[10rem] ">
-          <img
-            className="w-[30rem]"
-            src={Request}
-            alt="Pilih guru anda"
-          />
+          <img className="w-[30rem]" src={Request} alt="Pilih guru anda" />
         </div>
         <div className="flex-1  bg-primary pt-10 lg:pt-40 lg:pl-20 pl-8  lg:h-[30rem]">
           {" "}
-          <h1 className="text-2xl font-bold">
-            2. Ajukan Permintaan belajar
-          </h1>
+          <h1 className="text-2xl font-bold">2. Ajukan Permintaan belajar</h1>
           <br />
           <p className="lg:text-xl">
             Para guru akan
@@ -182,11 +165,7 @@ function LandingPage() {
             guru yang Anda pilih
           </p>
         </div>
-        <img
-          className="w-[30rem]"
-          src={Calender}
-          alt="Pilih guru anda"
-        />
+        <img className="w-[30rem]" src={Calender} alt="Pilih guru anda" />
       </div>
       <Footer />
     </Layout>

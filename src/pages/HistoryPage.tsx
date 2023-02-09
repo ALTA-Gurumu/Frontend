@@ -28,6 +28,7 @@ function HalamanSesiGuru() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [jadwal, setJadwal] = useState<CompleteTeacher>({});
+  const [riwayat, setRiwayat] = useState<CompleteTeacher>({});
 
   useEffect(() => {
     fetchJadwal();
@@ -35,9 +36,7 @@ function HalamanSesiGuru() {
 
   function fetchJadwal() {
     axios
-      .get(`https://devmyproject.site/guru/${checkID}`, {
-        headers: { Authorization: `Bearer ${checkToken}` },
-      })
+      .get(`https://devmyproject.site/guru/${checkID}`)
       .then((res) => {
         setJadwal(res.data.data);
         // console.log(res.data.data.Jadwal);
@@ -49,12 +48,22 @@ function HalamanSesiGuru() {
   }
 
   useEffect(() => {
-    if (status === "Selesai") {
-      setDisable(true);
-    } else {
-      setDisable(true);
-    }
-  }, [status]);
+    fetchRiwayat();
+  }, []);
+
+  function fetchRiwayat() {
+    axios
+      .get(
+        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/sesiku"
+      )
+      .then((res) => {
+        setRiwayat(res.data);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  }
 
   return (
     <>
@@ -94,23 +103,19 @@ function HalamanSesiGuru() {
                           </tr>
                         </thead>
                         <tbody className="text-[16px] font-normal">
-                          <tr>
-                            <th>1</th>
-                            <td>Danu</td>
-                            <td>12.00 (WIB)</td>
-                            <td>Senin 20 Januari 2023</td>
-                            <td>https://google meet/adka</td>
-                            <td>Selesai</td>
-                          </tr>
-
-                          <tr className="hover">
-                            <th>2</th>
-                            <td>Budy</td>
-                            <td>09.00 (WIB)</td>
-                            <td>Senin 17 Januari 2023</td>
-                            <td>-</td>
-                            <td>Selesai</td>
-                          </tr>
+                          <>
+                            {/* {console.log(riwayat)} */}
+                            {riwayat.data?.map((data) => (
+                              <tr key={data.reservasi_id}>
+                                <th>{data.reservasi_id}</th>
+                                <td>{data.nama_murid}</td>
+                                <td>{data.jam}</td>
+                                <td>{data.tanggal}</td>
+                                <td>{data.tautan_gmet}</td>
+                                <td>{data.status}</td>
+                              </tr>
+                            ))}
+                          </>
                         </tbody>
                       </table>
                     </div>

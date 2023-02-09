@@ -6,10 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 import { ProfilType } from "../utils/DataTypes";
 import Swal from "../utils/Swal";
 
-import {
-  CustomInput,
-  InputIcon,
-} from "../components/CustomInput";
+import { CustomInput, InputIcon } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 
 import Profil2 from "../assets/profil2.webp";
@@ -39,8 +36,7 @@ const EditProfilStudent = () => {
         "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/siswa"
       )
       .then((res) => {
-        const { nama, email, alamat, telepon, avatar } =
-          res.data.data;
+        const { nama, email, alamat, telepon, avatar } = res.data.data;
 
         setNama(nama);
         setEmail(email);
@@ -55,9 +51,7 @@ const EditProfilStudent = () => {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -93,10 +87,7 @@ const EditProfilStudent = () => {
       .finally(() => fetchData());
   };
 
-  const handleChange = (
-    value: string | File,
-    key: keyof typeof objSubmit
-  ) => {
+  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -115,9 +106,7 @@ const EditProfilStudent = () => {
                 type="nama-lengkap"
                 placeholder={nama}
                 defaultValue={nama}
-                onChange={(e) =>
-                  handleChange(e.target.value, "nama")
-                }
+                onChange={(e) => handleChange(e.target.value, "nama")}
               />
             </div>
           </div>
@@ -131,9 +120,7 @@ const EditProfilStudent = () => {
                 type="handphone"
                 placeholder={telephone}
                 defaultValue={telephone}
-                onChange={(e) =>
-                  handleChange(e.target.value, "telepon")
-                }
+                onChange={(e) => handleChange(e.target.value, "telepon")}
               />
             </div>
           </div>
@@ -147,9 +134,7 @@ const EditProfilStudent = () => {
                 type="email"
                 placeholder={email}
                 defaultValue={email}
-                onChange={(e) =>
-                  handleChange(e.target.value, "email")
-                }
+                onChange={(e) => handleChange(e.target.value, "email")}
               />
             </div>
           </div>
@@ -163,9 +148,7 @@ const EditProfilStudent = () => {
                 className="textarea pl-1 pt-0 w-full h-32"
                 placeholder={alamat}
                 defaultValue={alamat}
-                onChange={(e) =>
-                  handleChange(e.target.value, "alamat")
-                }
+                onChange={(e) => handleChange(e.target.value, "alamat")}
               ></textarea>
             </div>
           </div>
@@ -199,9 +182,7 @@ const EditProfilStudent = () => {
               if (!e.currentTarget.files) {
                 return;
               }
-              setGambar(
-                URL.createObjectURL(e.currentTarget.files[0])
-              );
+              setGambar(URL.createObjectURL(e.currentTarget.files[0]));
               handleChange(e.currentTarget.files[0], "avatar");
             }}
           />

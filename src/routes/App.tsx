@@ -6,10 +6,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import useCookies from "react-cookie/cjs/useCookies";
-import { ProfileTeacher } from "../pages/ProfilePage";
+// import { ProfileTeacher } from "../pages/ProfilePage";
 import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
-
 import HalamanSesiMurid from "../pages/HalamanSesiMurid";
 import { HalamanSesiGuru } from "../pages/HistoryPage";
 import PaymentDetails from "../pages/paymentDetails";
@@ -23,11 +22,7 @@ import Beranda from "../pages/Home";
 import Home from "../pages/Home";
 
 function App() {
-  const [cookie, , removeCookie] = useCookies([
-    "token",
-    "role",
-    "verifikasi",
-  ]);
+  const [cookie, , removeCookie] = useCookies(["token", "role", "verifikasi"]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkVerifikasi = cookie.verifikasi;
@@ -59,7 +54,7 @@ function App() {
       element: <Rating />,
     },
 
-  {
+    {
       path: "/profileStudent",
       element:
         checkToken && checkRole === "siswa" ? <ProfileStudent /> : <Login />,
@@ -72,18 +67,12 @@ function App() {
     {
       path: "/paymentDetails",
       element:
-        checkToken && checkRole === "siswa" ? (
-          <PaymentDetails />
-        ) : (
-          <Login />
-        ),
+        checkToken && checkRole === "siswa" ? <PaymentDetails /> : <Login />,
     },
     {
       path: "/editTeacher",
       element:
-        checkToken &&
-        checkRole === "guru" &&
-        checkVerifikasi === "false" ? (
+        checkToken && checkRole === "guru" && checkVerifikasi === "false" ? (
           <EditTeacher />
         ) : (
           <Home />
@@ -95,8 +84,8 @@ function App() {
     },
     {
       path: "/profile-teacher/:guru_id",
+      // element: <TabsContentForTeacherPage />,
       element: checkToken ? <TabsContentForTeacherPage /> : <Login />,
-
     },
     {
 

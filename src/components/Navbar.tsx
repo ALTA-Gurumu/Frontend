@@ -78,15 +78,7 @@ function Navbar() {
             </Link>
           </label>
         ) : (
-          <label
-            id="link-histori-sesi-murid"
-            tabIndex={0}
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <Link to="/HalamanSesiMurid">
-              <BsFillCalendarCheckFill className="text-primary w-7 h-7" />
-            </Link>
-          </label>
+          ""
         )}
 
         <div className="dropdown dropdown-end">
@@ -97,14 +89,14 @@ function Navbar() {
             tabIndex={0}
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
-            {checkToken ? (
+            {checkToken && checkRole === "guru" ? (
               <li>
                 <button
                   id="link-profil"
                   onClick={() =>
-                    checkToken && checkRole === "guru"
-                      ? navigate(`/profile-teacher/${checkId}`)
-                      : navigate("/HalamanSesiMurid")
+                    checkVer === "true"
+                      ? navigate("/profile-teacher/:guru_id")
+                      : navigate("/home")
                   }
                 >
                   Profil
@@ -114,7 +106,20 @@ function Navbar() {
               ""
             )}
 
-            <li id="link-home-1" className="bg-component text-zinc-50">
+            {checkToken && checkRole === "siswa" ? (
+              <li>
+                <button
+                  id="link-profil"
+                  onClick={() => navigate("/HalamanSesiMurid")}
+                >
+                  Profil
+                </button>
+              </li>
+            ) : (
+              ""
+            )}
+
+            <li id="link-home-1" className="text-zinc-800">
               <Link to="/home">Home</Link>
             </li>
 
