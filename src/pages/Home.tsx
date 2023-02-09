@@ -4,7 +4,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { set, slice } from "lodash";
 
-import { CustomInput, InputIcon } from "../components/CustomInput";
+import {
+  CustomInput,
+  InputIcon,
+} from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -17,7 +20,10 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-import { CompleteTeacher, getGuruBeranda } from "../utils/DataTypes";
+import {
+  CompleteTeacher,
+  getGuruBeranda,
+} from "../utils/DataTypes";
 
 import Swal from "../utils/Swal";
 
@@ -55,13 +61,15 @@ function Home() {
   const [searchLocation, setSearchLocation] = useState("");
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(6);
-  // const initialPost = slice(homes, 0, index);
   const [modal, setModal] = useState<string>("modal-open");
 
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingHome, setLoadingHome] = useState<boolean>(false);
   const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
+    {}
+  );
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -71,18 +79,25 @@ function Home() {
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
 
-  const [btn, setBtn] = useState<string>("px-4 py-3 text-[20px] rounded-2xl");
-  const [label, setLabel] = useState<string>("Lihat lebih banyak guru");
+  const [btn, setBtn] = useState<string>(
+    "px-4 py-3 text-[20px] rounded-2xl"
+  );
+  const [label, setLabel] = useState<string>(
+    "Lihat lebih banyak guru"
+  );
 
   const filteredHomes = homes.filter(
     (home) =>
-      home.pelajaran.toLowerCase().includes(searchSubject.toLowerCase()) &&
-      home.alamat.toLowerCase().includes(searchLocation.toLowerCase())
+      home.pelajaran
+        .toLowerCase()
+        .includes(searchSubject.toLowerCase()) &&
+      home.alamat
+        .toLowerCase()
+        .includes(searchLocation.toLowerCase())
   );
 
   const loadMore = () => {
     setIndex(index + 6);
-    // console.log(index);
     if (index >= homes.length) {
       setIsCompleted(true);
     } else {
@@ -95,16 +110,16 @@ function Home() {
   }, []);
 
   function fetchHome() {
+    setLoadingHome(true);
     axios
-      .get("https://devmyproject.site/guru")
+      .get("https://devmyproject.site/guru/")
       .then((res) => {
         setHome(res.data.data);
-        // console.log(res.data.data);
       })
       .catch((err) => {
         alert(err.response.data.message);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoadingHome(false));
   }
 
   // useEffect(() => {
@@ -151,7 +166,9 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -188,7 +205,10 @@ function Home() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -237,9 +257,14 @@ function Home() {
                           return;
                         }
                         setAvatar(
-                          URL.createObjectURL(e.currentTarget.files[0])
+                          URL.createObjectURL(
+                            e.currentTarget.files[0]
+                          )
                         );
-                        handleChange(e.currentTarget.files[0], "avatar");
+                        handleChange(
+                          e.currentTarget.files[0],
+                          "avatar"
+                        );
                       }}
                     />
 
@@ -250,7 +275,9 @@ function Home() {
                       style={{ border: "2px solid #424242" }}
                       placeholder={LinkedIn}
                       defaultValue={LinkedIn}
-                      onChange={(e) => handleChange(e.target.value, "LinkedIn")}
+                      onChange={(e) =>
+                        handleChange(e.target.value, "LinkedIn")
+                      }
                     />
 
                     <label className="label">
@@ -268,9 +295,14 @@ function Home() {
                           return;
                         }
                         setIjazah(
-                          URL.createObjectURL(e.currentTarget.files[0])
+                          URL.createObjectURL(
+                            e.currentTarget.files[0]
+                          )
                         );
-                        handleChange(e.currentTarget.files[0], "Ijazah");
+                        handleChange(
+                          e.currentTarget.files[0],
+                          "Ijazah"
+                        );
                       }}
                     />
                   </div>
@@ -294,7 +326,10 @@ function Home() {
                         placeholder={"contoh : Blitar"}
                         defaultValue={lokasiAsal}
                         onChange={(e) =>
-                          handleChange(e.target.value, "LokasiAsal")
+                          handleChange(
+                            e.target.value,
+                            "LokasiAsal"
+                          )
                         }
                       />
 
@@ -318,7 +353,30 @@ function Home() {
                           handleChange(e.target.value, "Telepon")
                         }
                       />
-
+                      <label className="label">
+                        <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
+                          Upload Ijazah
+                        </span>
+                      </label>
+                      <select
+                        defaultValue={"DEFAULT"}
+                        id="input-jenjang-pengajaran"
+                        className="select select-bordered w-10/12 lg:w-9/12  bg-white"
+                        style={{ border: "2px solid #424242" }}
+                        name="option"
+                        // onChange={handleChange}
+                      >
+                        <option value="DEFAULT" disabled>
+                          Pilih Salah Satu
+                        </option>
+                        <option value="1">Sekolah Dasar</option>
+                        <option value="2">
+                          Sekolah Menengah Pertama
+                        </option>
+                        <option value="3">
+                          Sekolah Menengah Atas
+                        </option>
+                      </select>
                       <div className="form-control">
                         <label className="label">
                           <span
@@ -336,7 +394,10 @@ function Home() {
                           style={{ border: "2px solid #424242" }}
                           name="option"
                           onChange={(e) =>
-                            handleChange(e.target.value, "Pendidikan")
+                            handleChange(
+                              e.target.value,
+                              "Pendidikan"
+                            )
                           }
                         >
                           <option value="DEFAULT" disabled>
@@ -344,7 +405,9 @@ function Home() {
                               ? "Pilih Salah Satu"
                               : `${pendidikan}`}
                           </option>
-                          <option value="Sekolah Dasar">Sekolah Dasar</option>
+                          <option value="Sekolah Dasar">
+                            Sekolah Dasar
+                          </option>
                           <option value="Sekolah Menengah Pertama">
                             Sekolah Menengah Pertama
                           </option>
@@ -371,7 +434,10 @@ function Home() {
                             placeholder="Ceritakan biografi singkat anda"
                             defaultValue={deskripsi}
                             onChange={(e) =>
-                              handleChange(e.target.value, "TentangSaya")
+                              handleChange(
+                                e.target.value,
+                                "TentangSaya"
+                              )
                             }
                           ></textarea>
                         </div>
