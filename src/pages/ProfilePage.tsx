@@ -5,6 +5,7 @@ import { CustomInput } from "../components/CustomInput";
 import { Footer } from "../components/Footer";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
+import { FC } from "react";
 
 import avatarImg from "../assets/avatar2.webp";
 
@@ -45,6 +46,8 @@ import qris from "../assets/qris logo 2.svg";
 import { Link } from "react-router-dom";
 import { ProfilType } from "../utils/DataTypes";
 import withReactContent from "sweetalert2-react-content";
+import { JadwaType } from "../utils/DataTypes";
+
 const MySwal = withReactContent(Swal);
 import Swal from "../utils/Swal";
 
@@ -201,12 +204,18 @@ const EditProfilStudent = () => {
   );
 };
 
-const center = {
-  lat: 51.505,
-  lng: -0.09,
-};
+// const center = {
+//   lat: 51.505,
+//   lng: -0.09,
+// };
 
-const DraggableMarker = () => {
+const DraggableMarker = ({
+  setMapCenter,
+  setLocations,
+}: {
+  setMapCenter: (arg: { lat: number; lng: number }) => void;
+  setLocations: (arg: Array<Location>) => void;
+}) => {
   const [draggable, setDraggable] = useState(false);
   const [position, setPosition] = useState(center);
   const markerRef = useRef(null);
@@ -215,15 +224,25 @@ const DraggableMarker = () => {
       dragend() {
         const marker: any = markerRef.current;
         if (marker != null) {
-          setPosition(marker.getLatLng());
+          const latLng = marker.getLatLng();
+          setPosition(latLng);
+          setMapCenter(latLng);
+          // You can perform a search here to get the new location information based on the updated position
+          setLocations([
+            {
+              lat: latLng.lat,
+              lon: latLng.lng,
+              display_name: `${latLng.lat}, ${latLng.lng}`,
+            },
+          ]);
         }
       },
     }),
-    []
+    [setMapCenter, setLocations]
   );
   const toggleDraggable = useCallback(() => {
-    setDraggable((d) => !d);
-  }, []);
+    setDraggable(!draggable);
+  }, [draggable]);
 
   return (
     <Marker
@@ -519,8 +538,8 @@ const ProfileTeacher = () => {
                   <div className="w-full min-h-screen flex flex-row">
                     <div className="flex-1 flex-col w-full min-h-scree">
                       <div className="w-8/12 rounded-2xl bg-primary shadow-xl h-[30rem] mt-10 shad mx-auto">
-                        <img src={Avatar} className="w-6/12 mx-auto pt-7" />
-                        <p className="font-bold text-3xl text-center mt-7">
+                        <img src={Avatar} className="w-6/12 mx-auto " />
+                        <p className="font-bold text-3xl text-center -mt-20">
                           {Nama}
                         </p>
                         <p className="flex flex-row justify-center mt-2">
@@ -1235,9 +1254,26 @@ const ProfileTeacher = () => {
     </div>
   );
 };
+const center = {
+  lat: 51.505,
+  lng: -0.09,
+};
 
-const EditProfileTeacher = () => {
+interface Location {
+  lat: number;
+  lon: number;
+  display_name: string;
+}
+const EditProfileTeacher: React.FC<{
+  center: { lat: number; lng: number };
+  scrollWheelZoom: boolean;
+}> = ({ scrollWheelZoom }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [mapCenter, setMapCenter] = useState({ lat: 51.505, lng: -0.09 });
+  const [zoom, setZoom] = useState(13);
+  const [locations, setLocations] = useState<Array<Location>>([]);
   const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.guru_id;
@@ -1245,21 +1281,19 @@ const EditProfileTeacher = () => {
 
   const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
-  const [tanggal, setTanggal] = useState(new Date());
+  const [tanggal, setTanggal] = useState<string>("");
   const [startDate, setStartDate] = useState(new Date());
+  const [jam, setJam] = useState<string>("");
 
-  const [checkbox, setCheckBox] = useState("online");
   const [Avatar, setAvatar] = useState<any>("");
   const [Email, setEmail] = useState<string>("");
   const [Gelar, setGelar] = useState<string>("");
   const [Ijazah, setIjazah] = useState<any>("");
-  const [Jadwal, setJadwal] = useState<any>("");
-  const [Latitude, setLatitude] = useState<string>("");
-  const [Longitude, setLongitude] = useState<string>("");
+  const [Jadwal, setJadwal] = useState<string>("");
+  const [Latitude, setLatitude] = useState<any>("");
+  const [Longitude, setLongitude] = useState<any>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [lokasiAsal, setLokasiAsal] = useState<string>("");
-  const [Nama, setNAMA] = useState<string>("");
-  const [Offline, setOffline] = useState("");
   const [MetodeBljr, setMetodeBljr] = useState("");
   const [Pelajaran, setPelajaran] = useState<string>("");
   const [Pendidikan, setPendidikan] = useState<string>("");
@@ -1268,13 +1302,32 @@ const EditProfileTeacher = () => {
   const [Telepon, setTELEPON] = useState<string>("");
   const [TentangSaya, setTentangSaya] = useState<string>("");
 
-  const handleOptionChangeOnline = (event: any) => {
-    setMetodeBljr(MetodeBljr === "online" ? "" : "online");
+  const handleSearchMap = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${searchQuery}&format=json`
+    );
+    const data = await response.json();
+
+    if (data.length) {
+      const [firstResult] = data;
+      setMapCenter({ lat: firstResult.lat, lng: firstResult.lon });
+      setLocations([firstResult]);
+    }
   };
 
-  const handleOptionChangeOffline = (event: any) => {
-    setMetodeBljr(MetodeBljr === "offline" ? "" : "offline");
-  };
+  useEffect(() => {
+    if (locations.length) {
+      const [location] = locations;
+      const latLng = `${location.lat}, ${location.lon}`;
+
+      setLatitude(`${location.lat}`);
+      setLongitude(`${location.lon}`);
+
+      console.log(`Updated location: ${latLng}`);
+    }
+  }, [locations]);
 
   const fetchDataGuru = useCallback(() => {
     axios({
@@ -1316,7 +1369,6 @@ const EditProfileTeacher = () => {
         setLongitude(Longitude);
         setLinkedIn(LinkedIn);
         setLokasiAsal(LokasiAsal);
-        setNAMA(Nama);
 
         setMetodeBljr(MetodeBljr);
         setPelajaran(Pelajaran);
@@ -1376,6 +1428,44 @@ const EditProfileTeacher = () => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
+  };
+
+  const handlePostJadwal = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+    const formData = new FormData();
+
+    const body = {
+      tanggal,
+      jam,
+    };
+
+    axios
+      .post("https://devmyproject.site/jadwal", body, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        const { data, message } = res.data;
+
+        MySwal.fire({
+          title: "Berhasil Menambah Jadwal",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Gagal Menambah Jadwal",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -1467,44 +1557,84 @@ const EditProfileTeacher = () => {
                 handleChange(e.currentTarget.files[0], "Ijazah");
               }}
             />
+            <form onSubmit={(e) => handlePostJadwal(e)}>
+              <h1 className="text-center mt-10 text-xl font-semibold">
+                Atur Waktu Mengajar
+              </h1>
+              <div className="flex flex-row w-full border-2">
+                <CustomInput
+                  id="date"
+                  type="date"
+                  className="w-4/12 h-[3rem] mt-5 flex mx-auto  "
+                  defaultValue={Jadwal}
+                  onChange={(e) => setTanggal(e.target.value)}
+                />
 
-            <h1 className="text-center mt-10 text-xl font-semibold">
-              Atur Waktu Mengajar
-            </h1>
-            <CustomInput
-              id="date"
-              type="datetime-local"
-              className="w-4/12 h-[3rem] mt-5 flex mx-auto  "
-              defaultValue={Jadwal}
-              onChange={(e) => handleChange(e.target.value, "Jadwal")}
-            />
-            <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto mt-5"></div>
-            <h1 className="text-center mt-10 text-xl font-semibold">
-              Atur Tempat Mengajar
-            </h1>
-            <div className="collapse">
-              <CustomInput id="checkbox" type="checkbox" />
-              <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2 border-2">
-                <img src={openMap} className="w-2/12 justify-center" />
+                <CustomInput
+                  id="time"
+                  type="time"
+                  className="w-4/12 h-[3rem] mt-5 flex mx-auto  "
+                  defaultValue={jam}
+                  onChange={(e) => setJam(e.target.value)}
+                />
+
               </div>
-              <div className="collapse-content">
-                <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
-                  <TileLayer
-                    id="input-map"
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
-                  <DraggableMarker />
-                </MapContainer>
-                <div className="flex justify-center pr-10 mt-">
-                  <CustomButton
-                    id="input-tempat-mengajar"
-                    label="Input Tempat Mengajar"
-                    className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
-                  />
-                </div>
+              <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto mt-5"></div>
+              <h1 className="text-center mt-10 text-xl font-semibold">
+                Atur Tempat Mengajar
+              </h1>
+
+              <CustomInput
+                id="input-Latitude"
+                defaultValue={Latitude}
+                onChange={(e) => setLatitude(e.target.value)}
+              />
+              <CustomInput
+                id="input-Longitude"
+                defaultValue={Longitude}
+                onChange={(e) => setLongitude(e.target.value)}
+              />
+              <form onSubmit={handleSearchMap} className="mb-10">
+                <CustomInput
+                  id="search-lokasi"
+                  type="text"
+                  placeholder="Search Your Location"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <CustomButton
+                  id="btn-pencarian-lokasi"
+                  type="submit"
+                  className="text-black"
+                  label="search"
+                />
+              </form>
+
+              <MapContainer
+                center={mapCenter}
+                zoom={zoom}
+                scrollWheelZoom={scrollWheelZoom}
+              >
+                <TileLayer
+                  id="input-map"
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <DraggableMarker
+                  setMapCenter={setMapCenter}
+                  setLocations={setLocations}
+                />
+              </MapContainer>
+
+              <div className="flex justify-center pr-10 mt-">
+                <CustomButton
+                  id="input-tempat-mengajar"
+                  label="Atur Jadwal Mengajar"
+                  className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
+                  onClick={(e: any) => handlePostJadwal(e)}
+                />
               </div>
-            </div>
+            </form>
           </div>
           <div className="flex-1 ">
             <label className="label mt-5">
