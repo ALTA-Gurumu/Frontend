@@ -269,34 +269,40 @@ const TabsContentForTeacherPage = () => {
     <>
       <Layout>
         <Navbar />
-        <div>
-          <Tabs
-            defaultSelectedTabId="profil"
-            className={`${Classes.COMPACT} w-11/12 mx-auto min-h-screen mt-20 `}
-            renderActiveTabPanelOnly={true}
-          >
-            <Tab
-              id="profil"
-              title="Profil"
-              className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
-              panel={
-                <div className="w-full min-h-screen text-sm font-normal">
-                  <ProfileTeacher />
-                </div>
-              }
-            />
-            <Tab
-              id="editProfil"
-              className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto"
-              title="Edit Profile"
-              panel={
-                <div className="w-full min-h-screen text-sm font-normal">
-                  <EditProfileTeacher />
-                </div>
-              }
-            />
-          </Tabs>
-        </div>
+        {checkRole === "siswa" ? (
+          <div>
+            <ProfileTeacher />
+          </div>
+        ) : (
+          <div>
+            <Tabs
+              defaultSelectedTabId="profil"
+              className={`${Classes.COMPACT} w-11/12 mx-auto min-h-screen mt-20 `}
+              renderActiveTabPanelOnly={true}
+            >
+              <Tab
+                id="profil"
+                title="Profil"
+                className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
+                panel={
+                  <div className="w-full min-h-screen text-sm font-normal">
+                    <ProfileTeacher />
+                  </div>
+                }
+              />
+              <Tab
+                id="editProfil"
+                className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto"
+                title="Edit Profile"
+                panel={
+                  <div className="w-full min-h-screen text-sm font-normal">
+                    <EditProfileTeacher />
+                  </div>
+                }
+              />
+            </Tabs>
+          </div>
+        )}
         <Footer />
       </Layout>
     </>
@@ -375,8 +381,6 @@ const ProfileTeacher = () => {
   useEffect(() => {
     checkRole !== "guru" && fetchData();
   }, []);
-
-  console.log(useParams);
 
   const fetchDataGuru = useCallback(() => {
     axios({
@@ -489,10 +493,9 @@ const ProfileTeacher = () => {
       .get(`https://devmyproject.site/ulasan/${guru_id}`)
       .then((res) => {
         setUlasan(res.data.data);
-        // console.log(ulasan.data);
       })
       .catch((err) => {
-        alert(err.toString());
+        // alert(err.toString());
       })
       .finally(() => setLoading(false));
   }

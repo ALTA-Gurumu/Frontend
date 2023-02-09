@@ -11,7 +11,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 
 import imgLogin from "../../assets/login-img.webp";
 
-import { CustomInput } from "../../components/CustomInput";
+import { CustomInput, InputIcon } from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { LoginNavbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
@@ -64,6 +64,7 @@ const Login = () => {
 
         setCookies("token", res.data.token, { path: "/" });
         setCookies("role", role, { path: "/" });
+        setCookies("nama", nama, { path: "/" });
         setCookies("guru_id", guru_id, { path: "/" });
         setCookies("verifikasi", verifikasi, { path: "/" });
 
@@ -86,70 +87,67 @@ const Login = () => {
     <>
       <Layout>
         <LoginNavbar />
-        <div className="w-full lg:min-h-screen flex justify-center items-center">
-          <div className=" w-10/12 mt-5 lg:-mt-10 lg:w-8/12 h-full lg:h-6/6 lg:pb-16 bg-white rounded-3xl border-2">
+        <div className="w-full lg:min-h-screen flex justify-center items-center my-5">
+          <div className=" w-10/12 lg:mb-0 mb-5 mt-5 lg:-mt-10 lg:w-8/12 h-full lg:pb-10 lg:pt-5 bg-white rounded-3xl border-2">
             <div className="flex flex-col lg:flex-row w-full h-full justify-center">
-              <div className="flex-1 flex items-center  ">
+              <div className="flex-1 flex items-end pl-5 lg:mb-16 mb-2">
                 <img
                   src={imgLogin}
-                  className="mx-auto w-10/12 max-w-full mt-10 lg:mt-0"
+                  className="lg:w-full w-10/12 lg:mx-0 mx-auto mt-10 lg:mt-0"
                 />
               </div>
-              <div className="flex-1 items-center -mt-15 lg:mt-10 ">
-                <h1 className="text-center text-4xl text-black font-extrabold lg:mt-10 tracking-wider">
+              <div className="flex-1 items-center lg:mt-0 mt-0">
+                <h1 className="text-center lg:text-[36px] text-[30px] text-navy font-[1000] tracking-wider">
                   Masuk
                 </h1>
-                <p className="text-center text-base text-black font-semibold w-8/12 mx-auto mt-7 tracking-normal">
+                <p className="text-center px-8 text-[16px] text-base text-navy mt-2 tracking-normal">
                   Lengkapi Formulir Dibawah dan Dapatkan Akses Masuk Akun Anda
                 </p>
-                <div className="form-control w-full ">
+                <div className="form-control w-full px-10 lg:mt-5 mt-0">
                   <label className="label mt-5">
-                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
+                    <span className="label-text lg:text-[18px] text-[16px] lg:w-8/12 text-navy">
                       Email :
                     </span>
                   </label>
                   <form onSubmit={handleSubmit}>
-                    <CustomInput
+                    <InputIcon
                       id="input-email"
                       type="text"
                       onChange={(e) => setEmail(e.target.value)}
                       name="email"
                       placeholder="@johndoe@gmail.com"
-                      className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                      style={{ border: "2px solid #424242" }}
+                      className="input w-full mx-auto bg-white"
+                      style={{ border: "2px solid rgb(17,43,60)" }}
                     />
-                    <label className="label mt-5">
-                      <span
-                        className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold"
-                        style={{ color: "#424242" }}
-                      >
+                    <label className="label lg:mt-5 mt-2">
+                      <span className="label-text lg:text-[18px] text-[16px] lg:w-8/12 text-navy">
                         Password :
                       </span>
                     </label>
 
-                    <CustomInput
+                    <InputIcon
                       id="input-password"
                       type="password"
                       onChange={(e) => setPassword(e.target.value)}
                       name="password"
                       placeholder="*********"
-                      className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                      style={{ border: "2px solid #424242" }}
+                      className="input w-full mx-auto bg-white"
+                      style={{ border: "2px solid rgb(17,43,60)" }}
                     />
                     <CustomButton
                       id="btn-masuk"
                       label="Masuk"
-                      className="w-10/12 lg:w-8/12 py-3 px-3  rounded-lg mx-auto mt-7 text-white font-lg text-lg disabled:bg-slate-500 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
+                      className="w-full py-3 px-3 rounded-lg lg:mt-12 mt-8 text-white font-semibold text-[18px] disabled:bg-slate-500 disabled:cursor-not-allowed bg-orange-500 hover:bg-orange-600"
                       style={{
                         fontFamily: "Poppins",
                       }}
                       loading={loading || disabled}
                     />
                   </form>
-                  <p className="text-center mt-5 text-slate-700 font-medium pb-10 lg:p-0">
-                    Belum Memiliki Akun{" "}
+                  <p className="text-center mt-5 text-navy font-medium pb-10 lg:p-0">
+                    Belum Memiliki Akun ?
                     <Link id="link-register" to="/register">
-                      <span className="font-bold underline text-slate-700 ml-2">
+                      <span className="font-bold underline text-navy ml-2">
                         Daftar Sekarang
                       </span>
                     </Link>

@@ -319,26 +319,7 @@ function Home() {
                           handleChange(e.target.value, "telepon")
                         }
                       />
-                      <label className="label">
-                        <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
-                          Upload Ijazah
-                        </span>
-                      </label>
-                      <select
-                        defaultValue={"DEFAULT"}
-                        id="input-jenjang-pengajaran"
-                        className="select select-bordered w-10/12 lg:w-9/12  bg-white"
-                        style={{ border: "2px solid #424242" }}
-                        name="option"
-                        // onChange={handleChange}
-                      >
-                        <option value="DEFAULT" disabled>
-                          Pilih Salah Satu
-                        </option>
-                        <option value="1">Sekolah Dasar</option>
-                        <option value="2">Sekolah Menengah Pertama</option>
-                        <option value="3">Sekolah Menengah Atas</option>
-                      </select>
+
                       <div className="form-control">
                         <label className="label">
                           <span
