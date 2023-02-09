@@ -159,7 +159,7 @@ function Navbar() {
 const LoginNavbar = () => {
   return (
     <>
-      <div className="navbar w-10/12 mx-auto mt-2 lg:mt-7 primary">
+      <div className="navbar lg:w-10/12 w-11/12 mx-auto mt-2 lg:mt-7 primary">
         <div className="navbar-start">
           <div id="dropdown" className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -210,7 +210,7 @@ const LoginNavbar = () => {
           <Link
             id="link-landingpage-2"
             to="/home"
-            className="btn btn-ghost normal-case text-xl lg:text-3xl font-bold text-component font-poppins"
+            className="btn btn-ghost normal-case text-[24px] p-0 lg:text-3xl font-extrabold text-component font-poppins"
           >
             GuruMu
           </Link>
