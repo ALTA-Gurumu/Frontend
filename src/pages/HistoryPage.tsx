@@ -1,25 +1,69 @@
-import { useState, useEffect } from "react";
-import "@blueprintjs/core/lib/css/blueprint.css";
-import { Tabs, Tab, Classes } from "@blueprintjs/core";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
-import Layout from "../components/Layout";
-import { Navbar } from "../components/Navbar";
+import { Tabs, Tab, Classes } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../utils/Swal";
+
+import { CompleteTeacher } from "../utils/DataTypes";
+
 import CustomButton from "../components/CustomButton";
 import { Footer } from "../components/Footer";
+import { Navbar } from "../components/Navbar";
+import Layout from "../components/Layout";
 
 function HalamanSesiGuru() {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+  const [cookies, ,] = useCookies(["token", "guru_id"]);
+  const checkToken = cookies.token;
+  const checkID = cookies.guru_id;
+
   const [status, setStatus] = useState<string>("Belum Selesai");
   const [disable, setDisable] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [jadwal, setJadwal] = useState<CompleteTeacher>({});
+  const [riwayat, setRiwayat] = useState<CompleteTeacher>({});
+
   useEffect(() => {
-    if (status === "Selesai") {
-      setDisable(true);
-    } else {
-      setDisable(true);
-    }
-  }, [status]);
-  console.log(status);
+    fetchJadwal();
+  }, []);
+
+  function fetchJadwal() {
+    axios
+      .get(`https://devmyproject.site/guru/${checkID}`)
+      .then((res) => {
+        setJadwal(res.data.data);
+        // console.log(res.data.data.Jadwal);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    fetchRiwayat();
+  }, []);
+
+  function fetchRiwayat() {
+    axios
+      .get(
+        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/sesiku"
+      )
+      .then((res) => {
+        setRiwayat(res.data);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  }
 
   return (
     <>
@@ -59,23 +103,19 @@ function HalamanSesiGuru() {
                           </tr>
                         </thead>
                         <tbody className="text-[16px] font-normal">
-                          <tr>
-                            <th>1</th>
-                            <td>Danu</td>
-                            <td>12.00 (WIB)</td>
-                            <td>Senin 20 Januari 2023</td>
-                            <td>https://google meet/adka</td>
-                            <td>Selesai</td>
-                          </tr>
-
-                          <tr className="hover">
-                            <th>2</th>
-                            <td>Budy</td>
-                            <td>09.00 (WIB)</td>
-                            <td>Senin 17 Januari 2023</td>
-                            <td>-</td>
-                            <td>Selesai</td>
-                          </tr>
+                          <>
+                            {/* {console.log(riwayat)} */}
+                            {riwayat.data?.map((data) => (
+                              <tr key={data.reservasi_id}>
+                                <th>{data.reservasi_id}</th>
+                                <td>{data.nama_murid}</td>
+                                <td>{data.jam}</td>
+                                <td>{data.tanggal}</td>
+                                <td>{data.tautan_gmet}</td>
+                                <td>{data.status}</td>
+                              </tr>
+                            ))}
+                          </>
                         </tbody>
                       </table>
                     </div>
@@ -147,6 +187,7 @@ function HalamanSesiGuru() {
                     </div>
                   }
                 />
+
                 <Tab
                   id="tab-3"
                   title="Jadwal Mengajar"
@@ -164,11 +205,15 @@ function HalamanSesiGuru() {
                           </tr>
                         </thead>
                         <tbody className="text-[16px] font-normal">
-                          <tr>
-                            <th>1</th>
-                            <td>Senin, 20 Januari 2023</td>
-                            <td>09.00 AM (WIB)</td>
-                          </tr>
+                          <>
+                            {jadwal.Jadwal?.map((data, index) => (
+                              <tr key={index}>
+                                <th>{data.ID}</th>
+                                <td>{data.Tanggal}</td>
+                                <td>{data.Jam}</td>
+                              </tr>
+                            ))}
+                          </>
                         </tbody>
                       </table>
                     </div>

@@ -15,15 +15,11 @@ import { RiMessage2Fill } from "react-icons/ri";
 function Reservasi() {
   const [selectedHour, setSelectedHour] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
-  const handleHourChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleHourChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedHour(event.target.value);
   };
 
-  const handleDateChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleDateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDate(event.target.value);
   };
   return (
@@ -35,35 +31,24 @@ function Reservasi() {
             alt="profil.webp"
             className="lg:w-32 w-28 lg:h-32 h-28 rounded-full lg:mt-10 mt-5 mb-2"
           />
-          <p className="lg:text-[36px] text-[28px] font-semibold  ">
-            John Doe
-          </p>
+          <p className="lg:text-[36px] text-[28px] font-semibold  ">John Doe</p>
           <div className="flex gap-1 mb-4">
             <MdStars className="w-5 h-5 text-component" />
             <p className="text-[14px]">{`${5} (6 ulasan)`} </p>
           </div>
           <p className="font-semibold lg:text-[16px] text-[14px] pr-8 mb-5">
-            Tarif Belajar/Jam{" "}
-            <span className="ml-2">Rp.{5000}</span>
+            Tarif Belajar/Jam <span className="ml-2">Rp.{5000}</span>
           </p>
-          <p className="text-zinc-800">
-            Mata Pelajaran dan Tingkatan
-          </p>
+          <p className="text-zinc-800">Mata Pelajaran dan Tingkatan</p>
           <div className="flex text-[#637381] gap-8 text-[14px] mt-2">
-            <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">
-              Matematika
-            </p>
-            <p className="py-1 px-2 bg-[#b3b3b3]  rounded-lg">
-              Sekolah Dasar
-            </p>
+            <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">Matematika</p>
+            <p className="py-1 px-2 bg-[#b3b3b3]  rounded-lg">Sekolah Dasar</p>
           </div>
         </div>
         <br />
         <div className="flex gap-1">
           <RiMessage2Fill className="w-5 h-5 text-navy" />
-          <p className="font-semibold">
-            John Doe merespon pesan dengan cepat
-          </p>
+          <p className="font-semibold">John Doe merespon pesan dengan cepat</p>
         </div>
       </div>
       <div className="lg:w-[25rem]">
@@ -88,9 +73,7 @@ function Reservasi() {
               placeholder="Tulis pesan anda disini"
             ></textarea>
           </div>
-          <h2 className="text-lg pt-3 font-bold">
-            Format Khusus
-          </h2>
+          <h2 className="text-lg pt-3 font-bold">Format Khusus</h2>
           <Tabs
             className=" w-11/12 mx-auto"
             defaultSelectedTabId="2"
@@ -113,9 +96,7 @@ function Reservasi() {
             />
           </Tabs>
           <br />
-          <h2 className="text-lg font-bold pb-3">
-            Tanggal kursus pertama
-          </h2>
+          <h2 className="text-lg font-bold pb-3">Tanggal kursus pertama</h2>
           <div className="flex flex-row gap-6">
             <select
               id="input-tanggal"
