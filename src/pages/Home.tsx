@@ -124,6 +124,7 @@ function Home() {
   useEffect(() => {
     checkRole === "guru" && fetchData();
   }, []);
+
   const fetchDataGetGuru = useCallback(() => {
     axios({
       method: "GET",
@@ -264,38 +265,51 @@ function Home() {
                         handleChange(e.currentTarget.files[0], "avatar");
                       }}
                     />
-                    <CustomInput
-                      id="input-linkedin"
-                      type="text"
-                      accept="image/png, image/jpg, image/jpeg"
-                      className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
-                      style={{ border: "2px solid #424242" }}
-                      placeholder={LinkedIn}
-                      defaultValue={LinkedIn}
-                      onChange={(e) => handleChange(e.target.value, "LinkedIn")}
-                    />
-
-                    <label className="label">
-                      <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
-                        Upload Ijazah
-                      </span>
-                    </label>
-
-                    <CustomInput
-                      id="input-ijazah"
-                      type="file"
-                      className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
-                      onChange={(e) => {
-                        if (!e.currentTarget.files) {
-                          return;
-                        }
-                        setIjazah(
-                          URL.createObjectURL(e.currentTarget.files[0])
-                        );
-                        handleChange(e.currentTarget.files[0], "ijazah");
-                      }}
-                    />
                   </div>
+                  <p className="text-center text-gray-500 font-semibold mt-2">
+                    * Uk. photo 400 x 400 pixels
+                  </p>
+                  <CustomInput
+                    id="input-avatar"
+                    type="file"
+                    accept="image/png, image/jpg, image/jpeg"
+                    className="file-input h-10 w-full max-w-xs flex justify-center bg-white lg:mt-4"
+                    onChange={(e) => {
+                      if (!e.currentTarget.files) {
+                        return;
+                      }
+                      setAvatar(URL.createObjectURL(e.currentTarget.files[0]));
+                      handleChange(e.currentTarget.files[0], "Avatar");
+                    }}
+                  />
+                  <CustomInput
+                    id="input-linkedin"
+                    type="text"
+                    className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
+                    style={{ border: "2px solid #424242" }}
+                    placeholder={LinkedIn}
+                    defaultValue={LinkedIn}
+                    onChange={(e) => handleChange(e.target.value, "LinkedIn")}
+                  />
+
+                  <label className="label">
+                    <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
+                      Upload Ijazah
+                    </span>
+                  </label>
+
+                  <CustomInput
+                    id="input-ijazah"
+                    type="file"
+                    className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
+                    onChange={(e) => {
+                      if (!e.currentTarget.files) {
+                        return;
+                      }
+                      setIjazah(URL.createObjectURL(e.currentTarget.files[0]));
+                      handleChange(e.currentTarget.files[0], "Ijazah");
+                    }}
+                  />
 
                   <div className="lg:w-7/12 w-full items-center lg:pl-16 pl-0 lg:mx-0 mx-2">
                     <div className="form-control w-full ">

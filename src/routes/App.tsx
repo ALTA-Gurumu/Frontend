@@ -88,9 +88,11 @@ function App() {
       element: checkToken ? <TabsContentForTeacherPage /> : <Login />,
     },
     {
+
       path: "/listmengajar/:guru_id",
       element:
         checkToken && checkRole === "guru" ? <HalamanSesiGuru /> : <Home />,
+
     },
     // {
     //   path: "/profile-edit/:id_user",

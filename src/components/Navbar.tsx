@@ -14,10 +14,16 @@ function Navbar() {
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
 
-  const [cookie, , removeCookie] = useCookies(["token", "role", "verifikasi"]);
+  const [cookie, , removeCookie] = useCookies([
+    "token",
+    "role",
+    "verifikasi",
+    "guru_id",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkVer = cookie.verifikasi;
+  const checkId = cookie.guru_id;
 
   const handleLogout = async () => {
     removeCookie("token");
@@ -32,6 +38,7 @@ function Navbar() {
       showCancelButton: false,
     });
   };
+  const linkProfile = `/profile-teacher/${checkId}`;
 
   return (
     <div className="navbar bg-card">
