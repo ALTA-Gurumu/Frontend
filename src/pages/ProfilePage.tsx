@@ -766,7 +766,6 @@ const ProfileTeacher = () => {
                                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
-                                <DraggableMarker />
                               </MapContainer>
                               <div className="flex justify-center pr-10 mt-">
                                 <CustomButton
@@ -1010,7 +1009,6 @@ const ProfileTeacher = () => {
                                           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
-                                        <DraggableMarker />
                                       </MapContainer>
                                       <div className="flex justify-center pr-10 mt-">
                                         <CustomButton
@@ -1587,7 +1585,6 @@ const EditProfileTeacher: React.FC<{
                   defaultValue={jam}
                   onChange={(e) => setJam(e.target.value)}
                 />
-
               </div>
               <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto mt-5"></div>
               <h1 className="text-center mt-10 text-xl font-semibold">

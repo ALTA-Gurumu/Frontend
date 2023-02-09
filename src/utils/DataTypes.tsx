@@ -42,11 +42,25 @@ export interface CompleteTeacher {
   Ijazah?: any;
   Latitude?: number;
   Longitude?: number;
-  Jadwal?: JadwaType[];
+  jadwal?: JadwalType[];
   data?: RiwayatType[];
   // dataUlasan?: UlasanType[];
   onChangeOption?: () => void;
 }
+
+export interface JadwaType {
+  id?: number;
+  guru_id?: number;
+  tanggal?: string;
+  jam?: string;
+}
+
+type JadwalType = {
+  ID?: number;
+  Tanggal?: string;
+  Jam?: string;
+  Status?: string;
+};
 
 export interface UlasanType {
   data: Ulasan[];
@@ -70,13 +84,6 @@ type Ulasan = {
   ulasan?: string;
 };
 
-type JadwaType = {
-  ID?: number;
-  Tanggal?: string;
-  Jam?: string;
-  Status?: string;
-};
-
 type RiwayatType = {
   reservasi_id?: number;
   nama_murid?: string;
@@ -98,11 +105,4 @@ export interface getGuruBeranda {
   avatar?: any;
   tarif?: number;
   penilaian?: number;
-}
-
-export interface JadwaType {
-  id?: number;
-  guru_id?: number;
-  tanggal?: string;
-  jam?: string;
 }
