@@ -158,7 +158,7 @@ function HalamanSesiMurid() {
             <div className="h-full">
               <Tabs
                 className=" w-11/12 mx-auto pt-4"
-                defaultSelectedTabId="1"
+                defaultSelectedTabId="tab-profil"
                 renderActiveTabPanelOnly={true}
               >
                 <Tab

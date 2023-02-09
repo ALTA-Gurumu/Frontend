@@ -24,25 +24,25 @@ export interface DataTypesGuru {
 }
 
 export interface CompleteTeacher {
-  Nama?: string;
-  Email?: string;
-  Telepon?: number;
-  LinkedIn?: string;
-  Gelar?: string;
-  TentangSaya?: string;
-  Pengalaman?: string;
-  LokasiAsal?: string;
-  MetodeBljr?: string;
-  Tarif?: number;
-  Pelajaran?: string;
-  Pendidikan?: string;
+  nama?: string;
+  email?: string;
+  telepon?: number;
+  linkedin?: string;
+  gelar?: string;
+  tentang_saya?: string;
+  pengalaman?: string;
+  lokasi_asal?: string;
+  metode_belajar?: string;
+  tarif?: number;
+  pelajaran?: string;
+  pendidikan?: string;
   Avatar?: any;
   avatar?: any;
-  Jadwal?: string;
-  Ijazah?: any;
-  Latitude?: number;
-  Longitude?: number;
-  jadwal?: JadwalType[];
+  jadwal?: string;
+  ijazah?: any;
+  latitude?: number;
+  longitude?: number;
+  Jadwal?: JadwalType[];
   data?: RiwayatType[];
   // dataUlasan?: UlasanType[];
   onChangeOption?: () => void;

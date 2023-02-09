@@ -4,10 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { set, slice } from "lodash";
 
-import {
-  CustomInput,
-  InputIcon,
-} from "../components/CustomInput";
+import { CustomInput, InputIcon } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -20,10 +17,7 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-import {
-  CompleteTeacher,
-  getGuruBeranda,
-} from "../utils/DataTypes";
+import { CompleteTeacher, getGuruBeranda } from "../utils/DataTypes";
 
 import Swal from "../utils/Swal";
 
@@ -67,9 +61,7 @@ function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingHome, setLoadingHome] = useState<boolean>(false);
   const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
-    {}
-  );
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -79,21 +71,13 @@ function Home() {
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
 
-  const [btn, setBtn] = useState<string>(
-    "px-4 py-3 text-[20px] rounded-2xl"
-  );
-  const [label, setLabel] = useState<string>(
-    "Lihat lebih banyak guru"
-  );
+  const [btn, setBtn] = useState<string>("px-4 py-3 text-[20px] rounded-2xl");
+  const [label, setLabel] = useState<string>("Lihat lebih banyak guru");
 
   const filteredHomes = homes.filter(
     (home) =>
-      home.pelajaran
-        .toLowerCase()
-        .includes(searchSubject.toLowerCase()) &&
-      home.alamat
-        .toLowerCase()
-        .includes(searchLocation.toLowerCase())
+      home.pelajaran.toLowerCase().includes(searchSubject.toLowerCase()) &&
+      home.alamat.toLowerCase().includes(searchLocation.toLowerCase())
   );
 
   const loadMore = () => {
@@ -159,6 +143,7 @@ function Home() {
         setIjazah(Ijazah);
         setPendidikan(Pendidikan);
         setDeskripsi(TentangSaya);
+        // console.log(res.data.data);
       })
       .catch((err) => {
         alert(err.toString());
@@ -166,9 +151,7 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -205,10 +188,7 @@ function Home() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (
-    value: string | File,
-    key: keyof typeof objSubmit
-  ) => {
+  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -257,14 +237,9 @@ function Home() {
                           return;
                         }
                         setAvatar(
-                          URL.createObjectURL(
-                            e.currentTarget.files[0]
-                          )
+                          URL.createObjectURL(e.currentTarget.files[0])
                         );
-                        handleChange(
-                          e.currentTarget.files[0],
-                          "avatar"
-                        );
+                        handleChange(e.currentTarget.files[0], "avatar");
                       }}
                     />
 
@@ -275,9 +250,7 @@ function Home() {
                       style={{ border: "2px solid #424242" }}
                       placeholder={LinkedIn}
                       defaultValue={LinkedIn}
-                      onChange={(e) =>
-                        handleChange(e.target.value, "LinkedIn")
-                      }
+                      onChange={(e) => handleChange(e.target.value, "linkedin")}
                     />
 
                     <label className="label">
@@ -295,14 +268,10 @@ function Home() {
                           return;
                         }
                         setIjazah(
-                          URL.createObjectURL(
-                            e.currentTarget.files[0]
-                          )
+                          URL.createObjectURL(e.currentTarget.files[0])
                         );
-                        handleChange(
-                          e.currentTarget.files[0],
-                          "Ijazah"
-                        );
+                        handleChange(e.currentTarget.files[0], "ijazah");
+                        handleChange(e.currentTarget.files[0], "ijazah");
                       }}
                     />
                   </div>
@@ -314,7 +283,7 @@ function Home() {
                           className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
                           style={{ color: "#424242" }}
                         >
-                          Alamat :
+                          Lokasi Asal :
                         </span>
                       </label>
 
@@ -326,10 +295,7 @@ function Home() {
                         placeholder={"contoh : Blitar"}
                         defaultValue={lokasiAsal}
                         onChange={(e) =>
-                          handleChange(
-                            e.target.value,
-                            "LokasiAsal"
-                          )
+                          handleChange(e.target.value, "lokasi_asal")
                         }
                       />
 
@@ -350,7 +316,7 @@ function Home() {
                         placeholder={"contoh : 0891234556"}
                         defaultValue={telefon}
                         onChange={(e) =>
-                          handleChange(e.target.value, "Telepon")
+                          handleChange(e.target.value, "telepon")
                         }
                       />
                       <label className="label">
@@ -370,12 +336,8 @@ function Home() {
                           Pilih Salah Satu
                         </option>
                         <option value="1">Sekolah Dasar</option>
-                        <option value="2">
-                          Sekolah Menengah Pertama
-                        </option>
-                        <option value="3">
-                          Sekolah Menengah Atas
-                        </option>
+                        <option value="2">Sekolah Menengah Pertama</option>
+                        <option value="3">Sekolah Menengah Atas</option>
                       </select>
                       <div className="form-control">
                         <label className="label">
@@ -394,10 +356,7 @@ function Home() {
                           style={{ border: "2px solid #424242" }}
                           name="option"
                           onChange={(e) =>
-                            handleChange(
-                              e.target.value,
-                              "Pendidikan"
-                            )
+                            handleChange(e.target.value, "pendidikan")
                           }
                         >
                           <option value="DEFAULT" disabled>
@@ -405,9 +364,7 @@ function Home() {
                               ? "Pilih Salah Satu"
                               : `${pendidikan}`}
                           </option>
-                          <option value="Sekolah Dasar">
-                            Sekolah Dasar
-                          </option>
+                          <option value="Sekolah Dasar">Sekolah Dasar</option>
                           <option value="Sekolah Menengah Pertama">
                             Sekolah Menengah Pertama
                           </option>
@@ -434,10 +391,7 @@ function Home() {
                             placeholder="Ceritakan biografi singkat anda"
                             defaultValue={deskripsi}
                             onChange={(e) =>
-                              handleChange(
-                                e.target.value,
-                                "TentangSaya"
-                              )
+                              handleChange(e.target.value, "tentang_saya")
                             }
                           ></textarea>
                         </div>
@@ -445,7 +399,7 @@ function Home() {
                         <CustomButton
                           id="btn-daftar"
                           label="Update Data"
-                          className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                          className=" w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
                           style={{
                             fontFamily: "Poppins",
                           }}
