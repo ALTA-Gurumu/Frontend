@@ -1,4 +1,3 @@
-// import Profil from "../assets/profil.jpg";
 import Profil2 from "../assets/profil2.webp";
 
 import { CustomInput } from "../components/CustomInput";
@@ -18,11 +17,23 @@ import { AiFillHome } from "react-icons/ai";
 import { FaLaptop } from "react-icons/fa";
 import { MdStars } from "react-icons/md";
 
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMap,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import openMap from "../assets/google-maps.webp";
 
-import { Tabs, Tab, Classes, RadioGroup, Radio } from "@blueprintjs/core";
+import {
+  Tabs,
+  Tab,
+  Classes,
+  RadioGroup,
+  Radio,
+} from "@blueprintjs/core";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useRef } from "react";
@@ -34,7 +45,11 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsPhoneFill } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
-import { CompleteTeacher, DataTypesGuru, UlasanType } from "../utils/DataTypes";
+import {
+  CompleteTeacher,
+  DataTypesGuru,
+  UlasanType,
+} from "../utils/DataTypes";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
@@ -80,10 +95,17 @@ function ProfileStudent() {
             </p>
           </label>
 
-          <input type="checkbox" id="my-modal-5" className="modal-toggle" />
+          <input
+            type="checkbox"
+            id="my-modal-5"
+            className="modal-toggle"
+          />
           <div className="modal">
             <div className="modal-box lg:w-9/12 w-10/12 max-w-full lg:pl-10 lg:p-5 p-7 shadow-xl">
-              <label htmlFor="my-modal-5" className="absolute right-5 top-4">
+              <label
+                htmlFor="my-modal-5"
+                className="absolute right-5 top-4"
+              >
                 <IoMdCloseCircleOutline className="text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7" />
               </label>
               <EditProfilStudent />
@@ -111,7 +133,10 @@ function ProfileStudent() {
               <br />
               <p className=" font-semibold">
                 Handphone
-                <span className=" pl-[6px] font-normal"> : 089566787765</span>
+                <span className=" pl-[6px] font-normal">
+                  {" "}
+                  : 089566787765
+                </span>
               </p>
             </div>
             <div className="lg:ml-0 ml-3 lg:mt-0 mt-5">
@@ -147,7 +172,10 @@ const EditProfilStudent = () => {
           <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
             <BsPhoneFill className="w-7 h-6" />
 
-            <InputIcon id="input-handphone" placeholder="089788970987" />
+            <InputIcon
+              id="input-handphone"
+              placeholder="089788970987"
+            />
           </div>
         </div>
 
@@ -183,7 +211,9 @@ const EditProfilStudent = () => {
       </div>
 
       <div className="flex flex-col items-center lg:w-[50vw] w-[70vw] lg:pt-16 pt-0 lg:mt-0 mt-2">
-        <p className="text-[#112B3C] text-[34px] font-semibold">Ubah Profil</p>
+        <p className="text-[#112B3C] text-[34px] font-semibold">
+          Ubah Profil
+        </p>
         <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
           <img src={Profil2} alt="profil.jpg" />
         </div>
@@ -263,38 +293,48 @@ const DraggableMarker = ({
 };
 
 const TabsContentForTeacherPage = () => {
+  const [cookies, ,] = useCookies(["role"]);
+  const checkRole = cookies.role;
+
   return (
     <>
       <Layout>
         <Navbar />
-        <div>
-          <Tabs
-            defaultSelectedTabId="3"
-            className={`${Classes.COMPACT} w-11/12 mx-auto min-h-screen mt-20 `}
-            renderActiveTabPanelOnly={true}
-          >
-            <Tab
-              id="1"
-              title="Profil"
-              className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
-              panel={
-                <div className="w-full min-h-screen text-sm font-normal">
-                  <ProfileTeacher />
-                </div>
-              }
-            />
-            <Tab
-              id="2"
-              className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto"
-              title="Edit Profile"
-              panel={
-                <div className="w-full min-h-screen text-sm font-normal">
-                  <EditProfileTeacher />
-                </div>
-              }
-            />
-          </Tabs>
-        </div>
+        {checkRole === "siswa" ? (
+          <div>
+            <ProfileTeacher />
+          </div>
+        ) : (
+          <div>
+            <Tabs
+              defaultSelectedTabId="1"
+              className={`${Classes.COMPACT}  w-11/12 mx-auto min-h-screen mt-20 `}
+              // style
+              renderActiveTabPanelOnly={true}
+            >
+              <Tab
+                id="1"
+                title="Profil"
+                className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
+                panel={
+                  <div className="w-full min-h-screen text-sm font-normal">
+                    <ProfileTeacher />
+                  </div>
+                }
+              />
+              <Tab
+                id="2"
+                className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto"
+                title="Update Profile"
+                panel={
+                  <div className="w-full min-h-screen text-sm font-normal">
+                    <EditProfileTeacher />
+                  </div>
+                }
+              />
+            </Tabs>
+          </div>
+        )}
         <Footer />
       </Layout>
     </>
@@ -302,9 +342,14 @@ const TabsContentForTeacherPage = () => {
 };
 
 const ProfileTeacher = () => {
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
+  const checkId = cookie.guru_id;
   const [loading, setLoading] = useState<boolean>(false);
 
   const [tanggal, setTanggal] = useState(new Date());
@@ -334,14 +379,15 @@ const ProfileTeacher = () => {
   const [alamat, setAlamat] = useState<string>("");
   const [telepon, setTelepon] = useState<string>("");
   const [pesan, setPesan] = useState<string>("");
-  const [metode_belajar, setMetodebelajar] = useState<string>("");
+  const [metode_belajar, setMetodebelajar] =
+    useState<string>("");
   const [jam, setJam] = useState(new Date());
 
-  const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
+  const [metode_pembayaran, setMetodePembayaran] =
+    useState<string>("");
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
 
   const navigate = useNavigate();
-  const checkId = cookie.guru_id;
 
   const [ulasan, setUlasan] = useState<UlasanType[]>([]);
   const [tambah, setTambah] = useState<number>(2);
@@ -435,7 +481,9 @@ const ProfileTeacher = () => {
     fetchDataGuru();
   }, [fetchDataGuru]);
 
-  const handleReservasi = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleReservasi = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -472,7 +520,10 @@ const ProfileTeacher = () => {
       .finally(() => setLoading(false));
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -512,6 +563,9 @@ const ProfileTeacher = () => {
   //   axios.get("https://devmyproject.site/guru/");
   // }
 
+  function checkJadwal() {
+    navigate(`/listmengajar/${checkId}`);
+  }
   return (
     <div className="flex flex-col p-8">
       <div className="flex lg:flex-row flex-col lg:items-start items-center w-full mt-10">
@@ -526,597 +580,769 @@ const ProfileTeacher = () => {
               />
               {Nama}
             </div>
-            <>
-              <label
-                htmlFor="my-modal-3"
-                className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
-              >
-                {<RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />}
-                Reservasi
-              </label>
+            {checkToken && checkRole === "siswa" ? (
+              <>
+                <label
+                  htmlFor="my-modal-3"
+                  className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
+                >
+                  {
+                    <RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />
+                  }
+                  Reservasi
+                </label>
 
-              {/* Put this part before </body> tag */}
-              <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-              <div className="modal">
-                <div className="modal-box w-11/12 max-w-5xl relative">
-                  <label
-                    htmlFor="my-modal-3"
-                    className="btn btn-sm btn-circle absolute right-2 top-2"
-                  >
-                    ✕
-                  </label>
-                  <div className="w-full min-h-screen flex flex-row">
-                    <div className="flex-1 flex-col w-full min-h-scree">
-                      <div className="w-8/12 rounded-2xl bg-primary shadow-xl h-[30rem] mt-10 shad mx-auto">
-                        <img src={Avatar} className="w-6/12 mx-auto " />
-                        <p className="font-bold text-3xl text-center -mt-20">
-                          {Nama}
-                        </p>
-                        <p className="flex flex-row justify-center mt-2">
-                          <span>
-                            <MdStars className="w-6 h-6 text-[#F66B0E] mr-2" />
-                          </span>
-                          <span className="text-lg font-semibold font-poppins">
-                            (6 Ulasan)
-                          </span>
-                        </p>
-                        <p className="flex justify-around mt-5">
-                          <span className="text-lg font-semibold">
-                            Tarif Belajar / Jam
-                          </span>
-                          <span className="text-lg font-semibold">{Tarif}</span>
-                        </p>
-                        <p className="text-lg font-bold text-center mt-5">
-                          Spelisasi dan Mapel
-                        </p>
-                        <p className="mt-5 text-center ">
-                          <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300">
-                            {Pelajaran}
-                          </span>
-                          <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300 ">
-                            Sekolah Dasar
-                          </span>
-                        </p>
-                      </div>
+                {/* Put this part before </body> tag */}
+                <input
+                  type="checkbox"
+                  id="my-modal-3"
+                  className="modal-toggle"
+                />
+                <div className="modal">
+                  <div className="modal-box w-11/12 max-w-5xl relative">
+                    <label
+                      htmlFor="my-modal-3"
+                      className="btn btn-sm btn-circle absolute right-2 top-2"
+                    >
+                      ✕
+                    </label>
+                    <div className="w-full min-h-screen flex flex-row">
+                      <div className="flex-1 flex-col w-full min-h-scree">
+                        <div className="w-8/12 rounded-2xl bg-primary shadow-xl h-[30rem] mt-10 shad mx-auto">
+                          <img
+                            src={Avatar}
+                            className="w-6/12 mx-auto "
+                          />
+                          <p className="font-bold text-3xl text-center -mt-20">
+                            {Nama}
+                          </p>
+                          <p className="flex flex-row justify-center mt-2">
+                            <span>
+                              <MdStars className="w-6 h-6 text-[#F66B0E] mr-2" />
+                            </span>
+                            <span className="text-lg font-semibold font-poppins">
+                              (6 Ulasan)
+                            </span>
+                          </p>
+                          <p className="flex justify-around mt-5">
+                            <span className="text-lg font-semibold">
+                              Tarif Belajar / Jam
+                            </span>
+                            <span className="text-lg font-semibold">
+                              {Tarif}
+                            </span>
+                          </p>
+                          <p className="text-lg font-bold text-center mt-5">
+                            Spelisasi dan Mapel
+                          </p>
+                          <p className="mt-5 text-center ">
+                            <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300">
+                              {Pelajaran}
+                            </span>
+                            <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300 ">
+                              Sekolah Dasar
+                            </span>
+                          </p>
+                        </div>
 
-                      <h2 className="text-md text-center mt-5 font-bold">
-                        John Doe merespon pesan dengan cepat
-                      </h2>
-                      <h1 className="font-semibold text-xl mt-10 font-poppins ml-10">
-                        Pilih Metode Pembayaran
-                      </h1>
-                      <form onSubmit={(e) => handleReservasi(e)}>
-                        <h3 className="font-semibold text-xl ml-10">
-                          Atm / Bank Transfer
-                        </h3>
-                        <div className="form-control flex flex-row">
-                          <CustomInput
-                            id="input-checkbox-online"
-                            name="online"
-                            checked={metode_pembayaran === "bca"}
-                            onChange={() => setMetodePembayaran("bca")}
-                            type="checkbox"
-                            className="checkbox mt-5 ml-10"
-                          />
-                          <label className="ml-4">
-                            <span className="font-semibold text-lg">
-                              <img src={bca} className="w-8/12" />
-                            </span>
-                          </label>
-                        </div>
-                        <div className="form-control flex flex-row mt-5">
-                          <CustomInput
-                            id="input-checkbox-online"
-                            name="online"
-                            type="checkbox"
-                            checked={metode_pembayaran === "bni"}
-                            onChange={() => setMetodePembayaran("bni")}
-                            className="checkbox ml-10"
-                          />
-                          <label className="ml-4">
-                            <span className="font-semibold text-lg">
-                              <img src={bni} className="w-8/12" />
-                            </span>
-                          </label>
-                        </div>
-                        <div className="form-control flex flex-row mt-5">
-                          <CustomInput
-                            id="input-checkbox-online"
-                            name="online"
-                            type="checkbox"
-                            checked={metode_pembayaran === "bri"}
-                            onChange={() => setMetodePembayaran("bri")}
-                            className="checkbox mt-5 ml-10"
-                          />
-                          <label className="ml-4">
-                            <span className="font-semibold text-lg">
-                              <img src={bri} className="w-8/12" />
-                            </span>
-                          </label>
-                        </div>
-                        <div className="form-control flex flex-row mt-5">
-                          <CustomInput
-                            id="input-checkbox-online"
-                            name="online"
-                            type="checkbox"
-                            checked={metode_pembayaran === "permata"}
-                            onChange={() => setMetodePembayaran("permata")}
-                            className="checkbox mt-5 ml-10"
-                          />
-                          <label className="ml-4">
-                            <span className="font-semibold text-lg">
-                              <img src={permata} className="w-8/12" />
-                            </span>
-                          </label>
-                        </div>
-                        <h1 className="mt-5 font-semibold text-xl ml-10">
-                          Mode QRIS
+                        <h2 className="text-md text-center mt-5 font-bold">
+                          John Doe merespon pesan dengan cepat
+                        </h2>
+                        <h1 className="font-semibold text-xl mt-10 font-poppins ml-10">
+                          Pilih Metode Pembayaran
                         </h1>
-                        <div className="form-control flex flex-row">
-                          <CustomInput
-                            id="input-checkbox-online"
-                            name="online"
-                            checked={metode_pembayaran === "qris"}
-                            onChange={() => setMetodePembayaran("qris")}
-                            type="checkbox"
-                            className="checkbox mt-5 ml-10"
-                          />
-                          <label className="ml-4">
-                            <span className="font-semibold text-lg">
-                              <img src={qris} className="w-8/12 mt-5" />
-                            </span>
-                          </label>
-                        </div>
-                        <div className="flex-1 flex-col w-full min-h-screen">
-                          <h1 className="font-bold text-3xl ml-5 mt-10">
-                            Reservasi
-                          </h1>
-                          <p className="font-semibold text-lg ml-5 mt-2 ">
-                            Let's thrive with John Doe
-                          </p>
-                          <p className="font-normal text-md w-10/12 ml-5">
-                            Perkenalkan diri anda dan ceritakan apa yang ingin
-                            anda pelajari
-                          </p>
-                          <div className="form-control mt-5 ">
-                            <label className="label">
-                              <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold">
-                                Tentang Saya
+                        <form
+                          onSubmit={(e) => handleReservasi(e)}
+                        >
+                          <h3 className="font-semibold text-xl ml-10">
+                            Atm / Bank Transfer
+                          </h3>
+                          <div className="form-control flex flex-row">
+                            <CustomInput
+                              id="input-checkbox-online"
+                              name="online"
+                              checked={
+                                metode_pembayaran === "bca"
+                              }
+                              onChange={() =>
+                                setMetodePembayaran("bca")
+                              }
+                              type="checkbox"
+                              className="checkbox mt-5 ml-10"
+                            />
+                            <label className="ml-4">
+                              <span className="font-semibold text-lg">
+                                <img
+                                  src={bca}
+                                  className="w-8/12"
+                                />
                               </span>
                             </label>
-                            <textarea
-                              id="input-tentang-saya"
-                              className="textarea textarea-bordered h-32 w-10/12 lg:w-11/12 mx-auto bg-white"
-                              placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
-                              onChange={(e) => setPesan(e.target.value)}
-                            ></textarea>
                           </div>
-                          <h1 className="text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-10">
-                            Format Kursus
-                          </h1>
-                          <div className="flex flex-rows w-full mt-5 ml-5">
-                            <div className="form-control ">
-                              <CustomInput
-                                id="input-checkbox-online"
-                                name="online"
-                                type="checkbox"
-                                checked={metode_belajar === "online"}
-                                onChange={() => setMetodebelajar("online")}
-                                className="checkbox"
-                              />
-                            </div>
+                          <div className="form-control flex flex-row mt-5">
+                            <CustomInput
+                              id="input-checkbox-online"
+                              name="online"
+                              type="checkbox"
+                              checked={
+                                metode_pembayaran === "bni"
+                              }
+                              onChange={() =>
+                                setMetodePembayaran("bni")
+                              }
+                              className="checkbox ml-10"
+                            />
                             <label className="ml-4">
-                              <span className="font-bold text-xl">Online</span>
-                            </label>
-                            <div className="form-control ml-10">
-                              <CustomInput
-                                id="input-checkbox-offline"
-                                name="online"
-                                type="checkbox"
-                                checked={metode_belajar === "offline"}
-                                onChange={() => setMetodebelajar("offline")}
-                                className="checkbox"
-                              />
-                            </div>
-                            <label className="ml-4">
-                              <span className="font-bold text-xl">Offline</span>
+                              <span className="font-semibold text-lg">
+                                <img
+                                  src={bni}
+                                  className="w-8/12"
+                                />
+                              </span>
                             </label>
                           </div>
-                          <h1 className="font-semibold text-lg m-5 mt-8">
-                            Tanggal Kursus Pertama
-                          </h1>
-                          <div className="flex flex-rows  w-10/12 lg:w-11/12 mx-auto mt-5">
-                            <DatePicker
-                              id="picker-calendar"
-                              selected={tanggal}
-                              onChange={(date: any) => setTanggal(date)}
-                              className="px-3 py-2 w-11/12 text-lg font-normal"
+                          <div className="form-control flex flex-row mt-5">
+                            <CustomInput
+                              id="input-checkbox-online"
+                              name="online"
+                              type="checkbox"
+                              checked={
+                                metode_pembayaran === "bri"
+                              }
+                              onChange={() =>
+                                setMetodePembayaran("bri")
+                              }
+                              className="checkbox mt-5 ml-10"
                             />
-                            <DatePicker
-                              id="picker-jam"
-                              selected={jam}
-                              onChange={(date: any) => {
-                                const d: any = new Date(
-                                  date
-                                ).toLocaleDateString();
-                                console.log(d);
-                                setJam(d);
-                              }}
-                              showTimeSelect
-                              showTimeSelectOnly
-                              timeIntervals={15}
-                              timeCaption="Time"
-                              dateFormat="h:mm aa"
-                              className="px-3 py-2 text-lg font-normal"
-                            />
+                            <label className="ml-4">
+                              <span className="font-semibold text-lg">
+                                <img
+                                  src={bri}
+                                  className="w-8/12"
+                                />
+                              </span>
+                            </label>
                           </div>
-                          <div className="collapse">
-                            <CustomInput id="checkbox" type="checkbox" />
-                            <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2 border-2 w-6/12 mx-auto">
-                              <img src={openMap} className="w-2/12 mx-auto" />
+                          <div className="form-control flex flex-row mt-5">
+                            <CustomInput
+                              id="input-checkbox-online"
+                              name="online"
+                              type="checkbox"
+                              checked={
+                                metode_pembayaran === "permata"
+                              }
+                              onChange={() =>
+                                setMetodePembayaran("permata")
+                              }
+                              className="checkbox mt-5 ml-10"
+                            />
+                            <label className="ml-4">
+                              <span className="font-semibold text-lg">
+                                <img
+                                  src={permata}
+                                  className="w-8/12"
+                                />
+                              </span>
+                            </label>
+                          </div>
+                          <h1 className="mt-5 font-semibold text-xl ml-10">
+                            Mode QRIS
+                          </h1>
+                          <div className="form-control flex flex-row">
+                            <CustomInput
+                              id="input-checkbox-online"
+                              name="online"
+                              checked={
+                                metode_pembayaran === "qris"
+                              }
+                              onChange={() =>
+                                setMetodePembayaran("qris")
+                              }
+                              type="checkbox"
+                              className="checkbox mt-5 ml-10"
+                            />
+                            <label className="ml-4">
+                              <span className="font-semibold text-lg">
+                                <img
+                                  src={qris}
+                                  className="w-8/12 mt-5"
+                                />
+                              </span>
+                            </label>
+                          </div>
+                          <div className="flex-1 flex-col w-full min-h-screen">
+                            <h1 className="font-bold text-3xl ml-5 mt-10">
+                              Reservasi
+                            </h1>
+                            <p className="font-semibold text-lg ml-5 mt-2 ">
+                              Let's thrive with John Doe
+                            </p>
+                            <p className="font-normal text-md w-10/12 ml-5">
+                              Perkenalkan diri anda dan ceritakan
+                              apa yang ingin anda pelajari
+                            </p>
+                            <div className="form-control mt-5 ">
+                              <label className="label">
+                                <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold">
+                                  Tentang Saya
+                                </span>
+                              </label>
+                              <textarea
+                                id="input-tentang-saya"
+                                className="textarea textarea-bordered h-32 w-10/12 lg:w-11/12 mx-auto bg-white"
+                                placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
+                                onChange={(e) =>
+                                  setPesan(e.target.value)
+                                }
+                              ></textarea>
                             </div>
-                            <div className="collapse-content">
-                              <MapContainer
-                                center={center}
-                                zoom={13}
-                                scrollWheelZoom={false}
-                              >
-                                <TileLayer
-                                  id="input-map"
-                                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            <h1 className="text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-10">
+                              Format Kursus
+                            </h1>
+                            <div className="flex flex-rows w-full mt-5 ml-5">
+                              <div className="form-control ">
+                                <CustomInput
+                                  id="input-checkbox-online"
+                                  name="online"
+                                  type="checkbox"
+                                  checked={
+                                    metode_belajar === "online"
+                                  }
+                                  onChange={() =>
+                                    setMetodebelajar("online")
+                                  }
+                                  className="checkbox"
                                 />
-                              </MapContainer>
-                              <div className="flex justify-center pr-10 mt-">
-                                <CustomButton
-                                  id="input-tempat-mengajar"
-                                  onChange={() => center}
-                                  label="Input Tempat Mengajar"
-                                  className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
-                                />
-                                <p className="font-bold text-3xl text-center mt-7">
-                                  {/* {item.nama} */}
-                                </p>
-                                <p className="flex flex-row justify-center mt-2">
-                                  <span>
-                                    <MdStars className="w-6 h-6 text-[#F66B0E] mr-2" />
-                                  </span>
-                                  <span className="text-lg font-semibold font-poppins">
-                                    (6 Ulasan)
-                                  </span>
-                                </p>
-                                <p className="flex justify-around mt-5">
-                                  <span className="text-lg font-semibold">
-                                    Tarif Belajar / Jam
-                                  </span>
-                                  <span className="text-lg font-semibold">
-                                    {/* {item.tarif} */}
-                                  </span>
-                                </p>
-                                <p className="text-lg font-bold text-center mt-5">
-                                  Spelisasi dan Mapel
-                                </p>
-                                <p className="mt-5 text-center ">
-                                  <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300">
-                                    {/* {item.pelajaran} */}
-                                  </span>
-                                  <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300 ">
-                                    Sekolah Dasar
-                                  </span>
-                                </p>
                               </div>
+                              <label className="ml-4">
+                                <span className="font-bold text-xl">
+                                  Online
+                                </span>
+                              </label>
+                              <div className="form-control ml-10">
+                                <CustomInput
+                                  id="input-checkbox-offline"
+                                  name="online"
+                                  type="checkbox"
+                                  checked={
+                                    metode_belajar === "offline"
+                                  }
+                                  onChange={() =>
+                                    setMetodebelajar("offline")
+                                  }
+                                  className="checkbox"
+                                />
+                              </div>
+                              <label className="ml-4">
+                                <span className="font-bold text-xl">
+                                  Offline
+                                </span>
+                              </label>
+                            </div>
+                            <h1 className="font-semibold text-lg m-5 mt-8">
+                              Tanggal Kursus Pertama
+                            </h1>
+                            <div className="flex flex-rows  w-10/12 lg:w-11/12 mx-auto mt-5">
+                              <DatePicker
+                                id="picker-calendar"
+                                selected={tanggal}
+                                onChange={(date: any) =>
+                                  setTanggal(date)
+                                }
+                                className="px-3 py-2 w-11/12 text-lg font-normal"
+                              />
+                              <DatePicker
+                                id="picker-jam"
+                                selected={jam}
+                                onChange={(date: any) => {
+                                  const d: any = new Date(
+                                    date
+                                  ).toLocaleDateString();
+                                  console.log(d);
+                                  setJam(d);
+                                }}
+                                showTimeSelect
+                                showTimeSelectOnly
+                                timeIntervals={15}
+                                timeCaption="Time"
+                                dateFormat="h:mm aa"
+                                className="px-3 py-2 text-lg font-normal"
+                              />
+                            </div>
+                            <div className="collapse">
+                              <CustomInput
+                                id="checkbox"
+                                type="checkbox"
+                              />
+                              <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2 border-2 w-6/12 mx-auto">
+                                <img
+                                  src={openMap}
+                                  className="w-2/12 mx-auto"
+                                />
+                              </div>
+                              <div className="collapse-content">
+                                <MapContainer
+                                  center={center}
+                                  zoom={13}
+                                  scrollWheelZoom={false}
+                                >
+                                  <TileLayer
+                                    id="input-map"
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                  />
+                                </MapContainer>
+                                <div className="flex justify-center pr-10 mt-">
+                                  <CustomButton
+                                    id="input-tempat-mengajar"
+                                    onChange={() => center}
+                                    label="Input Tempat Mengajar"
+                                    className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
+                                  />
+                                  <p className="font-bold text-3xl text-center mt-7">
+                                    {/* {item.nama} */}
+                                  </p>
+                                  <p className="flex flex-row justify-center mt-2">
+                                    <span>
+                                      <MdStars className="w-6 h-6 text-[#F66B0E] mr-2" />
+                                    </span>
+                                    <span className="text-lg font-semibold font-poppins">
+                                      (6 Ulasan)
+                                    </span>
+                                  </p>
+                                  <p className="flex justify-around mt-5">
+                                    <span className="text-lg font-semibold">
+                                      Tarif Belajar / Jam
+                                    </span>
+                                    <span className="text-lg font-semibold">
+                                      {/* {item.tarif} */}
+                                    </span>
+                                  </p>
+                                  <p className="text-lg font-bold text-center mt-5">
+                                    Spelisasi dan Mapel
+                                  </p>
+                                  <p className="mt-5 text-center ">
+                                    <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300">
+                                      {/* {item.pelajaran} */}
+                                    </span>
+                                    <span className="rounded-xl mr-3 py-3 px-2 bg-slate-300 ">
+                                      Sekolah Dasar
+                                    </span>
+                                  </p>
+                                </div>
 
-                              <h2 className="text-md text-center mt-5 font-bold">
-                                John Doe merespon pesan dengan cepat
-                              </h2>
-                              <h1 className="font-semibold text-xl mt-10 font-poppins ml-10">
-                                Pilih Metode Pembayaran
-                              </h1>
-                              <form onSubmit={(e) => handleReservasi(e)}>
-                                <h3 className="font-semibold text-xl ml-10">
-                                  Atm / Bank Transfer
-                                </h3>
-                                <div className="form-control flex flex-row">
-                                  <CustomInput
-                                    id="input-checkbox-online"
-                                    name="online"
-                                    checked={metode_pembayaran === "bca"}
-                                    onChange={() => setMetodePembayaran("bca")}
-                                    type="checkbox"
-                                    className="checkbox mt-5 ml-10"
-                                  />
-                                  <label className="ml-4">
-                                    <span className="font-semibold text-lg">
-                                      <img src={bca} className="w-8/12" />
-                                    </span>
-                                  </label>
-                                </div>
-                                <div className="form-control flex flex-row mt-5">
-                                  <CustomInput
-                                    id="input-checkbox-online"
-                                    name="online"
-                                    type="checkbox"
-                                    checked={metode_pembayaran === "bni"}
-                                    onChange={() => setMetodePembayaran("bni")}
-                                    className="checkbox ml-10"
-                                  />
-                                  <label className="ml-4">
-                                    <span className="font-semibold text-lg">
-                                      <img src={bni} className="w-8/12" />
-                                    </span>
-                                  </label>
-                                </div>
-                                <div className="form-control flex flex-row mt-5">
-                                  <CustomInput
-                                    id="input-checkbox-online"
-                                    name="online"
-                                    type="checkbox"
-                                    checked={metode_pembayaran === "bri"}
-                                    onChange={() => setMetodePembayaran("bri")}
-                                    className="checkbox mt-5 ml-10"
-                                  />
-                                  <label className="ml-4">
-                                    <span className="font-semibold text-lg">
-                                      <img src={bri} className="w-8/12" />
-                                    </span>
-                                  </label>
-                                </div>
-                                <div className="form-control flex flex-row mt-5">
-                                  <CustomInput
-                                    id="input-checkbox-online"
-                                    name="online"
-                                    type="checkbox"
-                                    checked={metode_pembayaran === "permata"}
-                                    onChange={() =>
-                                      setMetodePembayaran("permata")
-                                    }
-                                    className="checkbox mt-5 ml-10"
-                                  />
-                                  <label className="ml-4">
-                                    <span className="font-semibold text-lg">
-                                      <img src={permata} className="w-8/12" />
-                                    </span>
-                                  </label>
-                                </div>
-                                <h1 className="mt-5 font-semibold text-xl ml-10">
-                                  Mode QRIS
+                                <h2 className="text-md text-center mt-5 font-bold">
+                                  John Doe merespon pesan dengan
+                                  cepat
+                                </h2>
+                                <h1 className="font-semibold text-xl mt-10 font-poppins ml-10">
+                                  Pilih Metode Pembayaran
                                 </h1>
-                                <div className="form-control flex flex-row">
-                                  <CustomInput
-                                    id="input-checkbox-online"
-                                    name="online"
-                                    checked={metode_pembayaran === "qris"}
-                                    onChange={() => setMetodePembayaran("qris")}
-                                    type="checkbox"
-                                    className="checkbox mt-5 ml-10"
-                                  />
-                                  <label className="ml-4">
-                                    <span className="font-semibold text-lg">
-                                      <img src={qris} className="w-8/12 mt-5" />
-                                    </span>
-                                  </label>
-                                </div>
-                                <div className="flex-1 flex-col w-full min-h-screen">
-                                  <h1 className="font-bold text-3xl ml-5 mt-10">
-                                    Reservasi
-                                  </h1>
-                                  <p className="font-semibold text-lg ml-5 mt-2 ">
-                                    Let's thrive with John Doe
-                                  </p>
-                                  <p className="font-normal text-md w-10/12 ml-5">
-                                    Perkenalkan diri anda dan ceritakan apa yang
-                                    ingin anda pelajari
-                                  </p>
-                                  <div className="form-control mt-5 ">
-                                    <label className="label">
-                                      <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold">
-                                        Tentang Saya
-                                      </span>
-                                    </label>
-                                    <textarea
-                                      id="input-tentang-saya"
-                                      className="textarea textarea-bordered h-32 w-10/12 lg:w-11/12 mx-auto bg-white"
-                                      placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
-                                      onChange={(e) => setPesan(e.target.value)}
-                                    ></textarea>
-                                  </div>
-                                  <h1 className="text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-10">
-                                    Format Kursus
-                                  </h1>
-                                  <div className="flex flex-rows w-full mt-5 ml-5">
-                                    <div className="form-control ">
-                                      <CustomInput
-                                        id="input-checkbox-online"
-                                        name="online"
-                                        type="checkbox"
-                                        checked={metode_belajar === "online"}
-                                        onChange={() =>
-                                          setMetodebelajar("online")
-                                        }
-                                        className="checkbox"
-                                      />
-                                    </div>
-                                    <label className="ml-4">
-                                      <span className="font-bold text-xl">
-                                        Online
-                                      </span>
-                                    </label>
-                                    <div className="form-control ml-10">
-                                      <CustomInput
-                                        id="input-checkbox-offline"
-                                        name="online"
-                                        type="checkbox"
-                                        checked={metode_belajar === "offline"}
-                                        onChange={() =>
-                                          setMetodebelajar("offline")
-                                        }
-                                        className="checkbox"
-                                      />
-                                    </div>
-                                    <label className="ml-4">
-                                      <span className="font-bold text-xl">
-                                        Offline
-                                      </span>
-                                    </label>
-                                  </div>
-                                  <h1 className="font-semibold text-lg m-5 mt-8">
-                                    Tanggal Kursus Pertama
-                                  </h1>
-                                  <div className="flex flex-rows  w-10/12 lg:w-11/12 mx-auto mt-5">
-                                    <DatePicker
-                                      id="picker-calendar"
-                                      selected={tanggal}
-                                      onChange={(date: any) => setTanggal(date)}
-                                      className="px-3 py-2 w-11/12 text-lg font-normal"
-                                    />
-                                    <DatePicker
-                                      id="picker-jam"
-                                      selected={jam}
-                                      onChange={(date: any) => {
-                                        const d: any = new Date(
-                                          date
-                                        ).toLocaleDateString();
-                                        console.log(d);
-                                        setJam(d);
-                                      }}
-                                      showTimeSelect
-                                      showTimeSelectOnly
-                                      timeIntervals={15}
-                                      timeCaption="Time"
-                                      dateFormat="h:mm aa"
-                                      className="px-3 py-2 text-lg font-normal"
-                                    />
-                                  </div>
-                                  <div className="collapse">
+                                <form
+                                  onSubmit={(e) =>
+                                    handleReservasi(e)
+                                  }
+                                >
+                                  <h3 className="font-semibold text-xl ml-10">
+                                    Atm / Bank Transfer
+                                  </h3>
+                                  <div className="form-control flex flex-row">
                                     <CustomInput
-                                      id="checkbox"
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      checked={
+                                        metode_pembayaran ===
+                                        "bca"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran(
+                                          "bca"
+                                        )
+                                      }
                                       type="checkbox"
+                                      className="checkbox mt-5 ml-10"
                                     />
-                                    <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2 border-2 w-6/12 mx-auto">
-                                      <img
-                                        src={openMap}
-                                        className="w-2/12 mx-auto"
-                                      />
-                                    </div>
-                                    <div className="collapse-content">
-                                      <MapContainer
-                                        center={center}
-                                        zoom={13}
-                                        scrollWheelZoom={false}
-                                      >
-                                        <TileLayer
-                                          id="input-map"
-                                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img
+                                          src={bca}
+                                          className="w-8/12"
                                         />
-                                      </MapContainer>
-                                      <div className="flex justify-center pr-10 mt-">
-                                        <CustomButton
-                                          id="input-tempat-mengajar"
-                                          onChange={() => center}
-                                          label="Input Tempat Mengajar"
-                                          className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <div className="form-control flex flex-row mt-5">
+                                    <CustomInput
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      type="checkbox"
+                                      checked={
+                                        metode_pembayaran ===
+                                        "bni"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran(
+                                          "bni"
+                                        )
+                                      }
+                                      className="checkbox ml-10"
+                                    />
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img
+                                          src={bni}
+                                          className="w-8/12"
+                                        />
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <div className="form-control flex flex-row mt-5">
+                                    <CustomInput
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      type="checkbox"
+                                      checked={
+                                        metode_pembayaran ===
+                                        "bri"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran(
+                                          "bri"
+                                        )
+                                      }
+                                      className="checkbox mt-5 ml-10"
+                                    />
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img
+                                          src={bri}
+                                          className="w-8/12"
+                                        />
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <div className="form-control flex flex-row mt-5">
+                                    <CustomInput
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      type="checkbox"
+                                      checked={
+                                        metode_pembayaran ===
+                                        "permata"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran(
+                                          "permata"
+                                        )
+                                      }
+                                      className="checkbox mt-5 ml-10"
+                                    />
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img
+                                          src={permata}
+                                          className="w-8/12"
+                                        />
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <h1 className="mt-5 font-semibold text-xl ml-10">
+                                    Mode QRIS
+                                  </h1>
+                                  <div className="form-control flex flex-row">
+                                    <CustomInput
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      checked={
+                                        metode_pembayaran ===
+                                        "qris"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran(
+                                          "qris"
+                                        )
+                                      }
+                                      type="checkbox"
+                                      className="checkbox mt-5 ml-10"
+                                    />
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img
+                                          src={qris}
+                                          className="w-8/12 mt-5"
+                                        />
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <div className="flex-1 flex-col w-full min-h-screen">
+                                    <h1 className="font-bold text-3xl ml-5 mt-10">
+                                      Reservasi
+                                    </h1>
+                                    <p className="font-semibold text-lg ml-5 mt-2 ">
+                                      Let's thrive with John Doe
+                                    </p>
+                                    <p className="font-normal text-md w-10/12 ml-5">
+                                      Perkenalkan diri anda dan
+                                      ceritakan apa yang ingin
+                                      anda pelajari
+                                    </p>
+                                    <div className="form-control mt-5 ">
+                                      <label className="label">
+                                        <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold">
+                                          Tentang Saya
+                                        </span>
+                                      </label>
+                                      <textarea
+                                        id="input-tentang-saya"
+                                        className="textarea textarea-bordered h-32 w-10/12 lg:w-11/12 mx-auto bg-white"
+                                        placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
+                                        onChange={(e) =>
+                                          setPesan(
+                                            e.target.value
+                                          )
+                                        }
+                                      ></textarea>
+                                    </div>
+                                    <h1 className="text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-10">
+                                      Format Kursus
+                                    </h1>
+                                    <div className="flex flex-rows w-full mt-5 ml-5">
+                                      <div className="form-control ">
+                                        <CustomInput
+                                          id="input-checkbox-online"
+                                          name="online"
+                                          type="checkbox"
+                                          checked={
+                                            metode_belajar ===
+                                            "online"
+                                          }
+                                          onChange={() =>
+                                            setMetodebelajar(
+                                              "online"
+                                            )
+                                          }
+                                          className="checkbox"
                                         />
                                       </div>
+                                      <label className="ml-4">
+                                        <span className="font-bold text-xl">
+                                          Online
+                                        </span>
+                                      </label>
+                                      <div className="form-control ml-10">
+                                        <CustomInput
+                                          id="input-checkbox-offline"
+                                          name="online"
+                                          type="checkbox"
+                                          checked={
+                                            metode_belajar ===
+                                            "offline"
+                                          }
+                                          onChange={() =>
+                                            setMetodebelajar(
+                                              "offline"
+                                            )
+                                          }
+                                          className="checkbox"
+                                        />
+                                      </div>
+                                      <label className="ml-4">
+                                        <span className="font-bold text-xl">
+                                          Offline
+                                        </span>
+                                      </label>
+                                    </div>
+                                    <h1 className="font-semibold text-lg m-5 mt-8">
+                                      Tanggal Kursus Pertama
+                                    </h1>
+                                    <div className="flex flex-rows  w-10/12 lg:w-11/12 mx-auto mt-5">
+                                      <DatePicker
+                                        id="picker-calendar"
+                                        selected={tanggal}
+                                        onChange={(date: any) =>
+                                          setTanggal(date)
+                                        }
+                                        className="px-3 py-2 w-11/12 text-lg font-normal"
+                                      />
+                                      <DatePicker
+                                        id="picker-jam"
+                                        selected={jam}
+                                        onChange={(
+                                          date: any
+                                        ) => {
+                                          const d: any =
+                                            new Date(
+                                              date
+                                            ).toLocaleDateString();
+                                          console.log(d);
+                                          setJam(d);
+                                        }}
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        timeIntervals={15}
+                                        timeCaption="Time"
+                                        dateFormat="h:mm aa"
+                                        className="px-3 py-2 text-lg font-normal"
+                                      />
+                                    </div>
+                                    <div className="collapse">
+                                      <CustomInput
+                                        id="checkbox"
+                                        type="checkbox"
+                                      />
+                                      <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2 border-2 w-6/12 mx-auto">
+                                        <img
+                                          src={openMap}
+                                          className="w-2/12 mx-auto"
+                                        />
+                                      </div>
+                                      <div className="collapse-content">
+                                        <MapContainer
+                                          center={center}
+                                          zoom={13}
+                                          scrollWheelZoom={false}
+                                        >
+                                          <TileLayer
+                                            id="input-map"
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                          />
+                                        </MapContainer>
+                                        <div className="flex justify-center pr-10 mt-">
+                                          <CustomButton
+                                            id="input-tempat-mengajar"
+                                            onChange={() =>
+                                              center
+                                            }
+                                            label="Input Tempat Mengajar"
+                                            className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <h1 className="font-semibold text-2xl m-5">
+                                      Informasi Kontak
+                                    </h1>
+                                    <p className="font-normal text-lg w-11/12 ml-5">
+                                      Kontak yang anda berikan
+                                      hanya akan dibagikan ke
+                                      guru terkait
+                                    </p>
+                                    <label className="label mt-5">
+                                      <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
+                                        Alamat
+                                      </span>
+                                    </label>
+                                    <CustomInput
+                                      id="input-gelar"
+                                      type="text"
+                                      defaultValue={alamat}
+                                      className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
+                                      placeholder="S1 Pendidikan Matematik "
+                                      onChange={(e) =>
+                                        setAlamat(e.target.value)
+                                      }
+                                    />
+                                    <label className="label mt-5">
+                                      <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
+                                        No. Hp
+                                      </span>
+                                    </label>
+                                    <CustomInput
+                                      id="input-gelar"
+                                      type="text"
+                                      defaultValue={telepon}
+                                      className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
+                                      placeholder="S1 Pendidikan Matematik "
+                                      onChange={(e) =>
+                                        setTelepon(
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                    <div className="flex justify-center pb-10">
+                                      <Link to="/paymentDetails">
+                                        <CustomButton
+                                          id="btn-pembayaran"
+                                          className="px-4 py-2 bg-label text-white rounded-lg mt-8"
+                                          label="Lanjutkan Pembayaran"
+                                          onClick={
+                                            handleReservasi
+                                          }
+                                        />
+                                      </Link>
                                     </div>
                                   </div>
-                                  <h1 className="font-semibold text-2xl m-5">
-                                    Informasi Kontak
-                                  </h1>
-                                  <p className="font-normal text-lg w-11/12 ml-5">
-                                    Kontak yang anda berikan hanya akan
-                                    dibagikan ke guru terkait
-                                  </p>
-                                  <label className="label mt-5">
-                                    <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
-                                      Alamat
-                                    </span>
-                                  </label>
-                                  <CustomInput
-                                    id="input-gelar"
-                                    type="text"
-                                    defaultValue={alamat}
-                                    className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
-                                    placeholder="S1 Pendidikan Matematik "
-                                    onChange={(e) => setAlamat(e.target.value)}
-                                  />
-                                  <label className="label mt-5">
-                                    <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
-                                      No. Hp
-                                    </span>
-                                  </label>
-                                  <CustomInput
-                                    id="input-gelar"
-                                    type="text"
-                                    defaultValue={telepon}
-                                    className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
-                                    placeholder="S1 Pendidikan Matematik "
-                                    onChange={(e) => setTelepon(e.target.value)}
-                                  />
-                                  <div className="flex justify-center pb-10">
-                                    <Link to="/paymentDetails">
-                                      <CustomButton
-                                        id="btn-pembayaran"
-                                        className="px-4 py-2 bg-label text-white rounded-lg mt-8"
-                                        label="Lsanjutkan Pembayaran"
-                                        onClick={handleReservasi}
-                                      />
-                                    </Link>
-                                  </div>
-                                </div>
-                              </form>
+                                </form>
+                              </div>
+                            </div>
+                            <h1 className="font-semibold text-2xl m-5">
+                              Informasi Kontak
+                            </h1>
+                            <p className="font-normal text-lg w-11/12 ml-5">
+                              Kontak yang anda berikan hanya akan
+                              dibagikan ke guru terkait
+                            </p>
+                            <label className="label mt-5">
+                              <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
+                                Alamat
+                              </span>
+                            </label>
+                            <CustomInput
+                              id="input-gelar"
+                              type="text"
+                              defaultValue={alamat}
+                              className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
+                              placeholder="S1 Pendidikan Matematik "
+                              onChange={(e) =>
+                                setAlamat(e.target.value)
+                              }
+                            />
+                            <label className="label mt-5">
+                              <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
+                                No. Hp
+                              </span>
+                            </label>
+                            <CustomInput
+                              id="input-gelar"
+                              type="text"
+                              defaultValue={telepon}
+                              className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
+                              placeholder="S1 Pendidikan Matematik "
+                              onChange={(e) =>
+                                setTelepon(e.target.value)
+                              }
+                            />
+                            <div className="flex justify-center pb-10">
+                              <Link to="/paymentDetails">
+                                <CustomButton
+                                  id="btn-pembayaran"
+                                  className="px-4 py-2 bg-label text-white rounded-lg mt-8"
+                                  label="Lanjutkan Pembayaran"
+                                  onClick={handleReservasi}
+                                />
+                              </Link>
                             </div>
                           </div>
-                          <h1 className="font-semibold text-2xl m-5">
-                            Informasi Kontak
-                          </h1>
-                          <p className="font-normal text-lg w-11/12 ml-5">
-                            Kontak yang anda berikan hanya akan dibagikan ke
-                            guru terkait
-                          </p>
-                          <label className="label mt-5">
-                            <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
-                              Alamat
-                            </span>
-                          </label>
-                          <CustomInput
-                            id="input-gelar"
-                            type="text"
-                            defaultValue={alamat}
-                            className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
-                            placeholder="S1 Pendidikan Matematik "
-                            onChange={(e) => setAlamat(e.target.value)}
-                          />
-                          <label className="label mt-5">
-                            <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">
-                              No. Hp
-                            </span>
-                          </label>
-                          <CustomInput
-                            id="input-gelar"
-                            type="text"
-                            defaultValue={telepon}
-                            className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
-                            placeholder="S1 Pendidikan Matematik "
-                            onChange={(e) => setTelepon(e.target.value)}
-                          />
-                          <div className="flex justify-center pb-10">
-                            <Link to="/paymentDetails">
-                              <CustomButton
-                                id="btn-pembayaran"
-                                className="px-4 py-2 bg-label text-white rounded-lg mt-8"
-                                label="Lanjutkan Pembayaran"
-                                onClick={handleReservasi}
-                              />
-                            </Link>
-                          </div>
-                        </div>
-                      </form>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </>
+              </>
+            ) : (
+              <>
+                <CustomButton
+                  id="btn-cek-jadwal"
+                  className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
+                  icon={
+                    <RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />
+                  }
+                  label={"Cek Jadwal"}
+                  onClick={() => checkJadwal()}
+                />
+              </>
+            )}
           </div>
           <p className="lg:text-[36px] text-[28px] font-semibold mt-5 mb-5">
             {" "}
@@ -1127,11 +1353,16 @@ const ProfileTeacher = () => {
             <p className="text-[14px]">{`${5} (6 ulasan)`} </p>
           </div>
           <p className="font-semibold lg:text-[16px] text-[14px] pr-8 mb-5">
-            Tarif Belajar/Jam <span className="lg:ml-10 ml-2">Rp.{Tarif}</span>
+            Tarif Belajar/Jam{" "}
+            <span className="lg:ml-10 ml-2">Rp.{Tarif}</span>
           </p>
-          <p className="text-zinc-800 mt-6">Mata Pelajaran dan Tingkatan</p>
+          <p className="text-zinc-800 mt-6">
+            Mata Pelajaran dan Tingkatan
+          </p>
           <div className="flex text-[#637381] gap-8 text-[14px] mt-2">
-            <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">{Pelajaran}</p>
+            <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">
+              {Pelajaran}
+            </p>
           </div>
           <p className="text-[24px] text-zinc-800 font-semibold mt-10">
             Tentang Kursus
@@ -1145,7 +1376,9 @@ const ProfileTeacher = () => {
           <p className="text-zinc-900 lg:text-[36px] text-[28px] font-extrabold">
             {Gelar}
           </p>
-          <p className="text-[14px] text-zinc-500 mt-5">{TentangSaya}</p>
+          <p className="text-[14px] text-zinc-500 mt-5">
+            {TentangSaya}
+          </p>
           <p className="font-bold text-[28px] text-zinc-900 mt-10">
             Tentang John Doe
           </p>
@@ -1161,7 +1394,11 @@ const ProfileTeacher = () => {
                 Baca Selengkapnya ...
               </label>
 
-              <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+              <input
+                type="checkbox"
+                id="my-modal-3"
+                className="modal-toggle"
+              />
               <div className="modal">
                 <div className="modal-box relative">
                   <label
@@ -1176,36 +1413,42 @@ const ProfileTeacher = () => {
                   <hr className="border-2 " />
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-                    Bachelor's Degree with more than 10 years experienced
-                    teaching math from primary, secondary, until senior.
+                    Bachelor's Degree with more than 10 years
+                    experienced teaching math from primary,
+                    secondary, until senior.
                   </li>
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-                    Experienced Teaching All Math Levels (AP Calculus,
-                    Pre-Algebra, Algebra 1, Algebra 2, Geometry, Trigonometry,
-                    SAT, ACT, etc) for any curriculums such as Advanced
-                    Placement, IB (HL and SL), Cambridge (IGCSE, O Level and A
-                    Level).
+                    Experienced Teaching All Math Levels (AP
+                    Calculus, Pre-Algebra, Algebra 1, Algebra 2,
+                    Geometry, Trigonometry, SAT, ACT, etc) for
+                    any curriculums such as Advanced Placement,
+                    IB (HL and SL), Cambridge (IGCSE, O Level and
+                    A Level).
                   </li>
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-                    Bachelor's Degree with more than 10 years experienced
-                    teaching math from primary, secondary, until senior.
+                    Bachelor's Degree with more than 10 years
+                    experienced teaching math from primary,
+                    secondary, until senior.
                   </li>
                   <li className="flex gap-4 mt-8">
                     <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-                    Experienced Teaching All Math Levels (AP Calculus,
-                    Pre-Algebra, Algebra 1, Algebra 2, Geometry, Trigonometry,
-                    SAT, ACT, etc) for any curriculums such as Advanced
-                    Placement, IB (HL and SL), Cambridge (IGCSE, O Level and A
-                    Level).
+                    Experienced Teaching All Math Levels (AP
+                    Calculus, Pre-Algebra, Algebra 1, Algebra 2,
+                    Geometry, Trigonometry, SAT, ACT, etc) for
+                    any curriculums such as Advanced Placement,
+                    IB (HL and SL), Cambridge (IGCSE, O Level and
+                    A Level).
                   </li>
                 </div>
               </div>
             </div>
           </ul>
 
-          <p className=" mt-10 mb-5 text-[24px] font-semibold">Lokasi Kursus</p>
+          <p className=" mt-10 mb-5 text-[24px] font-semibold">
+            Lokasi Kursus
+          </p>
           <div className="flex flex-wrap gap-10">
             <div className="flex gap-2 py-2 px-5 rounded-2xl lg:-mb-0 -mb-5 bg-white shadow-lg">
               <FaMapMarkerAlt className="w-5 h-5" />
@@ -1240,13 +1483,17 @@ const ProfileTeacher = () => {
                     className="w-8 h-8 rounded-full"
                   />
 
-                  <p className="font-semibold">{data.nama_siswa}</p>
+                  <p className="font-semibold">
+                    {data.nama_siswa}
+                  </p>
                   <div className="flex items-center gap-1 ml-auto">
                     <MdStars className="text-component" />
                     {data.penilaian}
                   </div>
                 </div>
-                <p className="mt-4 lg:text-[16px] text-[15px]">{data.ulasan}</p>
+                <p className="mt-4 lg:text-[16px] text-[15px]">
+                  {data.ulasan}
+                </p>
               </div>
             ))}
           </>
@@ -1277,17 +1524,28 @@ const EditProfileTeacher: React.FC<{
   scrollWheelZoom: boolean;
 }> = ({ scrollWheelZoom }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [mapCenter, setMapCenter] = useState({ lat: 51.505, lng: -0.09 });
+  const [mapCenter, setMapCenter] = useState({
+    lat: 51.505,
+    lng: -0.09,
+  });
   const [zoom, setZoom] = useState(13);
-  const [locations, setLocations] = useState<Array<Location>>([]);
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+  const [locations, setLocations] = useState<Array<Location>>(
+    []
+  );
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
 
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.guru_id;
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
+    {}
+  );
 
   const [tanggal, setTanggal] = useState<string>("");
   const [startDate, setStartDate] = useState(new Date());
@@ -1310,7 +1568,9 @@ const EditProfileTeacher: React.FC<{
   const [Telepon, setTELEPON] = useState<string>("");
   const [TentangSaya, setTentangSaya] = useState<string>("");
 
-  const handleSearchMap = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearchMap = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     const response = await fetch(
@@ -1320,7 +1580,10 @@ const EditProfileTeacher: React.FC<{
 
     if (data.length) {
       const [firstResult] = data;
-      setMapCenter({ lat: firstResult.lat, lng: firstResult.lon });
+      setMapCenter({
+        lat: firstResult.lat,
+        lng: firstResult.lon,
+      });
       setLocations([firstResult]);
     }
   };
@@ -1395,7 +1658,9 @@ const EditProfileTeacher: React.FC<{
     fetchDataGuru();
   }, []);
 
-  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -1432,13 +1697,18 @@ const EditProfileTeacher: React.FC<{
       .finally(() => fetchDataGuru());
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
   };
 
-  const handlePostJadwal = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePostJadwal = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -1498,7 +1768,9 @@ const EditProfileTeacher: React.FC<{
                 if (!e.currentTarget.files) {
                   return;
                 }
-                setAvatar(URL.createObjectURL(e.currentTarget.files[0]));
+                setAvatar(
+                  URL.createObjectURL(e.currentTarget.files[0])
+                );
                 handleChange(e.currentTarget.files[0], "avatar");
               }}
             />
@@ -1511,7 +1783,9 @@ const EditProfileTeacher: React.FC<{
               id="input-tarif"
               type="number"
               defaultValue={Tarif}
-              onChange={(e) => handleChange(e.target.value, "Tarif")}
+              onChange={(e) =>
+                handleChange(e.target.value, "Tarif")
+              }
               className="input flex justify-center w-10/12 lg:w-8/12 mx-auto bg-white  border-gray-300"
               placeholder="Rp. 500.000 "
             />
@@ -1525,7 +1799,9 @@ const EditProfileTeacher: React.FC<{
                 <CustomInput
                   id="input-tarif"
                   type="text"
-                  onChange={(e) => handleChange(e.target.value, "Pelajaran")}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "Pelajaran")
+                  }
                   defaultValue={Pelajaran}
                   className="input flex justify-center w-10/12 lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                   placeholder="Rp. 500.000 "
@@ -1540,7 +1816,9 @@ const EditProfileTeacher: React.FC<{
                 <CustomInput
                   id="input-pendidikan"
                   type="text"
-                  onChange={(e) => handleChange(e.target.value, "Pendidikan")}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "Pendidikan")
+                  }
                   defaultValue={Pendidikan}
                   className="input flex justify-center w-10/12 lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                   placeholder="Rp. 500.000 "
@@ -1561,7 +1839,9 @@ const EditProfileTeacher: React.FC<{
                   return;
                 }
 
-                setIjazah(URL.createObjectURL(e.currentTarget.files[0]));
+                setIjazah(
+                  URL.createObjectURL(e.currentTarget.files[0])
+                );
                 handleChange(e.currentTarget.files[0], "Ijazah");
               }}
             />
@@ -1607,7 +1887,9 @@ const EditProfileTeacher: React.FC<{
                   type="text"
                   placeholder="Search Your Location"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) =>
+                    setSearchQuery(e.target.value)
+                  }
                 />
                 <CustomButton
                   id="btn-pencarian-lokasi"
@@ -1653,7 +1935,9 @@ const EditProfileTeacher: React.FC<{
               id="input-gelar"
               type="text"
               defaultValue={Gelar}
-              onChange={(e) => handleChange(e.target.value, "Gelar")}
+              onChange={(e) =>
+                handleChange(e.target.value, "Gelar")
+              }
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="S1 Pendidikan Matematik "
             />
@@ -1666,7 +1950,9 @@ const EditProfileTeacher: React.FC<{
               <textarea
                 id="input-tentang-saya"
                 defaultValue={TentangSaya}
-                onChange={(e) => handleChange(e.target.value, "TentangSaya")}
+                onChange={(e) =>
+                  handleChange(e.target.value, "TentangSaya")
+                }
                 className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 mx-auto bg-white"
                 placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
               ></textarea>
@@ -1680,7 +1966,9 @@ const EditProfileTeacher: React.FC<{
               <textarea
                 id="input-pengalaman"
                 defaultValue={Pengalaman}
-                onChange={(e) => handleChange(e.target.value, "Pengalaman")}
+                onChange={(e) =>
+                  handleChange(e.target.value, "Pengalaman")
+                }
                 className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 mx-auto bg-white"
                 placeholder="- Bachelor's Degree with more than 10 years experienced teaching math from primary, secondary, until senior.
                 
@@ -1700,7 +1988,9 @@ const EditProfileTeacher: React.FC<{
                   id="input-lokasi"
                   type="text"
                   defaultValue={lokasiAsal}
-                  onChange={(e) => handleChange(e.target.value, "LokasiAsal")}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "LokasiAsal")
+                  }
                   className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
                   placeholder="S1 Pendidikan Matematik "
                 />
@@ -1718,7 +2008,9 @@ const EditProfileTeacher: React.FC<{
                   />
                 </div>
                 <label className="ml-4">
-                  <span className="font-bold text-xl">Online</span>
+                  <span className="font-bold text-xl">
+                    Online
+                  </span>
                 </label>
                 <div className="form-control ml-10">
                   <CustomInput
@@ -1731,7 +2023,9 @@ const EditProfileTeacher: React.FC<{
                   />
                 </div>
                 <label className="ml-4">
-                  <span className="font-bold text-xl">Offline</span>
+                  <span className="font-bold text-xl">
+                    Offline
+                  </span>
                 </label>
               </div>
             </div>
@@ -1744,7 +2038,9 @@ const EditProfileTeacher: React.FC<{
               id="input-handphone"
               type="number"
               defaultValue={Telepon}
-              onChange={(e) => handleChange(e.target.value, "Telepon")}
+              onChange={(e) =>
+                handleChange(e.target.value, "Telepon")
+              }
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="0822XXXXX "
             />
@@ -1757,7 +2053,9 @@ const EditProfileTeacher: React.FC<{
               id="input-email"
               type="text"
               defaultValue={Email}
-              onChange={(e) => handleChange(e.target.value, "Email")}
+              onChange={(e) =>
+                handleChange(e.target.value, "Email")
+              }
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="@johndoe@gmail.com "
             />
@@ -1770,7 +2068,9 @@ const EditProfileTeacher: React.FC<{
               id="input-linkedin"
               type="text"
               defaultValue={LinkedIn}
-              onChange={(e) => handleChange(e.target.value, "LinkedIn")}
+              onChange={(e) =>
+                handleChange(e.target.value, "LinkedIn")
+              }
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="linkedin/johndoe "
             />
