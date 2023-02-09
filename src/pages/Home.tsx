@@ -95,7 +95,6 @@ function Home() {
   }, []);
 
   function fetchHome() {
-    // setDLoading(true);
     axios
       .get("https://devmyproject.site/guru")
       .then((res) => {
@@ -104,9 +103,13 @@ function Home() {
       })
       .catch((err) => {
         alert(err.response.data.message);
-      });
-    // .finally(() => setDLoading(false));
+      })
+      .finally(() => setLoading(false));
   }
+
+  // useEffect(() => {
+  //   lokasiAsal ? setDisabled(true) : setDisabled(false);
+  // }, [lokasiAsal]);
 
   const skipHandle = async () => {
     setModal("modal");
@@ -117,39 +120,13 @@ function Home() {
     });
   };
 
-  // useEffect(() => {
-  //   lokasiAsal ? setDisabled(true) : setDisabled(false);
-  // }, [lokasiAsal]);
-
   useEffect(() => {
     checkRole === "guru" && fetchData();
   }, []);
 
-  const fetchDataGetGuru = useCallback(() => {
-    axios({
-      method: "GET",
-      url: `https://devmyproject.site/guru`,
-      headers: {},
-      params: {},
-    })
-      .then((res) => {
-        const ApiResponse = res.data;
-        setTeacher(ApiResponse.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchDataGetGuru();
-  }, [fetchDataGetGuru]);
-
   function fetchData() {
     axios
-      .get(`https://devmyproject.site/guru/${checkId}`, {
-        // headers: { Authorization: `Bearer ${checkToken}` },
-      })
+      .get(`https://devmyproject.site/guru/${checkId}`, {})
       .then((res) => {
         const {
           Ijazah,
@@ -463,6 +440,7 @@ function Home() {
               penilaian={data.penilaian}
               judul={data.judul}
               tarif={data.tarif}
+              guru_id={data.guru_id}
             />
           ))}
         </div>
@@ -473,19 +451,20 @@ function Home() {
             id="btn-lihatLainnya"
             className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
             label="Lihat lebih banyak guru"
-            disabled
-          />
-        </div>
-      ) : (
-        <div className="text-center mt-14 mb-20">
-          {/* {loadMore !== homes.length ? "" : ""} */}
-          <CustomButton
-            id="btn-lihatLainnya"
-            className={`${btn} bg-[#F66B0E] text-white hover:bg-navy shadow-xl`}
-            label={label}
+            loading={loading}
             onClick={loadMore}
           />
         </div>
+      ) : (
+        <div className="mb-32"></div>
+        // <div className="text-center mt-14 mb-20">
+        //   {/* {loadMore !== homes.length ? "" : ""} */}
+        //   <CustomButton
+        //     id="btn-lihatLainnya"
+        //     className={`${btn} bg-[#F66B0E] text-white hover:bg-navy shadow-xl`}
+        //     label={label}
+        //   />
+        // </div>
       )}
     </Layout>
   );

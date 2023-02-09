@@ -36,10 +36,11 @@ function HalamanSesiGuru() {
 
   function fetchJadwal() {
     axios
-      .get(`https://devmyproject.site/guru/${checkID}`)
+      .get(`https://devmyproject.site/guru/29`)
+      // .get(`https://devmyproject.site/guru/${checkID}`)
       .then((res) => {
-        setJadwal(res.data.data);
-        // console.log(res.data.data.Jadwal);
+        setJadwal(res.data.data.Jadwal);
+        // console.log(res.data.data);
       })
       .catch((err) => {
         alert(err.toString());
@@ -206,7 +207,7 @@ function HalamanSesiGuru() {
                         </thead>
                         <tbody className="text-[16px] font-normal">
                           <>
-                            {jadwal.Jadwal?.map((data, index) => (
+                            {jadwal.jadwal?.map((data, index) => (
                               <tr key={index}>
                                 <th>{data.ID}</th>
                                 <td>{data.Tanggal}</td>

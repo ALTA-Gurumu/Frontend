@@ -64,7 +64,6 @@ const Login = () => {
 
         setCookies("token", res.data.token, { path: "/" });
         setCookies("role", role, { path: "/" });
-        setCookies("nama", nama, { path: "/" });
         setCookies("guru_id", guru_id, { path: "/" });
         setCookies("verifikasi", verifikasi, { path: "/" });
 
