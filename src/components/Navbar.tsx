@@ -82,15 +82,28 @@ function Navbar() {
             tabIndex={0}
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
-            {checkToken ? (
+            {checkToken && checkRole === "guru" ? (
               <li>
                 <button
                   id="link-profil"
                   onClick={() =>
-                    checkToken && checkRole === "guru"
+                    checkVer === "true"
                       ? navigate("/profile-teacher/:guru_id")
-                      : navigate("/HalamanSesiMurid")
+                      : navigate("/home")
                   }
+                >
+                  Profil
+                </button>
+              </li>
+            ) : (
+              ""
+            )}
+
+            {checkToken && checkRole === "siswa" ? (
+              <li>
+                <button
+                  id="link-profil"
+                  onClick={() => navigate("/HalamanSesiMurid")}
                 >
                   Profil
                 </button>

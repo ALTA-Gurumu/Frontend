@@ -33,7 +33,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsPhoneFill } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
-import { CompleteTeacher, DataTypesGuru } from "../utils/DataTypes";
+import { CompleteTeacher, DataTypesGuru, UlasanType } from "../utils/DataTypes";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
@@ -260,7 +260,7 @@ const TabsContentForTeacherPage = () => {
               className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
               panel={
                 <div className="w-full min-h-screen text-sm font-normal">
-                  {/* <ProfileTeacher /> */}
+                  <ProfileTeacher />
                 </div>
               }
             />
@@ -297,13 +297,16 @@ const ProfileTeacher = () => {
   const [email, setEmail] = useState<string>("");
   const [alamat, setAlamat] = useState<string>("");
   const [telepon, setTelepon] = useState<string>("");
-
   const [pesan, setPesan] = useState<string>("");
   const [metode_belajar, setMetodebelajar] = useState<string>("");
   const [jam, setJam] = useState(new Date());
   const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
   const navigate = useNavigate();
+
+  const [ulasan, setUlasan] = useState<UlasanType[]>([]);
+  const [tambah, setTambah] = useState<number>(2);
+  const [finish, setFinish] = useState<boolean>(false);
 
   const fetchData = useCallback(() => {
     axios({
@@ -396,6 +399,32 @@ const ProfileTeacher = () => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
+  };
+
+  useEffect(() => {
+    fetchUlasan();
+  }, []);
+
+  function fetchUlasan() {
+    axios
+      .get("https://devmyproject.site/ulasan/29")
+      .then((res) => {
+        setUlasan(res.data.data);
+        // console.log(ulasan.data);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
+  const loadUlasan = () => {
+    setTambah(tambah + 3);
+    if (tambah >= ulasan.length) {
+      setFinish(true);
+    } else {
+      setFinish(false);
+    }
   };
 
   return (
@@ -867,44 +896,38 @@ const ProfileTeacher = () => {
           <p className="text-[24px] text-zinc-900 font-semibold mt-10 mb-5">
             Ulasan
           </p>
+          {/* <>{console.log(ulasan)}</> */}
 
-          <div className="bg-white rounded-xl py-4 px-10 text-[16px] mb-5 pb-10 pt-10">
-            <div className="flex items-center gap-4">
-              <img
-                src={Profil2}
-                alt="profil.webp"
-                className="w-8 h-8 rounded-full"
-              />
-              <p className="font-semibold">Brandon</p>
-              <div className="flex items-center gap-1 ml-auto">
-                <MdStars className="text-component" />5
+          <>
+            {ulasan.slice(0, tambah).map((data, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl py-4 px-10 text-[16px] mb-4"
+              >
+                <div className="flex items-center gap-4">
+                  <img
+                    src={Profil2}
+                    alt="profil.webp"
+                    className="w-8 h-8 rounded-full"
+                  />
+
+                  <p className="font-semibold">{data.nama_siswa}</p>
+                  <div className="flex items-center gap-1 ml-auto">
+                    <MdStars className="text-component" />
+                    {data.penilaian}
+                  </div>
+                </div>
+                <p className="mt-4 lg:text-[16px] text-[15px]">{data.ulasan}</p>
               </div>
-            </div>
-            <p className="mt-4 lg:text-[16px] text-[15px]">
-              Sempurna! Thanks to him, my daughter test score improve a lot now.
-              I recommend to all parents who wants to boost their child
-              understanding and confidence in Math
+            ))}
+          </>
+          {finish ? (
+            ""
+          ) : (
+            <p onClick={loadUlasan} className="mt-5">
+              Lihat lebih banyak ......
             </p>
-          </div>
-          <div className="bg-white rounded-xl py-4 px-10 text-[16px]">
-            <div className="flex items-center gap-4">
-              <img
-                src={Profil2}
-                alt="profil.webp"
-                className="w-8 h-8 rounded-full"
-              />
-              <p className="font-semibold">Brandon</p>
-              <div className="flex items-center gap-1 ml-auto">
-                <MdStars className="text-component" />5
-              </div>
-            </div>
-            <p className="mt-4 lg:text-[16px] text-[15px]">
-              Sempurna! Thanks to him, my daughter test score improve a lot now.
-              I recommend to all parents who wants to boost their child
-              understanding and confidence in Math
-            </p>
-          </div>
-          <p className="mt-5">Lihat lebih banyak ......</p>
+          )}
         </div>
       </div>
     </div>
@@ -1180,5 +1203,5 @@ export {
   ProfileStudent,
   TabsContentForTeacherPage,
   EditProfileTeacher,
-  // ProfileTeacher,
+  ProfileTeacher,
 };

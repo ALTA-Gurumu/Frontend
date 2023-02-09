@@ -9,7 +9,6 @@ import useCookies from "react-cookie/cjs/useCookies";
 // import { ProfileTeacher } from "../pages/ProfilePage";
 import { TabsContentForTeacherPage } from "../pages/ProfilePage";
 import { ProfileStudent } from "../pages/ProfilePage";
-
 import HalamanSesiMurid from "../pages/HalamanSesiMurid";
 import { HalamanSesiGuru } from "../pages/HistoryPage";
 import PaymentDetails from "../pages/paymentDetails";
@@ -85,6 +84,7 @@ function App() {
     },
     {
       path: "/profile-teacher/:guru_id",
+      // element: <TabsContentForTeacherPage />,
       element: checkToken ? <TabsContentForTeacherPage /> : <Login />,
     },
     {

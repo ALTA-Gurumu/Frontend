@@ -49,7 +49,6 @@ function LandingPage() {
       .get("https://devmyproject.site/ulasan")
       .then((res) => {
         setUlasan(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         alert(err.response.data.message);
