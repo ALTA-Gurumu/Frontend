@@ -38,11 +38,37 @@ export interface CompleteTeacher {
   pendidikan?: string;
   Avatar?: any;
   avatar?: any;
+
   jadwal?: string;
   ijazah?: any;
   latitude?: number;
   longitude?: number;
   Jadwal?: JadwalType[];
+
+  data?: RiwayatType[];
+  // dataUlasan?: UlasanType[];
+  onChangeOption?: () => void;
+}
+
+
+export interface EditTeacher {
+  nama?: string;
+  email?: string;
+  telepon?: number;
+  linkedIn?: string;
+  gelar?: string;
+  tentang_saya?: string;
+  pengalaman?: string;
+  lokasi_asal?: string;
+  metode_belajar?: string;
+  tarif?: number;
+  pelajaran?: string;
+  pendidikan?: string;
+  avatar?: any;
+  ijazah?: any;
+  latitude?: string;
+  longitude?: string;
+  jadwal?: JadwaType[];
   data?: RiwayatType[];
   // dataUlasan?: UlasanType[];
   onChangeOption?: () => void;
@@ -61,9 +87,9 @@ type JadwalType = {
   Jam?: string;
   Status?: string;
 };
-
 export interface UlasanType {
   data: Ulasan[];
+  id: number;
   ulasan_id: number;
   nama_siswa: string;
   penilaian: string;
