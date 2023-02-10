@@ -49,6 +49,10 @@ function HalamanSesiMurid() {
   const [tautan_gmeet, setTautanGmeet] = useState<string>("");
   const [status, setStatus] = useState<string>("");
 
+  useEffect(() => {
+    fetchDataSesi();
+  }, []);
+
   function fetchDataSesi() {
     axios({
       method: "GET",
@@ -70,13 +74,13 @@ function HalamanSesiMurid() {
         setStatus(status);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.toString());
       })
       .finally(() => setLoading(false));
   }
 
   useEffect(() => {
-    fetchDataSesi();
+    fetchData();
   }, []);
 
   function fetchData() {
@@ -102,10 +106,6 @@ function HalamanSesiMurid() {
       })
       .finally(() => setLoading(false));
   }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -323,7 +323,7 @@ function HalamanSesiMurid() {
                       </div>
 
                       <p className="mt-2 lg:text-[36px] text-[24px] font-semibold text-[#112B3C]">
-                        {"nama"}
+                        {nama}
                       </p>
 
                       <div className="text-[16px] text-zinc-800 flex lg:flex-row flex-col lg:w-[45vw] w-[80vw] p-2 mt-10">
