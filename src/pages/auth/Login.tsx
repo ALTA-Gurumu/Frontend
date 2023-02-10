@@ -87,8 +87,8 @@ const Login = () => {
     <>
       <Layout>
         <LoginNavbar />
-        <div className="w-full lg:min-h-screen flex justify-center items-center my-5">
-          <div className=" w-10/12 lg:mb-0 mb-5 mt-5 lg:-mt-10 lg:w-8/12 h-full lg:pb-10 lg:pt-5 bg-white rounded-3xl border-2">
+        <div className="w-full lg:min-h-screen flex justify-center items-center">
+          <div className=" w-10/12 lg:mb-0 mb-5 mt-5 lg:-mt-10 lg:w-8/12 h-full lg:pb-10 lg:py-5 bg-white rounded-3xl border-2">
             <div className="flex flex-col lg:flex-row w-full h-full justify-center">
               <div className="flex-1 flex items-end pl-5 lg:mb-16 mb-2">
                 <img
