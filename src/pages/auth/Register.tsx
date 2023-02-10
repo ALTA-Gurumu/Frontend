@@ -100,16 +100,21 @@ const Register = () => {
       <Layout>
         <LoginNavbar />
         <div className="w-full lg:min-h-screen flex justify-center items-center mt-5 mb-10">
-          <div className=" w-10/12 mt-5 lg:w-8/12 h-full lg:h-6/6 bg-white rounded-3xl border-2 lg:pb-16 ">
-            <div className="flex flex-col lg:flex-row w-full h-full justify-center">
-              <div className="flex-1 flex items-center  ">
+          <div className=" w-10/12 mt-5 lg:w-9/12 h-full lg:h-6/6 bg-white rounded-3xl border-2 lg:pb-10">
+            <div className="flex flex-col lg:flex-row w-full h-full items -center">
+              <div className="flex-1 flex-col flex justify-end lg:pl-8 pl-4 lg:pr-0 pr-4 lg:pb-24 pb-0">
                 <img
                   src={imgRegis}
-                  className="mx-auto w-10/12 max-w-full mt-10 lg:mt-0"
+                  className="w-11/12 max-w-full mt-5 lg:mt-0 lg:ml-0 ml-4 mb-5"
                 />
+                <p className=" text-navy lg:text-[16px] text-[0px] font-semibold text-center">
+                  Belajar lebih efektif dengan guru - guru yang professional dan
+                  berpengalaman mengajar. Segera bergabung dan bangunlah karir
+                  anda.
+                </p>
               </div>
-              <div className="flex-1 items-center -mt-15 lg:mt-10 ">
-                <h1 className="text-center text-4xl text-black font-extrabold lg:mt-10 tracking-wider">
+              <div className="lg:w-[35vw] w-11/12 items-center -mt-15 lg:mt-2 lg:px-8 lg:pl-10 pl-8 lg:pt-4 pt-0">
+                <h1 className="text-center lg:text-4xl text-[30px] text-navy font-[1000] lg:mt-5 lg:mb-8 mb-1 tracking-wider">
                   Mari Memulai
                 </h1>
 
@@ -117,8 +122,8 @@ const Register = () => {
                   className="form-control w-full"
                   onSubmit={(e) => handleSubmit(e)}
                 >
-                  <label className="label mt-5">
-                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
+                  <label className="label">
+                    <span className="label-text text-[16px] w-10/12 lg:w-8/12 text-navy">
                       Nama Lengkap :
                     </span>
                   </label>
@@ -127,19 +132,19 @@ const Register = () => {
                     id="input-nama-lengkap"
                     type="text"
                     placeholder="John Doe"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white"
-                    style={{ border: "2px solid #424242" }}
+                    className="input w-11/12 lg:w-11/12 lg:mb-4 mb-1 bg-white"
+                    style={{ border: "2px solid  rgb(17,43,60)" }}
                     onChange={(e) => setNama(e.target.value)}
                   />
                   <label className="label">
-                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
+                    <span className="label-text text-[16px]  w-10/12 lg:w-8/12  text-navy">
                       Peran
                     </span>
                   </label>
                   <select
                     defaultValue={"DEFAULT"}
                     id="input-role"
-                    className="select select-bordered w-10/12 lg:w-8/12 mx-auto border-label border-2 bg-white"
+                    className="select select-bordered w-11/12 lg:w-11/12  border-navy border-2 bg-white"
                     name="option"
                     onChange={handleChange}
                   >
@@ -150,8 +155,8 @@ const Register = () => {
                     <option value="2">Teacher</option>
                   </select>
 
-                  <label className="label mt-5">
-                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
+                  <label className="label lg:mt-4 mt-1">
+                    <span className="label-text text-[16px] w-10/12 lg:w-8/12 text-navy">
                       Email :
                     </span>
                   </label>
@@ -160,12 +165,12 @@ const Register = () => {
                     id="input-email"
                     type="text"
                     placeholder="@johndoe@gmail.com"
-                    className="input w-10/12 lg:w-8/12 mx-auto bg-white border-label border-2"
+                    className="input w-11/12 lg:w-11/12  bg-white border-navy border-2"
                     onChange={(e) => setEmail(e.target.value)}
                   />
 
-                  <label className="label mt-5">
-                    <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold text-label">
+                  <label className="label lg:mt-4 mt-1">
+                    <span className="label-text text-[16px] w-10/12 lg:w-11/12 text-navy">
                       Password :
                     </span>
                   </label>
@@ -178,10 +183,10 @@ const Register = () => {
                         id="input-password"
                         type="password"
                         placeholder="Silahkan Masukan Password"
-                        className="input w-10/12 lg:w-8/12 mx-auto bg-white border-3 border-green-900"
+                        className="input w-11/12 lg:w-11/12  bg-white border-3 border-navy"
                         onChange={(e) => setPassword(e.target.value)}
                       />
-                      <p className="text-center text-lg text-green-600 border-green-700">
+                      <p className="text-[14px] mt-1 text-green-600 border-green-700">
                         Password yang anda masukkan kuat*
                       </p>
                     </>
@@ -191,10 +196,10 @@ const Register = () => {
                         id="input-password"
                         type="password"
                         placeholder="*********"
-                        className="input w-10/12 lg:w-8/12 mx-auto bg-white border-2 border-red-700"
+                        className="input w-11/12 lg:w-11/12  bg-white border-2 border-red-700"
                         onChange={(e) => setPassword(e.target.value)}
                       />
-                      <p className="text-center text-red-600 text-lg">
+                      <p className="mt-1 text-red-600 lg:text-[16px] text-[13px]">
                         Password yang anda masukkan Lemah*
                       </p>
                     </>
@@ -202,7 +207,7 @@ const Register = () => {
                   <CustomButton
                     id="generate-password"
                     label="Generate Secure Password"
-                    className="py-2 px-4 text-lg font-semibold"
+                    className="py-2 px-4 lg:text-lg text-[14px] text-navy font-[600] lg:-ml-0 -ml-6"
                     onClick={() => generatePassword(12)}
                   />
                   {generatePass === "" ? (
@@ -224,15 +229,15 @@ const Register = () => {
                   <CustomButton
                     id="btn-daftar"
                     label="Daftar"
-                    className="w-10/12 lg:w-8/12 py-3 px-3 lg:ml-24 rounded-lg mx-auto mt-7 disabled:bg-slate-500 disabled:cursor-not-allowed text-white font-lg text-lg bg-component hover:bg-orange-600 font-poppins"
+                    className="w-11/12 lg:w-11/12 py-3 lg:ml-1 ml-0 rounded-lg mx-auto mt-4 disabled:bg-slate-500 disabled:cursor-not-allowed text-white font-semibold text-[18px] bg-component hover:bg-orange-600 font-poppins"
                     loading={loading || disabled}
                   />
                 </form>
 
-                <p className="text-center mt-5 text-slate-700 font-medium pb-10 lg:p-0">
-                  Belum Memiliki Akun?{" "}
+                <p className="text-center mt-2 lg:-ml-0 -ml-6 text-navy pb-10 lg:p-0">
+                  Belum Memiliki Akun?
                   <Link to="/login">
-                    <span className="font-bold underline text-slate-700 ml-2 pb-20">
+                    <span className="font-bold underline text-navy ml-2 pb-20">
                       Login
                     </span>
                   </Link>

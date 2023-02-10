@@ -5,11 +5,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
 }
 
-export function CustomInput({
-  id,
-  placeholder,
-  ...props
-}: Props) {
+export function CustomInput({ id, placeholder, ...props }: Props) {
   return (
     <input
       id={id}

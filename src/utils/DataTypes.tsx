@@ -50,7 +50,6 @@ export interface CompleteTeacher {
   onChangeOption?: () => void;
 }
 
-
 export interface EditTeacher {
   nama?: string;
   email?: string;
@@ -101,6 +100,7 @@ export interface ProfilType {
   alamat?: string;
   telepon?: string;
   avatar?: any;
+  online?: string;
 }
 
 type Ulasan = {
