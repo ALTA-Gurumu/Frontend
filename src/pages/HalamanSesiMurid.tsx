@@ -323,7 +323,7 @@ function HalamanSesiMurid() {
                       </div>
 
                       <p className="mt-2 lg:text-[36px] text-[24px] font-semibold text-[#112B3C]">
-                        {nama}
+                        {"nama"}
                       </p>
 
                       <div className="text-[16px] text-zinc-800 flex lg:flex-row flex-col lg:w-[45vw] w-[80vw] p-2 mt-10">
