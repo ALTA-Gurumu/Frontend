@@ -297,6 +297,28 @@ const TabsContentForTeacherPage = () => {
             {checkId !== guru_id ? (
               <></>
             ) : (
+
+        {checkRole === "siswa" ? (
+          <div>
+            <ProfileTeacher />
+          </div>
+        ) : (
+          <div>
+            <Tabs
+              defaultSelectedTabId="profil"
+              className={`${Classes.COMPACT} w-11/12 mx-auto min-h-screen mt-20 `}
+              renderActiveTabPanelOnly={true}
+            >
+              <Tab
+                id="profil"
+                title="Profil"
+                className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
+                panel={
+                  <div className="w-full min-h-screen text-sm font-normal">
+                    <ProfileTeacher />
+                  </div>
+                }
+              />
               <Tab
                 id="editProfil"
                 className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto"
@@ -307,9 +329,11 @@ const TabsContentForTeacherPage = () => {
                   </div>
                 }
               />
+
             )}
           </Tabs>
         </div>
+
         <Footer />
       </Layout>
     </>
@@ -389,8 +413,6 @@ const ProfileTeacher = () => {
   useEffect(() => {
     checkRole !== "guru" && fetchData();
   }, []);
-
-  console.log(useParams);
 
   const fetchDataGuru = useCallback(() => {
     axios({
@@ -515,10 +537,9 @@ const ProfileTeacher = () => {
     })
       .then((res) => {
         setUlasan(res.data.data);
-        console.log(ulasan);
       })
       .catch((err) => {
-        alert(err.toString());
+        // alert(err.toString());
       })
       .finally(() => setLoading(false));
 

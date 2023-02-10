@@ -44,7 +44,6 @@ const Card: FC<CardProps> = ({
   const navigate = useNavigate();
 
   function onCLickReservasi() {
-    // console.log({ guru_id });
     navigate(`/profile-teacher/${guru_id}`);
   }
 
