@@ -97,6 +97,8 @@ function Navbar() {
                   onClick={() =>
                     checkVer === "true"
                       ? navigate(`/profile-teacher/${checkId}`)
+
+                      : navigate("/home")
                       : MySwal.fire({
                           title: "Data Perlu Update",
                           text: "Refresh Halaman Untuk kembali di Pengisian Data",
