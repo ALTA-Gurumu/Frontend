@@ -95,7 +95,7 @@ function Navbar() {
                   id="link-profil"
                   onClick={() =>
                     checkVer === "true"
-                      ? navigate("/profile-teacher/:guru_id")
+                      ? navigate(`/profile-teacher/${checkId}`)
                       : navigate("/home")
                   }
                 >

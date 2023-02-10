@@ -34,7 +34,12 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsPhoneFill } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
-import { CompleteTeacher, DataTypesGuru, UlasanType } from "../utils/DataTypes";
+import {
+  CompleteTeacher,
+  DataTypesGuru,
+  EditTeacher,
+  UlasanType,
+} from "../utils/DataTypes";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
@@ -315,8 +320,8 @@ const ProfileTeacher = () => {
   const [Gelar, setGelar] = useState<string>("");
   const [Ijazah, setIjazah] = useState<any>("");
   const [Jadwal, setJadwal] = useState<string>("");
-  const [Latitude, setLatitude] = useState<string>("");
-  const [Longitude, setLongitude] = useState<string>("");
+  const [latitude, setLatitude] = useState<string>("");
+  const [longitude, setLongitude] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [LokasiAsal, setLokasiAsal] = useState<string>("");
   const [Nama, setNAMA] = useState<string>("");
@@ -347,6 +352,7 @@ const ProfileTeacher = () => {
   const [ulasan, setUlasan] = useState<UlasanType[]>([]);
   const [tambah, setTambah] = useState<number>(2);
   const [finish, setFinish] = useState<boolean>(false);
+  const [guruId, setGuruId] = useState<any>();
 
   const fetchData = useCallback(() => {
     axios({
@@ -390,8 +396,8 @@ const ProfileTeacher = () => {
           Gelar,
           Ijazah,
           Jadwal,
-          Latitude,
-          Longitude,
+          latitude,
+          longitude,
           LinkedIn,
           LokasiAsal,
           Nama,
@@ -402,7 +408,7 @@ const ProfileTeacher = () => {
           Pengalaman,
           Tarif,
           Telepon,
-          TentangSaya,
+          tentang_saya,
         } = response.data.data;
 
         setAvatar(Avatar);
@@ -410,8 +416,8 @@ const ProfileTeacher = () => {
         setGelar(Gelar);
         setIjazah(Ijazah);
         setJadwal(Jadwal);
-        setLatitude(Latitude);
-        setLongitude(Longitude);
+        setLatitude(latitude);
+        setLongitude(longitude);
         setLinkedIn(LinkedIn);
         setLokasiAsal(LokasiAsal);
         setNAMA(Nama);
@@ -480,17 +486,35 @@ const ProfileTeacher = () => {
     fetchUlasan();
   }, []);
 
+  useEffect(() => {
+    setGuruId(new URL(window.location.href).searchParams.get("guru_id"));
+  }, []);
+
   function fetchUlasan() {
-    axios
-      .get("https://devmyproject.site/ulasan/29")
+    axios({
+      method: "GET",
+      url: `https://devmyproject.site/ulasan/${guru_id}`,
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
+      params: {
+        guru_id: guruId,
+      },
+    })
       .then((res) => {
         setUlasan(res.data.data);
-        // console.log(ulasan.data);
+        console.log(ulasan);
       })
       .catch((err) => {
         alert(err.toString());
       })
       .finally(() => setLoading(false));
+
+    if (guruId) {
+      fetchUlasan();
+    } else {
+      return "Data Ulasan Belum ada";
+    }
   }
 
   const loadUlasan = () => {
@@ -691,7 +715,9 @@ const ProfileTeacher = () => {
                                 name="online"
                                 type="checkbox"
                                 checked={metode_belajar === "online"}
-                                onChange={() => setMetodebelajar("online")}
+                                onChange={(e) =>
+                                  handleChange(e.target.value, "online")
+                                }
                                 className="checkbox"
                               />
                             </div>
@@ -1279,6 +1305,8 @@ const EditProfileTeacher: React.FC<{
 
   const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
+  const [EditTeacher, setEditTeacher] = useState<EditTeacher>({});
+
   const [tanggal, setTanggal] = useState<string>("");
   const [startDate, setStartDate] = useState(new Date());
   const [jam, setJam] = useState<string>("");
@@ -1288,8 +1316,8 @@ const EditProfileTeacher: React.FC<{
   const [Gelar, setGelar] = useState<string>("");
   const [Ijazah, setIjazah] = useState<any>("");
   const [Jadwal, setJadwal] = useState<string>("");
-  const [Latitude, setLatitude] = useState<any>("");
-  const [Longitude, setLongitude] = useState<any>("");
+  const [latitude, setLatitude] = useState<string>("");
+  const [longitude, setLongitude] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [LokasiAsal, setLokasiAsal] = useState<string>("");
   const [MetodeBljr, setMetodeBljr] = useState("online");
@@ -1300,8 +1328,15 @@ const EditProfileTeacher: React.FC<{
   const [Telepon, setTELEPON] = useState<string>("");
   const [TentangSaya, setTentangSaya] = useState<string>("");
 
+  const [metode_belajar, setMETODEBELAJAR] = useState("");
+
+  const handleChangeCheckbox = (value: any) => {
+    setMETODEBELAJAR(value);
+  };
+
   const handleSearchMap = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Submitting form...");
 
     const response = await fetch(
       `https://nominatim.openstreetmap.org/search?q=${searchQuery}&format=json`
@@ -1343,8 +1378,8 @@ const EditProfileTeacher: React.FC<{
           Gelar,
           Ijazah,
           Jadwal,
-          Latitude,
-          Longitude,
+          latitude,
+          longitude,
           LinkedIn,
           LokasiAsal,
           MetodeBljr,
@@ -1361,8 +1396,8 @@ const EditProfileTeacher: React.FC<{
         setGelar(Gelar);
         setIjazah(Ijazah);
         setJadwal(Jadwal);
-        setLatitude(Latitude);
-        setLongitude(Longitude);
+        setLatitude(latitude);
+        setLongitude(longitude);
         setLinkedIn(LinkedIn);
         setLokasiAsal(LokasiAsal);
 
@@ -1387,15 +1422,16 @@ const EditProfileTeacher: React.FC<{
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
-    let key: keyof typeof objSubmit;
-    for (key in objSubmit) {
-      formData.append(key, objSubmit[key]);
+    let key: keyof typeof EditTeacher;
+    for (key in EditTeacher) {
+      formData.append(key, EditTeacher[key]);
     }
 
     axios
       .put("https://devmyproject.site/guru", formData, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
+          "Content-Type": "multipart/json",
         },
       })
       .then((res) => {
@@ -1419,10 +1455,13 @@ const EditProfileTeacher: React.FC<{
       .finally(() => fetchDataGuru());
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
-    let temp = { ...objSubmit };
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof EditTeacher
+  ) => {
+    let temp = { ...EditTeacher };
     temp[key] = value;
-    setObjSubmit(temp);
+    setEditTeacher(temp);
   };
 
   const handlePostJadwal = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -1498,7 +1537,7 @@ const EditProfileTeacher: React.FC<{
               id="input-tarif"
               type="number"
               defaultValue={Tarif}
-              onChange={(e) => handleChange(e.target.value, "Tarif")}
+              onChange={(e) => handleChange(e.target.value, "tarif")}
               className="input flex justify-center w-10/12 lg:w-8/12 mx-auto bg-white  border-gray-300"
               placeholder="Rp. 500.000 "
             />
@@ -1512,7 +1551,7 @@ const EditProfileTeacher: React.FC<{
                 <CustomInput
                   id="input-tarif"
                   type="text"
-                  onChange={(e) => handleChange(e.target.value, "Pelajaran")}
+                  onChange={(e) => handleChange(e.target.value, "pelajaran")}
                   defaultValue={Pelajaran}
                   className="input flex justify-center w-10/12 lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                   placeholder="Rp. 500.000 "
@@ -1527,7 +1566,7 @@ const EditProfileTeacher: React.FC<{
                 <CustomInput
                   id="input-pendidikan"
                   type="text"
-                  onChange={(e) => handleChange(e.target.value, "Pendidikan")}
+                  onChange={(e) => handleChange(e.target.value, "pendidikan")}
                   defaultValue={Pendidikan}
                   className="input flex justify-center w-10/12 lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                   placeholder="Rp. 500.000 "
@@ -1549,7 +1588,7 @@ const EditProfileTeacher: React.FC<{
                 }
 
                 setIjazah(URL.createObjectURL(e.currentTarget.files[0]));
-                handleChange(e.currentTarget.files[0], "Ijazah");
+                handleChange(e.currentTarget.files[0], "ijazah");
               }}
             />
             <form onSubmit={(e) => handlePostJadwal(e)}>
@@ -1576,61 +1615,61 @@ const EditProfileTeacher: React.FC<{
                   />
                 </div>
               </div>
-              <h1 className="text-center mt-10 text-xl font-semibold">
-                Atur Tempat Mengajar
-              </h1>
-              <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto mt-5"></div>
-              <CustomInput
-                id="input-Latitude"
-                defaultValue={Latitude}
-                onChange={(e) => setLatitude(e.target.value)}
-              />
-              <CustomInput
-                id="input-Longitude"
-                defaultValue={Longitude}
-                onChange={(e) => setLongitude(e.target.value)}
-              />
-              <form onSubmit={handleSearchMap} className="mb-10">
-                <CustomInput
-                  id="search-lokasi"
-                  type="text"
-                  placeholder="Search Your Location"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <CustomButton
-                  id="btn-pencarian-lokasi"
-                  type="submit"
-                  className="text-black"
-                  label="search"
-                />
-              </form>
-
-              <MapContainer
-                center={mapCenter}
-                zoom={zoom}
-                scrollWheelZoom={scrollWheelZoom}
-              >
-                <TileLayer
-                  id="input-map"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <DraggableMarker
-                  setMapCenter={setMapCenter}
-                  setLocations={setLocations}
-                />
-              </MapContainer>
-
-              <div className="flex justify-center pr-10 mt-">
-                <CustomButton
-                  id="input-tempat-mengajar"
-                  label="Atur Jadwal Mengajar"
-                  className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
-                  onClick={(e: any) => handlePostJadwal(e)}
-                />
-              </div>
             </form>
+            <h1 className="text-center mt-10 text-xl font-semibold">
+              Atur Tempat Mengajar
+            </h1>
+            <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto mt-5"></div>
+            <CustomInput
+              id="input-Latitude"
+              defaultValue={latitude}
+              onChange={(e) => setLatitude(e.target.value)}
+            />
+            <CustomInput
+              id="input-Longitude"
+              defaultValue={longitude}
+              onChange={(e) => setLongitude(e.target.value)}
+            />
+            <form onSubmit={handleSearchMap} className="mb-10">
+              <CustomInput
+                id="search-lokasi"
+                type="text"
+                placeholder="Search Your Location"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <CustomButton
+                id="btn-pencarian-lokasi"
+                type="submit"
+                className="text-black"
+                label="search"
+              />
+            </form>
+
+            <MapContainer
+              center={mapCenter}
+              zoom={zoom}
+              scrollWheelZoom={scrollWheelZoom}
+            >
+              <TileLayer
+                id="input-map"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <DraggableMarker
+                setMapCenter={setMapCenter}
+                setLocations={setLocations}
+              />
+            </MapContainer>
+
+            <div className="flex justify-center pr-10 mt-">
+              <CustomButton
+                id="input-tempat-mengajar"
+                label="Atur Jadwal Mengajar"
+                className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
+                onClick={(e: any) => handlePostJadwal(e)}
+              />
+            </div>
           </div>
           <div className="flex-1 ">
             <label className="label mt-5">
@@ -1642,7 +1681,7 @@ const EditProfileTeacher: React.FC<{
               id="input-gelar"
               type="text"
               defaultValue={Gelar}
-              onChange={(e) => handleChange(e.target.value, "Gelar")}
+              onChange={(e) => handleChange(e.target.value, "gelar")}
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="S1 Pendidikan Matematik "
             />
@@ -1655,7 +1694,7 @@ const EditProfileTeacher: React.FC<{
               <textarea
                 id="input-tentang-saya"
                 defaultValue={TentangSaya}
-                onChange={(e) => handleChange(e.target.value, "TentangSaya")}
+                onChange={(e) => handleChange(e.target.value, "tentang_saya")}
                 className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 mx-auto bg-white"
                 placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
               ></textarea>
@@ -1669,9 +1708,9 @@ const EditProfileTeacher: React.FC<{
               <textarea
                 id="input-pengalaman"
                 defaultValue={Pengalaman}
-                onChange={(e) => handleChange(e.target.value, "Pengalaman")}
+                onChange={(e) => handleChange(e.target.value, "pengalaman")}
                 className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 mx-auto bg-white"
-                placeholder="- Bachelor's Degree with more than 10 years experienced teaching math from primary, secondary, until senior.
+                placeholder=" Bachelor's Degree with more than 10 years experienced teaching math from primary, secondary, until senior.
                 
                 "
               ></textarea>
@@ -1689,7 +1728,7 @@ const EditProfileTeacher: React.FC<{
                   id="input-lokasi"
                   type="text"
                   defaultValue={LokasiAsal}
-                  onChange={(e) => handleChange(e.target.value, "LokasiAsal")}
+                  onChange={(e) => handleChange(e.target.value, "lokasi_asal")}
                   className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
                 />
               </div>
@@ -1700,8 +1739,8 @@ const EditProfileTeacher: React.FC<{
                     id="input-checkbox-online"
                     name="online"
                     type="checkbox"
-                    checked={MetodeBljr === "online"}
-                    onChange={(e) => setMetodeBljr("online")}
+                    checked={metode_belajar === "online"}
+                    onChange={(e) => handleChangeCheckbox("online")}
                     className="checkbox  ml-10"
                   />
                 </div>
@@ -1713,8 +1752,8 @@ const EditProfileTeacher: React.FC<{
                     id="input-checkbox-offline"
                     name="offline"
                     type="checkbox"
-                    checked={MetodeBljr === "offline"}
-                    onChange={() => setMetodeBljr("offline")}
+                    checked={metode_belajar === "offline"}
+                    onChange={(e) => handleChangeCheckbox("offline")}
                     className="checkbox    ml-10"
                   />
                 </div>
@@ -1732,7 +1771,7 @@ const EditProfileTeacher: React.FC<{
               id="input-handphone"
               type="number"
               defaultValue={Telepon}
-              onChange={(e) => handleChange(e.target.value, "Telepon")}
+              onChange={(e) => handleChange(e.target.value, "telepon")}
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="0822XXXXX "
             />
@@ -1745,7 +1784,7 @@ const EditProfileTeacher: React.FC<{
               id="input-email"
               type="text"
               defaultValue={Email}
-              onChange={(e) => handleChange(e.target.value, "Email")}
+              onChange={(e) => handleChange(e.target.value, "email")}
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="@johndoe@gmail.com "
             />
@@ -1758,7 +1797,7 @@ const EditProfileTeacher: React.FC<{
               id="input-linkedin"
               type="text"
               defaultValue={LinkedIn}
-              onChange={(e) => handleChange(e.target.value, "LinkedIn")}
+              onChange={(e) => handleChange(e.target.value, "linkedIn")}
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="linkedin/johndoe "
             />
