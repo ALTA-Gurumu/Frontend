@@ -102,7 +102,7 @@ const Register = () => {
         <div className="w-full lg:min-h-screen flex justify-center items-center mt-5 mb-10">
           <div className=" w-10/12 mt-5 lg:w-9/12 h-full lg:h-6/6 bg-white rounded-3xl border-2 lg:pb-10">
             <div className="flex flex-col lg:flex-row w-full h-full items -center">
-              <div className="flex-1 flex-col flex justify-end lg:pl-8 pl-4 lg:pr-0 pr-4   lg:pb-24 pb-0">
+              <div className="flex-1 flex-col flex justify-end lg:pl-8 pl-4 lg:pr-0 pr-4 lg:pb-24 pb-0">
                 <img
                   src={imgRegis}
                   className="w-11/12 max-w-full mt-5 lg:mt-0 lg:ml-0 ml-4 mb-5"
@@ -113,8 +113,8 @@ const Register = () => {
                   anda.
                 </p>
               </div>
-              <div className="lg:w-[35vw] w-11/12 items-center -mt-15 lg:mt-2 lg:px-8 lg:pl-10 pl-8 pt-4">
-                <h1 className="text-center lg:text-4xl text-[30px] text-navy font-[1000] lg:mt-5 lg:mb-8 mb-4 tracking-wider">
+              <div className="lg:w-[35vw] w-11/12 items-center -mt-15 lg:mt-2 lg:px-8 lg:pl-10 pl-8 lg:pt-4 pt-0">
+                <h1 className="text-center lg:text-4xl text-[30px] text-navy font-[1000] lg:mt-5 lg:mb-8 mb-1 tracking-wider">
                   Mari Memulai
                 </h1>
 
@@ -132,7 +132,7 @@ const Register = () => {
                     id="input-nama-lengkap"
                     type="text"
                     placeholder="John Doe"
-                    className="input w-11/12 lg:w-11/12 mb-4 bg-white"
+                    className="input w-11/12 lg:w-11/12 lg:mb-4 mb-1 bg-white"
                     style={{ border: "2px solid  rgb(17,43,60)" }}
                     onChange={(e) => setNama(e.target.value)}
                   />
@@ -155,7 +155,7 @@ const Register = () => {
                     <option value="2">Teacher</option>
                   </select>
 
-                  <label className="label mt-4">
+                  <label className="label lg:mt-4 mt-1">
                     <span className="label-text text-[16px] w-10/12 lg:w-8/12 text-navy">
                       Email :
                     </span>
@@ -169,7 +169,7 @@ const Register = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
 
-                  <label className="label mt-4">
+                  <label className="label lg:mt-4 mt-1">
                     <span className="label-text text-[16px] w-10/12 lg:w-11/12 text-navy">
                       Password :
                     </span>
