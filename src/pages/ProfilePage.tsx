@@ -294,6 +294,16 @@ const DraggableMarker = ({
   );
 };
 
+interface MapOptions {
+  center: { lat: number; lng: number };
+  scrollWheelZoom: boolean;
+}
+
+const options: MapOptions = {
+  center: { lat: 37.7749, lng: -122.4194 },
+  scrollWheelZoom: true,
+};
+
 const TabsContentForTeacherPage = () => {
   const [cookies, ,] = useCookies(["role"]);
   const [cookie, removeCookie] = useCookies([
@@ -341,7 +351,10 @@ const TabsContentForTeacherPage = () => {
                 title="Edit Profile"
                 panel={
                   <div className="w-full min-h-screen text-sm font-normal">
-                    <EditProfileTeacher />
+                    <EditProfileTeacher
+                      center={options.center}
+                      scrollWheelZoom={options.scrollWheelZoom}
+                    />
                   </div>
                 }
               />
