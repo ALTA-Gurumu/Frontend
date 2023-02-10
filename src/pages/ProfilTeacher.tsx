@@ -1,3 +1,8 @@
+import { useState, useCallback, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
 import { Footer } from "../components/Footer";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -13,10 +18,7 @@ import { MdStars } from "react-icons/md";
 import Profil2 from "../assets/profil2.webp";
 import CustomButton from "../components/CustomButton";
 import { DataTypesGuru } from "../utils/DataTypes";
-import { useCookies } from "react-cookie";
-import axios from "axios";
-import { useParams } from "react-router";
-import { useState, useCallback, useEffect } from "react";
+
 const ProfileTeacher = () => {
   const { guru_id } = useParams();
   const [teacher, setTeacher] = useState<DataTypesGuru[]>([]);
@@ -24,6 +26,7 @@ const ProfileTeacher = () => {
   const [cookie, removeCookie] = useCookies(["token"]);
   const CheckToken = cookie.token;
 
+  console.log(guru_id);
   // const fetchData = useCallback(() => {
   //   axios({
   //     method: "GET",

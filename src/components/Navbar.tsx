@@ -29,6 +29,7 @@ function Navbar() {
     removeCookie("token");
     removeCookie("role");
     removeCookie("verifikasi");
+    removeCookie("guru_id");
 
     dispatch(handleAuth(false));
     navigate("/login");
@@ -59,7 +60,7 @@ function Navbar() {
             tabIndex={0}
             className="btn btn-ghost btn-circle avatar"
           >
-            <Link to="/profile-teacher/:guru_id">
+            <Link to={`/profile-teacher/${checkId}`}>
               <BsFillCalendarCheckFill className="text-primary w-7 h-7" />
             </Link>
           </label>
@@ -96,7 +97,14 @@ function Navbar() {
                   onClick={() =>
                     checkVer === "true"
                       ? navigate(`/profile-teacher/${checkId}`)
+
                       : navigate("/home")
+
+                      : MySwal.fire({
+                          title: "Data Perlu Update",
+                          text: "Refresh Halaman Untuk kembali di Pengisian Data",
+                          showCancelButton: false,
+                        })
                   }
                 >
                   Profil

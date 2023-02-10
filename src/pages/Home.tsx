@@ -55,11 +55,11 @@ function Home() {
   const [searchLocation, setSearchLocation] = useState("");
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(6);
-  // const initialPost = slice(homes, 0, index);
   const [modal, setModal] = useState<string>("modal-open");
 
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingHome, setLoadingHome] = useState<boolean>(false);
   const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
   const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
@@ -82,7 +82,6 @@ function Home() {
 
   const loadMore = () => {
     setIndex(index + 6);
-    // console.log(index);
     if (index >= homes.length) {
       setIsCompleted(true);
     } else {
@@ -95,18 +94,21 @@ function Home() {
   }, []);
 
   function fetchHome() {
-    // setDLoading(true);
+    setLoadingHome(true);
     axios
-      .get("https://devmyproject.site/guru")
+      .get("https://devmyproject.site/guru/")
       .then((res) => {
         setHome(res.data.data);
-        // console.log(res.data.data);
       })
       .catch((err) => {
         alert(err.response.data.message);
-      });
-    // .finally(() => setDLoading(false));
+      })
+      .finally(() => setLoadingHome(false));
   }
+
+  // useEffect(() => {
+  //   lokasiAsal ? setDisabled(true) : setDisabled(false);
+  // }, [lokasiAsal]);
 
   const skipHandle = async () => {
     setModal("modal");
@@ -117,39 +119,13 @@ function Home() {
     });
   };
 
-  // useEffect(() => {
-  //   lokasiAsal ? setDisabled(true) : setDisabled(false);
-  // }, [lokasiAsal]);
-
   useEffect(() => {
     checkRole === "guru" && fetchData();
   }, []);
 
-  const fetchDataGetGuru = useCallback(() => {
-    axios({
-      method: "GET",
-      url: `https://devmyproject.site/guru`,
-      headers: {},
-      params: {},
-    })
-      .then((res) => {
-        const ApiResponse = res.data;
-        setTeacher(ApiResponse.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchDataGetGuru();
-  }, [fetchDataGetGuru]);
-
   function fetchData() {
     axios
-      .get(`https://devmyproject.site/guru/${checkId}`, {
-        // headers: { Authorization: `Bearer ${checkToken}` },
-      })
+      .get(`https://devmyproject.site/guru/${checkId}`, {})
       .then((res) => {
         const {
           Ijazah,
@@ -167,6 +143,7 @@ function Home() {
         setIjazah(Ijazah);
         setPendidikan(Pendidikan);
         setDeskripsi(TentangSaya);
+        // console.log(res.data.data);
       })
       .catch((err) => {
         alert(err.toString());
@@ -273,7 +250,7 @@ function Home() {
                       style={{ border: "2px solid #424242" }}
                       placeholder={LinkedIn}
                       defaultValue={LinkedIn}
-                      onChange={(e) => handleChange(e.target.value, "LinkedIn")}
+                      onChange={(e) => handleChange(e.target.value, "linkedin")}
                     />
 
                     <label className="label">
@@ -293,7 +270,8 @@ function Home() {
                         setIjazah(
                           URL.createObjectURL(e.currentTarget.files[0])
                         );
-                        handleChange(e.currentTarget.files[0], "Ijazah");
+                        handleChange(e.currentTarget.files[0], "ijazah");
+                        handleChange(e.currentTarget.files[0], "ijazah");
                       }}
                     />
                   </div>
@@ -305,7 +283,7 @@ function Home() {
                           className="label-text text-lg w-10/12 lg:w-8/12 font-semibold"
                           style={{ color: "#424242" }}
                         >
-                          Alamat :
+                          Lokasi Asal :
                         </span>
                       </label>
 
@@ -317,7 +295,7 @@ function Home() {
                         placeholder={"contoh : Blitar"}
                         defaultValue={lokasiAsal}
                         onChange={(e) =>
-                          handleChange(e.target.value, "LokasiAsal")
+                          handleChange(e.target.value, "lokasi_asal")
                         }
                       />
 
@@ -338,10 +316,29 @@ function Home() {
                         placeholder={"contoh : 0891234556"}
                         defaultValue={telefon}
                         onChange={(e) =>
-                          handleChange(e.target.value, "Telepon")
+                          handleChange(e.target.value, "telepon")
                         }
                       />
-
+                      <label className="label">
+                        <span className="label-text text-xl text-slate-600 mt-5 mb-2 font-semibold">
+                          Upload Ijazah
+                        </span>
+                      </label>
+                      <select
+                        defaultValue={"DEFAULT"}
+                        id="input-jenjang-pengajaran"
+                        className="select select-bordered w-10/12 lg:w-9/12  bg-white"
+                        style={{ border: "2px solid #424242" }}
+                        name="option"
+                        // onChange={handleChange}
+                      >
+                        <option value="DEFAULT" disabled>
+                          Pilih Salah Satu
+                        </option>
+                        <option value="1">Sekolah Dasar</option>
+                        <option value="2">Sekolah Menengah Pertama</option>
+                        <option value="3">Sekolah Menengah Atas</option>
+                      </select>
                       <div className="form-control">
                         <label className="label">
                           <span
@@ -359,7 +356,7 @@ function Home() {
                           style={{ border: "2px solid #424242" }}
                           name="option"
                           onChange={(e) =>
-                            handleChange(e.target.value, "Pendidikan")
+                            handleChange(e.target.value, "pendidikan")
                           }
                         >
                           <option value="DEFAULT" disabled>
@@ -394,7 +391,7 @@ function Home() {
                             placeholder="Ceritakan biografi singkat anda"
                             defaultValue={deskripsi}
                             onChange={(e) =>
-                              handleChange(e.target.value, "TentangSaya")
+                              handleChange(e.target.value, "tentang_saya")
                             }
                           ></textarea>
                         </div>
@@ -402,7 +399,7 @@ function Home() {
                         <CustomButton
                           id="btn-daftar"
                           label="Update Data"
-                          className="w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
+                          className=" w-10/12 lg:w-6/12 py-3 px-3 rounded-lg mt-7 text-white font-lg text-lg bg-orange-500 hover:bg-orange-600"
                           style={{
                             fontFamily: "Poppins",
                           }}
@@ -463,6 +460,7 @@ function Home() {
               penilaian={data.penilaian}
               judul={data.judul}
               tarif={data.tarif}
+              guru_id={data.guru_id}
             />
           ))}
         </div>
@@ -473,19 +471,20 @@ function Home() {
             id="btn-lihatLainnya"
             className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
             label="Lihat lebih banyak guru"
-            disabled
-          />
-        </div>
-      ) : (
-        <div className="text-center mt-14 mb-20">
-          {/* {loadMore !== homes.length ? "" : ""} */}
-          <CustomButton
-            id="btn-lihatLainnya"
-            className={`${btn} bg-[#F66B0E] text-white hover:bg-navy shadow-xl`}
-            label={label}
+            loading={loading}
             onClick={loadMore}
           />
         </div>
+      ) : (
+        <div className="mb-32"></div>
+        // <div className="text-center mt-14 mb-20">
+        //   {/* {loadMore !== homes.length ? "" : ""} */}
+        //   <CustomButton
+        //     id="btn-lihatLainnya"
+        //     className={`${btn} bg-[#F66B0E] text-white hover:bg-navy shadow-xl`}
+        //     label={label}
+        //   />
+        // </div>
       )}
     </Layout>
   );

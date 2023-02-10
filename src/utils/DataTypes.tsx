@@ -24,28 +24,32 @@ export interface DataTypesGuru {
 }
 
 export interface CompleteTeacher {
-  Nama?: string;
-  Email?: string;
-  Telepon?: number;
-  LinkedIn?: string;
-  Gelar?: string;
-  TentangSaya?: string;
-  Pengalaman?: string;
-  LokasiAsal?: string;
-  MetodeBljr?: string;
-  Tarif?: number;
-  Pelajaran?: string;
-  Pendidikan?: string;
+  nama?: string;
+  email?: string;
+  telepon?: number;
+  linkedin?: string;
+  gelar?: string;
+  tentang_saya?: string;
+  pengalaman?: string;
+  lokasi_asal?: string;
+  metode_belajar?: string;
+  tarif?: number;
+  pelajaran?: string;
+  pendidikan?: string;
   Avatar?: any;
   avatar?: any;
-  Ijazah?: any;
-  Latitude?: number;
-  Longitude?: number;
-  Jadwal?: JadwaType[];
+
+  jadwal?: string;
+  ijazah?: any;
+  latitude?: number;
+  longitude?: number;
+  Jadwal?: JadwalType[];
+
   data?: RiwayatType[];
   // dataUlasan?: UlasanType[];
   onChangeOption?: () => void;
 }
+
 
 export interface EditTeacher {
   nama?: string;
@@ -70,6 +74,19 @@ export interface EditTeacher {
   onChangeOption?: () => void;
 }
 
+export interface JadwaType {
+  id?: number;
+  guru_id?: number;
+  tanggal?: string;
+  jam?: string;
+}
+
+type JadwalType = {
+  ID?: number;
+  Tanggal?: string;
+  Jam?: string;
+  Status?: string;
+};
 export interface UlasanType {
   data: Ulasan[];
   id: number;
@@ -93,13 +110,6 @@ type Ulasan = {
   ulasan?: string;
 };
 
-type JadwaType = {
-  ID?: number;
-  Tanggal?: string;
-  Jam?: string;
-  Status?: string;
-};
-
 type RiwayatType = {
   reservasi_id?: number;
   nama_murid?: string;
@@ -121,11 +131,4 @@ export interface getGuruBeranda {
   avatar?: any;
   tarif?: number;
   penilaian?: number;
-}
-
-export interface JadwaType {
-  id?: number;
-  guru_id?: number;
-  tanggal?: string;
-  jam?: string;
 }

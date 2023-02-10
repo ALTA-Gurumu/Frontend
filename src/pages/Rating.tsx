@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import { AiFillStar } from "react-icons/ai";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../utils/Swal";
+import { useCookies } from "react-cookie";
 
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -13,8 +14,8 @@ import CustomButton from "../components/CustomButton";
 import { CustomInput } from "../components/CustomInput";
 
 function Rating() {
-  const { guru_id } = useParams();
   const navigate = useNavigate();
+  const { guru_id } = useParams();
   const MySwal = withReactContent(Swal);
   const [penilaian, setPenilaian] = useState<number>();
   const [ulasan, setUlasan] = useState<string>();

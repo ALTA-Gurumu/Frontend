@@ -39,10 +39,9 @@ function HalamanSesiGuru() {
       .get(`https://devmyproject.site/guru/${checkID}`)
       .then((res) => {
         setJadwal(res.data.data);
-        // console.log(res.data.data.Jadwal);
       })
       .catch((err) => {
-        alert(err.toString());
+        // alert(err.toString());
       })
       .finally(() => setLoading(false));
   }
@@ -53,14 +52,18 @@ function HalamanSesiGuru() {
 
   function fetchRiwayat() {
     axios
-      .get(
-        "https://virtserver.swaggerhub.com/CapstoneAltaBE14/GuruMu/1.0.0/sesiku"
-      )
+      .get(`https://devmyproject.site/sesiku/${checkID}`)
       .then((res) => {
         setRiwayat(res.data);
       })
       .catch((err) => {
-        alert(err.toString());
+        const { message } = err.response.data;
+        console.log(err.response.data.message);
+        MySwal.fire({
+          title: "Riwayat Anda",
+          text: message,
+          showCancelButton: false,
+        });
       })
       .finally(() => setLoading(false));
   }
@@ -74,7 +77,7 @@ function HalamanSesiGuru() {
             <div className="h-full">
               <Tabs
                 className=" w-11/12 mx-auto"
-                defaultSelectedTabId="tab-3"
+                defaultSelectedTabId="tab-1"
                 renderActiveTabPanelOnly={true}
               >
                 <Tab
