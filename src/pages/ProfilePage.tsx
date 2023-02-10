@@ -297,28 +297,27 @@ const TabsContentForTeacherPage = () => {
             {checkId !== guru_id ? (
               <></>
             ) : (
-
-        {checkRole === "siswa" ? (
-          <div>
-            <ProfileTeacher />
-          </div>
-        ) : (
-          <div>
-            <Tabs
-              defaultSelectedTabId="profil"
-              className={`${Classes.COMPACT} w-11/12 mx-auto min-h-screen mt-20 `}
-              renderActiveTabPanelOnly={true}
-            >
-              <Tab
-                id="profil"
-                title="Profil"
-                className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
-                panel={
-                  <div className="w-full min-h-screen text-sm font-normal">
-                    <ProfileTeacher />
-                  </div>
-                }
-              />
+              // {checkRole === "siswa" ? (
+              //   <div>
+              //     <ProfileTeacher />
+              //   </div>
+              // ) : (
+              // <div>
+              //   <Tabs
+              //     defaultSelectedTabId="profil"
+              //     className={`${Classes.COMPACT} w-11/12 mx-auto min-h-screen mt-20 `}
+              //     renderActiveTabPanelOnly={true}
+              //   >
+              //     <Tab
+              //       id="profil"
+              //       title="Profil"
+              //       className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
+              //       panel={
+              //         <div className="w-full min-h-screen text-sm font-normal">
+              //           <ProfileTeacher />
+              //         </div>
+              //       }
+              //     />
               <Tab
                 id="editProfil"
                 className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto"
@@ -329,7 +328,6 @@ const TabsContentForTeacherPage = () => {
                   </div>
                 }
               />
-
             )}
           </Tabs>
         </div>
@@ -368,14 +366,12 @@ const ProfileTeacher = () => {
   const [Tarif, setTarif] = useState<string>("");
   const [Telepon, setTELEPON] = useState<string>("");
   const [TentangSaya, setTentangSaya] = useState<string>("");
-
   const [nama, setNama] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [alamat, setAlamat] = useState<string>("");
-  const [telepon, setTelepon] = useState<string>("");
   const [pesan, setPesan] = useState<string>("");
+  const [alamat_siswa, setAlamat] = useState<string>("");
+  const [telepon_siswa, setTelepon] = useState<string>("");
   const [metode_belajar, setMetodebelajar] = useState<string>("");
-  const [jam, setJam] = useState(new Date());
 
   const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
@@ -479,12 +475,9 @@ const ProfileTeacher = () => {
     const formData = new FormData();
 
     const body = {
-      pesan,
       metode_belajar,
-      tanggal,
-      jam,
-      alamat,
-      telepon,
+      alamat_siswa,
+      telepon_siswa,
       metode_pembayaran,
     };
 
@@ -584,11 +577,11 @@ const ProfileTeacher = () => {
               />
               {Nama}
             </div>
-            {checkId !== guru_id ? (
+            {checkId !== guru_id && checkRole === "guru" ? (
               <></>
             ) : (
               <>
-                {checkRole === "siswa" ? (
+                {checkToken && checkRole === "siswa" ? (
                   <>
                     <label
                       htmlFor="my-modal-3"
@@ -658,93 +651,97 @@ const ProfileTeacher = () => {
                               <h3 className="font-semibold text-xl ml-10">
                                 Atm / Bank Transfer
                               </h3>
-                              <div className="form-control flex flex-row">
-                                <CustomInput
-                                  id="input-checkbox-online"
-                                  name="online"
-                                  checked={metode_pembayaran === "bca"}
-                                  onChange={() => setMetodePembayaran("bca")}
-                                  type="checkbox"
-                                  className="checkbox mt-5 ml-10"
-                                />
-                                <label className="ml-4">
-                                  <span className="font-semibold text-lg">
-                                    <img src={bca} className="w-8/12" />
-                                  </span>
-                                </label>
-                              </div>
-                              <h1 className="text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-10">
-                                Format Kursus
-                              </h1>
-                              <div className="flex flex-rows w-full mt-5 ml-5">
-                                <div className="form-control ">
-                                  <CustomInput
-                                    id="input-checkbox-online"
-                                    name="online"
-                                    type="checkbox"
-                                    checked={metode_belajar === "online"}
-                                    onChange={(e) =>
-                                      handleChange(e.target.value, "online")
-                                    }
-                                    className="checkbox"
-                                  />
+                              <div className="collapse">
+                                <input type="checkbox" />
+                                <div className="collapse-title text-xl font-medium">
+                                  Click me to show/hide content
                                 </div>
-                                <label className="ml-4">
-                                  <span className="font-semibold text-lg">
-                                    <img src={bni} className="w-8/12" />
-                                  </span>
-                                </label>
+                                <div className="collapse-content">
+                                  <div className="form-control flex flex-row mt-5">
+                                    <CustomInput
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      type="checkbox"
+                                      checked={
+                                        metode_pembayaran === "no_va_bri"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran("no_va_bri")
+                                      }
+                                      className="checkbox mt-5 ml-10"
+                                    />
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img src={bri} className="w-8/12" />
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <div className="form-control flex flex-row mt-5">
+                                    <CustomInput
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      type="checkbox"
+                                      checked={
+                                        metode_pembayaran === "no_va_bri"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran("no_va_bri")
+                                      }
+                                      className="checkbox mt-5 ml-10"
+                                    />
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img src={bri} className="w-8/12" />
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <div className="form-control flex flex-row mt-5">
+                                    <CustomInput
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      type="checkbox"
+                                      checked={
+                                        metode_pembayaran === "no_va_permata"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran("no_va_permata")
+                                      }
+                                      className="checkbox mt-5 ml-10"
+                                    />
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img src={permata} className="w-8/12" />
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <h1 className="mt-5 font-semibold text-xl ml-10">
+                                    Mode QRIS
+                                  </h1>
+                                  <div className="form-control flex flex-row">
+                                    <CustomInput
+                                      id="input-checkbox-online"
+                                      name="online"
+                                      checked={
+                                        metode_pembayaran === "no_va_qris"
+                                      }
+                                      onChange={() =>
+                                        setMetodePembayaran("no_va_qris")
+                                      }
+                                      type="checkbox"
+                                      className="checkbox mt-5 ml-10"
+                                    />
+                                    <label className="ml-4">
+                                      <span className="font-semibold text-lg">
+                                        <img
+                                          src={qris}
+                                          className="w-8/12 mt-5"
+                                        />
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="form-control flex flex-row mt-5">
-                                <CustomInput
-                                  id="input-checkbox-online"
-                                  name="online"
-                                  type="checkbox"
-                                  checked={metode_pembayaran === "bri"}
-                                  onChange={() => setMetodePembayaran("bri")}
-                                  className="checkbox mt-5 ml-10"
-                                />
-                                <label className="ml-4">
-                                  <span className="font-semibold text-lg">
-                                    <img src={bri} className="w-8/12" />
-                                  </span>
-                                </label>
-                              </div>
-                              <div className="form-control flex flex-row mt-5">
-                                <CustomInput
-                                  id="input-checkbox-online"
-                                  name="online"
-                                  type="checkbox"
-                                  checked={metode_pembayaran === "permata"}
-                                  onChange={() =>
-                                    setMetodePembayaran("permata")
-                                  }
-                                  className="checkbox mt-5 ml-10"
-                                />
-                                <label className="ml-4">
-                                  <span className="font-semibold text-lg">
-                                    <img src={permata} className="w-8/12" />
-                                  </span>
-                                </label>
-                              </div>
-                              <h1 className="mt-5 font-semibold text-xl ml-10">
-                                Mode QRIS
-                              </h1>
-                              <div className="form-control flex flex-row">
-                                <CustomInput
-                                  id="input-checkbox-online"
-                                  name="online"
-                                  checked={metode_pembayaran === "qris"}
-                                  onChange={() => setMetodePembayaran("qris")}
-                                  type="checkbox"
-                                  className="checkbox mt-5 ml-10"
-                                />
-                                <label className="ml-4">
-                                  <span className="font-semibold text-lg">
-                                    <img src={qris} className="w-8/12 mt-5" />
-                                  </span>
-                                </label>
-                              </div>
+
                               <div className="flex-1 flex-col w-full min-h-screen">
                                 <h1 className="font-bold text-3xl ml-5 mt-10">
                                   Reservasi
@@ -766,7 +763,6 @@ const ProfileTeacher = () => {
                                     id="input-tentang-saya"
                                     className="textarea textarea-bordered h-32 w-10/12 lg:w-11/12 mx-auto bg-white"
                                     placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
-                                    onChange={(e) => setPesan(e.target.value)}
                                   ></textarea>
                                 </div>
                                 <h1 className="text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-10">
@@ -811,31 +807,7 @@ const ProfileTeacher = () => {
                                 <h1 className="font-semibold text-lg m-5 mt-8">
                                   Tanggal Kursus Pertama
                                 </h1>
-                                <div className="flex flex-rows  w-10/12 lg:w-11/12 mx-auto mt-5">
-                                  <DatePicker
-                                    id="picker-calendar"
-                                    selected={tanggal}
-                                    onChange={(date: any) => setTanggal(date)}
-                                    className="px-3 py-2 w-11/12 text-lg font-normal"
-                                  />
-                                  <DatePicker
-                                    id="picker-jam"
-                                    selected={jam}
-                                    onChange={(date: any) => {
-                                      const d: any = new Date(
-                                        date
-                                      ).toLocaleDateString();
-                                      console.log(d);
-                                      setJam(d);
-                                    }}
-                                    showTimeSelect
-                                    showTimeSelectOnly
-                                    timeIntervals={15}
-                                    timeCaption="Time"
-                                    dateFormat="h:mm aa"
-                                    className="px-3 py-2 text-lg font-normal"
-                                  />
-                                </div>
+                                <div className="flex flex-rows  w-10/12 lg:w-11/12 mx-auto mt-5"></div>
                                 <div className="collapse">
                                   <CustomInput id="checkbox" type="checkbox" />
                                   <div className="collapse-title text-xl font-bold text-center flex flex-rows justify-center mt-2 border-2 w-6/12 mx-auto">
@@ -1082,23 +1054,6 @@ const ProfileTeacher = () => {
                                             }
                                             className="px-3 py-2 w-11/12 text-lg font-normal"
                                           />
-                                          <DatePicker
-                                            id="picker-jam"
-                                            selected={jam}
-                                            onChange={(date: any) => {
-                                              const d: any = new Date(
-                                                date
-                                              ).toLocaleDateString();
-                                              console.log(d);
-                                              setJam(d);
-                                            }}
-                                            showTimeSelect
-                                            showTimeSelectOnly
-                                            timeIntervals={15}
-                                            timeCaption="Time"
-                                            dateFormat="h:mm aa"
-                                            className="px-3 py-2 text-lg font-normal"
-                                          />
                                         </div>
                                         <div className="collapse">
                                           <CustomInput
@@ -1148,7 +1103,6 @@ const ProfileTeacher = () => {
                                         <CustomInput
                                           id="input-gelar"
                                           type="text"
-                                          defaultValue={alamat}
                                           className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                                           placeholder="S1 Pendidikan Matematik "
                                           onChange={(e) =>
@@ -1163,7 +1117,7 @@ const ProfileTeacher = () => {
                                         <CustomInput
                                           id="input-gelar"
                                           type="text"
-                                          defaultValue={telepon}
+                                          defaultValue={telepon_siswa}
                                           className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                                           placeholder="S1 Pendidikan Matematik "
                                           onChange={(e) =>
@@ -1199,7 +1153,7 @@ const ProfileTeacher = () => {
                                 <CustomInput
                                   id="input-gelar"
                                   type="text"
-                                  defaultValue={alamat}
+                                  defaultValue={alamat_siswa}
                                   className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                                   placeholder="S1 Pendidikan Matematik "
                                   onChange={(e) => setAlamat(e.target.value)}
@@ -1212,7 +1166,7 @@ const ProfileTeacher = () => {
                                 <CustomInput
                                   id="input-gelar"
                                   type="text"
-                                  defaultValue={telepon}
+                                  defaultValue={telepon_siswa}
                                   className="input flex justify-center  w-10/12  lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                                   placeholder="S1 Pendidikan Matematik "
                                   onChange={(e) => setTelepon(e.target.value)}

@@ -429,6 +429,45 @@ function HalamanSesiMurid() {
                     </div>
                   }
                 />
+                <Tab
+                  id="tab-4"
+                  title="Detail Transaksi"
+                  className="text-center font-semibold lg:text-lg text-[18px] text-slate-500 lg:mt-5 pl-0 lg:pl-8 lg:pr-8 lg:-ml-4 -ml-2"
+                  panel={
+                    <div className="overflow-x-auto mt-10">
+                      <table className="table w-full mx-auto">
+                        <thead>
+                          <tr>
+                            <th className="text-[18px] text-zinc-700">No</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Nama Guru
+                            </th>
+                            <th className="text-[18px] text-zinc-700">Jam</th>
+                            <th className="text-[18px] text-zinc-700">
+                              Hari & Tanggal
+                            </th>
+                            <th className="text-[18px] text-zinc-700">
+                              Link Google Meet
+                            </th>
+                            <th className="text-[18px] text-zinc-700">
+                              Status
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="text-[16px] font-normal">
+                            <th>1</th>
+                            <td>Ahmad Bambang</td>
+                            <td>{jam}</td>
+                            <td>{tanggal}</td>
+                            <td>{tautan_gmeet}</td>
+                            <td>Selesai</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  }
+                />
               </Tabs>
             </div>
           </h1>
