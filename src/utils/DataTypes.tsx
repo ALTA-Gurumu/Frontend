@@ -38,13 +38,11 @@ export interface CompleteTeacher {
   pendidikan?: string;
   Avatar?: any;
   avatar?: any;
-
   jadwal?: string;
   ijazah?: any;
   latitude?: number;
   longitude?: number;
   Jadwal?: JadwalType[];
-
   data?: RiwayatType[];
   // dataUlasan?: UlasanType[];
   onChangeOption?: () => void;

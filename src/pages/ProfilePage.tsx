@@ -279,8 +279,12 @@ const TabsContentForTeacherPage = () => {
       <Layout>
         <Navbar />
         {checkId !== guru_id || checkRole === "siswa" ? (
-          <div className="pb-20 w-12/12 min-h-screen mt-20 lg:ml-60 ml-0 mx-auto">
-            <ProfileTeacher />
+          <div className="pb-20 ml-36">
+            <div className="w-12/12 min-h-screen mt-20 lg:ml-20 ml-0 mx-auto">
+              <div className="w-full min-h-screen text-sm font-normal">
+                <ProfileTeacher />
+              </div>
+            </div>
           </div>
         ) : (
           <div className="pb-20">
@@ -418,7 +422,7 @@ const ProfileTeacher = () => {
           Pengalaman,
           Tarif,
           Telepon,
-          tentang_saya,
+          TentangSaya,
         } = response.data.data;
 
         setAvatar(Avatar);
@@ -1246,10 +1250,10 @@ const ProfileTeacher = () => {
           <p className="text-zinc-900 lg:text-[36px] text-[28px] font-extrabold">
             {Gelar}
           </p>
-          <p className="text-[14px] text-zinc-500 mt-5">{TentangSaya}</p>
           <p className="font-bold text-[28px] text-zinc-900 mt-10 capitalize">
             Tentang {Nama}
           </p>
+          <p className="text-[14px] text-zinc-500 mt-5">{TentangSaya}</p>
           <ul className="lg:text-[16px] text-[15px]">
             <li className="flex gap-4 mt-8">
               <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />

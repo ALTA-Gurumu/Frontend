@@ -143,7 +143,6 @@ function Home() {
         setIjazah(Ijazah);
         setPendidikan(Pendidikan);
         setDeskripsi(TentangSaya);
-        // console.log(res.data.data);
       })
       .catch((err) => {
         alert(err.toString());
@@ -248,7 +247,7 @@ function Home() {
                       type="text"
                       className="input w-10/12 lg:w-8/12 mx-auto bg-white mt-7"
                       style={{ border: "2px solid #424242" }}
-                      placeholder={LinkedIn}
+                      placeholder={""}
                       defaultValue={LinkedIn}
                       onChange={(e) => handleChange(e.target.value, "linkedin")}
                     />
@@ -262,6 +261,7 @@ function Home() {
                     <CustomInput
                       id="input-ijazah"
                       type="file"
+                      accept="image/png, image/jpg, image/jpeg"
                       className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
                       onChange={(e) => {
                         if (!e.currentTarget.files) {
@@ -270,7 +270,6 @@ function Home() {
                         setIjazah(
                           URL.createObjectURL(e.currentTarget.files[0])
                         );
-                        handleChange(e.currentTarget.files[0], "ijazah");
                         handleChange(e.currentTarget.files[0], "ijazah");
                       }}
                     />
