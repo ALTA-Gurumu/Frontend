@@ -510,6 +510,8 @@ function Home() {
             </div>
           </div>
           {isCompleted ? (
+            <div className="mb-32"></div>
+          ) : (
             <div className="text-center mt-14 mb-20">
               <CustomButton
                 id="btn-lihatLainnya"
@@ -519,16 +521,6 @@ function Home() {
                 onClick={loadMore}
               />
             </div>
-          ) : (
-            <div className="mb-32"></div>
-            // <div className="text-center mt-14 mb-20">
-            //   {/* {loadMore !== homes.length ? "" : ""} */}
-            //   <CustomButton
-            //     id="btn-lihatLainnya"
-            //     className={`${btn} bg-[#F66B0E] text-white hover:bg-navy shadow-xl`}
-            //     label={label}
-            //   />
-            // </div>
           )}
         </>
       )}
