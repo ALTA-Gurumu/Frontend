@@ -4,10 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { set, slice } from "lodash";
 
-import {
-  CustomInput,
-  InputIcon,
-} from "../components/CustomInput";
+import { CustomInput, InputIcon } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -21,10 +18,7 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-import {
-  CompleteTeacher,
-  getGuruBeranda,
-} from "../utils/DataTypes";
+import { CompleteTeacher, getGuruBeranda } from "../utils/DataTypes";
 
 import Swal from "../utils/Swal";
 
@@ -64,13 +58,10 @@ function Home() {
   const [index, setIndex] = useState<number>(6);
   const [modal, setModal] = useState<string>("modal-open");
 
-  const [disabled, setDisabled] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingHome, setLoadingHome] = useState<boolean>(false);
-  const [teacher, setTeacher] = useState<getGuruBeranda[]>([]);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
-    {}
-  );
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -78,23 +69,12 @@ function Home() {
   const [pendidikan, setPendidikan] = useState<string>("");
   const [telefon, setTelefon] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
-  const [deskripsi, setDeskripsi] = useState<string>("");
-
-  const [btn, setBtn] = useState<string>(
-    "px-4 py-3 text-[20px] rounded-2xl"
-  );
-  const [label, setLabel] = useState<string>(
-    "Lihat lebih banyak guru"
-  );
+  const [tentangSaya, setTentangSaya] = useState<string>("");
 
   const filteredHomes = homes.filter(
     (home) =>
-      home.pelajaran
-        .toLowerCase()
-        .includes(searchSubject.toLowerCase()) &&
-      home.alamat
-        .toLowerCase()
-        .includes(searchLocation.toLowerCase())
+      home.pelajaran.toLowerCase().includes(searchSubject.toLowerCase()) &&
+      home.alamat.toLowerCase().includes(searchLocation.toLowerCase())
   );
 
   const loadMore = () => {
@@ -136,14 +116,10 @@ function Home() {
     });
   };
 
-  useEffect(() => {
-    checkRole === "guru" && fetchData();
-  }, []);
-
-  function fetchData() {
-    setLoading(true);
+  const fetchData = useCallback(() => {
+    setLoadingHome(true);
     axios
-      .get(`https://devmyproject.site/guru/${checkId}`, {})
+      .get(`https://devmyproject.site/guru/${checkId}`)
       .then((res) => {
         const {
           Ijazah,
@@ -160,18 +136,20 @@ function Home() {
         setTelefon(Telepon);
         setIjazah(Ijazah);
         setPendidikan(Pendidikan);
-        setDeskripsi(TentangSaya);
+        setTentangSaya(TentangSaya);
       })
       .catch((err) => {
         alert(err.toString());
       })
-      .finally(() => setLoading(false));
-  }
+      .finally(() => setLoadingHome(false));
+  }, []);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    setLoading(true);
+  useEffect(() => {
+    checkRole === "guru" && fetchData();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoadingHome(true);
     e.preventDefault();
     const formData = new FormData();
     let key: keyof typeof objSubmit;
@@ -183,14 +161,14 @@ function Home() {
       .put("https://devmyproject.site/guru", formData, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
-          "Content-Type": " multipart/form-data ",
+          "Content-Type": "multipart/json",
         },
       })
       .then((res) => {
         const { message } = res.data;
         setCookies("verifikasi", true, { path: "/" });
         MySwal.fire({
-          title: "Edit Succesfull",
+          title: "Berhasil Update",
           text: message,
           showCancelButton: false,
         });
@@ -199,18 +177,16 @@ function Home() {
       .catch((err) => {
         const { data } = err.response;
         MySwal.fire({
-          title: "Edit Failed",
+          title: "Update Gagal",
           text: data.message,
           showCancelButton: false,
         });
       })
-      .finally(() => setLoading(false));
+      .finally(() => fetchData())
+      .finally(() => setLoadingHome(false));
   };
 
-  const handleChange = (
-    value: string | File,
-    key: keyof typeof objSubmit
-  ) => {
+  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -261,14 +237,9 @@ function Home() {
                             return;
                           }
                           setAvatar(
-                            URL.createObjectURL(
-                              e.currentTarget.files[0]
-                            )
+                            URL.createObjectURL(e.currentTarget.files[0])
                           );
-                          handleChange(
-                            e.currentTarget.files[0],
-                            "avatar"
-                          );
+                          handleChange(e.currentTarget.files[0], "avatar");
                         }}
                       />
 
@@ -280,10 +251,7 @@ function Home() {
                         placeholder={LinkedIn}
                         defaultValue={LinkedIn}
                         onChange={(e) =>
-                          handleChange(
-                            e.target.value,
-                            "linkedin"
-                          )
+                          handleChange(e.target.value, "linkedin")
                         }
                       />
 
@@ -296,20 +264,16 @@ function Home() {
                       <CustomInput
                         id="input-ijazah"
                         type="file"
+                        accept="image/png, image/jpg, image/jpeg"
                         className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
                         onChange={(e) => {
                           if (!e.currentTarget.files) {
                             return;
                           }
                           setIjazah(
-                            URL.createObjectURL(
-                              e.currentTarget.files[0]
-                            )
+                            URL.createObjectURL(e.currentTarget.files[0])
                           );
-                          handleChange(
-                            e.currentTarget.files[0],
-                            "ijazah"
-                          );
+                          handleChange(e.currentTarget.files[0], "ijazah");
                         }}
                       />
                     </div>
@@ -335,10 +299,7 @@ function Home() {
                           placeholder={"contoh : Blitar"}
                           defaultValue={lokasiAsal}
                           onChange={(e) =>
-                            handleChange(
-                              e.target.value,
-                              "lokasi_asal"
-                            )
+                            handleChange(e.target.value, "lokasi_asal")
                           }
                         />
 
@@ -361,10 +322,7 @@ function Home() {
                           placeholder={"contoh : 0891234556"}
                           defaultValue={telefon}
                           onChange={(e) =>
-                            handleChange(
-                              e.target.value,
-                              "telepon"
-                            )
+                            handleChange(e.target.value, "telepon")
                           }
                         />
 
@@ -387,10 +345,7 @@ function Home() {
                             }}
                             name="option"
                             onChange={(e) =>
-                              handleChange(
-                                e.target.value,
-                                "pendidikan"
-                              )
+                              handleChange(e.target.value, "pendidikan")
                             }
                           >
                             <option value="DEFAULT" disabled>
@@ -398,9 +353,7 @@ function Home() {
                                 ? "Pilih Salah Satu"
                                 : `${pendidikan}`}
                             </option>
-                            <option value="Sekolah Dasar">
-                              Sekolah Dasar
-                            </option>
+                            <option value="Sekolah Dasar">Sekolah Dasar</option>
                             <option value="Sekolah Menengah Pertama">
                               Sekolah Menengah Pertama
                             </option>
@@ -425,12 +378,9 @@ function Home() {
                                 border: "2px solid #424242",
                               }}
                               placeholder="Ceritakan biografi singkat anda"
-                              defaultValue={deskripsi}
+                              defaultValue={tentangSaya}
                               onChange={(e) =>
-                                handleChange(
-                                  e.target.value,
-                                  "tentang_saya"
-                                )
+                                handleChange(e.target.value, "tentang_saya")
                               }
                             ></textarea>
                           </div>
@@ -466,9 +416,7 @@ function Home() {
                   className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"
                   placeholder="Mata Pelajaran"
                   value={searchSubject}
-                  onChange={(e) =>
-                    setSearchSubject(e.target.value)
-                  }
+                  onChange={(e) => setSearchSubject(e.target.value)}
                 />
               </div>
 
@@ -480,9 +428,7 @@ function Home() {
                   className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"
                   placeholder="Lokasi"
                   value={searchLocation}
-                  onChange={(e) =>
-                    setSearchLocation(e.target.value)
-                  }
+                  onChange={(e) => setSearchLocation(e.target.value)}
                 />
               </div>
 
@@ -492,21 +438,19 @@ function Home() {
 
           <div className="flex flex-col items-center w-full lg:mt-20 mt-14 ">
             <div className="gap-4 grid lg:grid-cols-3 grid-cols-1 lg:w-[90vw] w-[80vw]">
-              {filteredHomes
-                .slice(0, index)
-                .map((data, index) => (
-                  <Card
-                    id="card-guru"
-                    key={index}
-                    nama={data.nama}
-                    avatar={data.avatar}
-                    alamat={data.alamat}
-                    penilaian={data.penilaian}
-                    judul={data.judul}
-                    tarif={data.tarif}
-                    guru_id={data.guru_id}
-                  />
-                ))}
+              {filteredHomes.slice(0, index).map((data, index) => (
+                <Card
+                  id="card-guru"
+                  key={index}
+                  nama={data.nama}
+                  avatar={data.avatar}
+                  alamat={data.alamat}
+                  penilaian={data.penilaian}
+                  judul={data.judul}
+                  tarif={data.tarif}
+                  guru_id={data.guru_id}
+                />
+              ))}
             </div>
           </div>
           {isCompleted ? (

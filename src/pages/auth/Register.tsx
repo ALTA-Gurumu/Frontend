@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  ReactComponentElement,
-} from "react";
+import React, { useState, useEffect, ReactComponentElement } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -22,9 +18,7 @@ import { usePasswordValidation } from "../../utils/hooks/PasswordValidation";
 
 const Register = () => {
   const str =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-    "abcdefghijklmnopqrstuvwxyz" +
-    "1234567890";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "1234567890";
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
 
@@ -37,10 +31,9 @@ const Register = () => {
   const [generatePass, setGeneratePass] = useState<string>("");
   const [option, setOption] = useState();
 
-  const [hasNumber, upperCase, lowerCase] =
-    usePasswordValidation({
-      password: password,
-    });
+  const [hasNumber, upperCase, lowerCase] = usePasswordValidation({
+    password: password,
+  });
 
   function handleChange(event: any) {
     setOption(event.target.value);
@@ -54,9 +47,7 @@ const Register = () => {
     }
   }, [nama, option, email, password]);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setDLoading(true);
     e.preventDefault();
     const body = {
@@ -98,9 +89,7 @@ const Register = () => {
   function generatePassword(length: number) {
     let result = " ";
     for (let i = 0; i <= length; i++) {
-      let randomChar = Math.floor(
-        Math.random() * str.length + 1
-      );
+      let randomChar = Math.floor(Math.random() * str.length + 1);
       result += str.charAt(randomChar);
     }
 
@@ -123,9 +112,9 @@ const Register = () => {
                     className="w-11/12 max-w-full mt-5 lg:mt-0 lg:ml-0 ml-4 mb-5"
                   />
                   <p className=" text-navy lg:text-[16px] text-[0px] font-semibold text-center">
-                    Belajar lebih efektif dengan guru - guru yang
-                    professional dan berpengalaman mengajar.
-                    Segera bergabung dan bangunlah karir anda.
+                    Belajar lebih efektif dengan guru - guru yang professional
+                    dan berpengalaman mengajar. Segera bergabung dan bangunlah
+                    karir anda.
                   </p>
                 </div>
                 <div className="lg:w-[35vw] w-11/12 items-center -mt-15 lg:mt-2 lg:px-8 lg:pl-10 pl-8 lg:pt-4 pt-0">
@@ -168,8 +157,8 @@ const Register = () => {
                       <option value="DEFAULT" disabled>
                         Pilih Salah Satu
                       </option>
-                      <option value="1">Student</option>
-                      <option value="2">Teacher</option>
+                      <option value="1">Siswa</option>
+                      <option value="2">Guru</option>
                     </select>
 
                     <label className="label lg:mt-4 mt-1">
@@ -201,9 +190,7 @@ const Register = () => {
                           type="password"
                           placeholder="Silahkan Masukan Password"
                           className="input w-11/12 lg:w-11/12  bg-white border-3 border-navy"
-                          onChange={(e) =>
-                            setPassword(e.target.value)
-                          }
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                         <p className="text-[14px] mt-1 text-green-600 border-green-700">
                           Password yang anda masukkan kuat*
@@ -216,9 +203,7 @@ const Register = () => {
                           type="password"
                           placeholder="*********"
                           className="input w-11/12 lg:w-11/12  bg-white border-2 border-red-700"
-                          onChange={(e) =>
-                            setPassword(e.target.value)
-                          }
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                         <p className="mt-1 text-red-600 lg:text-[16px] text-[13px]">
                           Password yang anda masukkan Lemah*
