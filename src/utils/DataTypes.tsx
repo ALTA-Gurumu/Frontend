@@ -36,10 +36,9 @@ export interface CompleteTeacher {
   tarif?: number;
   pelajaran?: string;
   pendidikan?: string;
-  Avatar?: any;
   avatar?: any;
-  jadwal?: string;
   ijazah?: any;
+  jadwal?: string;
   latitude?: number;
   longitude?: number;
   Jadwal?: JadwalType[];
