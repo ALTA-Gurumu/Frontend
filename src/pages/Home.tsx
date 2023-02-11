@@ -166,12 +166,12 @@ function Home() {
       })
       .then((res) => {
         const { message } = res.data;
-        setCookies("verifikasi", true, { path: "/" });
         MySwal.fire({
           title: "Berhasil Update",
           text: message,
           showCancelButton: false,
         });
+        setCookies("verifikasi", true, { path: "/" });
         setObjSubmit({});
       })
       .catch((err) => {
@@ -230,7 +230,6 @@ function Home() {
                       <CustomInput
                         id="input-avatar"
                         type="file"
-                        accept="image/png, image/jpg, image/jpeg"
                         className="file-input h-10 w-full max-w-xs flex justify-center bg-white lg:mt-4"
                         onChange={(e) => {
                           if (!e.currentTarget.files) {
@@ -264,7 +263,6 @@ function Home() {
                       <CustomInput
                         id="input-ijazah"
                         type="file"
-                        accept="image/png, image/jpg, image/jpeg"
                         className="file-input h-10 file-input-bordered w-full max-w-xs bg-white"
                         onChange={(e) => {
                           if (!e.currentTarget.files) {

@@ -1,3 +1,4 @@
+import useDeepCompareEffect from "use-deep-compare-effect";
 import Profil2 from "../assets/profil2.webp";
 
 import { CustomInput } from "../components/CustomInput";
@@ -373,6 +374,7 @@ const ProfileTeacher = () => {
 
   const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
+  const [caraBelajar, setCaraBelajar] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -380,6 +382,7 @@ const ProfileTeacher = () => {
   const [tambah, setTambah] = useState<number>(2);
   const [finish, setFinish] = useState<boolean>(false);
   const [guruId, setGuruId] = useState<any>();
+
   const { guru_id } = useParams();
 
   const fetchData = useCallback(() => {
@@ -440,6 +443,7 @@ const ProfileTeacher = () => {
           Tarif,
           Telepon,
           TentangSaya,
+          MetodeBljr,
         } = response.data.data;
 
         setAvatar(Avatar);
@@ -460,6 +464,7 @@ const ProfileTeacher = () => {
         setTarif(Tarif);
         setTELEPON(Telepon);
         setTentangSaya(TentangSaya);
+        setCaraBelajar(MetodeBljr);
       })
       .catch((error) => {
         console.log(error);
@@ -1388,7 +1393,7 @@ const ProfileTeacher = () => {
                 </div>
                 <div className="flex gap-2 py-2 px-5 rounded-2xl bg-white shadow-lg">
                   <AiFillHome className="w-5 h-5" />
-                  <p>{Offline}</p>
+                  <p>{caraBelajar}</p>
                 </div>
               </div>
 
@@ -1486,19 +1491,13 @@ const EditProfileTeacher: React.FC<{
   const [longitude, setLongitude] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [LokasiAsal, setLokasiAsal] = useState<string>("");
-  const [MetodeBljr, setMetodeBljr] = useState("online");
   const [Pelajaran, setPelajaran] = useState<string>("");
   const [Pendidikan, setPendidikan] = useState<string>("");
   const [Pengalaman, setPengalaman] = useState<string>("");
   const [Tarif, setTarif] = useState<string>("");
   const [Telepon, setTELEPON] = useState<string>("");
   const [TentangSaya, setTentangSaya] = useState<string>("");
-
-  const [metode_belajar, setMETODEBELAJAR] = useState("");
-
-  const handleChangeCheckbox = (value: any) => {
-    setMETODEBELAJAR(value);
-  };
+  const [MetodeBljr, setMetodeBljr] = useState<string>("");
 
   const handleSearchMap = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -1572,7 +1571,6 @@ const EditProfileTeacher: React.FC<{
         setLongitude(longitude);
         setLinkedIn(LinkedIn);
         setLokasiAsal(LokasiAsal);
-
         setMetodeBljr(MetodeBljr);
         setPelajaran(Pelajaran);
         setPendidikan(Pendidikan);
@@ -1599,6 +1597,8 @@ const EditProfileTeacher: React.FC<{
     for (key in EditTeacher) {
       formData.append(key, EditTeacher[key]);
     }
+
+    console.log(formData);
 
     axios
       .put("https://devmyproject.site/guru", formData, {
@@ -1923,7 +1923,30 @@ const EditProfileTeacher: React.FC<{
                 />
               </div>
 
-              <div className="flex flex-rows w-4/12 mt-auto">
+              <div className="w-6/12">
+                <label className="label">
+                  <span className="label-text text-[16px] font-semibold  text-navy">
+                    Metode Belajar
+                  </span>
+                </label>
+                <select
+                  defaultValue={"DEFAULT"}
+                  id="input-role"
+                  className="select select-bordered w-11/12 border-2 bg-white font-normal text-[16px]"
+                  name="option"
+                  onChange={(e) =>
+                    handleChange(e.target.value, "metode_belajar")
+                  }
+                >
+                  <option value="DEFAULT" disabled>
+                    {MetodeBljr === "" ? "Belum Dipilih" : MetodeBljr}
+                  </option>
+                  <option value="online">Online</option>
+                  <option value="offline">Offline</option>
+                </select>
+              </div>
+
+              {/* <div className="flex flex-rows w-4/12 mt-auto">
                 <div className="form-control flex flex-row items-end">
                   <CustomInput
                     id="input-checkbox-online"
@@ -1957,7 +1980,7 @@ const EditProfileTeacher: React.FC<{
                     </label>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <label className="label mt-4">
