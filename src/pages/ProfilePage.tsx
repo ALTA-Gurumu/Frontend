@@ -486,7 +486,6 @@ const ProfileTeacher = () => {
     })
       .then((response) => {
         const {
-          ID,
           Avatar,
           Email,
           Gelar,
@@ -504,13 +503,9 @@ const ProfileTeacher = () => {
           Pengalaman,
           Tarif,
           Telepon,
-          tentang_saya,
-          tanggal,
-          jam,
+          TentangSaya,
+          MetodeBljr,
         } = response.data.data;
-
-        setTanggal(response.data.Jadwal.tanggal);
-        setJam(response.data.Jadwal.jam);
         setAvatar(Avatar);
         setEmail(Email);
         setGelar(Gelar);
@@ -532,14 +527,14 @@ const ProfileTeacher = () => {
         setCaraBelajar(MetodeBljr);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.toString());
       })
       .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
     fetchDataGuru();
-  }, [fetchDataGuru]);
+  }, []);
 
   const handleReservasi = async (
     e: React.FormEvent<HTMLFormElement>
@@ -635,108 +630,99 @@ const ProfileTeacher = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchPOVSiswa();
-  // }, []);
-
-  // function fetchPOVSiswa() {
-  //   axios.get("https://devmyproject.site/guru/");
-  // }
-
   function checkJadwal() {
     navigate(`/listmengajar/${checkId}`);
   }
+
+  console.log(Nama);
 
   return (
     <>
       {loading ? (
         <LoadingAnimation />
       ) : (
-        <div className="flex flex-col p-8">
-          <div className="flex lg:flex-row flex-col lg:items-start items-center w-full mt-10">
-            <div className="flex flex-col items-center lg:w-4/12 w-11/12 lg:p-5 p-0 ">
-              <div className="flex flex-col w-11/12 lg:h-[30rem] items-center rounded-3xl pb-4 bg-white text-[#424242] shadow-xl">
-                <div>
-                  {Email}
-                  <img
-                    src={Avatar}
-                    alt="profil.webp"
-                    className="lg:w-32 w-28 lg:h-32 h-28 rounded-full lg:mt-10 mt-5 mb-2"
-                  />
-                </div>
-                {checkId !== guru_id && checkRole === "guru" ? (
-                  <></>
-                ) : (
-                  <>
-                    {checkToken && checkRole === "siswa" ? (
-                      <>
-                        {Jadwal === null ? (
-                          <>Guru Belum ada jadwal</>
-                        ) : (
-                          <>
-                            <label
-                              htmlFor="my-modal-3"
-                              className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px]      text-[16px] text-white font-semibold"
-                            >
-                              {
-                                <RiMessage2Fill className="lg:w-6 w-5  lg:h-6 h-5" />
-                              }
-                              Reservasi
-                            </label>
-                            <CheckBayar />
-                          </>
-                        )}
-
-                        <p className="lg:text-[36px] text-[28px] font-semibold mt-5 mb-5">
-                          {" "}
-                          {Nama}
-                        </p>
-                        <div className="flex gap-1 mb-4">
-                          <MdStars className="w-5 h-5 text-[#F66B0E]" />
-                          <p className="text-[14px]">
-                            {`${5} (6 ulasan)`}{" "}
-                          </p>
-                        </div>
-                        <p className="font-semibold lg:text-[16px] text-[14px] pr-8 mb-5">
-                          Tarif Belajar/Jam{" "}
-                          <span className="lg:ml-10 ml-2">
-                            Rp.{Tarif}
-                          </span>
-                        </p>
-                        <p className="text-zinc-800 mt-6">
-                          Mata Pelajaran dan Tingkatan
-                        </p>
-                        <div className="flex text-[#637381] gap-8 text-[14px] mt-2">
-                          <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">
-                            {Pelajaran}
-                          </p>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <CustomButton
-                          id="btn-cek-jadwal"
-                          className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
-                          icon={
-                            <RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />
-                          }
-                          label={"Cek Jadwal"}
-                          onClick={() => checkJadwal()}
-                        />
-                      </>
-                    )}
-                  </>
-                )}
+        <div className="flex lg:flex-row flex-col mt-12 lg:-ml-40 -ml-14 lg:gap-10 gap-0">
+          <div className="flex flex-col items-center lg:w-5/12 w-11/12 lg:p-2 p-0 ml-5">
+            <div className="flex flex-col w-11/12 lg:h-[30rem] lg:pb-0 pb-4 items-center rounded-3xl bg-white text-[#424242] shadow-xl">
+              <div className="mb-4">
+                <img
+                  src={Avatar}
+                  alt="profil.webp"
+                  className="lg:w-32 w-28 lg:h-32 h-28 rounded-full lg:mt-10 mt-5 mb-2"
+                />
               </div>
-              <p className="text-[24px] text-zinc-800 font-semibold mt-10">
-                Tentang Kursus
-              </p>
+              {checkId !== guru_id && checkRole === "guru" ? (
+                <></>
+              ) : (
+                <>
+                  {checkToken && checkRole === "siswa" ? (
+                    <>
+                      {Jadwal === null ? (
+                        <>Guru Belum ada jadwal</>
+                      ) : (
+                        <>
+                          <label
+                            htmlFor="my-modal-3"
+                            className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px]      text-[16px] text-white font-semibold"
+                          >
+                            {
+                              <RiMessage2Fill className="lg:w-6 w-5  lg:h-6 h-5" />
+                            }
+                            Reservasi
+                          </label>
+                          <CheckBayar />
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <CustomButton
+                        id="btn-cek-jadwal"
+                        className="flex items-center justify-center gap-2 lg:w-60 w-52 bg-component hover:bg-navy border-none rounded-2xl p-2 lg:text-[20px] text-[16px] text-white font-semibold"
+                        icon={
+                          <RiMessage2Fill className="lg:w-6 w-5 lg:h-6 h-5" />
+                        }
+                        label={"Cek Jadwal"}
+                        onClick={() => checkJadwal()}
+                      />
+                    </>
+                  )}
+                </>
+              )}
 
-              <p className="px-5 py-3 text-lg  bg-white shadow-lg rounded-3xl mt-5">
-                {Pendidikan}
+              <p className="lg:text-[36px] text-[28px] font-semibold mt-5 mb-5 capitalize">
+                {" "}
+                {Nama}
               </p>
+              <div className="flex mt-2 gap-1 mb-4">
+                <MdStars className="w-5 h-5 text-[#F66B0E]" />
+                <p className="text-[14px] ">
+                  {`${5} (6 ulasan)`}{" "}
+                </p>
+              </div>
+              <p className="font-semibold lg:text-[16px] text-[14px] mb-5">
+                Tarif Belajar/Jam{" "}
+                <span className="lg:ml-2 ml-2">Rp.{Tarif}</span>
+              </p>
+              <p className="text-zinc-800 ">
+                Mata Pelajaran dan Tingkatan
+              </p>
+              <div className="flex text-[#637381] gap-8 text-[14px] mt-2">
+                <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">
+                  {Pelajaran}
+                </p>
+              </div>
             </div>
+            <p className="text-[24px] text-zinc-800 font-semibold mt-10">
+              Tentang Kursus
+            </p>
 
+            <p className="px-5 py-3 text-lg  bg-white shadow-lg rounded-3xl mt-5">
+              {Pendidikan}
+            </p>
+          </div>
+
+          <div className="flex lg:flex-row flex-col lg:items-start items-center w-full py-4 ">
             <div className="lg:w-9/12 w-11/12 py-2 lg:pl-24 pl-0 lg:pr-20 pr-0 lg:mt-0 mt-10">
               <p className="text-zinc-900 lg:text-[36px] text-[28px] font-extrabold">
                 {Gelar}
@@ -744,27 +730,16 @@ const ProfileTeacher = () => {
               <p className="text-[14px] text-zinc-500 mt-5">
                 {TentangSaya}
               </p>
-              <p className="font-bold text-[28px] text-zinc-900 mt-10">
-                Tentang John Doe
+              <p className="font-bold text-[28px] text-zinc-900 mt-10 capitalize">
+                Tentang {Nama}
               </p>
               <ul className="lg:text-[16px] text-[15px]">
-                <li className="flex gap-4 mt-8">
-                  <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
+                <p className="flex gap-4 mt-8 line-clamp-3">
+                  <label htmlFor="my-modal-3" className="mt-10">
+                    {Pengalaman}
+                  </label>
+                </p>
 
-                  {Pengalaman}
-                </li>
-              </ul>
-
-              <div className="mt-5">
-                {/* <label htmlFor="my-modal-3" className="mt-10">
-                Baca Selengkapnya ...
-              </label> */}
-
-                <input
-                  type="checkbox"
-                  id="my-modal-3"
-                  className="modal-toggle"
-                />
                 <div className="modal">
                   <div className="modal-box relative">
                     <label
@@ -774,79 +749,38 @@ const ProfileTeacher = () => {
                       ✕
                     </label>
                     <h1 className="text-2xl font-bold text-center">
-                      About John Doe
+                      About {Nama}
                     </h1>
                     <hr className="border-2 " />
-                    <li className="flex gap-4 mt-8">
-                      <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-                      Bachelor's Degree with more than 10 years
-                      experienced teaching math from primary,
-                      secondary, until senior.
-                    </li>
-                    <li className="flex gap-4 mt-8">
-                      <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-                      Experienced Teaching All Math Levels (AP
-                      Calculus, Pre-Algebra, Algebra 1, Algebra
-                      2, Geometry, Trigonometry, SAT, ACT, etc)
-                      for any curriculums such as Advanced
-                      Placement, IB (HL and SL), Cambridge
-                      (IGCSE, O Level and A Level).
-                    </li>
-                    <li className="flex gap-4 mt-8">
-                      <BsCheckCircle className="lg:w-8 w-16 lg:h-8 h-16 text-blue-600 lg:pb-0 pb-7" />
-                      Bachelor's Degree with more than 10 years
-                      experienced teaching math from primary,
-                      secondary, until senior.
-                    </li>
-                    <li className="flex gap-4 mt-8">
-                      <BsCheckCircle className="lg:w-16 w-32 lg:h-16 h-32 text-blue-600 lg:pb-0 pb-24" />
-                      Experienced Teaching All Math Levels (AP
-                      Calculus, Pre-Algebra, Algebra 1, Algebra
-                      2, Geometry, Trigonometry, SAT, ACT, etc)
-                      for any curriculums such as Advanced
-                      Placement, IB (HL and SL), Cambridge
-                      (IGCSE, O Level and A Level).
-                    </li>
+                    <p className="flex gap-4 mt-8">
+                      {Pengalaman}
+                    </p>
                   </div>
+                </div>
+              </ul>
+
+              <p className=" mt-10 mb-5 text-[24px] font-semibold">
+                Lokasi Kursus
+              </p>
+              <div className="flex flex-wrap gap-10">
+                <div className="flex gap-2 py-2 px-5 rounded-2xl lg:-mb-0 bg-white shadow-lg">
+                  <FaMapMarkerAlt className="w-5 h-5" />
+                  <p>{LokasiAsal}</p>
+                </div>
+                <div className="flex gap-2 py-2 px-5 rounded-2xl bg-white shadow-lg">
+                  <AiFillHome className="w-5 h-5" /> {"/"}{" "}
+                  <FaLaptop className="w-5 h-5" />
+                  <p>{caraBelajar}</p>
                 </div>
               </div>
 
-              <p className="text-[24px] text-zinc-800 font-semibold mt-10">
-                Tentang Kursus
+              <p className="text-[24px] text-zinc-900 font-semibold mt-10 mb-5">
+                Ulasan
               </p>
-              <p className="px-5 py-3 text-lg  bg-white shadow-lg rounded-3xl mt-5">
-                {Pendidikan}
-              </p>
-            </div>
-
-            <div className="flex lg:flex-row flex-col lg:items-start items-center w-full py-4 ">
-              <div className="lg:w-9/12 w-11/12 py-2 lg:pl-24 pl-0 lg:pr-20 pr-0 lg:mt-0 mt-10">
-                <p className="text-zinc-900 lg:text-[36px] text-[28px] font-extrabold">
-                  {Gelar}
-                </p>
-                <p className="text-[14px] text-zinc-500 mt-5">
-                  {TentangSaya}
-                </p>
-                <p className="font-bold text-[28px] text-zinc-900 mt-10 capitalize">
-                  Tentang {Nama}
-                </p>
-                <ul className="lg:text-[16px] text-[15px]">
-                  <p className="flex gap-4 mt-8 line-clamp-3">
-                    <label
-                      htmlFor="my-modal-3"
-                      className="mt-10"
-                    >
-                      {Pengalaman}
-                    </label>
-                  </p>
-                  <p className="text-[24px] text-zinc-900 font-semibold mt-10 mb-5">
-                    Ulasan
-                  </p>
-                  <CheckBayar />
-                  {/* <> */}
-                  {/* {ulasan.slice(0, tambah).map((data, index) => ( */}
+              <>
+                {ulasan.slice(0, tambah).map((data, index) => (
                   <div
-                    // key={index}
+                    key={index}
                     className="bg-white rounded-xl py-4 px-10 text-[16px] mb-4"
                   >
                     <div className="flex items-center gap-4">
@@ -855,80 +789,28 @@ const ProfileTeacher = () => {
                         alt="profil.webp"
                         className="w-8 h-8 rounded-full"
                       />
-                      <div className="modal">
-                        <div className="modal-box relative">
-                          <label
-                            htmlFor="my-modal-3"
-                            className="btn btn-sm btn-circle absolute right-2 top-2"
-                          >
-                            ✕
-                          </label>
-                          <h1 className="text-2xl font-bold text-center">
-                            About {Nama}
-                          </h1>
-                          <hr className="border-2 " />
-                          <p className="flex gap-4 mt-8">
-                            {Pengalaman}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </ul>
 
-                <p className=" mt-10 mb-5 text-[24px] font-semibold">
-                  Lokasi Kursus
-                </p>
-                <div className="flex flex-wrap gap-10">
-                  <div className="flex gap-2 py-2 px-5 rounded-2xl lg:-mb-0 bg-white shadow-lg">
-                    <FaMapMarkerAlt className="w-5 h-5" />
-                    <p>{LokasiAsal}</p>
-                  </div>
-                  <div className="flex gap-2 py-2 px-5 rounded-2xl bg-white shadow-lg">
-                    <AiFillHome className="w-5 h-5" /> {"/"}{" "}
-                    <FaLaptop className="w-5 h-5" />
-                    <p>{caraBelajar}</p>
-                  </div>
-                </div>
-
-                <p className="text-[24px] text-zinc-900 font-semibold mt-10 mb-5">
-                  Ulasan
-                </p>
-                <>
-                  {ulasan.slice(0, tambah).map((data, index) => (
-                    <div
-                      key={index}
-                      className="bg-white rounded-xl py-4 px-10 text-[16px] mb-4"
-                    >
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={Profil2}
-                          alt="profil.webp"
-                          className="w-8 h-8 rounded-full"
-                        />
-
-                        <p className="font-semibold">
-                          {data.nama_siswa}
-                        </p>
-                        <div className="flex items-center gap-1 ml-auto">
-                          <MdStars className="text-component" />
-                          {data.penilaian}
-                        </div>
-                      </div>
-                      <p className="mt-4 lg:text-[16px] text-[15px]">
-                        {data.ulasan}
+                      <p className="font-semibold">
+                        {data.nama_siswa}
                       </p>
+                      <div className="flex items-center gap-1 ml-auto">
+                        <MdStars className="text-component" />
+                        {data.penilaian}
+                      </div>
                     </div>
-                  ))}
-                </>
-                {finish ? (
-                  ""
-                ) : (
-                  <p onClick={loadUlasan} className="mt-5 mb-10">
-                    Lihat lebih banyak ......
-                  </p>
-                )}
-              </div>
+                    <p className="mt-4 lg:text-[16px] text-[15px]">
+                      {data.ulasan}
+                    </p>
+                  </div>
+                ))}
+              </>
+              {finish ? (
+                ""
+              ) : (
+                <p onClick={loadUlasan} className="mt-5 mb-10">
+                  Lihat lebih banyak ......
+                </p>
+              )}
             </div>
           </div>
         </div>
