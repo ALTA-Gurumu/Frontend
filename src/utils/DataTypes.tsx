@@ -88,6 +88,15 @@ type JadwalType = {
   Status?: string;
 };
 
+export interface Reservasi {
+  pesan?: string;
+  metode_belajar?: string;
+  tanggal?: string;
+  jam?: string;
+  alamat_siswa?: string;
+  telepon_siswa?: string;
+  metode_pembayaran?: string;
+}
 type SesikuType = {
   reservasi_id?: number;
   guru_id?: number;
@@ -114,6 +123,13 @@ export interface ProfilType {
   telepon?: string;
   avatar?: any;
   online?: string;
+  pesan?: string;
+  metode_belajar?: string;
+  tanggal?: string;
+  jam?: string;
+  alamat_siswa?: string;
+  telepon_siswa?: string;
+  metode_pembayaran?: string;
 }
 
 type Ulasan = {
