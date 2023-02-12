@@ -1,23 +1,22 @@
 import { Tabs, Tab, Classes } from "@blueprintjs/core";
-import "@blueprintjs/core/lib/css/blueprint.css";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import Cookies from "react-cookie/cjs/Cookies";
 import { useCookies } from "react-cookie";
 
-import { ProfilType } from "../utils/DataTypes";
+import axios from "axios";
+
+import { ProfilType, Sesiku } from "../utils/DataTypes";
 import Swal from "../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
 import EditProfilStudent from "./editProfilStudent";
 
-import {
-  CustomInput,
-  InputIcon,
-} from "../components/CustomInput";
+import { CustomInput, InputIcon } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import Layout from "../components/Layout";
-import { Link } from "react-router-dom";
 import { LoadingAnimation } from "../components/Loading";
 
 import Profil2 from "../assets/profil2.webp";
@@ -26,7 +25,6 @@ import Profil from "../assets/profil.jpg";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { AiTwotoneStar } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
-import Cookies from "react-cookie/cjs/Cookies";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsPhoneFill } from "react-icons/bs";
@@ -36,6 +34,7 @@ function HalamanSesiMurid() {
   const [cookie, removeCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
   const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
@@ -54,6 +53,9 @@ function HalamanSesiMurid() {
   const [status, setStatus] = useState<string>("");
   const [responseData, setResponseData] = useState<any>(null);
 
+  const [riwayat, setRiwayat] = useState<Sesiku>({});
+  const [ongoing, setOngoing] = useState<Sesiku>({});
+
   useEffect(() => {
     fetchDataSesi();
   }, []);
@@ -69,14 +71,8 @@ function HalamanSesiMurid() {
       params: {},
     })
       .then((res) => {
-        const {
-          nama_murid,
-          pelajaran,
-          tanggal,
-          jam,
-          tautan_gmeet,
-          status,
-        } = res.data.data;
+        const { nama_murid, pelajaran, tanggal, jam, tautan_gmeet, status } =
+          res.data.data;
 
         setNamaMurid(nama_murid);
         setPelajaran(pelajaran);
@@ -86,7 +82,7 @@ function HalamanSesiMurid() {
         setStatus(status);
       })
       .catch((err) => {
-        console.log(err.toString());
+        // console.log(err.toString());
       })
       .finally(() => setLoading(false));
   }
@@ -106,8 +102,7 @@ function HalamanSesiMurid() {
       params: {},
     })
       .then((res) => {
-        const { nama, email, alamat, telepon, avatar } =
-          res.data.data;
+        const { nama, email, alamat, telepon, avatar } = res.data.data;
 
         setNama(nama);
         setEmail(email);
@@ -121,9 +116,7 @@ function HalamanSesiMurid() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -159,21 +152,70 @@ function HalamanSesiMurid() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (
-    value: string | File,
-    key: keyof typeof objSubmit
-  ) => {
+  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
   };
 
   useEffect(() => {
-    const data = JSON.parse(
-      localStorage.getItem("data") || "{}"
-    );
+    const data = JSON.parse(localStorage.getItem("data") || "{}");
     setResponseData(data);
   }, []);
+
+  useEffect(() => {
+    fetchRiwayat();
+  }, []);
+
+  function fetchRiwayat() {
+    setLoading(true);
+    axios
+      .get(`https://devmyproject.site/sesiku/`, {
+        params: {
+          role: "siswa",
+          status: "selesai",
+        },
+      })
+      .then((res) => {
+        setRiwayat(res.data);
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+        MySwal.fire({
+          title: "Riwayat Anda",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    fetchOngoing();
+  }, []);
+
+  function fetchOngoing() {
+    setLoading(true);
+    axios
+      .get(`https://devmyproject.site/sesiku/`, {
+        params: {
+          role: "siswa",
+          status: "ongoing",
+        },
+      })
+      .then((res) => {
+        setOngoing(res.data);
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+        MySwal.fire({
+          title: "List Jadwal",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  }
 
   return (
     <Layout>
@@ -230,9 +272,7 @@ function HalamanSesiMurid() {
                               >
                                 <div className=" flex flex-col items-center lg:w-[30vw] w-[70vw] lg:mt-0 mt-5 text-[16px] text-[#112B3C] font-normal">
                                   <div>
-                                    <p className="items-start">
-                                      Nama Lengkap
-                                    </p>
+                                    <p className="items-start">Nama Lengkap</p>
                                     <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
                                       <HiUser className="w-7 h-6" />
                                       <InputIcon
@@ -241,19 +281,14 @@ function HalamanSesiMurid() {
                                         placeholder={nama}
                                         defaultValue={nama}
                                         onChange={(e) =>
-                                          handleChange(
-                                            e.target.value,
-                                            "nama"
-                                          )
+                                          handleChange(e.target.value, "nama")
                                         }
                                       />
                                     </div>
                                   </div>
 
                                   <div>
-                                    <p className="items-start">
-                                      Handphone
-                                    </p>
+                                    <p className="items-start">Handphone</p>
                                     <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
                                       <BsPhoneFill className="w-7 h-6" />
                                       <InputIcon
@@ -272,9 +307,7 @@ function HalamanSesiMurid() {
                                   </div>
 
                                   <div>
-                                    <p className="items-start">
-                                      Email
-                                    </p>
+                                    <p className="items-start">Email</p>
                                     <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
                                       <MdOutlineAlternateEmail className="w-7 h-6" />
                                       <InputIcon
@@ -283,19 +316,14 @@ function HalamanSesiMurid() {
                                         placeholder={email}
                                         defaultValue={email}
                                         onChange={(e) =>
-                                          handleChange(
-                                            e.target.value,
-                                            "email"
-                                          )
+                                          handleChange(e.target.value, "email")
                                         }
                                       />
                                     </div>
                                   </div>
 
                                   <div>
-                                    <p className="items-start">
-                                      Alamat
-                                    </p>
+                                    <p className="items-start">Alamat</p>
                                     <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
                                       <textarea
                                         id="input-alamat"
@@ -304,10 +332,7 @@ function HalamanSesiMurid() {
                                         placeholder={alamat}
                                         defaultValue={alamat}
                                         onChange={(e) =>
-                                          handleChange(
-                                            e.target.value,
-                                            "alamat"
-                                          )
+                                          handleChange(e.target.value, "alamat")
                                         }
                                       ></textarea>
                                     </div>
@@ -326,14 +351,10 @@ function HalamanSesiMurid() {
                                     Ubah Profil
                                   </p>
                                   <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
-                                    <img
-                                      src={avatar}
-                                      alt="profil.jpg"
-                                    />
+                                    <img src={avatar} alt="profil.jpg" />
                                   </div>
                                   <p className="text-[14px] font-normal text-[#C0B7B7]">
-                                    *Uk.foto maks 400 x 400
-                                    pixels
+                                    *Uk.foto maks 400 x 400 pixels
                                   </p>
 
                                   <CustomInput
@@ -343,16 +364,13 @@ function HalamanSesiMurid() {
                                     accept="image/png, image/jpg, image/jpeg"
                                     className="flex font-normal mt-2 text-[#112B3C] lg:text-[16px] text-[14px] text-center"
                                     onChange={(e) => {
-                                      if (
-                                        !e.currentTarget.files
-                                      ) {
+                                      if (!e.currentTarget.files) {
                                         return;
                                       }
 
                                       setAvatar(
                                         URL.createObjectURL(
-                                          e.currentTarget
-                                            .files[0]
+                                          e.currentTarget.files[0]
                                         )
                                       );
                                       handleChange(
@@ -399,12 +417,8 @@ function HalamanSesiMurid() {
                             </p>
                           </div>
                           <div className="lg:ml-0 ml-3 lg:mt-0 mt-5">
-                            <p className="block font-semibold">
-                              Alamat :
-                            </p>
-                            <p className="font-normal">
-                              {alamat}
-                            </p>
+                            <p className="block font-semibold">Alamat :</p>
+                            <p className="font-normal">{alamat}</p>
                           </div>
                         </div>
                       </div>
@@ -419,15 +433,11 @@ function HalamanSesiMurid() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">
-                                No
-                              </th>
+                              <th className="text-[18px] text-zinc-700">No</th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Guru
                               </th>
-                              <th className="text-[18px] text-zinc-700">
-                                Jam
-                              </th>
+                              <th className="text-[18px] text-zinc-700">Jam</th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
@@ -438,19 +448,29 @@ function HalamanSesiMurid() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr className="text-[16px] font-normal">
-                              <th>1</th>
-                              <td>Ahmad Bambang</td>
-                              <td>12.00 (WIB)</td>
-                              <td>Senin 20 Januari 2023</td>
-                              <td>Selesai</td>
-                              <td className="flex items-center text-component text-[16px] gap-1">
-                                <AiTwotoneStar className="w-5 h-5" />
-                                <Link to="/ulasan/:guru_id">
-                                  Ulasan
-                                </Link>
-                              </td>
-                            </tr>
+                            <>
+                              {riwayat.data?.map((data, index) => (
+                                <tr
+                                  key={data.reservasi_id}
+                                  className="text-[16px] font-normal"
+                                >
+                                  <th>{data.reservasi_id}</th>
+                                  <td>{data.nama_guru}</td>
+                                  <td>{data.jam}</td>
+                                  <td>{data.tanggal}</td>
+                                  <td>{data.status}</td>
+                                  <td
+                                    className="flex items-center text-component text-[16px] gap-1"
+                                    onClick={() =>
+                                      navigate(`/ulasan/${data.guru_id}`)
+                                    }
+                                  >
+                                    <AiTwotoneStar className="w-5 h-5" />
+                                    Ulasan
+                                  </td>
+                                </tr>
+                              ))}
+                            </>
                           </tbody>
                         </table>
                       </div>
@@ -465,15 +485,11 @@ function HalamanSesiMurid() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">
-                                No
-                              </th>
+                              <th className="text-[18px] text-zinc-700">No</th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Guru
                               </th>
-                              <th className="text-[18px] text-zinc-700">
-                                Jam
-                              </th>
+                              <th className="text-[18px] text-zinc-700">Jam</th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
@@ -486,14 +502,21 @@ function HalamanSesiMurid() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr className="text-[16px] font-normal">
-                              <th>1</th>
-                              <td>Ahmad Bambang</td>
-                              <td>{jam}</td>
-                              <td>{tanggal}</td>
-                              <td>{tautan_gmeet}</td>
-                              <td>Selesai</td>
-                            </tr>
+                            <>
+                              {ongoing.data?.map((data, index) => (
+                                <tr
+                                  key={index}
+                                  className="text-[16px] font-normal"
+                                >
+                                  <th>{data.reservasi_id}</th>
+                                  <td>{data.nama_guru}</td>
+                                  <td>{data.jam}</td>
+                                  <td>{data.tanggal}</td>
+                                  <td>{data.tautan_gmet}</td>
+                                  <td>{data.status}</td>
+                                </tr>
+                              ))}
+                            </>
                           </tbody>
                         </table>
                       </div>
@@ -508,15 +531,11 @@ function HalamanSesiMurid() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">
-                                No
-                              </th>
+                              <th className="text-[18px] text-zinc-700">No</th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Guru
                               </th>
-                              <th className="text-[18px] text-zinc-700">
-                                Jam
-                              </th>
+                              <th className="text-[18px] text-zinc-700">Jam</th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
