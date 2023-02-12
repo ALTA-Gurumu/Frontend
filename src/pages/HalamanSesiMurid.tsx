@@ -1,9 +1,11 @@
 import { Tabs, Tab, Classes } from "@blueprintjs/core";
-import "@blueprintjs/core/lib/css/blueprint.css";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import Cookies from "react-cookie/cjs/Cookies";
 import { useCookies } from "react-cookie";
 
+import axios from "axios";
 import { ProfilType, Sesiku } from "../utils/DataTypes";
 import Swal from "../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
@@ -14,7 +16,6 @@ import CustomButton from "../components/CustomButton";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import Layout from "../components/Layout";
-import { Link } from "react-router-dom";
 import { LoadingAnimation } from "../components/Loading";
 
 import Profil2 from "../assets/profil2.webp";
@@ -23,7 +24,6 @@ import Profil from "../assets/profil.jpg";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { AiTwotoneStar } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
-import Cookies from "react-cookie/cjs/Cookies";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsFillTrashFill, BsPhoneFill } from "react-icons/bs";
@@ -34,6 +34,7 @@ function HalamanSesiMurid() {
   const [cookie, removeCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
   const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
@@ -51,6 +52,9 @@ function HalamanSesiMurid() {
   const [tautan_gmeet, setTautanGmeet] = useState<string>("");
   const [responseData, setResponseData] = useState<any>([]);
   const [status, setStatus] = useState<string>("");
+
+  const [riwayat, setRiwayat] = useState<Sesiku>({});
+  const [ongoing, setOngoing] = useState<Sesiku>({});
 
   useEffect(() => {
     fetchDataSesi();
@@ -78,7 +82,7 @@ function HalamanSesiMurid() {
         setStatus(status);
       })
       .catch((err) => {
-        console.log(err.toString());
+        // console.log(err.toString());
       })
       .finally(() => setLoading(false));
   }
@@ -111,36 +115,6 @@ function HalamanSesiMurid() {
       })
       .finally(() => setLoading(false));
   }
-
-  // function fetchRiwayatSesi() {
-  //   setLoading(true);
-  //   axios
-  //     .get("https://devmyproject.site/sesiku/", {
-  //       params: {
-  //         role: "siswa",
-  //         status: "selesai",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       const { status } = res.data.data;
-  //       setStatus(status);
-  //       // setRiwayat(res.data);
-  //     })
-  //     .catch((err) => {
-  //       const { message } = err.response.data;
-  //       console.log(err.response.data.message);
-  //       MySwal.fire({
-  //         title: "Riwayat Anda",
-  //         text: message,
-  //         showCancelButton: false,
-  //       });
-  //     })
-  //     .finally(() => setLoading(false));
-  // }
-
-  // useEffect(() => {
-  //   fetchRiwayatSesi();
-  // }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -189,11 +163,67 @@ function HalamanSesiMurid() {
     setResponseData(data);
   }, []);
 
+
   const handleCanceOrder = () => {
     localStorage.removeItem("data");
     const remove = localStorage.removeItem("data");
     setResponseData(remove);
   };
+
+  useEffect(() => {
+    fetchRiwayat();
+  }, []);
+
+  function fetchRiwayat() {
+    setLoading(true);
+    axios
+      .get(`https://devmyproject.site/sesiku/`, {
+        params: {
+          role: "siswa",
+          status: "selesai",
+        },
+      })
+      .then((res) => {
+        setRiwayat(res.data);
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+        MySwal.fire({
+          title: "Riwayat Anda",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    fetchOngoing();
+  }, []);
+
+  function fetchOngoing() {
+    setLoading(true);
+    axios
+      .get(`https://devmyproject.site/sesiku/`, {
+        params: {
+          role: "siswa",
+          status: "ongoing",
+        },
+      })
+      .then((res) => {
+        setOngoing(res.data);
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+        MySwal.fire({
+          title: "List Jadwal",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  }
+
 
   return (
     <Layout>
@@ -427,17 +457,30 @@ function HalamanSesiMurid() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr className="text-[16px] font-normal">
-                              <th>1</th>
-                              <td>Ahmad Bambang</td>
-                              <td>12.00 (WIB)</td>
-                              <td>Senin 20 Januari 2023</td>
-                              <td>Selesai</td>
-                              <td className="flex items-center text-component text-[16px] gap-1">
-                                <AiTwotoneStar className="w-5 h-5" />
-                                <Link to="/ulasan/:guru_id">Ulasan</Link>
-                              </td>
-                            </tr>
+
+                            <>
+                              {riwayat.data?.map((data, index) => (
+                                <tr
+                                  key={data.reservasi_id}
+                                  className="text-[16px] font-normal"
+                                >
+                                  <th>{data.reservasi_id}</th>
+                                  <td>{data.nama_guru}</td>
+                                  <td>{data.jam}</td>
+                                  <td>{data.tanggal}</td>
+                                  <td>{data.status}</td>
+                                  <td
+                                    className="flex items-center text-component text-[16px] gap-1"
+                                    onClick={() =>
+                                      navigate(`/ulasan/${data.guru_id}`)
+                                    }
+                                  >
+                                    <AiTwotoneStar className="w-5 h-5" />
+                                    Ulasan
+                                  </td>
+                                </tr>
+                              ))}
+                            </>
                           </tbody>
                         </table>
                       </div>
@@ -469,14 +512,21 @@ function HalamanSesiMurid() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr className="text-[16px] font-normal">
-                              <th>1</th>
-                              <td>Ahmad Bambang</td>
-                              <td>{jam}</td>
-                              <td>{tanggal}</td>
-                              <td>{tautan_gmeet}</td>
-                              <td>Selesai</td>
-                            </tr>
+                            <>
+                              {ongoing.data?.map((data, index) => (
+                                <tr
+                                  key={index}
+                                  className="text-[16px] font-normal"
+                                >
+                                  <th>{data.reservasi_id}</th>
+                                  <td>{data.nama_guru}</td>
+                                  <td>{data.jam}</td>
+                                  <td>{data.tanggal}</td>
+                                  <td>{data.tautan_gmet}</td>
+                                  <td>{data.status}</td>
+                                </tr>
+                              ))}
+                            </>
                           </tbody>
                         </table>
                       </div>
@@ -492,6 +542,7 @@ function HalamanSesiMurid() {
                           <thead>
                             <tr>
                               <th className="text-[18px] text-zinc-700">No</th>
+
                               <th className="text-[18px] text-zinc-700">
                                 Nama Guru
                               </th>
@@ -501,6 +552,7 @@ function HalamanSesiMurid() {
                               <th className="text-[18px] text-zinc-700">
                                 Pelajaran
                               </th>
+
                               <th className="text-[18px] text-zinc-700">
                                 Metode Belajar
                               </th>

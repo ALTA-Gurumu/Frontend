@@ -102,6 +102,7 @@ type SesikuType = {
   guru_id?: number;
   role?: string;
   nama_siswa?: string;
+  nama_guru?: string;
   tanggal?: string;
   jam?: string;
   tautan_gmet?: string;
