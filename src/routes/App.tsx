@@ -32,6 +32,7 @@ function App() {
     config.headers.Authorization = `Bearer ${cookie.token}`;
     return config;
   });
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -84,7 +85,6 @@ function App() {
     },
     {
       path: "/profile-teacher/:guru_id",
-      // element: <TabsContentForTeacherPage />,
       element: checkToken ? <TabsContentForTeacherPage /> : <Login />,
     },
     {
@@ -92,26 +92,6 @@ function App() {
       element:
         checkToken && checkRole === "guru" ? <HalamanSesiGuru /> : <Home />,
     },
-    // {
-    //   path: "/profile-edit/:id_user",
-    //   element: checkToken ? <EditProfile /> : <Login />,
-    // },
-    // {
-    //   path: "/new-item",
-    //   element: checkToken ? <AddProduct /> : <Login />,
-    // },
-    // {
-    //   path: "/edit-item/:product_id",
-    //   element: checkToken ? <EditProduct /> : <Login />,
-    // },
-    // {
-    //   path: "/buying/:id_order",
-    //   element: checkToken ? <DetailTransc /> : <Login />,
-    // },
-    // {
-    //   path: "/selling/:id_order",
-    //   element: checkToken ? <DetailTranscSell /> : <Login />,
-    // },
   ]);
 
   return <RouterProvider router={router} />;

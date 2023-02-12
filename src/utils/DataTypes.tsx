@@ -47,6 +47,10 @@ export interface CompleteTeacher {
   onChangeOption?: () => void;
 }
 
+export interface Sesiku {
+  data?: SesikuType[];
+}
+
 export interface EditTeacher {
   nama?: string;
   email?: string;
@@ -83,6 +87,18 @@ type JadwalType = {
   Jam?: string;
   Status?: string;
 };
+
+type SesikuType = {
+  reservasi_id?: number;
+  guru_id?: number;
+  role?: string;
+  nama_siswa?: string;
+  tanggal?: string;
+  jam?: string;
+  tautan_gmet?: string;
+  status?: string;
+};
+
 export interface UlasanType {
   data: Ulasan[];
   id: number;
