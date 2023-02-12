@@ -1,3 +1,4 @@
+import useDeepCompareEffect from "use-deep-compare-effect";
 import Profil2 from "../assets/profil2.webp";
 
 import { CustomInput } from "../components/CustomInput";
@@ -17,16 +18,25 @@ import { AiFillHome } from "react-icons/ai";
 import { FaLaptop } from "react-icons/fa";
 import { MdStars } from "react-icons/md";
 
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMap,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import openMap from "../assets/google-maps.webp";
 
+
 import { Tabs, Tab, Classes, RadioGroup, Radio } from "@blueprintjs/core";
+
 
 import { useEffect, useRef } from "react";
 import { useMemo, useState, useCallback } from "react";
 import { InputIcon } from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
+import { LoadingAnimation } from "../components/Loading";
 
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -84,10 +94,17 @@ function ProfileStudent() {
             </p>
           </label>
 
-          <input type="checkbox" id="my-modal-5" className="modal-toggle" />
+          <input
+            type="checkbox"
+            id="my-modal-5"
+            className="modal-toggle"
+          />
           <div className="modal">
             <div className="modal-box lg:w-9/12 w-10/12 max-w-full lg:pl-10 lg:p-5 p-7 shadow-xl">
-              <label htmlFor="my-modal-5" className="absolute right-5 top-4">
+              <label
+                htmlFor="my-modal-5"
+                className="absolute right-5 top-4"
+              >
                 <IoMdCloseCircleOutline className="text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7" />
               </label>
               <EditProfilStudent />
@@ -115,7 +132,10 @@ function ProfileStudent() {
               <br />
               <p className=" font-semibold">
                 Handphone
-                <span className=" pl-[6px] font-normal"> : 089566787765</span>
+                <span className=" pl-[6px] font-normal">
+                  {" "}
+                  : 089566787765
+                </span>
               </p>
             </div>
             <div className="lg:ml-0 ml-3 lg:mt-0 mt-5">
@@ -133,7 +153,7 @@ function ProfileStudent() {
 
 const EditProfilStudent = () => {
   return (
-    <div className="flex lg:flex-row flex-col-reverse">
+    <div className="flex lg:flex-row flex-col-revers">
       <div className="flex flex-col items-center lg:w-[50vw] w-[70vw] lg:mt-0 mt-5 text-[16px] text-[#112B3C] font-normal">
         <div>
           <p className="items-start">Nama Lengkap</p>
@@ -151,7 +171,10 @@ const EditProfilStudent = () => {
           <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
             <BsPhoneFill className="w-7 h-6" />
 
-            <InputIcon id="input-handphone" placeholder="089788970987" />
+            <InputIcon
+              id="input-handphone"
+              placeholder="089788970987"
+            />
           </div>
         </div>
 
@@ -187,7 +210,9 @@ const EditProfilStudent = () => {
       </div>
 
       <div className="flex flex-col items-center lg:w-[50vw] w-[70vw] lg:pt-16 pt-0 lg:mt-0 mt-2">
-        <p className="text-[#112B3C] text-[34px] font-semibold">Ubah Profil</p>
+        <p className="text-[#112B3C] text-[34px] font-semibold">
+          Ubah Profil
+        </p>
         <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
           <img src={Profil2} alt="profil.jpg" />
         </div>
@@ -278,7 +303,11 @@ const options: MapOptions = {
 
 const TabsContentForTeacherPage = () => {
   const [cookies, ,] = useCookies(["role"]);
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.guru_id;
@@ -288,49 +317,34 @@ const TabsContentForTeacherPage = () => {
     <>
       <Layout>
         <Navbar />
-        <div>
-          <Tabs
-            defaultSelectedTabId="profil"
-            className={`${Classes.COMPACT} w-11/12 mx-auto min-h-screen mt-20 `}
-            renderActiveTabPanelOnly={true}
-          >
-            <Tab
-              id="profil"
-              title="Profil"
-              className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
-              panel={
-                <div className="w-full min-h-screen text-sm font-normal">
-                  <ProfileTeacher />
-                </div>
-              }
-            />
-            {checkId !== guru_id ? (
-              <></>
-            ) : (
-              // {checkRole === "siswa" ? (
-              //   <div>
-              //     <ProfileTeacher />
-              //   </div>
-              // ) : (
-              // <div>
-              //   <Tabs
-              //     defaultSelectedTabId="profil"
-              //     className={`${Classes.COMPACT} w-11/12 mx-auto min-h-screen mt-20 `}
-              //     renderActiveTabPanelOnly={true}
-              //   >
-              //     <Tab
-              //       id="profil"
-              //       title="Profil"
-              //       className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto "
-              //       panel={
-              //         <div className="w-full min-h-screen text-sm font-normal">
-              //           <ProfileTeacher />
-              //         </div>
-              //       }
-              //     />
+        {checkId !== guru_id || checkRole === "siswa" ? (
+          <div className="pb-20 ml-36">
+            <div className="w-12/12 min-h-screen mt-20 lg:ml-20 ml-0 mx-auto">
+              <div className="w-full min-h-screen text-sm font-normal">
+                <ProfileTeacher />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="pb-20">
+            <Tabs
+              defaultSelectedTabId="profil"
+              className={`${Classes.COMPACT} w-12/12 min-h-screen mt-20 lg:ml-20 ml-0 mx-auto `}
+              renderActiveTabPanelOnly={true}
+            >
+              <Tab
+                id="profil"
+                title="Profil"
+                className="pl-12 pr-12 pb-2 text-xl font-bold lg:ml-32 ml-10 lg:mx-0 mx-auto"
+                panel={
+                  <div className="w-full min-h-screen text-sm font-normal">
+                    <ProfileTeacher />
+                  </div>
+                }
+              />
               <Tab
                 id="editProfil"
-                className="pl-12 pr-12 pb-2 text-xl font-bold mx-auto"
+                className="pl-12 pr-12 pb-2 font-bold text-xl lg:ml-60 mx-auto"
                 title="Edit Profile"
                 panel={
                   <div className="w-full min-h-screen text-sm font-normal">
@@ -341,10 +355,9 @@ const TabsContentForTeacherPage = () => {
                   </div>
                 }
               />
-            )}
-          </Tabs>
-        </div>
-
+            </Tabs>
+          </div>
+        )}
         <Footer />
       </Layout>
     </>
@@ -371,19 +384,12 @@ interface ChargeRequest {
 const MIDTRANS_API_KEY = "SB-Mid-server-iTr-aTpYYMJkOzRoWLk1l-lg";
 
 const ProfileTeacher = () => {
-  const [redirectURL, setRedirectURL] = useState<string | null>(null);
-  const [customerDetails, setCustomerDetails] = useState<CustomerDetails>({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-  });
-  const [transactionDetails, setTransactionDetails] =
-    useState<TransactionDetails>({
-      order_id: "",
-      gross_amount: 0,
-    });
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.guru_id;
@@ -415,13 +421,18 @@ const ProfileTeacher = () => {
   const [pesan, setPesan] = useState<string>("");
   const [alamat_siswa, setAlamat] = useState<string>("");
   const [telepon_siswa, setTelepon] = useState<string>("");
+
   const [metode_belajar, setMetodebelajar] = useState<string>("");
   const [jam, setJam] = useState<string>("");
   const [jadwal, setJADWAL] = useState<string>("");
   const [tanggal, setTanggal] = useState<string>("");
 
-  const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
+ 
+
+  const [metode_pembayaran, setMetodePembayaran] =
+    useState<string>("");
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
+  const [caraBelajar, setCaraBelajar] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -429,9 +440,11 @@ const ProfileTeacher = () => {
   const [tambah, setTambah] = useState<number>(2);
   const [finish, setFinish] = useState<boolean>(false);
   const [guruId, setGuruId] = useState<any>();
+
   const { guru_id } = useParams();
 
   const fetchData = useCallback(() => {
+    setLoading(true);
     axios({
       method: "GET",
       url: `https://devmyproject.site/siswa`,
@@ -450,7 +463,8 @@ const ProfileTeacher = () => {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -458,6 +472,7 @@ const ProfileTeacher = () => {
   }, []);
 
   const fetchDataGuru = useCallback(() => {
+    setLoading(true);
     axios({
       method: "GET",
       url: `https://devmyproject.site/guru/${guru_id}`,
@@ -489,6 +504,7 @@ const ProfileTeacher = () => {
           tentang_saya,
           tanggal,
           jam,
+
         } = response.data.data;
 
         setTanggal(response.data.Jadwal.tanggal);
@@ -511,17 +527,21 @@ const ProfileTeacher = () => {
         setTarif(Tarif);
         setTELEPON(Telepon);
         setTentangSaya(TentangSaya);
+        setCaraBelajar(MetodeBljr);
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
     fetchDataGuru();
   }, [fetchDataGuru]);
 
-  const handleReservasi = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleReservasi = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -558,7 +578,10 @@ const ProfileTeacher = () => {
       .finally(() => setLoading(false));
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -569,10 +592,13 @@ const ProfileTeacher = () => {
   }, []);
 
   useEffect(() => {
-    setGuruId(new URL(window.location.href).searchParams.get("guru_id"));
+    setGuruId(
+      new URL(window.location.href).searchParams.get("guru_id")
+    );
   }, []);
 
   function fetchUlasan() {
+    setLoading(true);
     axios({
       method: "GET",
       url: `https://devmyproject.site/ulasan/${guru_id}`,
@@ -619,7 +645,10 @@ const ProfileTeacher = () => {
     navigate(`/listmengajar/${checkId}`);
   }
   return (
-    <div className="flex flex-col p-8">
+ {loading ? (
+        <LoadingAnimation />
+      ) : (
+      <div className="flex flex-col p-8">
       <div className="flex lg:flex-row flex-col lg:items-start items-center w-full mt-10">
         <div className="flex flex-col items-center lg:w-4/12 w-11/12 lg:p-5 p-0 ">
           <div className="flex flex-col w-11/12 lg:h-[30rem] items-center rounded-3xl pb-4 bg-white text-[#424242] shadow-xl">
@@ -631,6 +660,7 @@ const ProfileTeacher = () => {
                 className="lg:w-32 w-28 lg:h-32 h-28 rounded-full lg:mt-10 mt-5 mb-2"
               />
             </div>
+            {}
             {checkId !== guru_id && checkRole === "guru" ? (
               <></>
             ) : (
@@ -760,26 +790,36 @@ const ProfileTeacher = () => {
                     Level).
                   </li>
                 </div>
+      )
               </div>
             </div>
-          </ul>
 
-          <p className=" mt-10 mb-5 text-[24px] font-semibold">Lokasi Kursus</p>
-          <div className="flex flex-wrap gap-10">
-            <div className="flex gap-2 py-2 px-5 rounded-2xl lg:-mb-0 -mb-5 bg-white shadow-lg">
-              <FaMapMarkerAlt className="w-5 h-5" />
-              <p>{LokasiAsal}</p>
-            </div>
-            <div className="flex gap-2 py-2 px-5 rounded-2xl bg-white shadow-lg">
-              <AiFillHome className="w-5 h-5" />
-              <p>{Offline}</p>
-            </div>
+            <p className="text-[24px] text-zinc-800 font-semibold mt-10">
+              Tentang Kursus
+            </p>
+            <p className="px-5 py-3 text-lg  bg-white shadow-lg rounded-3xl mt-5">
+              {Pendidikan}
+            </p>
           </div>
 
-          <p className="mt-5 flex w-64 gap-2 py-2 px-5 rounded-2xl bg-white shadow-lg">
-            <FaLaptop className="w-5 h-5" />
-            {Online}
-          </p>
+          <div className="flex lg:flex-row flex-col lg:items-start items-center w-full py-4 ">
+            <div className="lg:w-9/12 w-11/12 py-2 lg:pl-24 pl-0 lg:pr-20 pr-0 lg:mt-0 mt-10">
+              <p className="text-zinc-900 lg:text-[36px] text-[28px] font-extrabold">
+                {Gelar}
+              </p>
+              <p className="text-[14px] text-zinc-500 mt-5">
+                {TentangSaya}
+              </p>
+              <p className="font-bold text-[28px] text-zinc-900 mt-10 capitalize">
+                Tentang {Nama}
+              </p>
+              <ul className="lg:text-[16px] text-[15px]">
+                <p className="flex gap-4 mt-8 line-clamp-3">
+                  <label htmlFor="my-modal-3" className="mt-10">
+                    {Pengalaman}
+                  </label>
+                </p>
+
 
           <p className="text-[24px] text-zinc-900 font-semibold mt-10 mb-5">
             Ulasan
@@ -797,27 +837,83 @@ const ProfileTeacher = () => {
                     alt="profil.webp"
                     className="w-8 h-8 rounded-full"
                   />
-
-                  <p className="font-semibold">{data.nama_siswa}</p>
-                  <div className="flex items-center gap-1 ml-auto">
-                    <MdStars className="text-component" />
-                    {data.penilaian}
+                  <div className="modal">
+                    <div className="modal-box relative">
+                      <label
+                        htmlFor="my-modal-3"
+                        className="btn btn-sm btn-circle absolute right-2 top-2"
+                      >
+                        ✕
+                      </label>
+                      <h1 className="text-2xl font-bold text-center">
+                        About {Nama}
+                      </h1>
+                      <hr className="border-2 " />
+                      <p className="flex gap-4 mt-8">
+                        {Pengalaman}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <p className="mt-4 lg:text-[16px] text-[15px]">{data.ulasan}</p>
+              </ul>
+
+              <p className=" mt-10 mb-5 text-[24px] font-semibold">
+                Lokasi Kursus
+              </p>
+              <div className="flex flex-wrap gap-10">
+                <div className="flex gap-2 py-2 px-5 rounded-2xl lg:-mb-0 bg-white shadow-lg">
+                  <FaMapMarkerAlt className="w-5 h-5" />
+                  <p>{LokasiAsal}</p>
+                </div>
+                <div className="flex gap-2 py-2 px-5 rounded-2xl bg-white shadow-lg">
+                  <AiFillHome className="w-5 h-5" /> {"/"}{" "}
+                  <FaLaptop className="w-5 h-5" />
+                  <p>{caraBelajar}</p>
+                </div>
               </div>
-            ))}
-          </>
-          {finish ? (
-            ""
-          ) : (
-            <p onClick={loadUlasan} className="mt-5">
-              Lihat lebih banyak ......
-            </p>
-          )}
+
+              <p className="text-[24px] text-zinc-900 font-semibold mt-10 mb-5">
+                Ulasan
+              </p>
+              <>
+                {ulasan.slice(0, tambah).map((data, index) => (
+                  <div
+                    key={index}
+                    className="bg-white rounded-xl py-4 px-10 text-[16px] mb-4"
+                  >
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={Profil2}
+                        alt="profil.webp"
+                        className="w-8 h-8 rounded-full"
+                      />
+
+                      <p className="font-semibold">
+                        {data.nama_siswa}
+                      </p>
+                      <div className="flex items-center gap-1 ml-auto">
+                        <MdStars className="text-component" />
+                        {data.penilaian}
+                      </div>
+                    </div>
+                    <p className="mt-4 lg:text-[16px] text-[15px]">
+                      {data.ulasan}
+                    </p>
+                  </div>
+                ))}
+              </>
+              {finish ? (
+                ""
+              ) : (
+                <p onClick={loadUlasan} className="mt-5 mb-10">
+                  Lihat lebih banyak ......
+                </p>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 const center = {
@@ -830,6 +926,7 @@ interface Location {
   lon: number;
   display_name: string;
 }
+
 const EditProfileTeacher: React.FC<{
   center: { lat: number; lng: number };
   scrollWheelZoom: boolean;
@@ -840,17 +937,27 @@ const EditProfileTeacher: React.FC<{
     lng: -0.09,
   });
   const [zoom, setZoom] = useState(13);
-  const [locations, setLocations] = useState<Array<Location>>([]);
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+  const [locations, setLocations] = useState<Array<Location>>(
+    []
+  );
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
 
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.guru_id;
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
+    {}
+  );
 
-  const [EditTeacher, setEditTeacher] = useState<EditTeacher>({});
+  const [EditTeacher, setEditTeacher] = useState<EditTeacher>(
+    {}
+  );
 
   const [tanggal, setTanggal] = useState<string>("");
   const [startDate, setStartDate] = useState(new Date());
@@ -858,6 +965,7 @@ const EditProfileTeacher: React.FC<{
 
   const [Avatar, setAvatar] = useState<any>("");
   const [Email, setEmail] = useState<string>("");
+  const [Nama, setNama] = useState<string>("");
   const [Gelar, setGelar] = useState<string>("");
   const [Ijazah, setIjazah] = useState<any>("");
   const [Jadwal, setJadwal] = useState<string>("");
@@ -865,21 +973,17 @@ const EditProfileTeacher: React.FC<{
   const [longitude, setLongitude] = useState<string>("");
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [LokasiAsal, setLokasiAsal] = useState<string>("");
-  const [MetodeBljr, setMetodeBljr] = useState("online");
   const [Pelajaran, setPelajaran] = useState<string>("");
   const [Pendidikan, setPendidikan] = useState<string>("");
   const [Pengalaman, setPengalaman] = useState<string>("");
   const [Tarif, setTarif] = useState<string>("");
   const [Telepon, setTELEPON] = useState<string>("");
   const [TentangSaya, setTentangSaya] = useState<string>("");
+  const [MetodeBljr, setMetodeBljr] = useState<string>("");
 
-  const [metode_belajar, setMETODEBELAJAR] = useState("");
-
-  const handleChangeCheckbox = (value: any) => {
-    setMETODEBELAJAR(value);
-  };
-
-  const handleSearchMap = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearchMap = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     console.log("Submitting form...");
 
@@ -911,6 +1015,7 @@ const EditProfileTeacher: React.FC<{
   }, [locations]);
 
   const fetchDataGuru = useCallback(() => {
+    setLoading(true);
     axios({
       method: "GET",
       url: `https://devmyproject.site/guru/${checkId}`,
@@ -923,6 +1028,7 @@ const EditProfileTeacher: React.FC<{
         const {
           Avatar,
           Email,
+          Nama,
           Gelar,
           Ijazah,
           Jadwal,
@@ -941,6 +1047,7 @@ const EditProfileTeacher: React.FC<{
 
         setAvatar(Avatar);
         setEmail(Email);
+        setNama(Nama);
         setGelar(Gelar);
         setIjazah(Ijazah);
         setJadwal(Jadwal);
@@ -948,7 +1055,6 @@ const EditProfileTeacher: React.FC<{
         setLongitude(longitude);
         setLinkedIn(LinkedIn);
         setLokasiAsal(LokasiAsal);
-
         setMetodeBljr(MetodeBljr);
         setPelajaran(Pelajaran);
         setPendidikan(Pendidikan);
@@ -959,14 +1065,17 @@ const EditProfileTeacher: React.FC<{
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
     fetchDataGuru();
   }, []);
 
-  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -974,6 +1083,8 @@ const EditProfileTeacher: React.FC<{
     for (key in EditTeacher) {
       formData.append(key, EditTeacher[key]);
     }
+
+    console.log(formData);
 
     axios
       .put("https://devmyproject.site/guru", formData, {
@@ -1012,7 +1123,9 @@ const EditProfileTeacher: React.FC<{
     setEditTeacher(temp);
   };
 
-  const handlePostJadwal = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePostJadwal = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -1052,32 +1165,36 @@ const EditProfileTeacher: React.FC<{
 
   return (
     <>
-      <div className="w-full min-h-screen flex flex-col">
-        <div className="flex lg:flex-row flex-col w-full min-h-screen mt-10">
-          <div className="flex-1 flex-col ">
-            <h1 className="text-3xl font-bold text-center mt-5">
+      {loading ? (
+        <LoadingAnimation />
+      ) : (
+        <div className="w-full min-h-screen flex lg:flex-row flex-col gap-20 lg:-mx-60 -mx-0 mt-16">
+          <div className="flex flex-col lg:w-[25vw] w-full">
+            <h1 className="text-[32px] font-extrabold text-center">
               Perbarui Profil Anda
             </h1>
 
-            <img src={Avatar} className="w-2/6 mx-auto mt-5" />
+            <img src={Avatar} className="w-3/6 mx-auto mt-8" />
 
-            <p className="text-center mt-5 text-md text-slate-400 ">
-              * Uk. Foto maks 400 x 400 pixels
+            <p className="text-center mt-2 text-[16px] text-slate-400 ">
+              * Uk. Foto maks 600 x 600 pixels
             </p>
             <CustomInput
               id="input-photo"
               type="file"
-              className="file-input  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-slate-100 mx-auto mt-5 border-none"
+              className="file-input h-10 w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto mt-5 border-none"
               onChange={(e) => {
                 if (!e.currentTarget.files) {
                   return;
                 }
-                setAvatar(URL.createObjectURL(e.currentTarget.files[0]));
+                setAvatar(
+                  URL.createObjectURL(e.currentTarget.files[0])
+                );
                 handleChange(e.currentTarget.files[0], "avatar");
               }}
             />
             <label className="label mt-5">
-              <span className="label-text text-xl mx-auto w-10/12 lg:w-8/12 font-semibold mt-2 text-label">
+              <span className="label-text text-[16px] mx-auto w-10/12 lg:w-full font-semibold mt-2 text-label">
                 Tarif / Jam
               </span>
             </label>
@@ -1085,84 +1202,90 @@ const EditProfileTeacher: React.FC<{
               id="input-tarif"
               type="number"
               defaultValue={Tarif}
-              onChange={(e) => handleChange(e.target.value, "tarif")}
-              className="input flex justify-center w-10/12 lg:w-8/12 mx-auto bg-white  border-gray-300"
-              placeholder="Rp. 500.000 "
+              onChange={(e) =>
+                handleChange(e.target.value, "tarif")
+              }
+              className="input flex justify-center w-10/12 lg:w-full mx-auto bg-white  border-gray-300"
+              placeholder="Rp. 500000 "
             />
-            <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto  mt-5">
-              <div className="flex flex-col w-full">
-                <label className="label ">
-                  <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold  text-label">
+            <div className="flex flex-col w-10/12 lg:w-full mt-5">
+              <div className="flex flex-rows w-full gap-2">
+                <label className="label w-6/12">
+                  <span className="label-text text-[16px] mx-auto w-10/12 lg:w-11/12 font-semibold  text-label">
                     Spesialisasi Mapel
                   </span>
                 </label>
-                <CustomInput
-                  id="input-tarif"
-                  type="text"
-                  onChange={(e) => handleChange(e.target.value, "pelajaran")}
-                  defaultValue={Pelajaran}
-                  className="input flex justify-center w-10/12 lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
-                  placeholder="Rp. 500.000 "
-                />
-              </div>
-              <div className="flex flex-col w-full">
-                <label className="label ">
-                  <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold  text-label">
+                <label className="label w-11/12">
+                  <span className="label-text text-[16px] w-10/12 lg:w-11/12 font-semibold  text-label">
                     Pendidikan
                   </span>
                 </label>
+              </div>
+
+              <div className="flex flex-rows w-full gap-2">
+                <CustomInput
+                  id="input-tarif"
+                  type="text"
+                  onChange={(e) =>
+                    handleChange(e.target.value, "pelajaran")
+                  }
+                  defaultValue={Pelajaran}
+                  className="input flex justify-center p-2 w-10/12 lg:w-6/12 mx-auto bg-white border-2 border-gray-300"
+                  placeholder="Matematika"
+                />
                 <CustomInput
                   id="input-pendidikan"
                   type="text"
-                  onChange={(e) => handleChange(e.target.value, "pendidikan")}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "pendidikan")
+                  }
                   defaultValue={Pendidikan}
-                  className="input flex justify-center w-10/12 lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
-                  placeholder="Rp. 500.000 "
+                  className=" input flex justify-center p-2 w-10/12 lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
+                  placeholder="Sekolah Menengah Atas"
                 />
               </div>
             </div>
             <label className="label">
-              <span className="label-text text-xl  w-10/12 lg:w-8/12 mx-auto font-semibold mt-5 text-label">
+              <span className="label-text text-[18px] w-10/12 lg:w-full mx-auto font-semibold mt-5 text-label">
                 Upload Ijazah
               </span>
             </label>
             <CustomInput
               id="input-ijazah"
               type="file"
-              className="file-input  w-10/12 lg:w-8/12  flex justify-center bg-slate-100 mx-auto mt-2 border-none"
+              className="file-input  w-10/12 lg:w-full h-10 flex justify-center bg-white mx-auto mt-2 border-none"
               onChange={(e) => {
                 if (!e.currentTarget.files) {
                   return;
                 }
-
-                setIjazah(URL.createObjectURL(e.currentTarget.files[0]));
+                setIjazah(
+                  URL.createObjectURL(e.currentTarget.files[0])
+                );
                 handleChange(e.currentTarget.files[0], "ijazah");
               }}
             />
+
             <form onSubmit={(e) => handlePostJadwal(e)}>
-              <h1 className="text-center mt-10 text-xl font-semibold">
+              <h1 className="text-center lg:mt-20 mt-10 text-xl font-semibold">
                 Atur Waktu Mengajar
               </h1>
 
-              <div className="flex flex-row w-full h-20 border-2">
-                <div className="flex-1">
-                  <CustomInput
-                    id="date"
-                    type="date"
-                    className=" p-5 w-10/12 h-10 rounded-xl mt-5 flex mx-auto font-semibold text-lg"
-                    defaultValue={Jadwal}
-                    onChange={(e) => setTanggal(e.target.value)}
-                  />
-                </div>
-                <div className="flex-1">
-                  <CustomInput
-                    id="time"
-                    type="time"
-                    className=" p-5 w-10/12 h-10 rounded-xl mt-5 flex mx-auto font-semibold text-lg"
-                    defaultValue={jam}
-                    onChange={(e) => setJam(e.target.value)}
-                  />
-                </div>
+              <div className="flex flex-row w-full  mt-4 gap-5">
+                <CustomInput
+                  id="date"
+                  type="date"
+                  className=" px-4 w-7/12 h-10 rounded-xl text-[14px]"
+                  defaultValue={Jadwal}
+                  onChange={(e) => setTanggal(e.target.value)}
+                />
+
+                <CustomInput
+                  id="time"
+                  type="time"
+                  className=" w-4/12 h-10 px-4 rounded-xl text-[14px]"
+                  defaultValue={jam}
+                  onChange={(e) => setJam(e.target.value)}
+                />
               </div>
             </form>
             <h1 className="text-center mt-10 text-xl font-semibold">
@@ -1220,9 +1343,26 @@ const EditProfileTeacher: React.FC<{
               />
             </div>
           </div>
-          <div className="flex-1 ">
-            <label className="label mt-5">
-              <span className="label-text text-xl mx-auto w-10/12 lg:w-9/12 font-semibold mt-2">
+
+          <div className="flex flex-col lg:w-[38vw] w-full">
+            <label className="label">
+              <span className="label-text text-[16px] mx-auto w-10/12 lg:w-9/12 font-semibold">
+                Nama Lengkap
+              </span>
+            </label>
+            <CustomInput
+              id="input-nama"
+              type="text"
+              defaultValue={Nama}
+              onChange={(e) =>
+                handleChange(e.target.value, "nama")
+              }
+              className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
+              placeholder="contoh : Lydia Kumala"
+            />
+
+            <label className="label mt-4">
+              <span className="label-text text-[16px] mx-auto w-10/12 lg:w-9/12 font-semibold">
                 Gelar
               </span>
             </label>
@@ -1230,34 +1370,40 @@ const EditProfileTeacher: React.FC<{
               id="input-gelar"
               type="text"
               defaultValue={Gelar}
-              onChange={(e) => handleChange(e.target.value, "gelar")}
+              onChange={(e) =>
+                handleChange(e.target.value, "gelar")
+              }
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="S1 Pendidikan Matematik "
             />
-            <div className="form-control mt-5">
+            <div className="form-control mt-4">
               <label className="label">
-                <span className="label-text text-xl mx-auto w-10/12 lg:w-9/12 font-semibold">
+                <span className="label-text text-[16px] mx-auto w-10/12 lg:w-9/12 font-semibold">
                   Tentang Saya
                 </span>
               </label>
               <textarea
                 id="input-tentang-saya"
                 defaultValue={TentangSaya}
-                onChange={(e) => handleChange(e.target.value, "tentang_saya")}
+                onChange={(e) =>
+                  handleChange(e.target.value, "tentang_saya")
+                }
                 className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 mx-auto bg-white"
                 placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
               ></textarea>
             </div>
-            <div className="form-control mt-5">
+            <div className="form-control mt-4">
               <label className="label">
-                <span className="label-text text-xl mx-auto w-10/12 lg:w-9/12 font-semibold">
+                <span className="label-text text-[16px] mx-auto w-10/12 lg:w-9/12 font-semibold">
                   Pengalaman
                 </span>
               </label>
               <textarea
                 id="input-pengalaman"
                 defaultValue={Pengalaman}
-                onChange={(e) => handleChange(e.target.value, "pengalaman")}
+                onChange={(e) =>
+                  handleChange(e.target.value, "pengalaman")
+                }
                 className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 mx-auto bg-white"
                 placeholder=" Bachelor's Degree with more than 10 years experienced teaching math from primary, secondary, until senior.
                 
@@ -1266,53 +1412,93 @@ const EditProfileTeacher: React.FC<{
             </div>
             <p></p>
 
-            <div className="flex flex-rows  w-10/12 lg:w-9/12 mx-auto border-2 mt-5">
-              <div className="flex flex-col w-full">
+            <div className="flex flex-rows w-10/12 lg:w-9/12 mx-auto mt-5 lg:gap-5 gap-2">
+              <div className="flex flex-col w-5/12">
                 <label className="label">
-                  <span className="label-text text-xl  font-semibold ml-">
+                  <span className="label-text text-[16px] font-semibold">
                     Lokasi Asal
                   </span>
                 </label>
+
                 <CustomInput
                   id="input-lokasi"
                   type="text"
                   defaultValue={LokasiAsal}
-                  onChange={(e) => handleChange(e.target.value, "lokasi_asal")}
-                  className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
+                  onChange={(e) =>
+                    handleChange(e.target.value, "lokasi_asal")
+                  }
+                  className="input px-2 lg:text-[16px] text-[14px] flex justify-center w-full bg-white border-2 border-gray-300"
                 />
               </div>
 
-              <div className="flex flex-rows w-full mt-14">
-                <div className="form-control ">
+              <div className="w-6/12">
+                <label className="label">
+                  <span className="label-text text-[16px] font-semibold  text-navy">
+                    Metode Belajar
+                  </span>
+                </label>
+                <select
+                  defaultValue={"DEFAULT"}
+                  id="input-role"
+                  className="select select-bordered w-11/12 border-2 bg-white font-normal text-[16px]"
+                  name="option"
+                  onChange={(e) =>
+                    handleChange(e.target.value, "metode_belajar")
+                  }
+                >
+                  <option value="DEFAULT" disabled>
+                    {MetodeBljr === "" ? "Belum Dipilih" : MetodeBljr}
+                  </option>
+                  <option value="online">Online</option>
+                  <option value="offline">Offline</option>
+                </select>
+              </div>
+
+              {/* <div className="flex flex-rows w-4/12 mt-auto">
+                <div className="form-control flex flex-row items-end">
                   <CustomInput
                     id="input-checkbox-online"
                     name="online"
                     type="checkbox"
                     checked={metode_belajar === "online"}
-                    onChange={(e) => handleChangeCheckbox("online")}
-                    className="checkbox  ml-10"
+                    onChange={(e) =>
+                      handleChangeCheckbox("online")
+                    }
+                    className="checkbox lg:w-6 w-5 lg:h-6 h-5"
                   />
+
+                  <label className="ml-1">
+                    <span className="font-semibold text-[14px]">
+                      Online
+                    </span>
+                  </label>
                 </div>
-                <label className="ml-4">
-                  <span className="font-bold text-xl">Online</span>
-                </label>
-                <div className="form-control ml-10">
-                  <CustomInput
-                    id="input-checkbox-offline"
-                    name="offline"
-                    type="checkbox"
-                    checked={metode_belajar === "offline"}
-                    onChange={(e) => handleChangeCheckbox("offline")}
-                    className="checkbox    ml-10"
-                  />
+
+                <div className="flex flex-rows w-3/12 mt-auto">
+                  <div className="form-control flex flex-row items-end">
+                    <CustomInput
+                      id="input-checkbox-offline"
+                      name="offline"
+                      type="checkbox"
+                      checked={metode_belajar === "offline"}
+                      onChange={(e) =>
+                        handleChangeCheckbox("offline")
+                      }
+                      className="checkbox lg:w-6 w-5 lg:h-6 h-5 lg:ml-4 ml-2"
+                    />
+
+                    <label className="ml-1">
+                      <span className="font-bold lg:text-[18px] text-[14px]">
+                        Offline
+                      </span>
+                    </label>
+                  </div>
                 </div>
-                <label className="ml-4">
-                  <span className="font-bold text-xl">Offline</span>
-                </label>
-              </div>
+              </div> */}
             </div>
-            <label className="label mt-5">
-              <span className="label-text text-xl mx-auto w-10/12 lg:w-9/12 font-semibold mt-2">
+
+            <label className="label mt-4">
+              <span className="label-text text-[16px] mx-auto w-10/12 lg:w-9/12 font-semibold mt-2">
                 No.HP
               </span>
             </label>
@@ -1325,8 +1511,8 @@ const EditProfileTeacher: React.FC<{
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="0822XXXXX "
             />
-            <label className="label mt-5">
-              <span className="label-text text-xl mx-auto w-10/12 lg:w-9/12 font-semibold mt-2">
+            <label className="label mt-4">
+              <span className="label-text text-[16px] mx-auto w-10/12 lg:w-9/12 font-semibold">
                 Email
               </span>
             </label>
@@ -1338,8 +1524,8 @@ const EditProfileTeacher: React.FC<{
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="@johndoe@gmail.com "
             />
-            <label className="label mt-5">
-              <span className="label-text text-xl mx-auto w-10/12 lg:w-9/12 font-semibold mt-2">
+            <label className="label mt-4">
+              <span className="label-text text-[16px] mx-auto w-10/12 lg:w-9/12 font-semibold">
                 Profil Linkedin
               </span>
             </label>
@@ -1351,17 +1537,17 @@ const EditProfileTeacher: React.FC<{
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="linkedin/johndoe "
             />
-            <div className="flex justify-center mt-5">
+            <div className="flex justify-center mt-16">
               <CustomButton
                 id="btn-update-teacher"
                 label="Perbarui"
-                className="text-white  w-10/12 lg:w-6/12  py-4 px-16 font-normal border-none text-xl bg-slate-900 rounded-xl "
+                className="text-white  w-10/12 lg:w-6/12 py-3 px-16 font-normal border-none text-xl bg-slate-900 rounded-xl "
                 onClick={(e: any) => handleUpdate(e)}
               />
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

@@ -36,18 +36,19 @@ export interface CompleteTeacher {
   tarif?: number;
   pelajaran?: string;
   pendidikan?: string;
-  Avatar?: any;
   avatar?: any;
-
-  jadwal?: string;
   ijazah?: any;
+  jadwal?: string;
   latitude?: number;
   longitude?: number;
   Jadwal?: JadwalType[];
-
   data?: RiwayatType[];
   // dataUlasan?: UlasanType[];
   onChangeOption?: () => void;
+}
+
+export interface Sesiku {
+  data?: SesikuType[];
 }
 
 export interface EditTeacher {
@@ -96,6 +97,17 @@ export interface Reservasi {
   telepon_siswa?: string;
   metode_pembayaran?: string;
 }
+type SesikuType = {
+  reservasi_id?: number;
+  guru_id?: number;
+  role?: string;
+  nama_siswa?: string;
+  tanggal?: string;
+  jam?: string;
+  tautan_gmet?: string;
+  status?: string;
+};
+
 export interface UlasanType {
   data: Ulasan[];
   id: number;

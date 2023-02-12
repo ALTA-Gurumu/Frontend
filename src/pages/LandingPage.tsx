@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import { LoadingAnimation } from "../components/Loading";
 import CustomBotton from "../components/CustomButton";
 import image1 from "../assets/image1.svg";
 import selecting from "../assets/Selecting.webp";
@@ -31,7 +32,11 @@ function Card({ nama_guru, penilaian, ulasan }: cardType) {
           <AiFillStar className="text-component w-5 h-5" />
           <p className="font-semibold pl-1">{penilaian}</p>
         </div>
-        <img src={avatar2} className="w-[3rem] ml-auto pr-2 " alt="avatar" />
+        <img
+          src={avatar2}
+          className="w-[3rem] ml-auto pr-2 "
+          alt="avatar"
+        />
       </div>
     </div>
   );
@@ -39,12 +44,16 @@ function Card({ nama_guru, penilaian, ulasan }: cardType) {
 
 function LandingPage() {
   const [ulasans, setUlasan] = useState<cardType[]>([]);
+  const [loadingpage, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    // setTimeout(() => {
     fetchUlasan();
+    // }, 15000);
   }, []);
 
   function fetchUlasan() {
+    setLoading(true);
     axios
       .get("https://devmyproject.site/ulasan")
       .then((res) => {
@@ -52,122 +61,145 @@ function LandingPage() {
       })
       .catch((err) => {
         alert(err.response.data.message);
-      });
+      })
+      .finally(() => setLoading(false));
   }
   return (
     <Layout>
       <Navbar />
-      <div className="flex flex-col-reverse lg:flex-row w-full justify-center min-h-screen bg-white items-center">
-        <div className="flex-1 pl-5 lg:mt-0 ">
-          <h1 className="flex justify-center text-4xl font-bold lg:text-[2.5rem]">
-            Diajar
-            <br />
-            dengan guru
-            <br />
-            terbaik
-          </h1>
+      {loadingpage ? (
+        <LoadingAnimation />
+      ) : (
+        <>
+          <div className="flex flex-col-reverse lg:flex-row w-full justify-center min-h-screen bg-white items-center">
+            <div className="flex-1 pl-5 lg:mt-0 ">
+              <h1 className="flex justify-center text-4xl font-bold lg:text-[2.5rem]">
+                Diajar
+                <br />
+                dengan guru
+                <br />
+                terbaik
+              </h1>
 
-          <br />
-          <div className="flex justify-center mr-12 lg:mr-11">
-            <Link to={"/home"}>
-              <CustomBotton
-                id="btn-landing-page"
-                disabled={false}
-                label="Pilih guru disini"
-                className="w-40 h-10 bg-component text-white hover:bg-navy border-none rounded-full lg:w-[12rem]"
+              <br />
+              <div className="flex justify-center mr-12 lg:mr-11">
+                <Link to={"/home"}>
+                  <CustomBotton
+                    id="btn-landing-page"
+                    disabled={false}
+                    label="Pilih guru disini"
+                    className="w-40 h-10 bg-component text-white hover:bg-navy border-none rounded-full lg:w-[12rem]"
+                  />
+                </Link>
+              </div>
+            </div>
+            <div className="flex-1 h-full items-center pt-10 lg:p-0 ">
+              <img
+                className=" w-full lg:w-11/12 flex items-center"
+                src={image1}
+                alt="Ayo belajar"
+                style={{ margin: "0 auto" }}
               />
-            </Link>
+            </div>
           </div>
-        </div>
-        <div className="flex-1 h-full items-center pt-10 lg:p-0 ">
-          <img
-            className=" w-full lg:w-11/12 flex items-center"
-            src={image1}
-            alt="Ayo belajar"
-            style={{ margin: "0 auto" }}
-          />
-        </div>
-      </div>
-      <div className="h-[8rem] lg:h-[5rem]  lg:pl-[13rem] pt-20 text-center lg:text-start">
-        <h1 className="text-4xl font-bold">
-          Belajar dengan
-          <br />
-          guru ulasan terbaik
-        </h1>
-      </div>
+          <div className="h-[8rem] lg:h-[5rem]  lg:pl-[13rem] pt-20 text-center lg:text-start">
+            <h1 className="text-4xl font-bold">
+              Belajar dengan
+              <br />
+              guru ulasan terbaik
+            </h1>
+          </div>
 
-      <div className="flex flex-col lg:flex-row pt-20 gap-[3rem] pb-12 lg:pb-0 lg:h-[35rem] justify-center lg:gap-28 items-center">
-        {ulasans.slice(0, 3).map((data, index) => (
-          <Card
-            key={index}
-            nama_guru={data.nama_guru}
-            penilaian={data.penilaian}
-            ulasan={data.ulasan}
-          />
-        ))}
-      </div>
+          <div className="flex flex-col lg:flex-row pt-20 gap-[3rem] pb-12 lg:pb-0 lg:h-[35rem] justify-center lg:gap-28 items-center">
+            {ulasans.slice(0, 3).map((data, index) => (
+              <Card
+                key={index}
+                nama_guru={data.nama_guru}
+                penilaian={data.penilaian}
+                ulasan={data.ulasan}
+              />
+            ))}
+          </div>
 
-      <div className="h-[8rem] lg:h-[0rem] bg-white lg:pl-[13rem] lg:pt-20 pt-8 pl-2 text-center lg:text-start">
-        <h1 className="text-4xl font-bold">
-          Dengan cara yang
-          <br />
-          mudah
-        </h1>
-      </div>
-      <div className="flex flex-col lg:flex-row w-full  bg-white h-[35rem] lg:h-[30rem] justify-evenly lg:items-center ">
-        <div className="pl-8 lg:pl-0">
-          <h1 className="text-2xl font-bold">1. Pilih guru anda</h1>
-          <br />
-          <p className="lg:text-xl">
-            cek profile guru dan
-            <br />
-            pilih guru yang
-            <br />
-            anda inginkan sesuai kebutuhan
-            <br />
-            anda
-          </p>
-        </div>
-        <img className="w-[30rem]" src={selecting} alt="Pilih guru anda" />
-      </div>
-      <div className="w-full flex flex-col-reverse lg:flex-row mx-auto gap-20 bg-white h-[45rem] lg:h-auto  ">
-        <div className="flex-1 bg-white lg:ml-[10rem] ">
-          <img className="w-[30rem]" src={Request} alt="Pilih guru anda" />
-        </div>
-        <div className="flex-1  bg-primary pt-10 lg:pt-40 lg:pl-20 pl-8  lg:h-[30rem]">
-          {" "}
-          <h1 className="text-2xl font-bold">2. Ajukan Permintaan belajar</h1>
-          <br />
-          <p className="lg:text-xl">
-            Para guru akan
-            <br />
-            memberikan tanggapan
-            <br />
-            terhadap permintaan
-            <br />
-            belajar Anda
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-col lg:flex-row w-full bg-white h-[45rem] lg:h-[35rem] pt-8 lg:pt-0 justify-evenly items-center">
-        <div>
-          <h1 className="text-2xl font-bold">
-            3. Atur jadwal belajar anda
-            <br />
-            sendiri
-          </h1>
-          <br />
-          <p className="lg:text-xl">
-            Atur pelaksanaan dan jadwal
-            <br />
-            kursus Anda sendiri dengan
-            <br />
-            guru yang Anda pilih
-          </p>
-        </div>
-        <img className="w-[30rem]" src={Calender} alt="Pilih guru anda" />
-      </div>
-      <Footer />
+          <div className="h-[8rem] lg:h-[0rem] bg-white lg:pl-[13rem] lg:pt-20 pt-8 pl-2 text-center lg:text-start">
+            <h1 className="text-4xl font-bold">
+              Dengan cara yang
+              <br />
+              mudah
+            </h1>
+          </div>
+          <div className="flex flex-col lg:flex-row w-full  bg-white h-[35rem] lg:h-[30rem] justify-evenly lg:items-center ">
+            <div className="pl-8 lg:pl-0">
+              <h1 className="text-2xl font-bold">
+                1. Pilih guru anda
+              </h1>
+              <br />
+              <p className="lg:text-xl">
+                cek profile guru dan
+                <br />
+                pilih guru yang
+                <br />
+                anda inginkan sesuai kebutuhan
+                <br />
+                anda
+              </p>
+            </div>
+            <img
+              className="w-[30rem]"
+              src={selecting}
+              alt="Pilih guru anda"
+            />
+          </div>
+          <div className="w-full flex flex-col-reverse lg:flex-row mx-auto gap-20 bg-white h-[45rem] lg:h-auto  ">
+            <div className="flex-1 bg-white lg:ml-[10rem] ">
+              <img
+                className="w-[30rem]"
+                src={Request}
+                alt="Pilih guru anda"
+              />
+            </div>
+            <div className="flex-1  bg-primary pt-10 lg:pt-40 lg:pl-20 pl-8  lg:h-[30rem]">
+              {" "}
+              <h1 className="text-2xl font-bold">
+                2. Ajukan Permintaan belajar
+              </h1>
+              <br />
+              <p className="lg:text-xl">
+                Para guru akan
+                <br />
+                memberikan tanggapan
+                <br />
+                terhadap permintaan
+                <br />
+                belajar Anda
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col lg:flex-row w-full bg-white h-[45rem] lg:h-[35rem] pt-8 lg:pt-0 justify-evenly items-center">
+            <div>
+              <h1 className="text-2xl font-bold">
+                3. Atur jadwal belajar anda
+                <br />
+                sendiri
+              </h1>
+              <br />
+              <p className="lg:text-xl">
+                Atur pelaksanaan dan jadwal
+                <br />
+                kursus Anda sendiri dengan
+                <br />
+                guru yang Anda pilih
+              </p>
+            </div>
+            <img
+              className="w-[30rem]"
+              src={Calender}
+              alt="Pilih guru anda"
+            />
+          </div>
+          <Footer />
+        </>
+      )}
     </Layout>
   );
 }
