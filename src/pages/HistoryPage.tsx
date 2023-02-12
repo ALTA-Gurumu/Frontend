@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -9,13 +9,14 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../utils/Swal";
 
-import { CompleteTeacher } from "../utils/DataTypes";
+import { CompleteTeacher, Sesiku } from "../utils/DataTypes";
 
 import CustomButton from "../components/CustomButton";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import Layout from "../components/Layout";
 import { LoadingAnimation } from "../components/Loading";
+import { useParams } from "react-router";
 
 function HalamanSesiGuru() {
   const navigate = useNavigate();
@@ -28,8 +29,10 @@ function HalamanSesiGuru() {
   const [disable, setDisable] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [No, setNo] = useState<number>(1);
   const [jadwal, setJadwal] = useState<CompleteTeacher>({});
-  const [riwayat, setRiwayat] = useState<CompleteTeacher>({});
+  const [riwayat, setRiwayat] = useState<Sesiku>({});
+  const [ongoing, setOngoing] = useState<Sesiku>({});
 
   useEffect(() => {
     fetchJadwal();
@@ -43,7 +46,13 @@ function HalamanSesiGuru() {
         setJadwal(res.data.data);
       })
       .catch((err) => {
-        // alert(err.toString());
+        const { message } = err.response.data;
+        console.log(err.response.data.message);
+        MySwal.fire({
+          title: "List Jadwal",
+          text: message,
+          showCancelButton: false,
+        });
       })
       .finally(() => setLoading(false));
   }
@@ -55,7 +64,12 @@ function HalamanSesiGuru() {
   function fetchRiwayat() {
     setLoading(true);
     axios
-      .get(`https://devmyproject.site/sesiku/${checkID}`)
+      .get(`https://devmyproject.site/sesiku/`, {
+        params: {
+          role: "guru",
+          status: "selesai",
+        },
+      })
       .then((res) => {
         setRiwayat(res.data);
       })
@@ -64,6 +78,34 @@ function HalamanSesiGuru() {
         console.log(err.response.data.message);
         MySwal.fire({
           title: "Riwayat Anda",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    fetchOngoing();
+  }, []);
+
+  function fetchOngoing() {
+    setLoading(true);
+    axios
+      .get(`https://devmyproject.site/sesiku`, {
+        params: {
+          role: "guru",
+          status: "ongoing",
+        },
+      })
+      .then((res) => {
+        setOngoing(res.data);
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+        console.log(err.response.data.message);
+        MySwal.fire({
+          title: "Data Sesi Guru",
           text: message,
           showCancelButton: false,
         });
@@ -95,15 +137,11 @@ function HalamanSesiGuru() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">
-                                NO
-                              </th>
+                              <th className="text-[18px] text-zinc-700">NO</th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Murid
                               </th>
-                              <th className="text-[18px] text-zinc-700">
-                                Jam
-                              </th>
+                              <th className="text-[18px] text-zinc-700">Jam</th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
@@ -117,11 +155,10 @@ function HalamanSesiGuru() {
                           </thead>
                           <tbody className="text-[16px] font-normal">
                             <>
-                              {/* {console.log(riwayat)} */}
-                              {riwayat.data?.map((data) => (
+                              {riwayat.data?.map((data, index) => (
                                 <tr key={data.reservasi_id}>
-                                  <th>{data.reservasi_id}</th>
-                                  <td>{data.nama_murid}</td>
+                                  <th>{index + 1}</th>
+                                  <td>{data.nama_siswa}</td>
                                   <td>{data.jam}</td>
                                   <td>{data.tanggal}</td>
                                   <td>{data.tautan_gmet}</td>
@@ -143,15 +180,11 @@ function HalamanSesiGuru() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">
-                                No
-                              </th>
+                              <th className="text-[18px] text-zinc-700">No</th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Murid
                               </th>
-                              <th className="text-[18px] text-zinc-700">
-                                Jam
-                              </th>
+                              <th className="text-[18px] text-zinc-700">Jam</th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
@@ -161,44 +194,32 @@ function HalamanSesiGuru() {
                               <th className="text-[18px] text-zinc-700">
                                 Status
                               </th>
-                              <th className="text-[18px] text-zinc-700">
+                              {/* <th className="text-[18px] text-zinc-700">
                                 Action
-                              </th>
+                              </th> */}
                             </tr>
                           </thead>
                           <tbody className="text-[16px] font-normal">
-                            <tr>
-                              <th>1</th>
-                              <td>Danu</td>
-                              <td>12.00 (WIB)</td>
-                              <td>Senin 20 Januari 2023</td>
-                              <td>https://google meet/adka</td>
-                              <td>Belum Selesai</td>
-                              <td>
-                                <CustomButton
-                                  id="button-masukan-history"
-                                  className="py-2 px-6 text-md font-normal rounded-xl hover:bg-orange-600 bg-orange-500 text-white"
-                                  label="Submit"
-                                  loading={disable}
-                                />
-                              </td>
-                            </tr>
-
-                            <tr className="hover">
-                              <th>2</th>
-                              <td>Budy</td>
-                              <td>09.00 (WIB)</td>
-                              <td>Senin 17 Januari 2023</td>
-                              <td>-</td>
-                              <td>Selesai</td>
-                              <td>
-                                <CustomButton
-                                  id="button-masukan-history"
-                                  className="py-2 px-6 text-md font-normal rounded-xl hover:bg-orange-600 bg-slate-500 text-slate-200"
-                                  label="Submit"
-                                />
-                              </td>
-                            </tr>
+                            <>
+                              {ongoing.data?.map((data, index) => (
+                                <tr key={data.reservasi_id}>
+                                  <th>{index + 1}</th>
+                                  <td>{data.nama_siswa}</td>
+                                  <td>{data.jam}</td>
+                                  <td>{data.tanggal}</td>
+                                  <td>{data.tautan_gmet}</td>
+                                  <td>{data.status}</td>
+                                  {/* <td>
+                                    <CustomButton
+                                      id="button-masukan-history"
+                                      className="py-2 px-6 text-md font-normal rounded-xl hover:bg-orange-600 bg-orange-500 text-white"
+                                      label="Submit"
+                                      loading={disable}
+                                    />
+                                  </td> */}
+                                </tr>
+                              ))}
+                            </>
                           </tbody>
                         </table>
                       </div>
@@ -214,28 +235,22 @@ function HalamanSesiGuru() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">
-                                No
-                              </th>
+                              <th className="text-[18px] text-zinc-700">No</th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
-                              <th className="text-[18px] text-zinc-700">
-                                Jam
-                              </th>
+                              <th className="text-[18px] text-zinc-700">Jam</th>
                             </tr>
                           </thead>
                           <tbody className="text-[16px] font-normal">
                             <>
-                              {jadwal.Jadwal?.map(
-                                (data, index) => (
-                                  <tr key={index}>
-                                    <th>{data.ID}</th>
-                                    <td>{data.Tanggal}</td>
-                                    <td>{data.Jam}</td>
-                                  </tr>
-                                )
-                              )}
+                              {jadwal.Jadwal?.map((data, index) => (
+                                <tr key={data.ID}>
+                                  <th>{index + 1}</th>
+                                  <td>{data.Tanggal}</td>
+                                  <td>{data.Jam}</td>
+                                </tr>
+                              ))}
                             </>
                           </tbody>
                         </table>
