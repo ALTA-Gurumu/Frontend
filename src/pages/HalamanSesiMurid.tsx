@@ -6,7 +6,6 @@ import Cookies from "react-cookie/cjs/Cookies";
 import { useCookies } from "react-cookie";
 
 import axios from "axios";
-
 import { ProfilType, Sesiku } from "../utils/DataTypes";
 import Swal from "../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
@@ -27,8 +26,9 @@ import { AiTwotoneStar } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { BsPhoneFill } from "react-icons/bs";
+import { BsFillTrashFill, BsPhoneFill } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
+import { IoBagCheckOutline } from "react-icons/io5";
 
 function HalamanSesiMurid() {
   const [cookie, removeCookie] = useCookies(["token"]);
@@ -50,8 +50,8 @@ function HalamanSesiMurid() {
   const [tanggal, setTanggal] = useState<string>("");
   const [jam, setJam] = useState<string>("");
   const [tautan_gmeet, setTautanGmeet] = useState<string>("");
+  const [responseData, setResponseData] = useState<any>([]);
   const [status, setStatus] = useState<string>("");
-  const [responseData, setResponseData] = useState<any>(null);
 
   const [riwayat, setRiwayat] = useState<Sesiku>({});
   const [ongoing, setOngoing] = useState<Sesiku>({});
@@ -163,6 +163,13 @@ function HalamanSesiMurid() {
     setResponseData(data);
   }, []);
 
+
+  const handleCanceOrder = () => {
+    localStorage.removeItem("data");
+    const remove = localStorage.removeItem("data");
+    setResponseData(remove);
+  };
+
   useEffect(() => {
     fetchRiwayat();
   }, []);
@@ -216,6 +223,7 @@ function HalamanSesiMurid() {
       })
       .finally(() => setLoading(false));
   }
+
 
   return (
     <Layout>
@@ -441,6 +449,7 @@ function HalamanSesiMurid() {
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
+
                               <th className="text-[18px] text-zinc-700">
                                 Status
                               </th>
@@ -448,6 +457,7 @@ function HalamanSesiMurid() {
                             </tr>
                           </thead>
                           <tbody>
+
                             <>
                               {riwayat.data?.map((data, index) => (
                                 <tr
@@ -532,29 +542,162 @@ function HalamanSesiMurid() {
                           <thead>
                             <tr>
                               <th className="text-[18px] text-zinc-700">No</th>
+
                               <th className="text-[18px] text-zinc-700">
                                 Nama Guru
                               </th>
-                              <th className="text-[18px] text-zinc-700">Jam</th>
                               <th className="text-[18px] text-zinc-700">
-                                Hari & Tanggal
+                                Tarif
                               </th>
                               <th className="text-[18px] text-zinc-700">
-                                Link Google Meet
+                                Pelajaran
+                              </th>
+
+                              <th className="text-[18px] text-zinc-700">
+                                Metode Belajar
                               </th>
                               <th className="text-[18px] text-zinc-700">
-                                Status
+                                Link Gmeet
+                              </th>
+                              <th className="text-[18px] text-zinc-700">
+                                Nomor Virtual Account
+                              </th>
+                              <th className="text-[18px] text-zinc-700">
+                                Action
                               </th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr className="text-[16px] font-normal">
-                              <th>1</th>
-                              <td>Ahmad Bambang</td>
-                              <td>{jam}</td>
-                              <td>{tanggal}</td>
-                              <td>{tautan_gmeet}</td>
-                              <td>Selesai</td>
+                              <td>1</td>
+                              <td>{responseData.nama_guru}</td>
+                              <td>{responseData.total_tarif}</td>
+                              <td>{responseData.pelajaran}</td>
+                              <td>{responseData.metode_belajar}</td>
+                              <td>
+                                {status === "selesai" ? (
+                                  (localStorage.removeItem("data"), null)
+                                ) : (
+                                  <p>Link Gmeet Belum tersedia</p>
+                                )}
+                              </td>
+                              <td>{responseData.nomer_va}</td>
+                              <td>
+                                {responseData.bank_penerima === "bca" ? (
+                                  <div>
+                                    <a href="https://simulator.sandbox.midtrans.com/bca/va/index">
+                                      <CustomButton
+                                        id="btn-bayar"
+                                        icon={
+                                          <IoBagCheckOutline className="mt-1 mr-2" />
+                                        }
+                                        label="Bayar"
+                                        className="bg-component text-white py-3 px-4 rounded-lg hover:bg-orange-700 flex flex-row w-10/12 justify-center font-poppins text-lg"
+                                      />
+                                    </a>
+                                    <CustomButton
+                                      id="btn-batalkanOrder"
+                                      icon={
+                                        <BsFillTrashFill className="mr-2 flex mx-auto mt-1 " />
+                                      }
+                                      label="Cancel Order"
+                                      className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
+                                      onClick={() => handleCanceOrder()}
+                                    />
+                                  </div>
+                                ) : responseData.bank_penerima === "bri" ? (
+                                  <div>
+                                    <a href="https://simulator.sandbox.midtrans.com/bri/va/index">
+                                      <CustomButton
+                                        id="btn-bayar"
+                                        icon={
+                                          <IoBagCheckOutline className="mt-1 mr-2" />
+                                        }
+                                        label="Bayar"
+                                        className="bg-component text-white py-3 px-4 rounded-lg hover:bg-orange-700 flex flex-row w-10/12 justify-center font-poppins text-lg"
+                                      />
+                                    </a>
+                                    <CustomButton
+                                      id="btn-batalkanOrder"
+                                      icon={
+                                        <BsFillTrashFill className="mr-2 flex mx-auto mt-1 " />
+                                      }
+                                      label="Cancel Order"
+                                      className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
+                                      onClick={() => handleCanceOrder()}
+                                    />
+                                  </div>
+                                ) : responseData.bank_penerima === "bni" ? (
+                                  <div>
+                                    <a href="https://simulator.sandbox.midtrans.com/bni/va/index">
+                                      <CustomButton
+                                        id="btn-bayar"
+                                        icon={
+                                          <IoBagCheckOutline className="mt-1 mr-2" />
+                                        }
+                                        label="Bayar"
+                                        className="bg-component text-white py-3 px-4 rounded-lg hover:bg-orange-700 flex flex-row w-10/12 justify-center font-poppins text-lg"
+                                      />
+                                    </a>
+                                    <CustomButton
+                                      id="btn-batalkanOrder"
+                                      icon={
+                                        <BsFillTrashFill className="mr-2 flex mx-auto mt-1 " />
+                                      }
+                                      label="Cancel Order"
+                                      className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
+                                      onClick={() => handleCanceOrder()}
+                                    />
+                                  </div>
+                                ) : responseData.bank_penerima === "permata" ? (
+                                  <div>
+                                    <a href="https://simulator.sandbox.midtrans.com/permata/va/index">
+                                      <CustomButton
+                                        id="btn-bayar"
+                                        icon={
+                                          <IoBagCheckOutline className="mt-1 mr-2" />
+                                        }
+                                        label="Bayar"
+                                        className="bg-component text-white py-3 px-4 rounded-lg hover:bg-orange-700 flex flex-row w-10/12 justify-center font-poppins text-lg"
+                                      />
+                                    </a>
+                                    <CustomButton
+                                      id="btn-batalkanOrder"
+                                      icon={
+                                        <BsFillTrashFill className="mr-2 flex mx-auto mt-1 " />
+                                      }
+                                      label="Cancel Order"
+                                      className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
+                                      onClick={() => handleCanceOrder()}
+                                    />
+                                  </div>
+                                ) : responseData.metode_pembayaran ===
+                                  "qris" ? (
+                                  <div>
+                                    <a href="https://simulator.sandbox.midtrans.com/qris/index">
+                                      <CustomButton
+                                        id="btn-bayar"
+                                        icon={
+                                          <IoBagCheckOutline className="mt-1 mr-2" />
+                                        }
+                                        label="Bayar"
+                                        className="bg-component text-white py-3 px-4 rounded-lg hover:bg-orange-700 flex flex-row w-10/12 justify-center font-poppins text-lg"
+                                      />
+                                    </a>
+                                    <CustomButton
+                                      id="btn-batalkanOrder"
+                                      icon={
+                                        <BsFillTrashFill className="mr-2 flex mx-auto mt-1 " />
+                                      }
+                                      label="Cancel Order"
+                                      className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
+                                      onClick={() => handleCanceOrder()}
+                                    />
+                                  </div>
+                                ) : (
+                                  <>Belum Ada Transaksi</>
+                                )}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
