@@ -86,6 +86,16 @@ type JadwalType = {
   Jam?: string;
   Status?: string;
 };
+
+export interface Reservasi {
+  pesan?: string;
+  metode_belajar?: string;
+  tanggal?: string;
+  jam?: string;
+  alamat_siswa?: string;
+  telepon_siswa?: string;
+  metode_pembayaran?: string;
+}
 export interface UlasanType {
   data: Ulasan[];
   id: number;
@@ -101,6 +111,13 @@ export interface ProfilType {
   telepon?: string;
   avatar?: any;
   online?: string;
+  pesan?: string;
+  metode_belajar?: string;
+  tanggal?: string;
+  jam?: string;
+  alamat_siswa?: string;
+  telepon_siswa?: string;
+  metode_pembayaran?: string;
 }
 
 type Ulasan = {

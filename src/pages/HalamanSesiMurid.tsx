@@ -48,6 +48,7 @@ function HalamanSesiMurid() {
   const [jam, setJam] = useState<string>("");
   const [tautan_gmeet, setTautanGmeet] = useState<string>("");
   const [status, setStatus] = useState<string>("");
+  const [responseData, setResponseData] = useState<any>(null);
 
   function fetchDataSesi() {
     axios({
@@ -148,6 +149,11 @@ function HalamanSesiMurid() {
     temp[key] = value;
     setObjSubmit(temp);
   };
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("data") || "{}");
+    setResponseData(data);
+  }, []);
 
   return (
     <>
@@ -435,36 +441,86 @@ function HalamanSesiMurid() {
                   className="text-center font-semibold lg:text-lg text-[18px] text-slate-500 lg:mt-5 pl-0 lg:pl-8 lg:pr-8 lg:-ml-4 -ml-2"
                   panel={
                     <div className="overflow-x-auto mt-10">
-                      <table className="table w-full mx-auto">
-                        <thead>
-                          <tr>
-                            <th className="text-[18px] text-zinc-700">No</th>
-                            <th className="text-[18px] text-zinc-700">
-                              Nama Guru
-                            </th>
-                            <th className="text-[18px] text-zinc-700">Jam</th>
-                            <th className="text-[18px] text-zinc-700">
-                              Hari & Tanggal
-                            </th>
-                            <th className="text-[18px] text-zinc-700">
-                              Link Google Meet
-                            </th>
-                            <th className="text-[18px] text-zinc-700">
-                              Status
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="text-[16px] font-normal">
-                            <th>1</th>
-                            <td>Ahmad Bambang</td>
-                            <td>{jam}</td>
-                            <td>{tanggal}</td>
-                            <td>{tautan_gmeet}</td>
-                            <td>Selesai</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      {responseData && (
+                        <table className="table w-full mx-auto">
+                          <thead>
+                            <tr>
+                              <th className="text-[18px] text-zinc-700">No</th>
+                              <th className="text-[18px] text-zinc-700">
+                                Nama Guru
+                              </th>
+                              <th className="text-[18px] text-zinc-700">
+                                Tarif
+                              </th>
+                              <th className="text-[18px] text-zinc-700">
+                                Pelajaran
+                              </th>
+                              <th className="text-[18px] text-zinc-700">
+                                Metode Belajar
+                              </th>
+
+                              <th className="text-[18px] text-zinc-700">
+                                Nomor Virtual Account
+                              </th>
+                              <th className="text-[18px] text-zinc-700">
+                                Action
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="text-[16px] font-normal">
+                              <td>1</td>
+                              <td>{responseData.nama_guru}</td>
+                              <td>{responseData.total_tarif}</td>
+                              <td>{responseData.pelajaran}</td>
+                              <td>{responseData.metode_belajar}</td>
+
+                              <td>{responseData.nomer_va}</td>
+                              <td>
+                                {responseData.bank_penerima === "bca" ? (
+                                  <a href="https://simulator.sandbox.midtrans.com/bca/va/index">
+                                    <CustomButton
+                                      id="btn-bayar"
+                                      label="bayar"
+                                    />
+                                  </a>
+                                ) : responseData.bank_penerima === "bri" ? (
+                                  <a href="https://simulator.sandbox.midtrans.com/bri/va/index">
+                                    <CustomButton
+                                      id="btn-bayar"
+                                      label="bayar"
+                                    />
+                                  </a>
+                                ) : responseData.bank_penerima === "bni" ? (
+                                  <a href="https://simulator.sandbox.midtrans.com/bni/va/index">
+                                    <CustomButton
+                                      id="btn-bayar"
+                                      label="bayar"
+                                    />
+                                  </a>
+                                ) : responseData.bank_penerima === "permata" ? (
+                                  <a href="https://simulator.sandbox.midtrans.com/bni/permata/index">
+                                    <CustomButton
+                                      id="btn-bayar"
+                                      label="bayar"
+                                    />
+                                  </a>
+                                ) : responseData.metode_pembayaran ===
+                                  "qris" ? (
+                                  <a href="https://simulator.sandbox.midtrans.com/qris/index">
+                                    <CustomButton
+                                      id="btn-bayar"
+                                      label="bayar"
+                                    />
+                                  </a>
+                                ) : (
+                                  <>Belum Ada Transaksi</>
+                                )}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      )}
                     </div>
                   }
                 />
