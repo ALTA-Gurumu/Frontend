@@ -4,7 +4,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { set, slice } from "lodash";
 
-import { CustomInput, InputIcon } from "../components/CustomInput";
+import {
+  CustomInput,
+  InputIcon,
+} from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import { Navbar } from "../components/Navbar";
@@ -18,7 +21,10 @@ import { BiSearchAlt } from "react-icons/bi";
 
 import withReactContent from "sweetalert2-react-content";
 import { handleAuth } from "../utils/redux/reducer/reducer";
-import { CompleteTeacher, getGuruBeranda } from "../utils/DataTypes";
+import {
+  CompleteTeacher,
+  getGuruBeranda,
+} from "../utils/DataTypes";
 
 import Swal from "../utils/Swal";
 
@@ -54,14 +60,20 @@ function Home() {
   const [homes, setHome] = useState<hometype[]>([]);
   const [searchSubject, setSearchSubject] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
+  const [page, setPage] = useState<number>(2);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
-  const [index, setIndex] = useState<number>(6);
+  // const [filteredHomes, setFilteredHomes] = useState<hometype[]>(
+  //   []
+  // );
+
   const [modal, setModal] = useState<string>("modal-open");
 
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingHome, setLoadingHome] = useState<boolean>(false);
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
+    {}
+  );
 
   const [avatar, setAvatar] = useState<any>("");
   const [ijazah, setIjazah] = useState<any>("");
@@ -71,29 +83,14 @@ function Home() {
   const [LinkedIn, setLinkedIn] = useState<string>("");
   const [tentangSaya, setTentangSaya] = useState<string>("");
 
-  const filteredHomes = homes.filter(
-    (home) =>
-      home.pelajaran.toLowerCase().includes(searchSubject.toLowerCase()) &&
-      home.alamat.toLowerCase().includes(searchLocation.toLowerCase())
-  );
-
-  const loadMore = () => {
-    setIndex(index + 6);
-    if (index >= homes.length) {
-      setIsCompleted(true);
-    } else {
-      setIsCompleted(false);
-    }
-  };
-
   useEffect(() => {
-    fetchHome();
+    fetchHome(1);
   }, []);
 
-  function fetchHome() {
+  function fetchHome(page: number) {
     setLoadingHome(true);
     axios
-      .get("https://devmyproject.site/guru/")
+      .get(`https://devmyproject.site/guru/?page=${page}`)
       .then((res) => {
         setHome(res.data.data);
       })
@@ -102,7 +99,53 @@ function Home() {
       })
       .finally(() => setLoadingHome(false));
   }
+  const filteredHomes = homes.filter(
+    (home) =>
+      home.pelajaran
+        .toLowerCase()
+        .includes(searchSubject.toLowerCase()) &&
+      home.alamat
+        .toLowerCase()
+        .includes(searchLocation.toLowerCase())
+  );
 
+  // const loadMore = () => {
+  //   setIndex(index + 6);
+  //   if (index >= homes.length) {
+  //     setIsCompleted(true);
+  //   } else {
+  //     setIsCompleted(false);
+  //   }
+  // };
+  function nextPage() {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const newPage = page + 1;
+    fetch(
+      `https://devmyproject.site/guru/?page=${page}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (newPage >= homes.length) {
+          setIsCompleted(true);
+        } else {
+          setIsCompleted(false);
+        }
+        const results = res.data;
+        const result = homes.slice();
+        result.push(...results);
+        setHome(result);
+        setPage(newPage);
+      })
+      .catch((error) => {
+        alert(error.toString());
+      });
+  }
   // useEffect(() => {
   //   lokasiAsal ? setDisabled(true) : setDisabled(false);
   // }, [lokasiAsal]);
@@ -148,7 +191,9 @@ function Home() {
     checkRole === "guru" && fetchData();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoadingHome(true);
     e.preventDefault();
     const formData = new FormData();
@@ -186,7 +231,10 @@ function Home() {
       .finally(() => setLoadingHome(false));
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -236,9 +284,14 @@ function Home() {
                             return;
                           }
                           setAvatar(
-                            URL.createObjectURL(e.currentTarget.files[0])
+                            URL.createObjectURL(
+                              e.currentTarget.files[0]
+                            )
                           );
-                          handleChange(e.currentTarget.files[0], "avatar");
+                          handleChange(
+                            e.currentTarget.files[0],
+                            "avatar"
+                          );
                         }}
                       />
 
@@ -250,7 +303,10 @@ function Home() {
                         placeholder={LinkedIn}
                         defaultValue={LinkedIn}
                         onChange={(e) =>
-                          handleChange(e.target.value, "linkedin")
+                          handleChange(
+                            e.target.value,
+                            "linkedin"
+                          )
                         }
                       />
 
@@ -269,9 +325,14 @@ function Home() {
                             return;
                           }
                           setIjazah(
-                            URL.createObjectURL(e.currentTarget.files[0])
+                            URL.createObjectURL(
+                              e.currentTarget.files[0]
+                            )
                           );
-                          handleChange(e.currentTarget.files[0], "ijazah");
+                          handleChange(
+                            e.currentTarget.files[0],
+                            "ijazah"
+                          );
                         }}
                       />
                     </div>
@@ -297,7 +358,10 @@ function Home() {
                           placeholder={"contoh : Blitar"}
                           defaultValue={lokasiAsal}
                           onChange={(e) =>
-                            handleChange(e.target.value, "lokasi_asal")
+                            handleChange(
+                              e.target.value,
+                              "lokasi_asal"
+                            )
                           }
                         />
 
@@ -320,7 +384,10 @@ function Home() {
                           placeholder={"contoh : 0891234556"}
                           defaultValue={telefon}
                           onChange={(e) =>
-                            handleChange(e.target.value, "telepon")
+                            handleChange(
+                              e.target.value,
+                              "telepon"
+                            )
                           }
                         />
 
@@ -343,7 +410,10 @@ function Home() {
                             }}
                             name="option"
                             onChange={(e) =>
-                              handleChange(e.target.value, "pendidikan")
+                              handleChange(
+                                e.target.value,
+                                "pendidikan"
+                              )
                             }
                           >
                             <option value="DEFAULT" disabled>
@@ -351,7 +421,9 @@ function Home() {
                                 ? "Pilih Salah Satu"
                                 : `${pendidikan}`}
                             </option>
-                            <option value="Sekolah Dasar">Sekolah Dasar</option>
+                            <option value="Sekolah Dasar">
+                              Sekolah Dasar
+                            </option>
                             <option value="Sekolah Menengah Pertama">
                               Sekolah Menengah Pertama
                             </option>
@@ -378,7 +450,10 @@ function Home() {
                               placeholder="Ceritakan biografi singkat anda"
                               defaultValue={tentangSaya}
                               onChange={(e) =>
-                                handleChange(e.target.value, "tentang_saya")
+                                handleChange(
+                                  e.target.value,
+                                  "tentang_saya"
+                                )
                               }
                             ></textarea>
                           </div>
@@ -414,7 +489,9 @@ function Home() {
                   className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"
                   placeholder="Mata Pelajaran"
                   value={searchSubject}
-                  onChange={(e) => setSearchSubject(e.target.value)}
+                  onChange={(e) =>
+                    setSearchSubject(e.target.value)
+                  }
                 />
               </div>
 
@@ -426,7 +503,9 @@ function Home() {
                   className="input input-ghost lg:text-[18px] text-[16px] h-8 pl-0 w-full max-w-full"
                   placeholder="Lokasi"
                   value={searchLocation}
-                  onChange={(e) => setSearchLocation(e.target.value)}
+                  onChange={(e) =>
+                    setSearchLocation(e.target.value)
+                  }
                 />
               </div>
 
@@ -436,7 +515,7 @@ function Home() {
 
           <div className="flex flex-col items-center w-full lg:mt-20 mt-14 ">
             <div className="gap-4 grid lg:grid-cols-3 grid-cols-1 lg:w-[90vw] w-[80vw]">
-              {filteredHomes.slice(0, index).map((data, index) => (
+              {filteredHomes.map((data, index) => (
                 <Card
                   id="card-guru"
                   key={index}
@@ -460,7 +539,7 @@ function Home() {
                 className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
                 label="Lihat lebih banyak guru"
                 loading={loading}
-                onClick={loadMore}
+                onClick={() => nextPage()}
               />
             </div>
           )}
