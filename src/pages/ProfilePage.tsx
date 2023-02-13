@@ -1378,6 +1378,7 @@ const EditProfileTeacher: React.FC<{
                   </option>
                   <option value="online">Online</option>
                   <option value="offline">Offline</option>
+                  <option value="online & offline">Online & Offline</option>
                 </select>
               </div>
 
