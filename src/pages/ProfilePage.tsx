@@ -18,11 +18,23 @@ import { AiFillHome } from "react-icons/ai";
 import { FaLaptop } from "react-icons/fa";
 import { MdStars } from "react-icons/md";
 
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMap,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import openMap from "../assets/google-maps.webp";
 
-import { Tabs, Tab, Classes, RadioGroup, Radio } from "@blueprintjs/core";
+import {
+  Tabs,
+  Tab,
+  Classes,
+  RadioGroup,
+  Radio,
+} from "@blueprintjs/core";
 
 import { useEffect, useRef } from "react";
 import { useMemo, useState, useCallback } from "react";
@@ -42,7 +54,7 @@ import {
 } from "../utils/DataTypes";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import bni from "../assets/2560px-BNI_logo 4.svg";
 import bri from "../assets/Logo-BRI 4.svg";
 import bca from "../assets/Logo-Bank-BCA-1 4.svg";
@@ -85,10 +97,17 @@ function ProfileStudent() {
             </p>
           </label>
 
-          <input type="checkbox" id="my-modal-5" className="modal-toggle" />
+          <input
+            type="checkbox"
+            id="my-modal-5"
+            className="modal-toggle"
+          />
           <div className="modal">
             <div className="modal-box lg:w-9/12 w-10/12 max-w-full lg:pl-10 lg:p-5 p-7 shadow-xl">
-              <label htmlFor="my-modal-5" className="absolute right-5 top-4">
+              <label
+                htmlFor="my-modal-5"
+                className="absolute right-5 top-4"
+              >
                 <IoMdCloseCircleOutline className="text-[#112B3C] lg:w-8 w-7 lg:h-8 h-7" />
               </label>
               <EditProfilStudent />
@@ -116,7 +135,10 @@ function ProfileStudent() {
               <br />
               <p className=" font-semibold">
                 Handphone
-                <span className=" pl-[6px] font-normal"> : 089566787765</span>
+                <span className=" pl-[6px] font-normal">
+                  {" "}
+                  : 089566787765
+                </span>
               </p>
             </div>
             <div className="lg:ml-0 ml-3 lg:mt-0 mt-5">
@@ -152,7 +174,10 @@ const EditProfilStudent = () => {
           <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
             <BsPhoneFill className="w-7 h-6" />
 
-            <InputIcon id="input-handphone" placeholder="089788970987" />
+            <InputIcon
+              id="input-handphone"
+              placeholder="089788970987"
+            />
           </div>
         </div>
 
@@ -188,7 +213,9 @@ const EditProfilStudent = () => {
       </div>
 
       <div className="flex flex-col items-center lg:w-[50vw] w-[70vw] lg:pt-16 pt-0 lg:mt-0 mt-2">
-        <p className="text-[#112B3C] text-[34px] font-semibold">Ubah Profil</p>
+        <p className="text-[#112B3C] text-[34px] font-semibold">
+          Ubah Profil
+        </p>
         <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
           <img src={Profil2} alt="profil.jpg" />
         </div>
@@ -279,7 +306,11 @@ const options: MapOptions = {
 
 const TabsContentForTeacherPage = () => {
   const [cookies, ,] = useCookies(["role"]);
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.guru_id;
@@ -353,10 +384,15 @@ interface ChargeRequest {
   customer_details: CustomerDetails;
 }
 
-const MIDTRANS_API_KEY = "SB-Mid-server-iTr-aTpYYMJkOzRoWLk1l-lg";
+const MIDTRANS_API_KEY =
+  "SB-Mid-server-iTr-aTpYYMJkOzRoWLk1l-lg";
 
 const ProfileTeacher = () => {
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.guru_id;
@@ -389,12 +425,14 @@ const ProfileTeacher = () => {
   const [alamat_siswa, setAlamat] = useState<string>("");
   const [telepon_siswa, setTelepon] = useState<string>("");
 
-  const [metode_belajar, setMetodebelajar] = useState<string>("");
+  const [metode_belajar, setMetodebelajar] =
+    useState<string>("");
   const [jam, setJam] = useState<string>("");
   const [jadwal, setJADWAL] = useState<string>("");
   const [tanggal, setTanggal] = useState<string>("");
 
-  const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
+  const [metode_pembayaran, setMetodePembayaran] =
+    useState<string>("");
   const [objSubmit, setObjSubmit] = useState<ProfilType>({});
   const [caraBelajar, setCaraBelajar] = useState<string>("");
 
@@ -426,7 +464,7 @@ const ProfileTeacher = () => {
         setTelepon(telepon);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.toString());
       })
       .finally(() => setLoading(false));
   }, []);
@@ -467,11 +505,12 @@ const ProfileTeacher = () => {
           TentangSaya,
           MetodeBljr,
         } = response.data.data;
+
         setAvatar(Avatar);
         setEmail(Email);
         setGelar(Gelar);
         setIjazah(Ijazah);
-        setJadwal(Jadwal);
+        setJadwal(response.data.data.Jadwal[0]);
         setLatitude(latitude);
         setLongitude(longitude);
         setLinkedIn(LinkedIn);
@@ -487,6 +526,7 @@ const ProfileTeacher = () => {
         setTentangSaya(TentangSaya);
         setCaraBelajar(MetodeBljr);
       })
+
       .catch((error) => {
         console.log(error.toString());
       })
@@ -497,7 +537,11 @@ const ProfileTeacher = () => {
     fetchDataGuru();
   }, []);
 
-  const handleReservasi = async (e: React.FormEvent<HTMLFormElement>) => {
+  Jadwal === "" ? console.log("kosong") : console.log(Jadwal);
+
+  const handleReservasi = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -529,12 +573,15 @@ const ProfileTeacher = () => {
         navigate("/paymentDetails");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.toString());
       })
       .finally(() => setLoading(false));
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
@@ -545,7 +592,9 @@ const ProfileTeacher = () => {
   }, []);
 
   useEffect(() => {
-    setGuruId(new URL(window.location.href).searchParams.get("guru_id"));
+    setGuruId(
+      new URL(window.location.href).searchParams.get("guru_id")
+    );
   }, []);
 
   function fetchUlasan() {
@@ -588,8 +637,6 @@ const ProfileTeacher = () => {
     navigate(`/listmengajar/${checkId}`);
   }
 
-  console.log(Nama);
-
   return (
     <>
       {loading ? (
@@ -626,7 +673,9 @@ const ProfileTeacher = () => {
                           </label>
                           <IsiModalReservasi
                             center={options.center}
-                            scrollWheelZoom={options.scrollWheelZoom}
+                            scrollWheelZoom={
+                              options.scrollWheelZoom
+                            }
                           />
                         </>
                       )}
@@ -653,15 +702,21 @@ const ProfileTeacher = () => {
               </p>
               <div className="flex mt-2 gap-1 mb-4">
                 <MdStars className="w-5 h-5 text-[#F66B0E]" />
-                <p className="text-[14px] ">{`${5} (6 ulasan)`} </p>
+                <p className="text-[14px] ">
+                  {`${5} (6 ulasan)`}{" "}
+                </p>
               </div>
               <p className="font-semibold lg:text-[16px] text-[14px] mb-5">
                 Tarif Belajar/Jam{" "}
                 <span className="lg:ml-2 ml-2">Rp.{Tarif}</span>
               </p>
-              <p className="text-zinc-800 ">Mata Pelajaran dan Tingkatan</p>
+              <p className="text-zinc-800 ">
+                Mata Pelajaran dan Tingkatan
+              </p>
               <div className="flex text-[#637381] gap-8 text-[14px] mt-2">
-                <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">{Pelajaran}</p>
+                <p className="py-1 px-2 bg-[#b3b3b3] rounded-lg">
+                  {Pelajaran}
+                </p>
               </div>
             </div>
             <p className="text-[24px] text-zinc-800 font-semibold mt-10">
@@ -678,7 +733,9 @@ const ProfileTeacher = () => {
               <p className="text-zinc-900 lg:text-[36px] text-[28px] font-extrabold">
                 {Gelar}
               </p>
-              <p className="text-[14px] text-zinc-500 mt-5">{TentangSaya}</p>
+              <p className="text-[14px] text-zinc-500 mt-5">
+                {TentangSaya}
+              </p>
               <p className="font-bold text-[28px] text-zinc-900 mt-10 capitalize">
                 Tentang {Nama}
               </p>
@@ -697,11 +754,13 @@ const ProfileTeacher = () => {
                     >
                       ✕
                     </label>
-                    <h1 className="text-2xl font-bold text-center">
+                    <h1 className="text-2xl font-bold text-center capitalize">
                       About {Nama}
                     </h1>
                     <hr className="border-2 " />
-                    <p className="flex gap-4 mt-8">{Pengalaman}</p>
+                    <p className="flex gap-4 mt-8">
+                      {Pengalaman}
+                    </p>
                   </div>
                 </div>
               </ul>
@@ -737,7 +796,9 @@ const ProfileTeacher = () => {
                         className="w-8 h-8 rounded-full"
                       />
 
-                      <p className="font-semibold">{data.nama_siswa}</p>
+                      <p className="font-semibold">
+                        {data.nama_siswa}
+                      </p>
                       <div className="flex items-center gap-1 ml-auto">
                         <MdStars className="text-component" />
                         {data.penilaian}
@@ -784,17 +845,27 @@ const EditProfileTeacher: React.FC<{
     lng: -0.09,
   });
   const [zoom, setZoom] = useState(13);
-  const [locations, setLocations] = useState<Array<Location>>([]);
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+  const [locations, setLocations] = useState<Array<Location>>(
+    []
+  );
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
 
   const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.guru_id;
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>({});
+  const [objSubmit, setObjSubmit] = useState<CompleteTeacher>(
+    {}
+  );
 
-  const [EditTeacher, setEditTeacher] = useState<EditTeacher>({});
+  const [EditTeacher, setEditTeacher] = useState<EditTeacher>(
+    {}
+  );
 
   const [tanggal, setTanggal] = useState<string>("");
   const [startDate, setStartDate] = useState(new Date());
@@ -818,7 +889,9 @@ const EditProfileTeacher: React.FC<{
   const [TentangSaya, setTentangSaya] = useState<string>("");
   const [MetodeBljr, setMetodeBljr] = useState<string>("");
 
-  const handleSearchMap = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearchMap = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     console.log("Submitting form...");
 
@@ -907,7 +980,7 @@ const EditProfileTeacher: React.FC<{
         setTentangSaya(TentangSaya);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.tostring());
       })
       .finally(() => setLoading(false));
   }, []);
@@ -916,7 +989,9 @@ const EditProfileTeacher: React.FC<{
     fetchDataGuru();
   }, []);
 
-  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -924,8 +999,6 @@ const EditProfileTeacher: React.FC<{
     for (key in EditTeacher) {
       formData.append(key, EditTeacher[key]);
     }
-
-    console.log(formData);
 
     axios
       .put("https://devmyproject.site/guru", formData, {
@@ -964,7 +1037,9 @@ const EditProfileTeacher: React.FC<{
     setEditTeacher(temp);
   };
 
-  const handlePostJadwal = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePostJadwal = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -1026,7 +1101,9 @@ const EditProfileTeacher: React.FC<{
                 if (!e.currentTarget.files) {
                   return;
                 }
-                setAvatar(URL.createObjectURL(e.currentTarget.files[0]));
+                setAvatar(
+                  URL.createObjectURL(e.currentTarget.files[0])
+                );
                 handleChange(e.currentTarget.files[0], "avatar");
               }}
             />
@@ -1039,7 +1116,9 @@ const EditProfileTeacher: React.FC<{
               id="input-tarif"
               type="number"
               defaultValue={Tarif}
-              onChange={(e) => handleChange(e.target.value, "tarif")}
+              onChange={(e) =>
+                handleChange(e.target.value, "tarif")
+              }
               className="input flex justify-center w-10/12 lg:w-full mx-auto bg-white  border-gray-300"
               placeholder="Rp. 500000 "
             />
@@ -1061,7 +1140,9 @@ const EditProfileTeacher: React.FC<{
                 <CustomInput
                   id="input-tarif"
                   type="text"
-                  onChange={(e) => handleChange(e.target.value, "pelajaran")}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "pelajaran")
+                  }
                   defaultValue={Pelajaran}
                   className="input flex justify-center p-2 w-10/12 lg:w-6/12 mx-auto bg-white border-2 border-gray-300"
                   placeholder="Matematika"
@@ -1069,7 +1150,9 @@ const EditProfileTeacher: React.FC<{
                 <CustomInput
                   id="input-pendidikan"
                   type="text"
-                  onChange={(e) => handleChange(e.target.value, "pendidikan")}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "pendidikan")
+                  }
                   defaultValue={Pendidikan}
                   className=" input flex justify-center p-2 w-10/12 lg:w-11/12 mx-auto bg-white border-2 border-gray-300"
                   placeholder="Sekolah Menengah Atas"
@@ -1089,7 +1172,9 @@ const EditProfileTeacher: React.FC<{
                 if (!e.currentTarget.files) {
                   return;
                 }
-                setIjazah(URL.createObjectURL(e.currentTarget.files[0]));
+                setIjazah(
+                  URL.createObjectURL(e.currentTarget.files[0])
+                );
                 handleChange(e.currentTarget.files[0], "ijazah");
               }}
             />
@@ -1133,14 +1218,18 @@ const EditProfileTeacher: React.FC<{
               id="input-Latitude"
               className="hidden"
               defaultValue={latitude}
-              onChange={(e) => handleChangeMap(e.target.value, "latitude")}
+              onChange={(e) =>
+                handleChangeMap(e.target.value, "latitude")
+              }
             />
             <div className="flex flex-row justify-center">
               <CustomInput
                 id="input-Longitude"
                 className="hidden"
                 defaultValue={longitude}
-                onChange={(e) => handleChangeMap(e.target.value, "longitude")}
+                onChange={(e) =>
+                  handleChangeMap(e.target.value, "longitude")
+                }
               />
               <form onSubmit={handleSearchMap} className="mb-10">
                 <CustomInput
@@ -1148,7 +1237,9 @@ const EditProfileTeacher: React.FC<{
                   type="text"
                   placeholder="Search Your Location"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) =>
+                    setSearchQuery(e.target.value)
+                  }
                 />
                 <CustomButton
                   id="btn-pencarian-lokasi"
@@ -1185,7 +1276,9 @@ const EditProfileTeacher: React.FC<{
               id="input-nama"
               type="text"
               defaultValue={Nama}
-              onChange={(e) => handleChange(e.target.value, "nama")}
+              onChange={(e) =>
+                handleChange(e.target.value, "nama")
+              }
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="contoh : Lydia Kumala"
             />
@@ -1199,7 +1292,9 @@ const EditProfileTeacher: React.FC<{
               id="input-gelar"
               type="text"
               defaultValue={Gelar}
-              onChange={(e) => handleChange(e.target.value, "gelar")}
+              onChange={(e) =>
+                handleChange(e.target.value, "gelar")
+              }
               className="input flex justify-center  w-10/12  lg:w-9/12 mx-auto bg-white border-2 border-gray-300"
               placeholder="S1 Pendidikan Matematik "
             />
@@ -1212,7 +1307,9 @@ const EditProfileTeacher: React.FC<{
               <textarea
                 id="input-tentang-saya"
                 defaultValue={TentangSaya}
-                onChange={(e) => handleChange(e.target.value, "tentang_saya")}
+                onChange={(e) =>
+                  handleChange(e.target.value, "tentang_saya")
+                }
                 className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 mx-auto bg-white"
                 placeholder="CumLaude Grade (GPA: 3.87 out of 4) ||  Curriculum: IB, IGCSE, O Level, AS/A Level, AP, SAT, ACT and National Curriculum."
               ></textarea>
@@ -1226,7 +1323,9 @@ const EditProfileTeacher: React.FC<{
               <textarea
                 id="input-pengalaman"
                 defaultValue={Pengalaman}
-                onChange={(e) => handleChange(e.target.value, "pengalaman")}
+                onChange={(e) =>
+                  handleChange(e.target.value, "pengalaman")
+                }
                 className="textarea textarea-bordered h-32 w-10/12 lg:w-9/12 mx-auto bg-white"
                 placeholder=" Bachelor's Degree with more than 10 years experienced teaching math from primary, secondary, until senior.
                 
@@ -1247,7 +1346,9 @@ const EditProfileTeacher: React.FC<{
                   id="input-lokasi"
                   type="text"
                   defaultValue={LokasiAsal}
-                  onChange={(e) => handleChange(e.target.value, "lokasi_asal")}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "lokasi_asal")
+                  }
                   className="input px-2 lg:text-[16px] text-[14px] flex justify-center w-full bg-white border-2 border-gray-300"
                 />
               </div>
@@ -1264,11 +1365,16 @@ const EditProfileTeacher: React.FC<{
                   className="select select-bordered w-11/12 border-2 bg-white font-normal text-[16px]"
                   name="option"
                   onChange={(e) =>
-                    handleChange(e.target.value, "metode_belajar")
+                    handleChange(
+                      e.target.value,
+                      "metode_belajar"
+                    )
                   }
                 >
                   <option value="DEFAULT" disabled>
-                    {MetodeBljr === "" ? "Belum Dipilih" : MetodeBljr}
+                    {MetodeBljr === ""
+                      ? "Belum Dipilih"
+                      : MetodeBljr}
                   </option>
                   <option value="online">Online</option>
                   <option value="offline">Offline</option>
@@ -1382,21 +1488,29 @@ const IsiModalReservasi: React.FC<{
   });
   const [latitude, setLatitude] = useState<string>("");
   const [longitude, setLongitude] = useState<string>("");
-  const [locations, setLocations] = useState<Array<Location>>([]);
+  const [locations, setLocations] = useState<Array<Location>>(
+    []
+  );
   const [zoom, setZoom] = useState(13);
-  const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
+  const [cookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "guru_id",
+  ]);
   const checkToken = cookie.token;
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
 
   const { guru_id }: any = useParams();
   const [pesan, setPesan] = useState<string>("");
-  const [metode_belajar, setMetode_Belajar] = useState<string>("");
+  const [metode_belajar, setMetode_Belajar] =
+    useState<string>("");
   const [tanggal, setTanggal] = useState<string>("");
   const [jam, setJam] = useState<string>("");
   const [alamat_siswa, setAlamatSiswa] = useState<string>("");
   const [telepon_siswa, setTeleponSiswa] = useState<string>("");
-  const [metode_pembayaran, setMetodePembayaran] = useState<string>("");
+  const [metode_pembayaran, setMetodePembayaran] =
+    useState<string>("");
   const [data, setData] = useState([]);
   const [jadwal, setJadwal] = useState<CompleteTeacher>({});
   const [Avatar, setAvatar] = useState<string>("");
@@ -1426,16 +1540,22 @@ const IsiModalReservasi: React.FC<{
     axios
       .get(`https://devmyproject.site/guru/${guru_id}`)
       .then((res) => {
-        const { Avatar, Nama, Tarif, Pelajaran } = res.data.data;
+        const {
+          Avatar,
+          Nama,
+          Tarif,
+          Pelajaran,
+          telepon,
+          alamat,
+        } = res.data.data;
         setAvatar(Avatar);
         setNama(Nama);
         setTarif(Tarif);
         setPelajaran(Pelajaran);
         setJadwal(res.data.data);
-        console.log(jadwal);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.toString());
       })
       .finally(() => setLoading(false));
   }
@@ -1444,7 +1564,9 @@ const IsiModalReservasi: React.FC<{
     fetchJadwal();
   }, []);
 
-  const handleReservasi = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleReservasi = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -1460,8 +1582,6 @@ const IsiModalReservasi: React.FC<{
       metode_pembayaran,
     };
 
-    console.log(body);
-
     axios
       .post("https://devmyproject.site/reservasi", body, {
         headers: {
@@ -1473,16 +1593,15 @@ const IsiModalReservasi: React.FC<{
         const { data, message } = res.data;
         localStorage.setItem("data", JSON.stringify(data));
         setData(JSON.parse(localStorage.getItem("data") || ""));
-        console.log(body);
         MySwal.fire({
           title: "Berhasil Melakukan Transaksi",
           text: message,
           showCancelButton: false,
         });
+        navigate("/paymentDetails");
       })
       .catch((err) => {
         const { message } = err.response.data;
-        console.log(err.response.data);
 
         MySwal.fire({
           title: "Gagal Melakukan Transaksi",
@@ -1495,10 +1614,16 @@ const IsiModalReservasi: React.FC<{
 
   return (
     <>
-      <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+      <input
+        type="checkbox"
+        id="my-modal-3"
+        className="modal-toggle"
+      />
       <div className="modal">
         <div className="modal-box w-11/12 max-w-5xl relative">
-          <h3 className="text-xl text-center font-bold">Halaman Reservasi</h3>
+          <h3 className="text-xl text-center font-bold">
+            Halaman Reservasi
+          </h3>
           <hr className="mt-5 w-8/12 mx-auto border-2" />
           <label
             htmlFor="my-modal-3"
@@ -1509,8 +1634,13 @@ const IsiModalReservasi: React.FC<{
           <div className="w-full min-h-screen flex flex-row">
             <div className="flex-1 flex-col w-full min-h-scree">
               <div className="w-8/12 rounded-2xl bg-primary shadow-xl h-[30rem] mt-10 shad mx-auto">
-                <img src={Avatar} className="w-6/12 mx-auto pt-7" />
-                <p className="font-bold text-3xl text-center mt-7">{Nama}</p>
+                <img
+                  src={Avatar}
+                  className="w-6/12 mx-auto pt-7"
+                />
+                <p className="font-bold text-3xl text-center mt-7">
+                  {Nama}
+                </p>
                 <p className="flex flex-row justify-center mt-2">
                   <span>
                     <MdStars className="w-6 h-6 text-[#F66B0E] mr-2" />
@@ -1523,7 +1653,9 @@ const IsiModalReservasi: React.FC<{
                   <span className="text-lg font-semibold">
                     Tarif Belajar / Jam
                   </span>
-                  <span className="text-lg font-semibold">{Tarif}</span>
+                  <span className="text-lg font-semibold">
+                    {Tarif}
+                  </span>
                 </p>
                 <p className="text-lg font-bold text-center mt-5">
                   Spelisasi dan Mapel
@@ -1557,18 +1689,24 @@ const IsiModalReservasi: React.FC<{
                   <option value="transfer_va_bca">BCA</option>
                   <option value="transfer_va_bri">BRI</option>
                   <option value="transfer_va_bni">BNI</option>
-                  <option value="transfer_va_permata">Permata</option>
+                  <option value="transfer_va_permata">
+                    Permata
+                  </option>
                   <option value="qris">Metode Qris</option>
                 </select>
               </div>
             </div>
             <div className="flex-1 flex-col w-full min-h-screen">
-              <h1 className="font-bold text-3xl ml-5 mt-10">Reservasi</h1>
+              <h1 className="font-bold text-3xl ml-5 mt-10">
+                Reservasi
+              </h1>
               <p className="font-semibold text-lg ml-5 mt-2 ">
-                Let's thrive with John Doe
+                Mari belajar dengan{" "}
+                <span className="capitalize">{Nama}</span>
               </p>
               <p className="font-normal text-md w-10/12 ml-5">
-                Perkenalkan diri anda dan ceritakan apa yang ingin anda pelajari
+                Perkenalkan diri anda dan ceritakan apa yang
+                ingin anda pelajari
               </p>
               <div className="form-control mt-5 ">
                 <label className="label">
@@ -1668,9 +1806,12 @@ const IsiModalReservasi: React.FC<{
                 />
               </div> */}
 
-              <h1 className="font-semibold text-2xl m-5">Informasi Kontak</h1>
+              <h1 className="font-semibold text-2xl m-5">
+                Informasi Kontak
+              </h1>
               <p className="font-normal text-lg w-11/12 ml-5">
-                Kontak yang anda berikan hanya akan dibagikan ke guru terkait
+                Kontak yang anda berikan hanya akan dibagikan ke
+                guru terkait
               </p>
               <label className="label mt-5">
                 <span className="label-text text-xl mx-auto w-10/12 lg:w-11/12 font-semibold mt-2">

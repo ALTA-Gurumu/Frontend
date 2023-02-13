@@ -11,7 +11,10 @@ import Swal from "../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
 import EditProfilStudent from "./editProfilStudent";
 
-import { CustomInput, InputIcon } from "../components/CustomInput";
+import {
+  CustomInput,
+  InputIcon,
+} from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
@@ -71,8 +74,14 @@ function HalamanSesiMurid() {
       params: {},
     })
       .then((res) => {
-        const { nama_murid, pelajaran, tanggal, jam, tautan_gmeet, status } =
-          res.data.data;
+        const {
+          nama_murid,
+          pelajaran,
+          tanggal,
+          jam,
+          tautan_gmeet,
+          status,
+        } = res.data.data;
 
         setNamaMurid(nama_murid);
         setPelajaran(pelajaran);
@@ -102,7 +111,8 @@ function HalamanSesiMurid() {
       params: {},
     })
       .then((res) => {
-        const { nama, email, alamat, telepon, avatar } = res.data.data;
+        const { nama, email, alamat, telepon, avatar } =
+          res.data.data;
 
         setNama(nama);
         setEmail(email);
@@ -116,7 +126,9 @@ function HalamanSesiMurid() {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -152,14 +164,19 @@ function HalamanSesiMurid() {
       .finally(() => fetchData());
   };
 
-  const handleChange = (value: string | File, key: keyof typeof objSubmit) => {
+  const handleChange = (
+    value: string | File,
+    key: keyof typeof objSubmit
+  ) => {
     let temp = { ...objSubmit };
     temp[key] = value;
     setObjSubmit(temp);
   };
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("data") || "{}");
+    const data = JSON.parse(
+      localStorage.getItem("data") || "{}"
+    );
     setResponseData(data);
   }, []);
 
@@ -278,7 +295,9 @@ function HalamanSesiMurid() {
                               >
                                 <div className=" flex flex-col items-center lg:w-[30vw] w-[70vw] lg:mt-0 mt-5 text-[16px] text-[#112B3C] font-normal">
                                   <div>
-                                    <p className="items-start">Nama Lengkap</p>
+                                    <p className="items-start">
+                                      Nama Lengkap
+                                    </p>
                                     <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
                                       <HiUser className="w-7 h-6" />
                                       <InputIcon
@@ -287,14 +306,19 @@ function HalamanSesiMurid() {
                                         placeholder={nama}
                                         defaultValue={nama}
                                         onChange={(e) =>
-                                          handleChange(e.target.value, "nama")
+                                          handleChange(
+                                            e.target.value,
+                                            "nama"
+                                          )
                                         }
                                       />
                                     </div>
                                   </div>
 
                                   <div>
-                                    <p className="items-start">Handphone</p>
+                                    <p className="items-start">
+                                      Handphone
+                                    </p>
                                     <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
                                       <BsPhoneFill className="w-7 h-6" />
                                       <InputIcon
@@ -313,7 +337,9 @@ function HalamanSesiMurid() {
                                   </div>
 
                                   <div>
-                                    <p className="items-start">Email</p>
+                                    <p className="items-start">
+                                      Email
+                                    </p>
                                     <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
                                       <MdOutlineAlternateEmail className="w-7 h-6" />
                                       <InputIcon
@@ -322,14 +348,19 @@ function HalamanSesiMurid() {
                                         placeholder={email}
                                         defaultValue={email}
                                         onChange={(e) =>
-                                          handleChange(e.target.value, "email")
+                                          handleChange(
+                                            e.target.value,
+                                            "email"
+                                          )
                                         }
                                       />
                                     </div>
                                   </div>
 
                                   <div>
-                                    <p className="items-start">Alamat</p>
+                                    <p className="items-start">
+                                      Alamat
+                                    </p>
                                     <div className="flex border border-[#424242] rounded-xl lg:w-96 w-72 items-center p-2 gap-2 mt-1 mb-4">
                                       <textarea
                                         id="input-alamat"
@@ -338,7 +369,10 @@ function HalamanSesiMurid() {
                                         placeholder={alamat}
                                         defaultValue={alamat}
                                         onChange={(e) =>
-                                          handleChange(e.target.value, "alamat")
+                                          handleChange(
+                                            e.target.value,
+                                            "alamat"
+                                          )
                                         }
                                       ></textarea>
                                     </div>
@@ -357,10 +391,14 @@ function HalamanSesiMurid() {
                                     Ubah Profil
                                   </p>
                                   <div className=" w-32 h-32 lg:mt-5 mt-5 mb-5 border border-[#EFEFEF] rounded-full overflow-hidden">
-                                    <img src={avatar} alt="profil.jpg" />
+                                    <img
+                                      src={avatar}
+                                      alt="profil.jpg"
+                                    />
                                   </div>
                                   <p className="text-[14px] font-normal text-[#C0B7B7]">
-                                    *Uk.foto maks 400 x 400 pixels
+                                    *Uk.foto maks 400 x 400
+                                    pixels
                                   </p>
 
                                   <CustomInput
@@ -370,13 +408,16 @@ function HalamanSesiMurid() {
                                     accept="image/png, image/jpg, image/jpeg"
                                     className="flex font-normal mt-2 text-[#112B3C] lg:text-[16px] text-[14px] text-center"
                                     onChange={(e) => {
-                                      if (!e.currentTarget.files) {
+                                      if (
+                                        !e.currentTarget.files
+                                      ) {
                                         return;
                                       }
 
                                       setAvatar(
                                         URL.createObjectURL(
-                                          e.currentTarget.files[0]
+                                          e.currentTarget
+                                            .files[0]
                                         )
                                       );
                                       handleChange(
@@ -423,8 +464,12 @@ function HalamanSesiMurid() {
                             </p>
                           </div>
                           <div className="lg:ml-0 ml-3 lg:mt-0 mt-5">
-                            <p className="block font-semibold">Alamat :</p>
-                            <p className="font-normal">{alamat}</p>
+                            <p className="block font-semibold">
+                              Alamat :
+                            </p>
+                            <p className="font-normal">
+                              {alamat}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -439,11 +484,15 @@ function HalamanSesiMurid() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">No</th>
+                              <th className="text-[18px] text-zinc-700">
+                                No
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Guru
                               </th>
-                              <th className="text-[18px] text-zinc-700">Jam</th>
+                              <th className="text-[18px] text-zinc-700">
+                                Jam
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
@@ -456,27 +505,31 @@ function HalamanSesiMurid() {
                           </thead>
                           <tbody>
                             <>
-                              {riwayat.data?.map((data, index) => (
-                                <tr
-                                  key={data.reservasi_id}
-                                  className="text-[16px] font-normal"
-                                >
-                                  <th>{data.reservasi_id}</th>
-                                  <td>{data.nama_guru}</td>
-                                  <td>{data.jam}</td>
-                                  <td>{data.tanggal}</td>
-                                  <td>{data.status}</td>
-                                  <td
-                                    className="flex items-center text-component text-[16px] gap-1"
-                                    onClick={() =>
-                                      navigate(`/ulasan/${data.guru_id}`)
-                                    }
+                              {riwayat.data?.map(
+                                (data, index) => (
+                                  <tr
+                                    key={data.reservasi_id}
+                                    className="text-[16px] font-normal"
                                   >
-                                    <AiTwotoneStar className="w-5 h-5" />
-                                    Ulasan
-                                  </td>
-                                </tr>
-                              ))}
+                                    <th>{data.reservasi_id}</th>
+                                    <td>{data.nama_guru}</td>
+                                    <td>{data.jam}</td>
+                                    <td>{data.tanggal}</td>
+                                    <td>{data.status}</td>
+                                    <td
+                                      className="flex items-center text-component text-[16px] gap-1"
+                                      onClick={() =>
+                                        navigate(
+                                          `/ulasan/${data.guru_id}`
+                                        )
+                                      }
+                                    >
+                                      <AiTwotoneStar className="w-5 h-5" />
+                                      Ulasan
+                                    </td>
+                                  </tr>
+                                )
+                              )}
                             </>
                           </tbody>
                         </table>
@@ -492,11 +545,15 @@ function HalamanSesiMurid() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">No</th>
+                              <th className="text-[18px] text-zinc-700">
+                                No
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Guru
                               </th>
-                              <th className="text-[18px] text-zinc-700">Jam</th>
+                              <th className="text-[18px] text-zinc-700">
+                                Jam
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
@@ -510,19 +567,21 @@ function HalamanSesiMurid() {
                           </thead>
                           <tbody>
                             <>
-                              {ongoing.data?.map((data, index) => (
-                                <tr
-                                  key={index}
-                                  className="text-[16px] font-normal"
-                                >
-                                  <th>{data.reservasi_id}</th>
-                                  <td>{data.nama_guru}</td>
-                                  <td>{data.jam}</td>
-                                  <td>{data.tanggal}</td>
-                                  <td>{data.tautan_gmet}</td>
-                                  <td>{data.status}</td>
-                                </tr>
-                              ))}
+                              {ongoing.data?.map(
+                                (data, index) => (
+                                  <tr
+                                    key={index}
+                                    className="text-[16px] font-normal"
+                                  >
+                                    <th>{data.reservasi_id}</th>
+                                    <td>{data.nama_guru}</td>
+                                    <td>{data.jam}</td>
+                                    <td>{data.tanggal}</td>
+                                    <td>{data.tautan_gmet}</td>
+                                    <td>{data.status}</td>
+                                  </tr>
+                                )
+                              )}
                             </>
                           </tbody>
                         </table>
@@ -538,7 +597,9 @@ function HalamanSesiMurid() {
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">No</th>
+                              <th className="text-[18px] text-zinc-700">
+                                No
+                              </th>
 
                               <th className="text-[18px] text-zinc-700">
                                 Nama Guru
@@ -570,35 +631,46 @@ function HalamanSesiMurid() {
                               <td>{responseData.nama_guru}</td>
                               <td>{responseData.total_tarif}</td>
                               <td>{responseData.pelajaran}</td>
-                              <td>{responseData.metode_belajar}</td>
                               <td>
-                                {ongoing.data?.map((data, index) => (
-                                  <tr
-                                    key={index}
-                                    className="text-[16px] font-normal"
-                                  >
-                                    <td>
-                                      {data.tautan_gmet ? (
-                                        (localStorage.removeItem("data"), null)
-                                      ) : (
-                                        <></>
-                                      )}
-                                    </td>
-                                  </tr>
-                                ))}
+                                {responseData.metode_belajar}
+                              </td>
+                              <td>
+                                {ongoing.data?.map(
+                                  (data, index) => (
+                                    <tr
+                                      key={index}
+                                      className="text-[16px] font-normal"
+                                    >
+                                      <td>
+                                        {data.tautan_gmet ? (
+                                          (localStorage.removeItem(
+                                            "data"
+                                          ),
+                                          null)
+                                        ) : (
+                                          <></>
+                                        )}
+                                      </td>
+                                    </tr>
+                                  )
+                                )}
                               </td>
                               <td>{responseData.nomer_va}</td>
                               <td>
-                                {responseData.bank_penerima === "bca" ? (
+                                {responseData.bank_penerima ===
+                                "bca" ? (
                                   <div>
-                                    <a href="https://simulator.sandbox.midtrans.com/bca/va/index">
+                                    <a
+                                      href="https://simulator.sandbox.midtrans.com/bca/va/index"
+                                      target={"_blank"}
+                                    >
                                       <CustomButton
                                         id="btn-bayar"
                                         icon={
-                                          <IoBagCheckOutline className="mt-1 mr-2" />
+                                          <IoBagCheckOutline className="mt-1 mr-2 " />
                                         }
                                         label="Bayar"
-                                        className="bg-component text-white py-3 px-4 rounded-lg hover:bg-orange-700 flex flex-row w-10/12 justify-center font-poppins text-lg"
+                                        className="bg-component text-white py-3 px-4 rounded-lg hover:bg-orange-700 flex flex-row w-10/12 justify-center font-poppins text-lg "
                                       />
                                     </a>
                                     <CustomButton
@@ -608,12 +680,18 @@ function HalamanSesiMurid() {
                                       }
                                       label="Cancel Order"
                                       className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
-                                      onClick={() => handleCanceOrder()}
+                                      onClick={() =>
+                                        handleCanceOrder()
+                                      }
                                     />
                                   </div>
-                                ) : responseData.bank_penerima === "bri" ? (
+                                ) : responseData.bank_penerima ===
+                                  "bri" ? (
                                   <div>
-                                    <a href="https://simulator.sandbox.midtrans.com/bri/va/index">
+                                    <a
+                                      href="https://simulator.sandbox.midtrans.com/bri/va/index"
+                                      target={"_blank"}
+                                    >
                                       <CustomButton
                                         id="btn-bayar"
                                         icon={
@@ -630,12 +708,18 @@ function HalamanSesiMurid() {
                                       }
                                       label="Cancel Order"
                                       className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
-                                      onClick={() => handleCanceOrder()}
+                                      onClick={() =>
+                                        handleCanceOrder()
+                                      }
                                     />
                                   </div>
-                                ) : responseData.bank_penerima === "bni" ? (
+                                ) : responseData.bank_penerima ===
+                                  "bni" ? (
                                   <div>
-                                    <a href="https://simulator.sandbox.midtrans.com/bni/va/index">
+                                    <a
+                                      href="https://simulator.sandbox.midtrans.com/bni/va/index"
+                                      target={"_blank"}
+                                    >
                                       <CustomButton
                                         id="btn-bayar"
                                         icon={
@@ -652,12 +736,18 @@ function HalamanSesiMurid() {
                                       }
                                       label="Cancel Order"
                                       className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
-                                      onClick={() => handleCanceOrder()}
+                                      onClick={() =>
+                                        handleCanceOrder()
+                                      }
                                     />
                                   </div>
-                                ) : responseData.bank_penerima === "permata" ? (
+                                ) : responseData.bank_penerima ===
+                                  "permata" ? (
                                   <div>
-                                    <a href="https://simulator.sandbox.midtrans.com/permata/va/index">
+                                    <a
+                                      href="https://simulator.sandbox.midtrans.com/permata/va/index"
+                                      target={"_blank"}
+                                    >
                                       <CustomButton
                                         id="btn-bayar"
                                         icon={
@@ -674,13 +764,18 @@ function HalamanSesiMurid() {
                                       }
                                       label="Cancel Order"
                                       className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
-                                      onClick={() => handleCanceOrder()}
+                                      onClick={() =>
+                                        handleCanceOrder()
+                                      }
                                     />
                                   </div>
                                 ) : responseData.metode_pembayaran ===
                                   "qris" ? (
                                   <div>
-                                    <a href="https://simulator.sandbox.midtrans.com/qris/index">
+                                    <a
+                                      href="https://simulator.sandbox.midtrans.com/qris/index"
+                                      target={"_blank"}
+                                    >
                                       <CustomButton
                                         id="btn-bayar"
                                         icon={
@@ -697,7 +792,9 @@ function HalamanSesiMurid() {
                                       }
                                       label="Cancel Order"
                                       className="bg-label text-white py-3 px-4 rounded-lg hover:bg-slate-900 flex flex-row mt-5 justify-center"
-                                      onClick={() => handleCanceOrder()}
+                                      onClick={() =>
+                                        handleCanceOrder()
+                                      }
                                     />
                                   </div>
                                 ) : (
