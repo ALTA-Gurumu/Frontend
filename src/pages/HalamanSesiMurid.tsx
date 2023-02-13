@@ -163,7 +163,6 @@ function HalamanSesiMurid() {
     setResponseData(data);
   }, []);
 
-
   const handleCanceOrder = () => {
     localStorage.removeItem("data");
     const remove = localStorage.removeItem("data");
@@ -223,7 +222,6 @@ function HalamanSesiMurid() {
       })
       .finally(() => setLoading(false));
   }
-
 
   return (
     <Layout>
@@ -457,7 +455,6 @@ function HalamanSesiMurid() {
                             </tr>
                           </thead>
                           <tbody>
-
                             <>
                               {riwayat.data?.map((data, index) => (
                                 <tr
@@ -575,11 +572,20 @@ function HalamanSesiMurid() {
                               <td>{responseData.pelajaran}</td>
                               <td>{responseData.metode_belajar}</td>
                               <td>
-                                {status === "selesai" ? (
-                                  (localStorage.removeItem("data"), null)
-                                ) : (
-                                  <p>Link Gmeet Belum tersedia</p>
-                                )}
+                                {ongoing.data?.map((data, index) => (
+                                  <tr
+                                    key={index}
+                                    className="text-[16px] font-normal"
+                                  >
+                                    <td>
+                                      {data.tautan_gmet ? (
+                                        (localStorage.removeItem("data"), null)
+                                      ) : (
+                                        <></>
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))}
                               </td>
                               <td>{responseData.nomer_va}</td>
                               <td>

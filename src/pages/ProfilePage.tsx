@@ -624,7 +624,10 @@ const ProfileTeacher = () => {
                             }
                             Reservasi
                           </label>
-                          <IsiModalReservasi />
+                          <IsiModalReservasi
+                            center={options.center}
+                            scrollWheelZoom={options.scrollWheelZoom}
+                          />
                         </>
                       )}
                     </>
@@ -845,6 +848,14 @@ const EditProfileTeacher: React.FC<{
       console.log(`Updated location: ${latLng}`);
     }
   }, [locations]);
+
+  const handleChangeMap = (value: any, type: any) => {
+    if (type === "latitude") {
+      setLatitude(value);
+    } else if (type === "longitude") {
+      setLongitude(value);
+    }
+  };
 
   const fetchDataGuru = useCallback(() => {
     setLoading(true);
@@ -1105,37 +1116,48 @@ const EditProfileTeacher: React.FC<{
                   onChange={(e) => setJam(e.target.value)}
                 />
               </div>
+              <div className="flex justify-center pr-10 mt-">
+                <CustomButton
+                  id="input-tempat-mengajar"
+                  label="Atur Jadwal Mengajar"
+                  className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
+                  onClick={(e: any) => handlePostJadwal(e)}
+                />
+              </div>
             </form>
             <h1 className="text-center mt-10 text-xl font-semibold">
               Atur Tempat Mengajar
             </h1>
-            <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto mt-5"></div>
+            <div className="flex flex-rows  w-10/12 lg:w-8/12 mx-auto"></div>
             <CustomInput
               id="input-Latitude"
+              className="hidden"
               defaultValue={latitude}
-              onChange={(e) => setLatitude(e.target.value)}
+              onChange={(e) => handleChangeMap(e.target.value, "latitude")}
             />
-            <CustomInput
-              id="input-Longitude"
-              defaultValue={longitude}
-              onChange={(e) => setLongitude(e.target.value)}
-            />
-            <form onSubmit={handleSearchMap} className="mb-10">
+            <div className="flex flex-row justify-center">
               <CustomInput
-                id="search-lokasi"
-                type="text"
-                placeholder="Search Your Location"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                id="input-Longitude"
+                className="hidden"
+                defaultValue={longitude}
+                onChange={(e) => handleChangeMap(e.target.value, "longitude")}
               />
-              <CustomButton
-                id="btn-pencarian-lokasi"
-                type="submit"
-                className="text-black"
-                label="search"
-              />
-            </form>
-
+              <form onSubmit={handleSearchMap} className="mb-10">
+                <CustomInput
+                  id="search-lokasi"
+                  type="text"
+                  placeholder="Search Your Location"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <CustomButton
+                  id="btn-pencarian-lokasi"
+                  type="submit"
+                  className="py-2 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10 ml-5 hover:bg-slate-700"
+                  label="search"
+                />
+              </form>
+            </div>
             <MapContainer
               center={mapCenter}
               zoom={zoom}
@@ -1151,15 +1173,6 @@ const EditProfileTeacher: React.FC<{
                 setLocations={setLocations}
               />
             </MapContainer>
-
-            <div className="flex justify-center pr-10 mt-">
-              <CustomButton
-                id="input-tempat-mengajar"
-                label="Atur Jadwal Mengajar"
-                className="py-4 px-6 bg-slate-900 text-white text-lg rounded-xl mt-10"
-                onClick={(e: any) => handlePostJadwal(e)}
-              />
-            </div>
           </div>
 
           <div className="flex flex-col lg:w-[38vw] w-full">
@@ -1359,7 +1372,18 @@ const EditProfileTeacher: React.FC<{
     </>
   );
 };
-function IsiModalReservasi() {
+const IsiModalReservasi: React.FC<{
+  center: { lat: number; lng: number };
+  scrollWheelZoom: boolean;
+}> = ({ scrollWheelZoom }) => {
+  const [mapCenter, setMapCenter] = useState({
+    lat: 51.505,
+    lng: -0.09,
+  });
+  const [latitude, setLatitude] = useState<string>("");
+  const [longitude, setLongitude] = useState<string>("");
+  const [locations, setLocations] = useState<Array<Location>>([]);
+  const [zoom, setZoom] = useState(13);
   const [cookie, removeCookie] = useCookies(["token", "role", "guru_id"]);
   const checkToken = cookie.token;
 
@@ -1575,6 +1599,26 @@ function IsiModalReservasi() {
                   <option value="offline">Offline</option>
                 </select>
               </div>
+              {metode_belajar === "offline" ? (
+                <MapContainer
+                  center={mapCenter}
+                  zoom={zoom}
+                  scrollWheelZoom={scrollWheelZoom}
+                >
+                  <TileLayer
+                    id="input-map"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <DraggableMarker
+                    setMapCenter={setMapCenter}
+                    setLocations={setLocations}
+                  />
+                </MapContainer>
+              ) : (
+                <></>
+              )}
+
               <h1 className="font-semibold text-lg m-5 mt-8">
                 Tanggal dan Jam Kursus Pertama
               </h1>
@@ -1668,7 +1712,7 @@ function IsiModalReservasi() {
       </div>
     </>
   );
-}
+};
 
 export {
   ProfileStudent,
