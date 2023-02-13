@@ -61,10 +61,6 @@ function Home() {
   const [searchSubject, setSearchSubject] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const [page, setPage] = useState<number>(2);
-  const [isCompleted, setIsCompleted] = useState<boolean>(false);
-  // const [filteredHomes, setFilteredHomes] = useState<hometype[]>(
-  //   []
-  // );
 
   const [modal, setModal] = useState<string>("modal-open");
 
@@ -87,6 +83,10 @@ function Home() {
     fetchHome(1);
   }, []);
 
+  useEffect(() => {
+    fetchSearchResult(searchSubject, searchLocation);
+  }, [searchSubject, searchLocation]);
+
   function fetchHome(page: number) {
     setLoadingHome(true);
     axios
@@ -99,24 +99,15 @@ function Home() {
       })
       .finally(() => setLoadingHome(false));
   }
-  const filteredHomes = homes.filter(
-    (home) =>
-      home.pelajaran
-        .toLowerCase()
-        .includes(searchSubject.toLowerCase()) &&
-      home.alamat
-        .toLowerCase()
-        .includes(searchLocation.toLowerCase())
-  );
-
-  // const loadMore = () => {
-  //   setIndex(index + 6);
-  //   if (index >= homes.length) {
-  //     setIsCompleted(true);
-  //   } else {
-  //     setIsCompleted(false);
-  //   }
-  // };
+  function fetchSearchResult(subject: string, location: string) {
+    axios
+      .get(
+        `https://devmyproject.site/guru?pelajaran=${subject}&lokasi=${location}`
+      )
+      .then((res) => {
+        setHome(res.data.data);
+      });
+  }
   function nextPage() {
     const requestOptions = {
       method: "GET",
@@ -131,11 +122,6 @@ function Home() {
     )
       .then((response) => response.json())
       .then((res) => {
-        if (newPage >= homes.length) {
-          setIsCompleted(true);
-        } else {
-          setIsCompleted(false);
-        }
         const results = res.data;
         const result = homes.slice();
         result.push(...results);
@@ -146,9 +132,6 @@ function Home() {
         alert(error.toString());
       });
   }
-  // useEffect(() => {
-  //   lokasiAsal ? setDisabled(true) : setDisabled(false);
-  // }, [lokasiAsal]);
 
   const skipHandle = async () => {
     setModal("modal");
@@ -515,7 +498,7 @@ function Home() {
 
           <div className="flex flex-col items-center w-full lg:mt-20 mt-14 ">
             <div className="gap-4 grid lg:grid-cols-3 grid-cols-1 lg:w-[90vw] w-[80vw]">
-              {filteredHomes.map((data, index) => (
+              {homes.map((data, index) => (
                 <Card
                   id="card-guru"
                   key={index}
@@ -530,19 +513,19 @@ function Home() {
               ))}
             </div>
           </div>
-          {isCompleted ? (
+          {/* {isCompleted ? (
             <div className="mb-32"></div>
-          ) : (
-            <div className="text-center mt-14 mb-20">
-              <CustomButton
-                id="btn-lihatLainnya"
-                className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
-                label="Lihat lebih banyak guru"
-                loading={loading}
-                onClick={() => nextPage()}
-              />
-            </div>
-          )}
+          ) : ( */}
+          <div className="text-center mt-14 mb-20">
+            <CustomButton
+              id="btn-lihatLainnya"
+              className="px-4 py-3 text-[20px] rounded-2xl bg-[#F66B0E] text-white hover:bg-navy shadow-xl"
+              label="Lihat lebih banyak guru"
+              loading={loading}
+              onClick={() => nextPage()}
+            />
+          </div>
+          {/* )} */}
         </>
       )}
     </Layout>
