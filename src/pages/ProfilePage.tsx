@@ -1378,7 +1378,9 @@ const EditProfileTeacher: React.FC<{
                   </option>
                   <option value="online">Online</option>
                   <option value="offline">Offline</option>
-                  <option value="online & offline">Online & Offline</option>
+                  <option value="online & offline">
+                    Online & Offline
+                  </option>
                 </select>
               </div>
 
@@ -1599,7 +1601,6 @@ const IsiModalReservasi: React.FC<{
           text: message,
           showCancelButton: false,
         });
-        navigate("/paymentDetails");
       })
       .catch((err) => {
         const { message } = err.response.data;
