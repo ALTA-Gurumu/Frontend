@@ -1601,6 +1601,7 @@ const IsiModalReservasi: React.FC<{
           text: message,
           showCancelButton: false,
         });
+        navigate(`/home`);
       })
       .catch((err) => {
         const { message } = err.response.data;

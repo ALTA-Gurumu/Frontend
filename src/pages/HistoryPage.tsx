@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -133,15 +137,19 @@ function HalamanSesiGuru() {
                     title="Riwayat"
                     className="text-center font-semibold text-lg text-slate-500 mt-2 lg:pl-8 lg:pr-8"
                     panel={
-                      <div className="overflow-x-auto mt-10">
+                      <div className="overflow-x-auto overflow-scroll h-[55vh] mt-10">
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">NO</th>
+                              <th className="text-[18px] text-zinc-700">
+                                NO
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Murid
                               </th>
-                              <th className="text-[18px] text-zinc-700">Jam</th>
+                              <th className="text-[18px] text-zinc-700">
+                                Jam
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
@@ -155,16 +163,18 @@ function HalamanSesiGuru() {
                           </thead>
                           <tbody className="text-[16px] font-normal">
                             <>
-                              {riwayat.data?.map((data, index) => (
-                                <tr key={data.reservasi_id}>
-                                  <th>{index + 1}</th>
-                                  <td>{data.nama_siswa}</td>
-                                  <td>{data.jam}</td>
-                                  <td>{data.tanggal}</td>
-                                  <td>{data.tautan_gmet}</td>
-                                  <td>{data.status}</td>
-                                </tr>
-                              ))}
+                              {riwayat.data?.map(
+                                (data, index) => (
+                                  <tr key={data.reservasi_id}>
+                                    <th>{index + 1}</th>
+                                    <td>{data.nama_siswa}</td>
+                                    <td>{data.jam}</td>
+                                    <td>{data.tanggal}</td>
+                                    <td>{data.tautan_gmet}</td>
+                                    <td>{data.status}</td>
+                                  </tr>
+                                )
+                              )}
                             </>
                           </tbody>
                         </table>
@@ -174,17 +184,21 @@ function HalamanSesiGuru() {
                   <Tab
                     id="tab-2"
                     title="Sedang Berlangsung"
-                    className=" text-center font-semibold text-lg text-slate-500 mt-2 pl-0 lg:pl-8 lg:pr-8 "
+                    className=" text-center  font-semibold text-lg text-slate-500 mt-2 pl-0 lg:pl-8 lg:pr-8 "
                     panel={
-                      <div className="overflow-x-auto mt-10">
+                      <div className="overflow-x-auto overflow-scroll h-[55vh] mt-10">
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">No</th>
+                              <th className="text-[18px] text-zinc-700">
+                                No
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Nama Murid
                               </th>
-                              <th className="text-[18px] text-zinc-700">Jam</th>
+                              <th className="text-[18px] text-zinc-700">
+                                Jam
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
@@ -201,15 +215,16 @@ function HalamanSesiGuru() {
                           </thead>
                           <tbody className="text-[16px] font-normal">
                             <>
-                              {ongoing.data?.map((data, index) => (
-                                <tr key={data.reservasi_id}>
-                                  <th>{index + 1}</th>
-                                  <td>{data.nama_siswa}</td>
-                                  <td>{data.jam}</td>
-                                  <td>{data.tanggal}</td>
-                                  <td>{data.tautan_gmet}</td>
-                                  <td>{data.status}</td>
-                                  {/* <td>
+                              {ongoing.data?.map(
+                                (data, index) => (
+                                  <tr key={data.reservasi_id}>
+                                    <th>{index + 1}</th>
+                                    <td>{data.nama_siswa}</td>
+                                    <td>{data.jam}</td>
+                                    <td>{data.tanggal}</td>
+                                    <td>{data.tautan_gmet}</td>
+                                    <td>{data.status}</td>
+                                    {/* <td>
                                     <CustomButton
                                       id="button-masukan-history"
                                       className="py-2 px-6 text-md font-normal rounded-xl hover:bg-orange-600 bg-orange-500 text-white"
@@ -217,8 +232,9 @@ function HalamanSesiGuru() {
                                       loading={disable}
                                     />
                                   </td> */}
-                                </tr>
-                              ))}
+                                  </tr>
+                                )
+                              )}
                             </>
                           </tbody>
                         </table>
@@ -231,26 +247,32 @@ function HalamanSesiGuru() {
                     title="Jadwal Mengajar"
                     className=" text-center font-semibold lg:text-lg text-slate-500 lg:mt-10 pl-0 lg:pl-8 lg:pr-8 "
                     panel={
-                      <div className="overflow-x-auto mt-10">
+                      <div className="overflow-x-auto overflow-scroll h-[55vh] mt-10">
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
-                              <th className="text-[18px] text-zinc-700">No</th>
+                              <th className="text-[18px] text-zinc-700">
+                                No
+                              </th>
                               <th className="text-[18px] text-zinc-700">
                                 Hari & Tanggal
                               </th>
-                              <th className="text-[18px] text-zinc-700">Jam</th>
+                              <th className="text-[18px] text-zinc-700">
+                                Jam
+                              </th>
                             </tr>
                           </thead>
                           <tbody className="text-[16px] font-normal">
                             <>
-                              {jadwal.Jadwal?.map((data, index) => (
-                                <tr key={data.ID}>
-                                  <th>{index + 1}</th>
-                                  <td>{data.Tanggal}</td>
-                                  <td>{data.Jam}</td>
-                                </tr>
-                              ))}
+                              {jadwal.Jadwal?.map(
+                                (data, index) => (
+                                  <tr key={data.ID}>
+                                    <th>{index + 1}</th>
+                                    <td>{data.Tanggal}</td>
+                                    <td>{data.Jam}</td>
+                                  </tr>
+                                )
+                              )}
                             </>
                           </tbody>
                         </table>

@@ -480,7 +480,7 @@ function HalamanSesiMurid() {
                     title="Riwayat"
                     className=" text-center font-semibold text-lg text-slate-500 mt-2 pl-0 lg:pl-8 lg:pr-8 lg:-ml-0 -ml-2"
                     panel={
-                      <div className="overflow-x-auto mt-10">
+                      <div className="overflow-x-auto overflow-scroll h-[55vh] mt-10">
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
@@ -541,7 +541,7 @@ function HalamanSesiMurid() {
                     title="Sedang Berlangsung"
                     className="text-center font-semibold lg:text-lg text-[18px] text-slate-500 lg:mt-5 pl-0 lg:pl-8 lg:pr-8 lg:-ml-4 -ml-2"
                     panel={
-                      <div className="overflow-x-auto mt-10">
+                      <div className="overflow-x-auto overflow-scroll h-[55vh] mt-10">
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
@@ -593,7 +593,7 @@ function HalamanSesiMurid() {
                     title="Detail Transaksi"
                     className="text-center font-semibold lg:text-lg text-[18px] text-slate-500 lg:mt-5 pl-0 lg:pl-8 lg:pr-8 lg:-ml-4 -ml-2"
                     panel={
-                      <div className="overflow-x-auto mt-10">
+                      <div className="overflow-x-auto overflow-scroll h-[55vh] mt-10">
                         <table className="table w-full mx-auto">
                           <thead>
                             <tr>
@@ -614,9 +614,9 @@ function HalamanSesiMurid() {
                               <th className="text-[18px] text-zinc-700">
                                 Metode Belajar
                               </th>
-                              <th className="text-[18px] text-zinc-700">
+                              {/* <th className="text-[18px] text-zinc-700">
                                 Link Gmeet
-                              </th>
+                              </th> */}
                               <th className="text-[18px] text-zinc-700">
                                 Nomor Virtual Account
                               </th>
@@ -634,7 +634,7 @@ function HalamanSesiMurid() {
                               <td>
                                 {responseData.metode_belajar}
                               </td>
-                              <td>
+                              {/* <td>
                                 {ongoing.data?.map(
                                   (data, index) => (
                                     <tr
@@ -654,7 +654,7 @@ function HalamanSesiMurid() {
                                     </tr>
                                   )
                                 )}
-                              </td>
+                              </td> */}
                               <td>{responseData.nomer_va}</td>
                               <td>
                                 {responseData.bank_penerima ===
